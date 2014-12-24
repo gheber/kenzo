@@ -2,30 +2,30 @@
 ;;;  VARIOUS  VARIOUS  VARIOUS  VARIOUS  VARIOUS  VARIOUS
 ;;;  VARIOUS  VARIOUS  VARIOUS  VARIOUS  VARIOUS  VARIOUS
 
-(IN-PACKAGE "COMMON-LISP-USER")
+(IN-PACKAGE #:cat)
 
 (PROVIDE "various")
 
-(DEFCONSTANT +EMPTY-LIST+ '())
+(DEFINE-CONSTANT +EMPTY-LIST+ '())
 
-(DEFCONSTANT +F-EMPTY-VECTOR+
+(DEFINE-CONSTANT +F-EMPTY-VECTOR+
    (make-array 0 :element-type 'fixnum))
 
-(DEFCONSTANT +S-EMPTY-VECTOR+
+(DEFINE-CONSTANT +S-EMPTY-VECTOR+
    #())
 
-(DEFCONSTANT +TRUE+ t)
+(DEFINE-CONSTANT +TRUE+ t)
 
-(DEFCONSTANT +FALSE+ nil)
+(DEFINE-CONSTANT +FALSE+ nil)
 
-(DEFCONSTANT +2-EXP+
+(DEFINE-CONSTANT +2-EXP+
   (let ((rslt (make-array (integer-length most-positive-fixnum)
                         :element-type 'fixnum)))
     (declare (type (array fixnum 1) rslt))
     (dotimes (i (integer-length most-positive-fixnum) rslt)
       (setf (aref rslt i) (the fixnum (expt 2 i))))))
 
-(DEFCONSTANT +MASK+
+(DEFINE-CONSTANT +MASK+
   (let ((rslt (make-array (integer-length most-positive-fixnum)
                         :element-type 'fixnum)))
     (declare (type (array fixnum 1) rslt))

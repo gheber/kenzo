@@ -2,7 +2,7 @@
 ;;;  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES
 ;;;  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES
 
-(IN-PACKAGE "COMMON-LISP-USER")
+(IN-PACKAGE #:cat)
 
 (PROVIDE "classes")
 
@@ -489,6 +489,8 @@
      (setf excl:*enable-package-locked-errors* nil))
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :common-lisp) nil))
+#+sbcl(eval-when (:compile-toplevel :load-toplevel :execute)
+	(sb-ext:unlock-package :common-lisp))
 
 (DEFSTRUCT (LOOP (:print-function loop-print))
   (list #+allegro :type #+allegro iloop))
@@ -498,7 +500,8 @@
      (setf excl:*enable-package-locked-errors* t))
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :common-lisp) t))
-
+#+sbcl(eval-when (:compile-toplevel :load-toplevel :execute)
+         (sb-ext:lock-package :common-lisp))
 
 
 ;;;

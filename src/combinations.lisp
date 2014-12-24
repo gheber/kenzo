@@ -2,7 +2,7 @@
 ;;;  COMBINATIONS  COMBINATIONS  COMBINATIONS  COMBINATIONS  COMBINATIONS
 ;;;  COMBINATIONS  COMBINATIONS  COMBINATIONS  COMBINATIONS  COMBINATIONS
 
-(IN-PACKAGE "COMMON-LISP-USER")
+(IN-PACKAGE #:cat)
 
 (provide "combinations")
 
@@ -50,14 +50,6 @@
             (:less (return-from maplexico :less))
             (:greater (return-from maplexico :greater))))))
 
-#|
-  (maplexico #'f-cmpr '(1 2 3) '(1 3))
-  (maplexico #'f-cmpr '(1 2 3) '(1 1))
-  (maplexico #'f-cmpr '(1 1) '(1 1 0))
-  (maplexico #'f-cmpr '(1 1 0) '(1 1))
-  (maplexico #'f-cmpr '(1 1) '(1 1))
-  (maplexico #'f-cmpr nil nil)
-|#
 
 (DEFUN S-CMPR (symbol1 symbol2)
    (declare (symbol symbol1 symbol2))
@@ -97,24 +89,6 @@
        (f-cmpr (first list1) (first list2))
        (l-cmpr (rest list1) (rest list2))))))
 
-#|
-  (s-cmpr 'a 'b)
-  (s-cmpr 'b 'b)
-  (s-cmpr 'c 'b)
-  (f-cmpr 1 2)
-  (f-cmpr 2 2)
-  (f-cmpr 3 2)
-  (l-cmpr nil nil)
-  (l-cmpr nil '(1))
-  (l-cmpr '(1) nil)
-  (l-cmpr '(a) '(a))
-  (l-cmpr '(a) '(1))
-  (l-cmpr '(1) '(a))
-  (l-cmpr '(1) '(1))
-  (l-cmpr '(1 a) '(1 1))
-  (l-cmpr '(1 a) '(1 a b)))
-|# 
-
 
 ;;;;
 ;;;;  COMBINATIONS
@@ -142,14 +116,6 @@
                           ((endp mark) (nreverse rslt))
                         (declare (list rslt mark))))))
 
-
-#|
-  (cmbn 2)
-  (cmbn 2 2 'a)
-  (cmbn 2 'a)
-  (cmbn 2 2 'a -3 'b))
-  (term-cmbn 3 -5 'a)
-|#
 
 #+allegro
 (setf *print-pretty* nil)
@@ -181,27 +147,15 @@
        :degr degr
        :list +empty-list+)))
 
-#|
-  (zero-cmbn 3))
-|#  
 
 (DEFUN ZERO-INTR-DFFR (cmbn)
    (declare (type cmbn cmbn))
    (the cmbn (zero-cmbn (1- (cmbn-degr cmbn)))))
 
-#|
-  (zero-intr-dffr (cmbn 2))
-|#
 
-(DEFCONSTANT +ZERO-NEGATIVE-CMBN+
+(DEFINE-CONSTANT +ZERO-NEGATIVE-CMBN+
    (make-cmbn :degr -1 :list +empty-list+))
 
-#|
-  (cmbn-non-zero-p (cmbn 0))
-  (cmbn-non-zero-p (cmbn 0 1 'a)))
-  (cmbn-zero-p (cmbn 0))
-  (cmbn-zero-p (cmbn 0 1 'a)))
-|#
 
 (DEFUN CMBN-OPPS (cmbn)
    (declare (type cmbn cmbn))
@@ -215,11 +169,6 @@
                                   (term (- cffc) gnrt)))
                      list)))))
 
-#|
-  (setf c (cmbn 0 1 'a -2 'b))
-  (cmbn-opps c)
-  (symbol-value 'c))
-|#
 
 (DEFUN N-CMBN (n cmbn)
    ;; n is assumed non-zero
@@ -238,13 +187,6 @@
                                      (term (* n cffc) gnrt)))
                         list))))))
 
-#|
-  (setf c (cmbn 2 3 'a))
-  (setf c2 (n-cmbn 1 c))
-  (eq c c2)
-  (n-cmbn -1 c)
-  (n-cmbn -3 c))
-|#
 
 (DEFUN 2CMBN-ADD (cmpr cmbn1 cmbn2)
    (declare
@@ -305,17 +247,6 @@
                   :exit))
             (make-cmbn :degr degr1 :list pre-rslt)))))))
 
-#|
-  (2cmbn-add #'s-cmpr (cmbn 0) (cmbn 1))
-  (2cmbn-add #'s-cmpr (cmbn 0) (cmbn 0))
-  (2cmbn-add #'s-cmpr (cmbn 0 1 'a) (cmbn 0))
-  (2cmbn-add #'s-cmpr (cmbn 0 1 'a) (cmbn 0 2 'a))
-  (2cmbn-add #'s-cmpr (cmbn 0 1 'a) (cmbn 0 -1 'a))
-  (2cmbn-add #'s-cmpr (cmbn 0 1 'a) (cmbn 0 2 'b))
-  (2cmbn-add #'s-cmpr (cmbn 0 2 'b) (cmbn 0 1 'a))
-  (2cmbn-add #'s-cmpr (cmbn 0 1 'a -2 'b) (cmbn 0 2 'b))
-  (2cmbn-add #'s-cmpr (cmbn 0 2 'b) (cmbn 0 1 'a 3 'c)))
-|#
 
 (DEFUN 2CMBN-SBTR (cmpr cmbn1 cmbn2)
    (declare
@@ -385,29 +316,6 @@
                :degr degr1
                :list pre-rslt)))))))
 
-#|
-  (2cmbn-sbtr #'s-cmpr (cmbn 0) (cmbn 1))
-  (2cmbn-sbtr #'s-cmpr (cmbn 0) (cmbn 0))
-  (2cmbn-sbtr #'s-cmpr (cmbn 0) (cmbn 0 1 'a))
-  (2cmbn-sbtr #'s-cmpr (cmbn 0 2 'b) (cmbn 0))
-  (2cmbn-sbtr #'s-cmpr (cmbn 0 3 'b) (cmbn 0 3 'b))
-  (2cmbn-sbtr #'s-cmpr (cmbn 0 3 'b) (cmbn 0 4 'b))
-  (2cmbn-sbtr #'s-cmpr
-    (cmbn 0 1 'a 2 'c  2 'd       3 'g)
-    (cmbn 0      1 'c -2 'd 4 'f -3 'g 4 'h))
-  (2cmbn-sbtr #'s-cmpr
-    (cmbn 0      1 'c -2 'd 4 'f -3 'g 4 'h)
-    (cmbn 0 1 'a 2 'c  2 'd       3 'g))
-  (2cmbn-sbtr #'s-cmpr
-    (cmbn 0      1 'c -2 'd 4 'f -3 'g)
-    (cmbn 0 1 'a 2 'c  2 'd       3 'g))
-  (2cmbn-sbtr #'s-cmpr
-    (cmbn 0 1 'b 2 'a)
-    (cmbn 0 1 'a 1 'b)))  ;;; !!!
-  (2cmbn-sbtr #'s-cmpr
-    (cmbn 0 1 'b 2 'c)
-    (cmbn 0 1 'a 1 'b)))
-|#
 
 (DEFUN 2N-2CMBN (cmpr n1 cmbn1 n2 cmbn2)
    ;; n1 * cmbn1 + n2 * cmbn2
@@ -491,21 +399,6 @@
                :degr degr1
                :list pre-rslt)))))))
 
-#|
-  (2n-2cmbn #'s-cmpr 3 (cmbn 0) 4 (cmbn 1))
-  (2n-2cmbn #'s-cmpr 3 (cmbn 0) 4 (cmbn 0))
-  (2n-2cmbn #'s-cmpr 3 (cmbn 0 1 'a) 4 (cmbn 0))
-  (2n-2cmbn #'s-cmpr 3 (cmbn 0  1 'a 2 'b 3 'c     )
-                     1 (cmbn 0 -3 'a 2 'b      4 'd))
-  (2n-2cmbn #'s-cmpr 3 (cmbn 0 -3 'a 2 'b     4 'd)
-                     1 (cmbn 0  1 'a 2 'b 3 'c    ))
-  (2n-2cmbn #'s-cmpr 1 (cmbn 0  1 'a 2 'b 3 'c     )
-                     1 (cmbn 0 -3 'a 2 'b      4 'd))
-  (2n-2cmbn #'s-cmpr 1 (cmbn 0 -3 'a 2 'b     4 'd)
-                     1 (cmbn 0  1 'a 2 'b 3 'c    ))
-  (2n-2cmbn #'s-cmpr 1 (cmbn 0 -3 'a 2 'b     4 'd)
-                     3 (cmbn 0  1 'a 2 'b 3 'c    )))
-|#
 
 (DEFUN CMBN-CMBN (cmpr n-cmbn-list)
   ;; n-cmbn-list = list of (cons n cmbn)
@@ -553,14 +446,6 @@
 	      (push (2cmbn-add cmpr (car mark2) (car mark1))
 		    new-rslt)))))))
 
-#|
-  (setf cons (cons 3 (cmbn 0 4 'a)))
-  (cmbn-cmbn #'s-cmpr (make-list 5 :initial-element cons))
-  (dotimes (i 10)
-     (print
-       (cffc (first (cmbn-list
-          (cmbn-cmbn #'s-cmpr (make-list (1+ i) :initial-element cons))))))))
-|#
 
 (DEFUN NTERM-ADD (cmpr degr &rest rest)
    (declare
@@ -593,14 +478,6 @@
             :degr degr
             :list (delete 0 rslt :key #'car)))))
 
-#|
-  (nterm-add #'s-cmpr 11)
-  (nterm-add #'s-cmpr 11 (term 1 'a))
-  (nterm-add #'s-cmpr 11 (term 1 'a) (term 2 'b))
-  (nterm-add #'s-cmpr 11 (term 1 'b) (term 2 'a) (term 3 'aa)
-                         (term -2 'aa) (term -2 'a) (term 4 'aab)
-                         (term 5 'c))
-|#
 
 (DEFUN NCMBN-ADD (cmpr cmbn &rest rest)
    (declare
@@ -612,10 +489,6 @@
                                    (cons 1 cmbn))
                          (cons cmbn rest)))))
 
-#|
-  (setf c (cmbn 3 4 'a))
-  (ncmbn-add #'s-cmpr c c c c c)
-|#
 
 (DEFUN DSTR-ADD-TERM-TO-CMBN (cmpr cffc gnrt cmbn)
    (declare
@@ -650,25 +523,3 @@
                    (return)))
                (:greater)))
          cmbn)))
-
-#|
-()
-(setf c (zero-cmbn 10))
-(dstr-add-term-to-cmbn #'s-cmpr 3 'f c)
-(eq * c)
-(dstr-add-term-to-cmbn #'s-cmpr 3 'g c)
-(eq * c)
-(dstr-add-term-to-cmbn #'s-cmpr 3 'a c)
-(eq * c)
-(dstr-add-term-to-cmbn #'s-cmpr 3 'd c)
-(eq * c)
-(dstr-add-term-to-cmbn #'s-cmpr -3 'd c)
-(eq * c)
-(dstr-add-term-to-cmbn #'s-cmpr -2 'a c)
-(dstr-add-term-to-cmbn #'s-cmpr -1 'a c)
-(eq * c)
-(dstr-add-term-to-cmbn #'s-cmpr -3 'g c)
-(eq * c)
-(dstr-add-term-to-cmbn #'s-cmpr -3 'f c)
-(eq * c))
-|#
