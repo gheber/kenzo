@@ -44,5 +44,15 @@
 
 	   ;; various.lisp
 
+	   <A-B<
+	   <A-B>
+	   >A-B<
+	   >A-B>
+	   BINOMIAL-N-P
+	   CLOCK
+	   DONE
+	   SRANDOM
+	   V<A-B>
+
 	   ))
 

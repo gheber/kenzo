@@ -43,12 +43,6 @@
 	 ((> pp p) rslt)
 	(declare (fixnum nn pp rslt)))))
 
-#|
-  (dotimes (i 6)
-     (print (binomial-n-p 5 i)))
-  (dotimes (i 6)
-     (print (binomial-p-q (- 5 i) i))))
-|#
 
 (SETF *PRINT-LEVEL* 5
   *PRINT-LENGTH* 10)
@@ -85,12 +79,6 @@
       ((= i a) rslt)
     (declare (fixnum i) (list rslt)))))
 
-#|
-  (<a-b< 0 5)
-  (<a-b> 0 5)
-  (>a-b< 0 5)
-  (>a-b> 0 5))
-|#
 
 (DEFUN V<A-B> (a b)
    (declare (fixnum a b))
@@ -104,9 +92,6 @@
           (setf (aref rslt mark) i))
        rslt)))
 
-#|
-  (v<a-b> -5 5))
-|#
 
 (DEFUN SRANDOM (max)
    (declare (fixnum max))
@@ -117,9 +102,6 @@
             max
             rslt))))
 
-#|
-  (dotimes (i 20) (print (srandom 3))))
-|#
 
 (DEFUN CLOCK ()
   (multiple-value-bind (sec min hour day month year)

@@ -5,4 +5,6 @@
   :version "0.1"
   :depends-on (:kenzo :fiveam)
   :pathname #P"test/"
-  :components ((:file "combinations-test")))
+  :components ((:file "package")
+	       (:file "combinations-test")
+	       (:file "various-test")))
