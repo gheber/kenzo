@@ -1,0 +1,350 @@
+;;;
+;;; [[ Comments added to the listing.]]
+;;;
+
+
+International Allegro CL Free Express Edition
+8.0 [Windows] (Dec 27, 2006 16:11)
+Copyright (C) 1985-2006, Franz Inc., Oakland, CA, USA.  All Rights Reserved.
+
+This development copy of Allegro CL is licensed to:
+   Trial User
+
+CG version 1.81.2.23 / IDE version 1.80.2.21
+Loaded options from C:\Documents and Settings\Fourier\Mes documents\allegro-prefs.cl.
+
+;; Optimization settings: safety 1, space 1, speed 1, debug 2.
+;; For a complete description of all compiler switches given the current
+;; optimization settings evaluate (EXPLAIN-COMPILER-SETTINGS).
+;;;
+;;; [[ Don't forget to define the standard package "COMMON-LISP-USER"
+;;; [[   before starting.
+;;; [[ Cf Tools > IDE 1 > Initial Package := COMMON-LISP-USER
+;;;
+;;; [[ You must anyway load the "cat-init" file
+;;;
+CL-USER(1): (load "cat-init")
+; Loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\cat-init.cl
+
+ FILE  1: macros
+ FILE  2: various
+ FILE  3: classes
+ FILE  4: combinations
+ FILE  5: chain-complexes
+ FILE  6: chcm-elementary-op
+ FILE  7: effective-homology
+ FILE  8: homology-groups
+ FILE  9: searching-homology
+ FILE 10: cones
+ FILE 11: tensor-products
+ FILE 12: coalgebras
+ FILE 13: cobar
+ FILE 14: algebras
+ FILE 15: bar
+ FILE 16: simplicial-sets
+ FILE 17: simplicial-mrphs
+ FILE 18: delta
+ FILE 19: special-smsts
+ FILE 20: suspensions
+ FILE 21: disk-pasting
+ FILE 22: cartesian-products
+ FILE 23: eilenberg-zilber
+ FILE 24: kan
+ FILE 25: simplicial-groups
+ FILE 26: fibrations
+ FILE 27: loop-spaces
+ FILE 28: ls-twisted-products
+ FILE 29: lp-space-efhm
+ FILE 30: classifying-spaces
+ FILE 31: k-pi-n
+ FILE 32: serre
+ FILE 33: cs-twisted-products
+ FILE 34: cl-space-efhm
+ FILE 35: whitehead
+ FILE 36: smith
+T
+;;;
+;;; [[ Then the Kenzo function "load-cfiles" load the *compiled* files.
+;;; [[ The Kenzo function "load-sfiles" would load the *source* files
+;;; [[   and later the code is interpreted (much slower).
+;;;
+CL-USER(2): (load-cfiles)
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\macros.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\various.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\classes.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\combinations.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\chain-complexes.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\chcm-elementary-op.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\effective-homology.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\homology-groups.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\searching-homology.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\cones.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\tensor-products.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\coalgebras.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\cobar.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\algebras.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\bar.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\simplicial-sets.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\simplicial-mrphs.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\delta.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\special-smsts.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\suspensions.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\disk-pasting.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\cartesian-products.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\eilenberg-zilber.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\kan.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\simplicial-groups.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\fibrations.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\loop-spaces.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\ls-twisted-products.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\lp-space-efhm.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\classifying-spaces.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\k-pi-n.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\serre.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\cs-twisted-products.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\cl-space-efhm.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\whitehead.fasl
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\smith.fasl
+("macros" "various" "classes" "combinations" "chain-complexes" "chcm-elementary-op"
+ "effective-homology" "homology-groups" "searching-homology" "cones" ...)
+;;;
+;;; [[ Now Kenzo is ready.
+;;; [[ For example the computing time
+;;; [[   for the homology group H_7(\Omega^2 S^3).
+;;;
+CL-USER(3): (time (homology (loop-space (sphere 3) 2) 7))
+
+Computing boundary-matrix in dimension 7.
+Rank of the source-module : 13.
+
+
+;; Clock -> 2007-02-05, 14h 48m 1s.
+Computing the boundary of the generator 1 (dimension 7) :
+<<AlLp[7 <<AlLp[2 S3][2 S3][2 S3][2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 8s.
+Computing the boundary of the generator 2 (dimension 7) :
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][5 <<AlLp[2 S3][2 S3][2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 8s.
+Computing the boundary of the generator 3 (dimension 7) :
+<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 8s.
+Computing the boundary of the generator 4 (dimension 7) :
+<<AlLp[1 <<AlLp[2 S3]>>][5 <<AlLp[2 S3][2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 8s.
+Computing the boundary of the generator 5 (dimension 7) :
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 8s.
+Computing the boundary of the generator 6 (dimension 7) :
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 8s.
+Computing the boundary of the generator 7 (dimension 7) :
+<<AlLp[5 <<AlLp[2 S3][2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 8s.
+Computing the boundary of the generator 8 (dimension 7) :
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 8s.
+Computing the boundary of the generator 9 (dimension 7) :
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 8s.
+Computing the boundary of the generator 10 (dimension 7) :
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 8s.
+Computing the boundary of the generator 11 (dimension 7) :
+<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 8s.
+Computing the boundary of the generator 12 (dimension 7) :
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 8s.
+Computing the boundary of the generator 13 (dimension 7) :
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+Computing boundary-matrix in dimension 8.
+Rank of the source-module : 21.
+
+
+;; Clock -> 2007-02-05, 14h 48m 8s.
+Computing the boundary of the generator 1 (dimension 8) :
+<<AlLp[1 <<AlLp[2 S3]>>][7 <<AlLp[2 S3][2 S3][2 S3][2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 9s.
+Computing the boundary of the generator 2 (dimension 8) :
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][5 <<AlLp[2 S3][2 S3][2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 9s.
+Computing the boundary of the generator 3 (dimension 8) :
+<<AlLp[5 <<AlLp[2 S3][2 S3][2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 9s.
+Computing the boundary of the generator 4 (dimension 8) :
+<<AlLp[7 <<AlLp[2 S3][2 S3][2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 9s.
+Computing the boundary of the generator 5 (dimension 8) :
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][5 <<AlLp[2 S3][2 S3][2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 10s.
+Computing the boundary of the generator 6 (dimension 8) :
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 10s.
+Computing the boundary of the generator 7 (dimension 8) :
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][5 <<AlLp[2 S3][2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 10s.
+Computing the boundary of the generator 8 (dimension 8) :
+<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 10s.
+Computing the boundary of the generator 9 (dimension 8) :
+<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 10s.
+Computing the boundary of the generator 10 (dimension 8) :
+<<AlLp[1 <<AlLp[2 S3]>>][5 <<AlLp[2 S3][2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 10s.
+Computing the boundary of the generator 11 (dimension 8) :
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 10s.
+Computing the boundary of the generator 12 (dimension 8) :
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 10s.
+Computing the boundary of the generator 13 (dimension 8) :
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 10s.
+Computing the boundary of the generator 14 (dimension 8) :
+<<AlLp[5 <<AlLp[2 S3][2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 11s.
+Computing the boundary of the generator 15 (dimension 8) :
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 12s.
+Computing the boundary of the generator 16 (dimension 8) :
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 12s.
+Computing the boundary of the generator 17 (dimension 8) :
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 12s.
+Computing the boundary of the generator 18 (dimension 8) :
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 12s.
+Computing the boundary of the generator 19 (dimension 8) :
+<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 12s.
+Computing the boundary of the generator 20 (dimension 8) :
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+;; Clock -> 2007-02-05, 14h 48m 12s.
+Computing the boundary of the generator 21 (dimension 8) :
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+End of computing.
+
+
+
+
+Homology in dimension 7 :
+
+
+Component Z/2Z
+
+Component Z/2Z
+
+
+---done---
+
+;; Clock -> 2007-02-05, 14h 48m 13s.
+
+; cpu time (non-gc) 7,633 msec user, 421 msec system
+; cpu time (gc)     3,293 msec user, 40 msec system
+; cpu time (total)  10,926 msec user, 461 msec system
+; real time  11,497 msec
+; space allocation:
+;  3,324,666 cons cells, 94,505,896 other bytes, 0 static bytes
+NIL
+CL-USER(4): (exit)
