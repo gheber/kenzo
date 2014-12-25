@@ -7,4 +7,7 @@
   :pathname #P"test/"
   :components ((:file "package")
 	       (:file "combinations-test")
-	       (:file "various-test")))
+	       (:file "various-test")
+	       (:file "chain-complexes-test")
+	       (:file "diabolo")
+	       (:file "circle")))

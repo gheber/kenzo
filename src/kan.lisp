@@ -2,7 +2,7 @@
 ;;;  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN
 ;;;  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN
 
-(IN-PACKAGE "COMMON-LISP-USER")
+(IN-PACKAGE #:cat)
 
 (provide "kan")
 

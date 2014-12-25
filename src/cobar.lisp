@@ -2,7 +2,7 @@
 ;;;  COBAR  COBAR  COBAR  COBAR  COBAR  COBAR  COBAR  COBAR  COBAR
 ;;;  COBAR  COBAR  COBAR  COBAR  COBAR  COBAR  COBAR  COBAR  COBAR
 
-(IN-PACKAGE "COMMON-LISP-USER")
+(IN-PACKAGE #:cat)
 
 (PROVIDE "cobar")
 
@@ -28,7 +28,9 @@
 (allp 2 'a 3))  ;; error
 |#
 
-(DEFCONSTANT +NULL-ALLP+ (make-allp :list +empty-list+))
+#-sbcl(DEFCONSTANT +NULL-ALLP+ (make-allp :list +empty-list+))
+#+sbcl (DEFPARAMETER +NULL-ALLP+ (make-allp :list +empty-list+))
+
 
 (DEFUN ALLP-PRINT (allp stream depth)
   (declare

@@ -7,11 +7,12 @@
       (let ((rslt '(1 5 10 10 5 1)))
 	(dotimes (i 6)
 	  (is (equal (cat:binomial-n-p 5 i)
-		     (nth i rslt)))))
+		     (nth i rslt))))))
 
-      (let ((rslt '(1 4 3 1 1 1)))
+(test binomial-p-q
+      (let ((rslt '(1 5 10 10 5 1)))
 	(dotimes (i 6)
-	  (is (equal (cat:binomial-n-p (- 5 i) i)
+	  (is (equal (cat:binomial-p-q (- 5 i) i)
 		     (nth i rslt))))))
 
 (test <a-b<

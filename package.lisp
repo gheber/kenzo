@@ -7,13 +7,19 @@
 
 	   ;; chain-complexes.lisp
 
+	   BUILD-CHCM
+	   CAT-INIT
+	   DO-CONTROL
+
 	   ;; chcm-elementary-op.lisp
 
 	   ;; classes.lisp
 
+	   CHAIN-COMPLEX
 	   CMBN-CMBN
 	   CMBN-DEGR
 	   CMBN-LIST
+	   MAKE-RESULT
 
 	   ;; combinations.lisp
 
@@ -35,15 +41,20 @@
 
 	   ;; macros.lisp
 
+	   BASIS
+	   BINOMIAL-P-Q
 	   CFFC
-	   GNRT
 	   CMBN-NON-ZERO-P
 	   CMBN-ZERO-P
+	   CMPR
+	   DFFR
+	   GNRT
 	   TERM
 	   TERM-CMBN
 
 	   ;; various.lisp
 
+	   +EMPTY-LIST+
 	   <A-B<
 	   <A-B>
 	   >A-B<

@@ -2,11 +2,12 @@
 ;;;  CLASSIFYING-SPACES  CLASSIFYING-SPACES  CLASSIFYING-SPACES
 ;;;  CLASSIFYING-SPACES  CLASSIFYING-SPACES  CLASSIFYING-SPACES
 
-(IN-PACKAGE "COMMON-LISP-USER")
+(IN-PACKAGE #:cat)
 
 (provide "classifying-spaces")
 
-(DEFCONSTANT +NULL-GBAR+ (make-gbar :dmns 0 :list +empty-list+))
+#-sbcl (DEFCONSTANT +NULL-GBAR+ (make-gbar :dmns 0 :list +empty-list+))
+#+sbcl (DEFPARAMETER +NULL-GBAR+ (make-gbar :dmns 0 :list +empty-list+))
 
 (DEFUN GBAR-PRINT (gbar stream depth)
   (declare

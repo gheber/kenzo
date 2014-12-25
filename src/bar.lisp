@@ -6,7 +6,7 @@
 ;;;  MAC-LANE signs (p. 306)
 ;;;
 
-(IN-PACKAGE "COMMON-LISP-USER")
+(IN-PACKAGE #:cat)
 
 (PROVIDE "bar")
 
@@ -31,8 +31,8 @@
 (abar 2 'a 3))  ;; error
 |#
 
-(DEFCONSTANT +NULL-ABAR+ (make-abar :list +empty-list+))
-
+#-sbcl (DEFCONSTANT +NULL-ABAR+ (make-abar :list +empty-list+))
+#+sbcl (DEFPARAMETER +NULL-ABAR+ (make-abar :list +empty-list+))
 
 ;;; -[CLISP
 #|

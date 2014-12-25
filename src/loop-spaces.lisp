@@ -2,11 +2,12 @@
 ;;;  LOOP-SPACES  LOOP-SPACES  LOOP-SPACES  LOOP-SPACES  LOOP-SPACES  LOOP-SPACES
 ;;;  LOOP-SPACES  LOOP-SPACES  LOOP-SPACES  LOOP-SPACES  LOOP-SPACES  LOOP-SPACES
 
-(IN-PACKAGE "COMMON-LISP-USER")
+(IN-PACKAGE #:cat)
 
 (PROVIDE "loop-spaces")
 
-(DEFCONSTANT +NULL-LOOP+ (make-loop :list +empty-list+))
+#-sbcl (DEFCONSTANT +NULL-LOOP+ (make-loop :list +empty-list+))
+#+sbcl (DEFPARAMETER +NULL-LOOP+ (make-loop :list +empty-list+))
 
 ;;; NILOOP = non-normalized iloop; a common dgop is possible.
 

@@ -111,11 +111,6 @@
   result)
   
 
-#|
-()
-(make-result :gnrt 'a :value '(a a) :clnm 23 :rntm 2.345)
-|#
-
 (DEFPARAMETER +MAXIMAL-DIMENSION+ 15)
 
 (DEFVAR *MRPH-LIST*)
@@ -361,7 +356,7 @@
                                    (/ runtime internal-time-units-per-second))))
                              (declare (single-float rntm))
                              (incf *results-cmlt-tm* rntm)
-                             rntm)))                     
+                             rntm)))
                   (mapl #'(lambda (mark)
                             (declare (cons mark))
                             (incf (car mark) runtime))
@@ -380,7 +375,7 @@
                (:less (setf right middle))
               (:greater (setf left middle)))))))
 
-	   
+
 (DEFUN MRPH-CMBN (scmpr2 tcmpr2 intr cmbn memory)
    (declare
       (type intr-mrph intr)
@@ -419,15 +414,6 @@
                     ~A and ~A are in a wrong order." (cdar mark2) (cdar mark1)))))
    cmbn)
 
-#|
-  (do-control #'s-cmpr (cmbn 0 1 'a 1 'b -1 'c))
-  (do-control #'s-cmpr (cmbn 0 1 'b 1 'b -1 'c))
-  (do-control #'s-cmpr (cmbn 0 1 'a 1 'b -1 'b))
-  (setf *cmbn-control* nil)
-  (control #'s-cmpr (cmbn 0 1 'a 1 'b -1 'b))
-  (setf *cmbn-control* t)
-  (control #'s-cmpr (cmbn 0 1 'a 1 'b -1 'b))
-|#
 
 #|
 (DEFVAR *PROFILER-STACK*)
@@ -495,38 +481,6 @@
 ;;                     (profiler-off mrph)
                      ))))))))
 
-#|
-()
-(cat-init)
-(setf cc (build-chcm :cmpr #'f-cmpr
-                     :basis :locally-effective
-                     :bsgn 0
-                     :intr-dffr #'(lambda (cmbn)
-                                    (cmbn (1- (cmbn-degr cmbn))))
-                     :strt :cmbn
-                     :orgn '(Z of Z)))
-(setf cc (build-chcm :cmpr #'f-cmpr
-                     :basis :locally-effective
-                     :bsgn 0
-                     :intr-dffr #'(lambda (cmbn)
-                                    (cmbn (1- (cmbn-degr cmbn))))
-                     :strt :cmbn
-                     :orgn '(Z of Z)))
-(setf ff (build-mrph :sorc cc :trgt cc :degr 0
-                     :intr #'(lambda (degr n) (cmbn degr 1 n))
-                     :strt :gnrt :orgn '(test)))
-(setf ff (build-mrph :sorc cc :trgt cc :degr 0
-                     :intr #'(lambda (degr n) (cmbn degr 1 n))
-                     :strt :gnrt :orgn '(test)))
-(dotimes (i 20)
-  (let ((n (- (random 50) 50)))
-    (format t "~%~D   ~D" n (gnrt-? ff 0 n))))
-(setf +too-much-time+ -1)
-(dotimes (i 20)
-  (let ((n (- (random 50) 50)))
-    (format t "~%~D   ~D" n (gnrt-? ff 0 n))))
-(setf +too-much-time+ 50)
-|#
 
 (DEFUN CMBN-? (mrph cmbn)
    (declare
@@ -565,41 +519,3 @@
                            cmbn (svref (rslts mrph) (cmbn-degr cmbn))))
 ;;                     (profiler-off mrph)
                      )))))))))
-
-#|
-()
-(cat-init)
-(setf cc (build-chcm :cmpr #'f-cmpr
-                     :basis :locally-effective
-                     :bsgn 0
-                     :intr-dffr #'(lambda (cmbn)
-                                    (cmbn (1- (cmbn-degr cmbn))))
-                     :strt :cmbn
-                     :orgn '(Z of Z)))
-(setf *n* 10)
-(defun ff (degr i)
-  (do ((*2n* (ash *n* 1))
-       (rslt +empty-list+
-             (cons (cons (let ((cffc (- (random *2n*) *n*)))
-                           (if (minusp cffc) cffc (1+ cffc)))
-                         (decf gnrt (1+ (random *n*))))
-                   rslt))
-       (gnrt i)
-       (k 0 (1+ k)))
-      ((= k *n*)
-       (make-cmbn
-        :degr 0
-        :list rslt))))
-(ff 0 20)
-(compile 'ff)
-(setf mrph (build-mrph :sorc cc :trgt cc :degr 0
-                       :intr #'ff :strt :gnrt :orgn '(test)))
-(cmbn-? mrph (cmbn 0 1 100))
-(cmbn-? mrph *)
-(cmbn-? mrph *)
-(cmbn-? mrph *)
-(cmbn-? mrph *)
-(cmbn-? mrph *)
-(time (cmbn-? mrph *))
-(inspect mrph)
-|#
