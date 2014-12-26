@@ -31,7 +31,7 @@
 (abar 2 'a 3))  ;; error
 |#
 
-#-sbcl (DEFCONSTANT +NULL-ABAR+ (make-abar :list +empty-list+))
+#-sbcl (DEFINE-CONSTANT +NULL-ABAR+ (make-abar :list +empty-list+))
 #+sbcl (DEFPARAMETER +NULL-ABAR+ (make-abar :list +empty-list+))
 
 ;;; -[CLISP

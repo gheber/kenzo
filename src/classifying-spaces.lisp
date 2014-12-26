@@ -6,7 +6,7 @@
 
 (provide "classifying-spaces")
 
-#-sbcl (DEFCONSTANT +NULL-GBAR+ (make-gbar :dmns 0 :list +empty-list+))
+#-sbcl (DEFINE-CONSTANT +NULL-GBAR+ (make-gbar :dmns 0 :list +empty-list+))
 #+sbcl (DEFPARAMETER +NULL-GBAR+ (make-gbar :dmns 0 :list +empty-list+))
 
 (DEFUN GBAR-PRINT (gbar stream depth)

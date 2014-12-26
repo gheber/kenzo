@@ -28,7 +28,7 @@
 (allp 2 'a 3))  ;; error
 |#
 
-#-sbcl(DEFCONSTANT +NULL-ALLP+ (make-allp :list +empty-list+))
+#-sbcl (DEFINE-CONSTANT +NULL-ALLP+ (make-allp :list +empty-list+))
 #+sbcl (DEFPARAMETER +NULL-ALLP+ (make-allp :list +empty-list+))
 
 
@@ -45,7 +45,8 @@
                    (format stream "[~D ~A]" degr gnrt)))
       (format stream ">>")
       allp)))
-            
+
+
 (DEFUN COBAR-CMPR (cmpr)
   (declare (type cmprf cmpr))
   (flet ((rslt (allp1 allp2)

@@ -6,7 +6,7 @@
 
 (PROVIDE "loop-spaces")
 
-#-sbcl (DEFCONSTANT +NULL-LOOP+ (make-loop :list +empty-list+))
+#-sbcl (DEFINE-CONSTANT +NULL-LOOP+ (make-loop :list +empty-list+))
 #+sbcl (DEFPARAMETER +NULL-LOOP+ (make-loop :list +empty-list+))
 
 ;;; NILOOP = non-normalized iloop; a common dgop is possible.
