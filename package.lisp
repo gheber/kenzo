@@ -7,9 +7,13 @@
 
 	   ;; chain-complexes.lisp
 
+	   +TOO-MUCH-TIME+
 	   BUILD-CHCM
+	   BUILD-MRPH
 	   CAT-INIT
+	   CMBN-?
 	   DO-CONTROL
+	   GNRT-?
 
 	   ;; chcm-elementary-op.lisp
 
@@ -19,6 +23,7 @@
 	   CMBN-CMBN
 	   CMBN-DEGR
 	   CMBN-LIST
+	   MAKE-CMBN
 	   MAKE-RESULT
 
 	   ;; combinations.lisp
