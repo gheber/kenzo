@@ -17,8 +17,8 @@
 ;;;
 
 (DEFSTRUCT (CMBN (:print-function cmbn-print))
-  (degr #+allegro :type #+allegro fixnum)
-  (list #+allegro :type #+allegro list))
+  (degr -1 :type fixnum)
+  (list () :type list))
 
 ;; CFFC = CoeFFiCient
 (DEFUN CFFC-P (object)
@@ -494,7 +494,7 @@
 
 (DEFSTRUCT (LOOP (:print-function loop-print))
   (list #+allegro :type #+allegro iloop))
-                  
+
 #+allegro
 (eval-when (:compile-toplevel :load-toplevel :execute)
      (setf excl:*enable-package-locked-errors* t))
@@ -512,6 +512,6 @@
 ;;  (:gbar dmns absm_(m-1) ... absm_1)
 
 (DEFSTRUCT (GBAR (:print-function gbar-print))
-  (dmns #+allegro :type #+allegro fixnum)
-  (list #+allegro :type #+allegro list))
+  (dmns -1 :type fixnum)
+  (list () :type list))
 
