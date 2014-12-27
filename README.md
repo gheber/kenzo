@@ -15,7 +15,6 @@ This version aims to update its infrastructure by providing the following:
    manager
 2. A simple regression test suite based on
    [FiveAM](http://common-lisp.net/project/fiveam/)
-   (Based on tests scattered throughout the source code in comments.)
 3. Support for [SBCL](http://www.sbcl.org/)
 
 *!!! WARNING !!!*
