@@ -6,7 +6,6 @@
 
 (PROVIDE "tensor-products")
 
-(DEFVAR *TNPR-WITH-DEGREES* nil)
 
 (DEFUN TNPR-PRINT (tnpr stream depth)
   (declare

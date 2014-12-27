@@ -536,7 +536,6 @@
     depart3
       (return (append res (terminer-H* B)))))
 
-(DEFVAR *HOMOLOGY-VERBOSE* t)
 
 (DEFUN CHCM-MAT (chcm n)
   (declare

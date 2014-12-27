@@ -6,10 +6,6 @@
 
 (PROVIDE "algebras")
 
-(DEFVAR *ALGB-LIST*)
-(SETF *ALGB-LIST* +empty-list+)
-(PUSHNEW '*ALGB-LIST* *list-list*)
-
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :clos) nil))
 (DEFMETHOD PRINT-OBJECT ((algb algebra) stream)
@@ -76,10 +72,6 @@
 				      :orgn orgn))
        (push chcm *algb-list*)
        chcm)))
-
-(DEFVAR *HOPF-LIST*)
-(SETF *HOPF-LIST* +empty-list+)
-(PUSHNEW '*HOPF-LIST* *list-list*)
 
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :clos) nil))

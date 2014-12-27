@@ -6,10 +6,6 @@
 
 (PROVIDE "simplicial-groups")
 
-(DEFVAR *SMGR-LIST*)
-(SETF *SMGR-LIST* +empty-list+)
-(PUSHNEW '*SMGR-LIST* *list-list*)
-
 (DEFUN SMGR (idnm)
   (declare (fixnum idnm))
   (the (or null simplicial-group)

@@ -6,10 +6,6 @@
 
 (provide "kan")
 
-(DEFVAR *KAN-LIST*)
-(SETF *KAN-LIST* +empty-list+)
-(PUSHNEW '*KAN-LIST* *list-list*)
-
 (DEFUN KAN (idnm)
   (declare (fixnum idnm))
   (the (or null simplicial-group)

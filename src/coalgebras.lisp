@@ -6,10 +6,6 @@
 
 (PROVIDE "coalgebras")
 
-(DEFVAR *CLGB-LIST*)
-(SETF *CLGB-LIST* +empty-list+)
-(PUSHNEW '*CLGB-LIST* *list-list*)
-
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :clos) nil))
 (DEFMETHOD PRINT-OBJECT ((clgb coalgebra) stream)

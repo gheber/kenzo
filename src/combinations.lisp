@@ -469,10 +469,10 @@
                       (if mark2
                          (push term (cdr mark2))
                          (push term rslt))
-                      (return))                     
+                      (return))
                      (:equal
                       (incf (-cffc mark1) cffc)
-                      (return))                     
+                      (return))
                      (:greater )))))
          (make-cmbn
             :degr degr

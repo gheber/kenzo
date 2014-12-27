@@ -10,9 +10,6 @@
 ;;;  REDUCTIONS
 ;;;
 
-(DEFVAR *RDCT-LIST*)
-(SETF *RDCT-LIST* +empty-list+)
-(PUSHNEW '*RDCT-LIST* *list-list*)
 
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :clos) nil))
@@ -82,9 +79,6 @@
 ;;;  HOMOTOPY-EQUIVALENCES
 ;;;
 
-(DEFVAR *HMEQ-LIST*)
-(SETF *HMEQ-LIST* +empty-list+)
-(PUSHNEW '*HMEQ-LIST* *list-list*)
 
 (DEFMETHOD BUILD-HMEQ ((keyword1 (eql :lrdct)) lrdct &key rrdct orgn)
    (declare
@@ -236,15 +230,6 @@
 
 ;; Functions.
 
-(DEFVAR *TDD*)
-(DEFVAR *BDD*)
-(DEFVAR *ID-FG*)
-(DEFVAR *ID-GF-DH-HD*)
-(DEFVAR *HH*)
-(DEFVAR *FH*)
-(DEFVAR *HG*)
-(DEFVAR *DF-FD*)
-(DEFVAR *DG-GD*)
 
 (DEFUN PRE-CHECK-RDCT (rdct)
    (declare (type reduction rdct))
@@ -270,8 +255,6 @@
             *hg* (cmps h g)))
    (done))
 
-(DEFVAR *TC*)
-(DEFVAR *BC*)
 
 (DEFUN CHECK-RDCT ()
   (dolist (cmbn '(*tc* *bc*))

@@ -6,31 +6,6 @@
 
 (PROVIDE "various")
 
-(DEFINE-CONSTANT +EMPTY-LIST+ '())
-
-(DEFINE-CONSTANT +F-EMPTY-VECTOR+
-   (make-array 0 :element-type 'fixnum))
-
-(DEFINE-CONSTANT +S-EMPTY-VECTOR+
-   #())
-
-(DEFINE-CONSTANT +TRUE+ t)
-
-(DEFINE-CONSTANT +FALSE+ nil)
-
-(DEFINE-CONSTANT +2-EXP+
-  (let ((rslt (make-array (integer-length most-positive-fixnum)
-                        :element-type 'fixnum)))
-    (declare (type (array fixnum 1) rslt))
-    (dotimes (i (integer-length most-positive-fixnum) rslt)
-      (setf (aref rslt i) (the fixnum (expt 2 i))))))
-
-(DEFINE-CONSTANT +MASK+
-  (let ((rslt (make-array (integer-length most-positive-fixnum)
-                        :element-type 'fixnum)))
-    (declare (type (array fixnum 1) rslt))
-    (dotimes (i (integer-length most-positive-fixnum) rslt)
-      (setf (aref rslt i) (the fixnum (1- (expt 2 i)))))))
 
 (DEFUN BINOMIAL-N-P (n p)
   (declare (fixnum n p))

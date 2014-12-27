@@ -6,8 +6,6 @@
 
 (PROVIDE "chain-complexes")
 
-(DEFVAR *LIST-LIST* +empty-list+)
-
 (DEFUN CAT-INIT ()
   (declare (special *idnm-counter* *results-n* *results-cmlt-tm*))
   (setf *idnm-counter* 0 *results-n* 0 *results-cmlt-tm* 0.0)
@@ -76,11 +74,7 @@
 	(when found
 	  (push (k idnm) k-list))))
     (mapc #'kd (nreverse (mapcar #'idnm k-list)))))
-    
 
-(DEFVAR *CHCM-LIST*)
-(SETF *CHCM-LIST* +empty-list+)
-(PUSHNEW '*CHCM-LIST* *list-list*)
 
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :clos) nil))
@@ -109,13 +103,7 @@
     (result-gnrt result) (result-value result)
     (result-clnm result) (result-rntm result))
   result)
-  
 
-(DEFPARAMETER +MAXIMAL-DIMENSION+ 15)
-
-(DEFVAR *MRPH-LIST*)
-(SETF *MRPH-LIST* +empty-list+)
-(PUSHNEW '*MRPH-LIST* *list-list*)
 
 (DEFMETHOD ?2 ((mrph morphism) cmbn)
    (declare (type cmbn cmbn))
@@ -237,17 +225,6 @@
 
 ;;; FUNCTIONS
 
-(DEFVAR *START-STACK* +empty-list+)
-
-(DEFPARAMETER +TOO-MUCH-TIME+ -1)
-
-(DEFVAR *RESULTS-MAX* (expt 10 5))
-
-(DEFVAR *RESULTS-COEF* 3.0)
-(DEFVAR *RESULTS-CMLT-TM* 0.0)
-(DEFVAR *RESULTS-N* 0)
-
-(DEFVAR *RESULTS-VERBOSE* t)
 
 (DEFUN NRESULTS ()
   (the fixnum
@@ -439,10 +416,6 @@
          *profiler-stack*)
       (incf (wrtm mrph) time-spent)))
 |#
-
-(DEFVAR *FUTURE-DISPLAY* nil)
-
-(DEFVAR *TIME-INTERVAL* 60000)
 
 (DEFUN GNRT-? (mrph degr gnrt)
    (declare

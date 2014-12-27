@@ -6,10 +6,6 @@
 
 (PROVIDE "simplicial-mrphs")
 
-(DEFVAR *SMMR-LIST*)
-(SETF *SMMR-LIST* +empty-list+)
-(PUSHNEW '*SMMR-LIST* *LIST-LIST*)
-
 (DEFMETHOD ?3 ((smmr simplicial-mrph) dmns absm-or-gmsm)
   (declare
      (fixnum dmns)

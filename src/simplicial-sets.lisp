@@ -7,10 +7,6 @@
 (PROVIDE "simplicial-sets")
 
 
-(DEFVAR *SMST-LIST*)
-(SETF *SMST-LIST* +empty-list+)
-(PUSHNEW '*SMST-LIST* *list-list*)
-
 (DEFUN DGOP-EXT-INT (ext-dgop)
    (declare (list ext-dgop))
           ;; (list fixnum)
