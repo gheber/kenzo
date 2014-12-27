@@ -52,24 +52,26 @@
 
 
 (DEFUN S-CMPR (symbol1 symbol2)
-   (declare (symbol symbol1 symbol2))
-   (the cmpr
-      (if (#+aclpc acl:whole-string<
-          #-aclpc string< symbol1 symbol2)
-         :less
-         (if (#+aclpc acl:whole-string=
-              #-aclpc string= symbol1 symbol2)
-            :equal
-            :greater))))
+  (declare (symbol symbol1 symbol2))
+  (the cmpr
+       (if (#+aclpc acl:whole-string<
+		    #-aclpc string< symbol1 symbol2)
+	   :less
+	   (if (#+aclpc acl:whole-string=
+			#-aclpc string= symbol1 symbol2)
+	       :equal
+	       :greater))))
+
 
 (DEFUN F-CMPR (n1 n2)
-   (declare (fixnum n1 n2))
-   (the cmpr
-      (if (< n1 n2)
-         :less
-         (if (= n1 n2)
-            :equal
-            :greater))))
+  (declare (fixnum n1 n2))
+  (the cmpr
+       (if (< n1 n2)
+	   :less
+	   (if (= n1 n2)
+	       :equal
+	       :greater))))
+
 
 (DEFUN L-CMPR (list1 list2)
   (declare (list list1 list2))
@@ -82,12 +84,12 @@
           (lexico
            (s-cmpr (first list1) (first list2))
            (l-cmpr (rest list1) (rest list2)))
-        :greater)
-    (if (symbolp (first list2))
-        :less
-      (lexico
-       (f-cmpr (first list1) (first list2))
-       (l-cmpr (rest list1) (rest list2))))))
+	  :greater)
+      (if (symbolp (first list2))
+	  :less
+	  (lexico
+	   (f-cmpr (first list1) (first list2))
+	   (l-cmpr (rest list1) (rest list2))))))
 
 
 ;;;;
