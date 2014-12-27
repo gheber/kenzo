@@ -17,6 +17,15 @@
 
 	   ;; chcm-elementary-op.lisp
 
+	   ADD
+	   CMPS
+	   IDNT-MRPH
+	   N-MRPH
+	   OPPS
+	   SBTR
+	   Z-CHCM
+	   ZERO-MRPH
+
 	   ;; classes.lisp
 
 	   CHAIN-COMPLEX
@@ -44,6 +53,14 @@
 	   ZERO-CMBN
 	   ZERO-INTR-DFFR
 
+	   ;; fibrations.lisp
+
+	   FIBRATION-TOTAL
+
+	   ;; k-pi-n.lisp
+
+	   K-Z
+
 	   ;; macros.lisp
 
 	   BASIS
@@ -57,6 +74,18 @@
 	   TERM
 	   TERM-CMBN
 
+	   ;; searching-homology.lisp
+
+	   HOMOLOGY
+
+	   ;; smith.lisp
+
+	   CHML-CLSS
+
+	   ;; special-smsts.lisp
+
+	   SPHERE
+
 	   ;; various.lisp
 
 	   +EMPTY-LIST+
@@ -69,6 +98,10 @@
 	   DONE
 	   SRANDOM
 	   V<A-B>
+
+	   ;; whitehead.lisp
+
+	   Z-WHITEHEAD
 
 	   ))
 

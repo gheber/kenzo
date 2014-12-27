@@ -9,5 +9,6 @@
 	       (:file "combinations-test")
 	       (:file "various-test")
 	       (:file "chain-complexes-test")
+	       (:file "chcm-elementary-op-test")
 	       (:file "diabolo")
 	       (:file "circle")))
