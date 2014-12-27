@@ -8,7 +8,7 @@
 (in-package :kenzo-asd)
 
 (asdf:defsystem #:kenzo
-  :description "A repackaged version of the Kenzo program by Francis Sergeraert and Xavier Dousson"
+  :description "A Symbolic Software for Effective Homology Computation by Francis Sergeraert"
   :serial t
   :components ((:file "package")
                (:file "kenzo")
