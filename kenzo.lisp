@@ -9,6 +9,12 @@
 ;;(PROCLAIM '(OPTIMIZE (speed 3) (safety 1) (space 0) (debug 0)))
 (DECLAIM '(OPTIMIZE (speed 0) (space 0) (debug 3)))
 
+;; Don't mess with ANSI's definition of DEFCONSTANT!
+
+(DEFMACRO DEFINE-CONSTANT (name value &optional doc)
+  `(defconstant ,name (if (boundp ',name) (symbol-value ',name) ,value)
+                      ,@(when doc (list doc))))
+
 ;; globals from cat-init.lisp
 
 (DEFVAR *CMBN-CONTROL*)
@@ -141,15 +147,3 @@
 (DEFVAR *SMGR-LIST*)
 (SETF *SMGR-LIST* +empty-list+)
 (PUSHNEW '*SMGR-LIST* *list-list*)
-
-
-
-
-
-
-
-;; Don't mess with ANSI's definition of DEFCONSTANT!
-
-(DEFMACRO DEFINE-CONSTANT (name value &optional doc)
-  `(defconstant ,name (if (boundp ',name) (symbol-value ',name) ,value)
-                      ,@(when doc (list doc))))
