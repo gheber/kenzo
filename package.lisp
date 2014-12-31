@@ -31,9 +31,12 @@
 	   CHAIN-COMPLEX
 	   CMBN-CMBN
 	   CMBN-DEGR
+	   DEGR
+	   DFFR1
 	   CMBN-LIST
 	   MAKE-CMBN
 	   MAKE-RESULT
+	   MORPHISM
 
 	   ;; combinations.lisp
 
@@ -63,6 +66,7 @@
 
 	   ;; macros.lisp
 
+	   ?
 	   BASIS
 	   BINOMIAL-P-Q
 	   CFFC

@@ -11,4 +11,5 @@
 	       (:file "chain-complexes-test")
 	       (:file "chcm-elementary-op-test")
 	       (:file "diabolo")
-	       (:file "circle")))
+	       (:file "circle")
+               (:file "ccn")))
