@@ -13,7 +13,7 @@
 
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :clos) nil))
-(DEFMETHOD PRINT-OBJECT ((rdct reduction) (stream stream))
+(DEFMETHOD PRINT-OBJECT ((rdct reduction) stream)
  (the reduction
    (progn
       (format stream "[K~D Reduction K~D => K~D]"
@@ -129,7 +129,7 @@
                                                  rslt))
                                      (sign 1 (- sign))
                                      (nark 0 (1+ nark)))
-                                    ((> nark degr) rslt))))                                           
+                                    ((> nark degr) rslt))))
         :strt :gnrt
         :orgn `(locally effective version of C_* delta ,dmns)))
    (defun make-f (tdmns bdmns)
@@ -178,11 +178,11 @@
   (setf id-gf-dh-hd (i-sbtr (idnt-mrph tcc) gf dh hd))
   (setf c (cmbn 2 1 '(0 1 2) 10 '(1 2 3) 100 '(1 2 4) 1000 '(2 3 4)))
   (cmbn-? id-gf-dh-hd c)
-|#                                   
+|#
 
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :clos) nil))
-(DEFMETHOD PRINT-OBJECT ((hmeq homotopy-equivalence) (stream stream))
+(DEFMETHOD PRINT-OBJECT ((hmeq homotopy-equivalence) stream)
  (the homotopy-equivalence
    (progn
       (format stream "[K~D Homotopy-Equivalence K~D <= K~D => K~D]"
@@ -277,7 +277,7 @@
   (setf *tc* (cmbn 2 1 '(0 1 2) 10 '(1 2 3) 100 '(1 2 4) 1000 '(2 3 4)))
   (setf *bc* (cmbn 3 4 '(0 1 2 3)))  
   (check-rdct))
-|#                                   
+|#
 
 (DEFMETHOD CMPS ((brdct reduction) (trdct reduction) &optional dummy)
   (declare (ignore dummy))
@@ -549,7 +549,7 @@
                :lrdct new-lrdct
                :rrdct (add rrdct top-perturbation)
                :orgn `(add ,hmeq ,lb-perturbation))))))
-                        
+
 #|
   (cat-init)
   (setf hmeq (trivial-hmeq (cdelta 4)))

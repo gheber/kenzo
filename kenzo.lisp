@@ -7,7 +7,7 @@
   (values))
 
 ;;(PROCLAIM '(OPTIMIZE (speed 3) (safety 1) (space 0) (debug 0)))
-(DECLAIM '(OPTIMIZE (speed 0) (space 0) (debug 3)))
+(DECLAIM (OPTIMIZE (speed 0) (space 0) (debug 3)))
 
 ;; Don't mess with ANSI's definition of DEFCONSTANT!
 

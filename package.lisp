@@ -7,6 +7,8 @@
 
 	   ;; chain-complexes.lisp
 
+	   ?2
+	   ?3
 	   +TOO-MUCH-TIME+
 	   BUILD-CHCM
 	   BUILD-MRPH

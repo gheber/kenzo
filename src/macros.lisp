@@ -137,7 +137,7 @@
 
 
 (DEFMACRO CMBN-NON-ZERO-P (cmbn)
-   `(cmbn-list ,cmbn)) 
+   `(cmbn-list ,cmbn))
 
 (DEFMACRO CMBN-ZERO-P (cmbn)
   `(null (cmbn-list ,cmbn)))
@@ -179,7 +179,7 @@
       (3 `(basis3 ,@rest))))
 
 (DEFMACRO BASIS3 (smst dmns keyword)
-  (declare (ignore keyword))  
+  (declare (ignore keyword))
   `(a-basis2 (basis ,smst) ,dmns))
 
 (DEFMACRO DFFR (&rest rest)
@@ -226,7 +226,7 @@
 
 (DEFMACRO I-SBTR (mrph1 mrph2 &rest rest)
    `(sbtr ,mrph1 (i-add ,mrph2 ,@rest)))
-   
+
 #|
   (macroexpand '(i-sbtr m1 m2))
   (macroexpand '(i-sbtr m1 m2 m3))
@@ -617,7 +617,7 @@
 
 ;;; GMSM-FACES-INFO = (gmsm (simple-vector absm) . bndr)
 ;;;                         faces
-       
+
 (DEFMACRO MAKE-GMSM-FACES-INFO (&key gmsm faces bndr)
    `(cons ,gmsm (cons ,faces ,bndr)))
 
@@ -725,8 +725,8 @@
   `(let ((,absm1 (absm (dgop1 ,crpr) (gmsm1 ,crpr)))
          (,absm2 (absm (dgop2 ,crpr) (gmsm2 ,crpr))))
      (declare (type absm ,absm1 ,absm2))
-     ,@body)) 
-  
+     ,@body))
+
 #|
 ()
 (with-crpr (absm1 absm2) (crpr 3 'a 4 'b) (list absm1 absm2))
@@ -823,7 +823,7 @@
 
 (DEFMACRO APOWR (dgop gmsm expn)
    `(cons ,dgop (cons ,gmsm ,expn)))
-   
+
 (DEFMACRO APDGOP (apowr)
    `(car ,apowr))
 
