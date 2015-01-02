@@ -12,4 +12,5 @@
 	       (:file "chcm-elementary-op-test")
 	       (:file "diabolo")
 	       (:file "circle")
-               (:file "ccn")))
+               (:file "ccn")
+	       (:file "effective-homology-test")))

@@ -46,9 +46,9 @@
 
 (defparameter *n* 5)
 (defun ff (degr i)
-  (do ((*2n* (ash *n* 1))
+  (do ((2*n* (ash *n* 1))
        (rslt cat:+empty-list+
-	     (cons (cons (let ((cffc (- (random *2n*) *n*)))
+	     (cons (cons (let ((cffc (- (random 2*n*) *n*)))
 			   (if (minusp cffc) cffc (1+ cffc)))
 			 (decf gnrt (1+ (random *n*))))
 		   rslt))
@@ -56,7 +56,7 @@
        (k 0 (1+ k)))
       ((= k *n*)
        (cat:make-cmbn
-	:degr 0
+	:degr degr
 	:list rslt))))
 
 (test cmps

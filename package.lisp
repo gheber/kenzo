@@ -58,6 +58,10 @@
 	   ZERO-CMBN
 	   ZERO-INTR-DFFR
 
+	   ;; effective-homology.lisp
+
+	   BUILD-RDCT
+
 	   ;; fibrations.lisp
 
 	   FIBRATION-TOTAL
@@ -68,6 +72,7 @@
 
 	   ;; macros.lisp
 
+	   -1-EXPT-N
 	   ?
 	   BASIS
 	   BINOMIAL-P-Q

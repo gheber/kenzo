@@ -3,16 +3,6 @@
 
 (in-suite :kenzo)
 
-(test result-print
-      (let ((rslt (format nil "~a"
-			  (cat:make-result :gnrt 'a :value '(a a)
-					   :clnm 23 :rntm 2.345))))
-	(is (equal rslt (format nil "~{~a~}"
-				     '(#\Newline "<Rslt>" #\Newline
-				       "    GNRT-> A" #\Newline
-				       "   VALUE-> (A A)" #\Newline
-				       "    CLNM->     23" #\Newline
-				       "    RNTM->       2.345"))))))
 
 #|
   (do-control #'s-cmpr (cmbn 0 1 'a 1 'b -1 'c))
@@ -23,7 +13,6 @@
   (setf *cmbn-control* t)
   (control #'s-cmpr (cmbn 0 1 'a 1 'b -1 'b))
 |#
-
 
 (test do-control
       (let ((comb (cat:do-control #'cat:s-cmpr (cat:cmbn 0 1 'a 1 'b -1 'c))))
@@ -66,9 +55,9 @@
 
 (defparameter *n* 10)
 (defun ff (degr i)
-  (do ((*2n* (ash *n* 1))
+  (do ((2*n* (ash *n* 1))
        (rslt cat:+empty-list+
-             (cons (cons (let ((cffc (- (random *2n*) *n*)))
+             (cons (cons (let ((cffc (- (random 2*n*) *n*)))
                            (if (minusp cffc) cffc (1+ cffc)))
                          (decf gnrt (1+ (random *n*))))
                    rslt))
@@ -76,7 +65,7 @@
        (k 0 (1+ k)))
       ((= k *n*)
        (cat:make-cmbn
-        :degr 0
+        :degr degr
         :list rslt))))
 
 (test cmbn-?

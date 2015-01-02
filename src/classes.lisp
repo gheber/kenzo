@@ -150,10 +150,10 @@
      (orgn :type list :initarg :orgn :reader orgn)))
 
 (DEFSTRUCT (RESULT (:print-function result-print))
-  (gnrt #+allegro :type #+allegro gnrt)
-  (value #+allegro :type #+allegro cmbn)
-  (clnm #+allegro :type #+allegro fixnum)
-  (rntm #+allegro :type #+allegro single-float))
+  (gnrt nil :type gnrt)
+  (value nil :type cmbn)
+  (clnm 0 :type fixnum)
+  (rntm 0.0 :type single-float))
 
 ;;;
 ;;;  EFFECTIVE HOMOLOGY

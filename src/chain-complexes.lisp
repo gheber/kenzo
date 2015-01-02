@@ -294,62 +294,63 @@
 
 
 
-(DEFUN MRPH-GNRT (cmpr2 intr degr gnrt memory &optional (left -1) (right (fill-pointer memory)))
+(DEFUN MRPH-GNRT (cmpr2 intr degr gnrt memory
+		  &optional (left -1) (right (fill-pointer memory)))
   (declare
-     (type intr-mrph intr)
-     ;; (function (fixnum gnrt) cmbn)
-     (type cmprf cmpr2)
-     (fixnum degr left right)
-     (type gnrt gnrt)
+   (type intr-mrph intr)
+   ;; (function (fixnum gnrt) cmbn)
+   (type cmprf cmpr2)
+   (fixnum degr left right)
+   (type gnrt gnrt)
    (vector memory)
    (special *results-n*)
    (fixnum *results-n*))
-   ;; (vector result)
-   (the (values cmbn fixnum)
-      ;;; cmbn = image of the generator
-      ;;; fixnum = index "exact" or just "lower" of the maybe stored result
-      (loop
-        (when (= right (1+ left))            ;; the result for gnrt is not available
-          (push (get-internal-run-time) *start-stack*)
-          (let ((value (funcall intr degr gnrt))
-                (runtime (- (get-internal-run-time) (pop *start-stack*))))
-            (declare
-             (type cmbn value)
-             (integer runtime))
-            (if (> runtime +too-much-time+)
-                ;;; the condition deciding whether
-                ;;;   storing must happen
-                (let ((old-length (vector-push-extend nil memory)))
-                  (declare (fixnum old-length))
-                  (replace memory memory
-                           :start1 (1+ right) :end1 (1+ old-length)
-                           :start2 right :end2 old-length)
-                  (setf (aref memory right)
-                    (make-result
-                     :gnrt gnrt :value value
-                     :clnm 1
-                     :rntm (let ((rntm
-                                  (float
-                                   (/ runtime internal-time-units-per-second))))
-                             (declare (single-float rntm))
-                             (incf *results-cmlt-tm* rntm)
-                             rntm)))
-                  (mapl #'(lambda (mark)
-                            (declare (cons mark))
-                            (incf (car mark) runtime))
-                    *start-stack*)
-                  (when (> (incf *results-n*) *results-max*)
-                    (clean-results))
-                  (return (values value right)))
-              (return (values value left)))))
-        (let ((middle (truncate (+ right left) 2)))
+  ;; (vector result)
+  (the (values cmbn fixnum)
+       ;; cmbn = image of the generator
+       ;; fixnum = index "exact" or just "lower" of the maybe stored result
+       (loop
+	  (when (= right (1+ left)) ; the result for gnrt is not available
+	    (push (get-internal-run-time) *start-stack*)
+	    (let ((value (funcall intr degr gnrt))
+		  (runtime (- (get-internal-run-time) (pop *start-stack*))))
+	      (declare
+	       (type cmbn value)
+	       (integer runtime))
+	      (if (> runtime +too-much-time+)
+		  ;; the condition deciding whether
+		  ;; storing must happen
+		  (let ((old-length (vector-push-extend nil memory)))
+		    (declare (fixnum old-length))
+		    (replace memory memory
+			     :start1 (1+ right) :end1 (1+ old-length)
+			     :start2 right :end2 old-length)
+		    (setf (aref memory right)
+			  (make-result
+			   :gnrt gnrt :value value :clnm 1
+			   :rntm (let ((rntm
+					(float
+					 (/ runtime
+					    internal-time-units-per-second))))
+				   (declare (single-float rntm))
+				   (incf *results-cmlt-tm* rntm)
+				   rntm)))
+		    (mapl #'(lambda (mark)
+			      (declare (cons mark))
+			      (incf (car mark) runtime))
+			  *start-stack*)
+		    (when (> (incf *results-n*) *results-max*)
+		      (clean-results))
+		    (return (values value right)))
+		  (return (values value left)))))
+	  (let ((middle (truncate (+ right left) 2)))
             (declare (fixnum middle))
             (ecase (funcall cmpr2 gnrt (result-gnrt (aref memory middle)))
-               (:equal (let ((rslt (aref memory middle)))
-			  (declare (type cons rslt))
-			  (incf (result-clnm rslt))
-			  (return (values (result-value rslt) middle))))
-               (:less (setf right middle))
+	      (:equal (let ((rslt (aref memory middle)))
+			(declare (type result rslt))
+			(incf (result-clnm rslt))
+			(return (values (result-value rslt) middle))))
+	      (:less (setf right middle))
               (:greater (setf left middle)))))))
 
 
