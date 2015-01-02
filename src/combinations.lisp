@@ -16,39 +16,39 @@
    (type cmbn cmbn) (stream stream)
    (ignore depth))
   (the cmbn
-    (with-cmbn (degr list) cmbn
-               (format stream "~%~70@{-~}{CMBN ~D}" degr)
-               (do ((mark list (cdr mark))
-                    (nth 0 (1+ nth)))
-                   ((endp mark))
-                 (declare
-                  (list mark)
-                  (fixnum nth))
-                 (when (and *print-length* (= nth *print-length*))
-                   (format stream "~%... ...")
-                   (return))
-                 (format stream "~%<~D * ~A>" (-cffc mark) (-gnrt mark)))
-               (format stream "~%~78@{-~}~%" t)
-               cmbn)))
+       (with-cmbn (degr list) cmbn
+		  (format stream "~%~70@{-~}{CMBN ~D}" degr)
+		  (do ((mark list (cdr mark))
+		       (nth 0 (1+ nth)))
+		      ((endp mark))
+		    (declare
+		     (list mark)
+		     (fixnum nth))
+		    (when (and *print-length* (= nth *print-length*))
+		      (format stream "~%... ...")
+		      (return))
+		    (format stream "~%<~D * ~A>" (-cffc mark) (-gnrt mark)))
+		  (format stream "~%~78@{-~}~%" t)
+		  cmbn)))
 
 
 (DEFUN MAPLEXICO (cmpr list1 list2)
-   (declare
-      (type cmprf cmpr)
-      (list list1 list2))
-   (the boolean
-      (do ((mark1 list1 (cdr mark1))
-           (mark2 list2 (cdr mark2)))
-          (nil)
+  (declare
+   (type cmprf cmpr)
+   (list list1 list2))
+  (the boolean
+       (do ((mark1 list1 (cdr mark1))
+	    (mark2 list2 (cdr mark2)))
+	   (nil)
          (declare (list mark1 mark2))
          (unless mark1
-            (return-from maplexico
-               (if mark2 :less :equal)))
+	   (return-from maplexico
+	     (if mark2 :less :equal)))
          (unless mark2
-            (return-from maplexico :greater))
+	   (return-from maplexico :greater))
          (case (funcall cmpr (car mark1) (car mark2))
-            (:less (return-from maplexico :less))
-            (:greater (return-from maplexico :greater))))))
+	   (:less (return-from maplexico :less))
+	   (:greater (return-from maplexico :greater))))))
 
 
 (DEFUN S-CMPR (symbol1 symbol2)
@@ -99,24 +99,24 @@
 
 #|
 (DEFUN CMBN (degr &rest rest)
-   (declare (fixnum degr))
-   (the cmbn
-      (let ((rslt (list degr :cmbn)))
-	(do ((mark rest (cddr mark)))
-	    ((endp mark) (nreverse rslt))
+  (declare (fixnum degr))
+  (the cmbn
+       (let ((rslt (list degr :cmbn)))
+	 (do ((mark rest (cddr mark)))
+	     ((endp mark) (nreverse rslt))
 	   (declare (list mark))
 	   (push (term (car mark) (cadr mark)) rslt)))))
 |#
 
 (DEFUN CMBN (degr &rest rest)
-   (declare (fixnum degr))
-   (the cmbn
-     (make-cmbn :degr degr
-                :list (do ((rslt +empty-list+
-                                 (cons (term (car mark) (cadr mark)) rslt))
-                           (mark rest (cddr mark)))
-                          ((endp mark) (nreverse rslt))
-                        (declare (list rslt mark))))))
+  (declare (fixnum degr))
+  (the cmbn
+       (make-cmbn :degr degr
+		  :list (do ((rslt +empty-list+
+				   (cons (term (car mark) (cadr mark)) rslt))
+			     (mark rest (cddr mark)))
+			    ((endp mark) (nreverse rslt))
+			  (declare (list rslt mark))))))
 
 
 #+allegro
@@ -125,281 +125,300 @@
 
 (DEFUN CHECK-CMBN (chcm cmbn)
   (declare
-    (type chain-complex chcm)
-    (type cmbn cmbn))
+   (type chain-complex chcm)
+   (type cmbn cmbn))
   (the boolean
-    (do ((cmpr (cmpr chcm))
-	 (mark2 (cmbn-list cmbn) mark1)
-	 (mark1 (rest (cmbn-list cmbn)) (cdr mark1)))
-	((endp mark1) t)
-	(declare
+       (do ((cmpr (cmpr chcm))
+	    (mark2 (cmbn-list cmbn) mark1)
+	    (mark1 (rest (cmbn-list cmbn)) (cdr mark1)))
+	   ((endp mark1) t)
+	 (declare
 	  (type cmprf cmpr)
 	  (list mark1 mark2))
-      (unless (eq :less (funcall cmpr (-gnrt mark2) (-gnrt mark1)))
-	(error "In CHECK-CMBN, bad order; the generator:~@
+	 (unless (eq :less (funcall cmpr (-gnrt mark2) (-gnrt mark1)))
+	   (error "In CHECK-CMBN, bad order; the generator:~@
                 ~A~@
                 is not less than the generator:~@
                 ~A."
-	       (-gnrt mark2) (-gnrt mark1))))))
+		  (-gnrt mark2) (-gnrt mark1))))))
 
 (DEFUN ZERO-CMBN (degr)
-   (declare (fixnum degr))
-   (the cmbn
-      (make-cmbn
-       :degr degr
-       :list +empty-list+)))
+  (declare (fixnum degr))
+  (the cmbn
+       (make-cmbn
+	:degr degr
+	:list +empty-list+)))
 
 
 (DEFUN ZERO-INTR-DFFR (cmbn)
-   (declare (type cmbn cmbn))
-   (the cmbn (zero-cmbn (1- (cmbn-degr cmbn)))))
+  (declare (type cmbn cmbn))
+  (the cmbn (zero-cmbn (1- (cmbn-degr cmbn)))))
 
 
 (DEFINE-CONSTANT +ZERO-NEGATIVE-CMBN+
-   (make-cmbn :degr -1 :list +empty-list+))
+    (make-cmbn :degr -1 :list +empty-list+))
 
 
 (DEFUN CMBN-OPPS (cmbn)
-   (declare (type cmbn cmbn))
-   (the cmbn
-      (with-cmbn (degr list) cmbn
-         (make-cmbn
-            :degr degr
-            :list (mapcar #'(lambda (term)
-                               (declare (type term term))
-                               (with-term (cffc gnrt) term
-                                  (term (- cffc) gnrt)))
-                     list)))))
+  (declare (type cmbn cmbn))
+  (the cmbn
+       (with-cmbn (degr list) cmbn
+		  (make-cmbn
+		   :degr degr
+		   :list (mapcar #'(lambda (term)
+				     (declare (type term term))
+				     (with-term
+					 (cffc gnrt) term
+					 (term (- cffc) gnrt)))
+				 list)))))
 
 
 (DEFUN N-CMBN (n cmbn)
-   ;; n is assumed non-zero
-   (declare
-      (fixnum n)
-      (type cmbn cmbn))
-   (the cmbn
-      (if (= n 1)
-         cmbn
-         (with-cmbn (degr list) cmbn
-            (make-cmbn
-               :degr degr
-               :list (mapcar #'(lambda (term)
-                                  (declare (type term term))
-                                  (with-term (cffc gnrt) term
-                                     (term (* n cffc) gnrt)))
-                        list))))))
+  ;; n is assumed non-zero
+  (declare
+   (fixnum n)
+   (type cmbn cmbn))
+  (the cmbn
+       (if (= n 1)
+	   cmbn
+	   (with-cmbn (degr list) cmbn
+		      (make-cmbn
+		       :degr degr
+		       :list (mapcar #'(lambda (term)
+					 (declare (type term term))
+					 (with-term
+					     (cffc gnrt) term
+					     (term (* n cffc) gnrt)))
+				     list))))))
 
 
 (DEFUN 2CMBN-ADD (cmpr cmbn1 cmbn2)
-   (declare
-      (type cmprf cmpr)
-      (type cmbn cmbn1 cmbn2))
-   (the cmbn
-      (with-cmbn (degr1 list1) cmbn1
-      (with-cmbn (degr2 list2) cmbn2
-         (unless (= degr1 degr2)
-            (error "In ADD, the combination arguments have different degrees ~D and ~D."
-               degr1 degr2))
-         (unless list1
-            (return-from 2cmbn-add cmbn2))
-         (unless list2
-            (return-from 2cmbn-add cmbn1))
-         (let ((pre-rslt +empty-list+)
-               (mark1 list1)
-               (mark2 list2))
-            (declare (list pre-rslt mark1 mark2))
-            (with--term (cffc1 gnrt1) mark1
-            (with--term (cffc2 gnrt2) mark2
-               (tagbody
-                  :begin
-                  (ecase (funcall cmpr gnrt1 gnrt2)
-                     (:equal
-                      (let ((cffc (+ cffc1 cffc2)))
-                         (declare (fixnum cffc))
-                         (unless (zerop cffc)
-                            (push (term cffc gnrt1) pre-rslt))
-                         (setf mark1 (cdr mark1)
-                               mark2 (cdr mark2))
-                         (unless mark1 (go :cmbn1-is-finished))
-                         (unless mark2 (go :cmbn2-is-finished))
-                         (setf cffc1 (-cffc mark1)
-                               gnrt1 (-gnrt mark1)
-                               cffc2 (-cffc mark2)
-                               gnrt2 (-gnrt mark2))
-                         (go :begin)))
-                     (:less
-                      (push (-term mark1) pre-rslt)
-                      (setf mark1 (cdr mark1))
-                      (unless mark1 (go :cmbn1-is-finished))
-                      (setf cffc1 (-cffc mark1)
-                            gnrt1 (-gnrt mark1))
-                      (go :begin))
-                     (:greater
-                      (push (-term mark2) pre-rslt)
-                      (setf mark2 (cdr mark2))
-                      (unless mark2 (go :cmbn2-is-finished))
-                      (setf cffc2 (-cffc mark2)
-                            gnrt2 (-gnrt mark2))
-                      (go :begin)))
-                  :cmbn1-is-finished
-                  (setf pre-rslt (nreconc pre-rslt mark2))
-                  (go :exit)
-                  :cmbn2-is-finished
-                  (setf pre-rslt (nreconc pre-rslt mark1))
-                  :exit))
-            (make-cmbn :degr degr1 :list pre-rslt)))))))
+  (declare
+   (type cmprf cmpr)
+   (type cmbn cmbn1 cmbn2))
+  (the cmbn
+       (with-cmbn
+	   (degr1 list1) cmbn1
+	   (with-cmbn
+	       (degr2 list2) cmbn2
+	       (unless (= degr1 degr2)
+		 (error "In ADD, the combination arguments have different degrees ~D and ~D."
+			degr1 degr2))
+	       (unless list1
+		 (return-from 2cmbn-add cmbn2))
+	       (unless list2
+		 (return-from 2cmbn-add cmbn1))
+	       (let ((pre-rslt +empty-list+)
+		     (mark1 list1)
+		     (mark2 list2))
+		 (declare (list pre-rslt mark1 mark2))
+		 (with--term
+		     (cffc1 gnrt1) mark1
+		     (with--term
+			 (cffc2 gnrt2) mark2
+			 (tagbody
+			  :begin
+			    (ecase (funcall cmpr gnrt1 gnrt2)
+			      (:equal
+			       (let ((cffc (+ cffc1 cffc2)))
+				 (declare (fixnum cffc))
+				 (unless (zerop cffc)
+				   (push (term cffc gnrt1) pre-rslt))
+				 (setf mark1 (cdr mark1)
+				       mark2 (cdr mark2))
+				 (unless mark1 (go :cmbn1-is-finished))
+				 (unless mark2 (go :cmbn2-is-finished))
+				 (setf cffc1 (-cffc mark1)
+				       gnrt1 (-gnrt mark1)
+				       cffc2 (-cffc mark2)
+				       gnrt2 (-gnrt mark2))
+				 (go :begin)))
+			      (:less
+			       (push (-term mark1) pre-rslt)
+			       (setf mark1 (cdr mark1))
+			       (unless mark1 (go :cmbn1-is-finished))
+			       (setf cffc1 (-cffc mark1)
+				     gnrt1 (-gnrt mark1))
+			       (go :begin))
+			      (:greater
+			       (push (-term mark2) pre-rslt)
+			       (setf mark2 (cdr mark2))
+			       (unless mark2 (go :cmbn2-is-finished))
+			       (setf cffc2 (-cffc mark2)
+				     gnrt2 (-gnrt mark2))
+			       (go :begin)))
+			  :cmbn1-is-finished
+			    (setf pre-rslt (nreconc pre-rslt mark2))
+			    (go :exit)
+			  :cmbn2-is-finished
+			    (setf pre-rslt (nreconc pre-rslt mark1))
+			  :exit))
+		     (make-cmbn :degr degr1 :list pre-rslt)))))))
 
 
 (DEFUN 2CMBN-SBTR (cmpr cmbn1 cmbn2)
-   (declare
-      (type cmprf cmpr)
-      (type cmbn cmbn1 cmbn2))
-   (the cmbn
-      (with-cmbn (degr1 list1) cmbn1
-      (with-cmbn (degr2 list2) cmbn2
-         (unless (= degr1 degr2)
-            (error "In SBTR, the combination arguments have different degrees ~D and ~D."
-               degr1 degr2))
-         (unless list1
-            (return-from 2cmbn-sbtr (cmbn-opps cmbn2)))
-         (unless list2
-            (return-from 2cmbn-sbtr cmbn1))
-         (let ((pre-rslt +empty-list+)
-               (mark1 list1)
-               (mark2 list2))
-            (declare (list pre-rslt mark1 mark2))
-            (with--term (cffc1 gnrt1) mark1
-            (with--term (cffc2 gnrt2) mark2
-               (tagbody
-                  :begin
-                  (ecase (funcall cmpr gnrt1 gnrt2)
-                     (:equal
-                      (let ((cffc (- cffc1 cffc2)))
-                         (declare (fixnum cffc))
-                         (unless (zerop cffc)
-                            (push (term cffc gnrt1) pre-rslt))
-                                                  (unless mark1 (go :cmbn1-is-finished))
-                         (setf mark1 (cdr mark1)
-                               mark2 (cdr mark2))
-                         (unless mark1 (go :cmbn1-is-finished))
-                         (unless mark2 (go :cmbn2-is-finished))
-                         (setf cffc1 (-cffc mark1)
-                               gnrt1 (-gnrt mark1)
-                               cffc2 (-cffc mark2)
-                               gnrt2 (-gnrt mark2))
-                         (go :begin)))
-                     (:less
-                      (push (-term mark1) pre-rslt)
-                      (setf mark1 (cdr mark1))
-                      (unless mark1 (go :cmbn1-is-finished))
-                      (setf cffc1 (-cffc mark1)
-                            gnrt1 (-gnrt mark1))
-                      (go :begin))
-                     (:greater
-                      (push (term (- cffc2) gnrt2) pre-rslt)
-                      (setf mark2 (cdr mark2))
-                      (unless mark2 (go :cmbn2-is-finished))
-                      (setf cffc2 (-cffc mark2)
-                            gnrt2 (-gnrt mark2))
-                      (go :begin)))
-                  :cmbn1-is-finished
-                  (setf pre-rslt
-                        (nreconc pre-rslt
-                           (mapcar #'(lambda (term)
-                                        (declare (cons term))
-                                        (with-term (cffc gnrt) term
-                                           (term (- cffc) gnrt)))
-                              mark2)))
-                  (go :exit)
-                  :cmbn2-is-finished
-                  (setf pre-rslt (nreconc pre-rslt mark1))
-                  :exit))
-            (make-cmbn
-               :degr degr1
-               :list pre-rslt)))))))
+  (declare
+   (type cmprf cmpr)
+   (type cmbn cmbn1 cmbn2))
+  (the cmbn
+       (with-cmbn
+	   (degr1 list1) cmbn1
+	   (with-cmbn
+	       (degr2 list2) cmbn2
+	       (unless (= degr1 degr2)
+		 (error "In SBTR, the combination arguments have different degrees ~D and ~D."
+			degr1 degr2))
+	       (unless list1
+		 (return-from 2cmbn-sbtr (cmbn-opps cmbn2)))
+	       (unless list2
+		 (return-from 2cmbn-sbtr cmbn1))
+	       (let ((pre-rslt +empty-list+)
+		     (mark1 list1)
+		     (mark2 list2))
+		 (declare (list pre-rslt mark1 mark2))
+		 (with--term
+		     (cffc1 gnrt1) mark1
+		     (with--term
+			 (cffc2 gnrt2) mark2
+			 (tagbody
+			  :begin
+			    (ecase (funcall cmpr gnrt1 gnrt2)
+			      (:equal
+			       (let ((cffc (- cffc1 cffc2)))
+				 (declare (fixnum cffc))
+				 (unless (zerop cffc)
+				   (push (term cffc gnrt1) pre-rslt))
+				 (unless mark1 (go :cmbn1-is-finished))
+				 (setf mark1 (cdr mark1)
+				       mark2 (cdr mark2))
+				 (unless mark1 (go :cmbn1-is-finished))
+				 (unless mark2 (go :cmbn2-is-finished))
+				 (setf cffc1 (-cffc mark1)
+				       gnrt1 (-gnrt mark1)
+				       cffc2 (-cffc mark2)
+				       gnrt2 (-gnrt mark2))
+				 (go :begin)))
+			      (:less
+			       (push (-term mark1) pre-rslt)
+			       (setf mark1 (cdr mark1))
+			       (unless mark1 (go :cmbn1-is-finished))
+			       (setf cffc1 (-cffc mark1)
+				     gnrt1 (-gnrt mark1))
+			       (go :begin))
+			      (:greater
+			       (push (term (- cffc2) gnrt2) pre-rslt)
+			       (setf mark2 (cdr mark2))
+			       (unless mark2 (go :cmbn2-is-finished))
+			       (setf cffc2 (-cffc mark2)
+				     gnrt2 (-gnrt mark2))
+			       (go :begin)))
+			  :cmbn1-is-finished
+			    (setf pre-rslt
+				  (nreconc pre-rslt
+					   (mapcar #'(lambda (term)
+						       (declare (cons term))
+						       (with-term
+							   (cffc gnrt) term
+							   (term (- cffc) gnrt)))
+						   mark2)))
+			    (go :exit)
+			  :cmbn2-is-finished
+			    (setf pre-rslt (nreconc pre-rslt mark1))
+			  :exit))
+		     (make-cmbn
+		      :degr degr1
+		      :list pre-rslt)))))))
 
 
 (DEFUN 2N-2CMBN (cmpr n1 cmbn1 n2 cmbn2)
-   ;; n1 * cmbn1 + n2 * cmbn2
-   ;; combinations may be null but not n1 and n2
-   (declare
-      (type cmprf cmpr)
-      (fixnum n1 n2)
-      (type cmbn cmbn1 cmbn2))
-   (the cmbn
-      (with-cmbn (degr1 list1) cmbn1
-      (with-cmbn (degr2 list2) cmbn2
-         (unless (= degr1 degr2)
-            (error "In 2N-2CMBN, the combination arguments have different degrees ~D and ~D."
-               degr1 degr2))
-         (unless list1
-            (return-from 2n-2cmbn (n-cmbn n2 cmbn2)))
-         (unless list2
-            (return-from 2n-2cmbn (n-cmbn n1 cmbn1)))
-         (let ((pre-rslt +empty-list+)
-               (mark1 list1)
-               (mark2 list2))
-            (declare (list pre-rslt mark1 mark2))
-            (with--term (cffc1 gnrt1) mark1
-            (with--term (cffc2 gnrt2) mark2
-               (setf cffc1 (* n1 cffc1)
-                     cffc2 (* n2 cffc2))
-               (tagbody
-                  :begin
-                  (ecase (funcall cmpr gnrt1 gnrt2)
-                     (:equal
-                      (let ((cffc (+ cffc1 cffc2)))
-                         (declare (fixnum cffc))
-                         (unless (zerop cffc)
-                            (push (term cffc gnrt1) pre-rslt))
-                         (setf mark1 (cdr mark1)
-                               mark2 (cdr mark2))
-                         (unless mark1 (go :cmbn1-is-finished))
-                         (unless mark2 (go :cmbn2-is-finished))
-                         (setf cffc1 (* n1 (-cffc mark1))
-                               gnrt1 (-gnrt mark1)
-                               cffc2 (* n2 (-cffc mark2))
-                               gnrt2 (-gnrt mark2))
-                         (go :begin)))
-                     (:less
-                      (push (term cffc1 gnrt1) pre-rslt)
-                      (setf mark1 (cdr mark1))
-                      (unless mark1 (go :cmbn1-is-finished))
-                      (setf cffc1 (* n1 (-cffc mark1))
-                            gnrt1 (-gnrt mark1))
-                      (go :begin))
-                     (:greater
-                      (push (term cffc2 gnrt2) pre-rslt)
-                      (setf mark2 (cdr mark2))
-                      (unless mark2 (go :cmbn2-is-finished))
-                      (setf cffc2 (* n2 (-cffc mark2))
-                            gnrt2 (-gnrt mark2))
-                      (go :begin)))
-                  :cmbn1-is-finished
-                  (setf pre-rslt
-                        (nreconc pre-rslt
-                           (if (= 1 n2)
-                              mark2
-                              (mapcar #'(lambda (term)
-                                           (declare (cons term))
-                                           (with-term (cffc gnrt) term
-                                              (term (* n2 cffc) gnrt)))
-                                 mark2))))
-                  (go :exit)
-                  :cmbn2-is-finished
-                  (setf pre-rslt
-                        (nreconc pre-rslt
-                           (if (= 1 n1)
-                              mark1
-                              (mapcar #'(lambda (term)
-                                           (declare (cons term))
-                                           (with-term (cffc gnrt) term
-                                              (term (* n1 cffc) gnrt)))
-                                 mark1))))
-                  :exit))
-            (make-cmbn
-               :degr degr1
-               :list pre-rslt)))))))
+  ;; n1 * cmbn1 + n2 * cmbn2
+  ;; combinations may be null but not n1 and n2
+  (declare
+   (type cmprf cmpr)
+   (fixnum n1 n2)
+   (type cmbn cmbn1 cmbn2))
+  (the cmbn
+       (with-cmbn
+	   (degr1 list1) cmbn1
+	   (with-cmbn
+	       (degr2 list2) cmbn2
+	       (unless (= degr1 degr2)
+		 (error "In 2N-2CMBN, the combination arguments have different degrees ~D and ~D."
+			degr1 degr2))
+	       (unless list1
+		 (return-from 2n-2cmbn (n-cmbn n2 cmbn2)))
+	       (unless list2
+		 (return-from 2n-2cmbn (n-cmbn n1 cmbn1)))
+	       (let ((pre-rslt +empty-list+)
+		     (mark1 list1)
+		     (mark2 list2))
+		 (declare (list pre-rslt mark1 mark2))
+		 (with--term
+		     (cffc1 gnrt1) mark1
+		     (with--term
+			 (cffc2 gnrt2) mark2
+			 (setf cffc1 (* n1 cffc1)
+			       cffc2 (* n2 cffc2))
+			 (tagbody
+			  :begin
+			    (ecase (funcall cmpr gnrt1 gnrt2)
+			      (:equal
+			       (let ((cffc (+ cffc1 cffc2)))
+				 (declare (fixnum cffc))
+				 (unless (zerop cffc)
+				   (push (term cffc gnrt1) pre-rslt))
+				 (setf mark1 (cdr mark1)
+				       mark2 (cdr mark2))
+				 (unless mark1 (go :cmbn1-is-finished))
+				 (unless mark2 (go :cmbn2-is-finished))
+				 (setf cffc1 (* n1 (-cffc mark1))
+				       gnrt1 (-gnrt mark1)
+				       cffc2 (* n2 (-cffc mark2))
+				       gnrt2 (-gnrt mark2))
+				 (go :begin)))
+			      (:less
+			       (push (term cffc1 gnrt1) pre-rslt)
+			       (setf mark1 (cdr mark1))
+			       (unless mark1 (go :cmbn1-is-finished))
+			       (setf cffc1 (* n1 (-cffc mark1))
+				     gnrt1 (-gnrt mark1))
+			       (go :begin))
+			      (:greater
+			       (push (term cffc2 gnrt2) pre-rslt)
+			       (setf mark2 (cdr mark2))
+			       (unless mark2 (go :cmbn2-is-finished))
+			       (setf cffc2 (* n2 (-cffc mark2))
+				     gnrt2 (-gnrt mark2))
+			       (go :begin)))
+			  :cmbn1-is-finished
+			    (setf pre-rslt
+				  (nreconc pre-rslt
+					   (if (= 1 n2)
+					       mark2
+					       (mapcar #'(lambda (term)
+							   (declare (cons term))
+							   (with-term
+							       (cffc gnrt) term
+							       (term (* n2 cffc)
+								     gnrt)))
+						       mark2))))
+			    (go :exit)
+			  :cmbn2-is-finished
+			    (setf pre-rslt
+				  (nreconc pre-rslt
+					   (if (= 1 n1)
+					       mark1
+					       (mapcar #'(lambda (term)
+							   (declare (cons term))
+							   (with-term
+							       (cffc gnrt) term
+							       (term (* n1 cffc)
+								     gnrt)))
+						       mark1))))
+			  :exit))
+		     (make-cmbn
+		      :degr degr1
+		      :list pre-rslt)))))))
 
 
 (DEFUN CMBN-CMBN (cmpr n-cmbn-list)
@@ -407,121 +426,121 @@
   ;;               non-empty-list
   ;;            every n is non-null
   (declare
-     (type cmprf cmpr)
-     (list n-cmbn-list))
+   (type cmprf cmpr)
+   (list n-cmbn-list))
   (unless (rest n-cmbn-list)
-     (return-from cmbn-cmbn
-	(n-cmbn (caar n-cmbn-list) (cdar n-cmbn-list))))
+    (return-from cmbn-cmbn
+      (n-cmbn (caar n-cmbn-list) (cdar n-cmbn-list))))
   (unless (cddr n-cmbn-list)
-     (return-from cmbn-cmbn
-	(2n-2cmbn cmpr
-		  (caar n-cmbn-list) (cdar n-cmbn-list)
-		  (caadr n-cmbn-list) (cdadr n-cmbn-list))))
+    (return-from cmbn-cmbn
+      (2n-2cmbn cmpr
+		(caar n-cmbn-list) (cdar n-cmbn-list)
+		(caadr n-cmbn-list) (cdadr n-cmbn-list))))
   (the cmbn
-     (let ((new-rslt +empty-list+))
-        (declare (list new-rslt))
-	(do ((mark1 (rest n-cmbn-list) (cddr mark1))
-	     (mark2 n-cmbn-list (cdr mark1)))
-	    ((endp mark2))
+       (let ((new-rslt +empty-list+))
+	 (declare (list new-rslt))
+	 (do ((mark1 (rest n-cmbn-list) (cddr mark1))
+	      (mark2 n-cmbn-list (cdr mark1)))
+	     ((endp mark2))
 	   (declare (list mark1 mark2))
 	   (when (endp mark1)
-	      (push (n-cmbn (caar mark2) (cdar mark2)) new-rslt)
-	      (return))
+	     (push (n-cmbn (caar mark2) (cdar mark2)) new-rslt)
+	     (return))
 	   (push (2n-2cmbn cmpr
 			   (caar mark2) (cdar mark2)
 			   (caar mark1) (cdar mark1))
 		 new-rslt))
-	(let ((old-rslt +empty-list+))
-	  (declare (list old-rslt))
-	  (loop
-	   (unless (rest new-rslt)
-	      (return-from cmbn-cmbn (first new-rslt)))
-	   (setf old-rslt new-rslt
-		 new-rslt +empty-list+)
-	   (do ((mark1 (rest old-rslt) (cddr mark1))
-		(mark2 old-rslt (cdr mark1)))
-	       ((endp mark2))
-	      (declare (list mark1 mark2))
-	      (when (endp mark1)
-		 (push (car mark2) new-rslt)
-		 (return))
-	      (push (2cmbn-add cmpr (car mark2) (car mark1))
-		    new-rslt)))))))
+	 (let ((old-rslt +empty-list+))
+	   (declare (list old-rslt))
+	   (loop
+	      (unless (rest new-rslt)
+		(return-from cmbn-cmbn (first new-rslt)))
+	      (setf old-rslt new-rslt
+		    new-rslt +empty-list+)
+	      (do ((mark1 (rest old-rslt) (cddr mark1))
+		   (mark2 old-rslt (cdr mark1)))
+		  ((endp mark2))
+		(declare (list mark1 mark2))
+		(when (endp mark1)
+		  (push (car mark2) new-rslt)
+		  (return))
+		(push (2cmbn-add cmpr (car mark2) (car mark1))
+		      new-rslt)))))))
 
 
 (DEFUN NTERM-ADD (cmpr degr &rest rest)
-   (declare
-      (type cmprf cmpr)
-      (fixnum degr)
-      (list rest))
-      ;; (list term)
-   (unless rest
-      (return-from nterm-add (zero-cmbn degr)))
-   (the cmbn
-      (let ((rslt (list (first rest))))
+  (declare
+   (type cmprf cmpr)
+   (fixnum degr)
+   (list rest))
+  ;; (list term)
+  (unless rest
+    (return-from nterm-add (zero-cmbn degr)))
+  (the cmbn
+       (let ((rslt (list (first rest))))
          (declare (list rslt))
          (dolist (term (rest rest))
-            (declare (type term term))
-            (with-term  (cffc gnrt) term
-               (do ((mark1 rslt (cdr mark1))
-                    (mark2 nil mark1))
-                   ((endp mark1) (setf (cdr mark2) (list term)))
-                  (ecase (funcall cmpr gnrt (-gnrt mark1))
-                     (:less
-                      (if mark2
-                         (push term (cdr mark2))
-                         (push term rslt))
-                      (return))
-                     (:equal
-                      (incf (-cffc mark1) cffc)
-                      (return))
-                     (:greater )))))
+	   (declare (type term term))
+	   (with-term  (cffc gnrt) term
+		       (do ((mark1 rslt (cdr mark1))
+			    (mark2 nil mark1))
+			   ((endp mark1) (setf (cdr mark2) (list term)))
+			 (ecase (funcall cmpr gnrt (-gnrt mark1))
+			   (:less
+			    (if mark2
+				(push term (cdr mark2))
+				(push term rslt))
+			    (return))
+			   (:equal
+			    (incf (-cffc mark1) cffc)
+			    (return))
+			   (:greater )))))
          (make-cmbn
-            :degr degr
-            :list (delete 0 rslt :key #'car)))))
+	  :degr degr
+	  :list (delete 0 rslt :key #'car)))))
 
 
 (DEFUN NCMBN-ADD (cmpr cmbn &rest rest)
-   (declare
-      (type cmprf cmpr)
-      (type cmbn cmbn))
-   (the cmbn
-      (cmbn-cmbn cmpr (mapcar #'(lambda (cmbn)
+  (declare
+   (type cmprf cmpr)
+   (type cmbn cmbn))
+  (the cmbn
+       (cmbn-cmbn cmpr (mapcar #'(lambda (cmbn)
                                    (declare (type cmbn cmbn))
                                    (cons 1 cmbn))
-                         (cons cmbn rest)))))
+			       (cons cmbn rest)))))
 
 
 (DEFUN DSTR-ADD-TERM-TO-CMBN (cmpr cffc gnrt cmbn)
-   (declare
-      (type cmprf cmpr)
-      (fixnum cffc)  ;; non-zero
-      (type gnrt gnrt)
-      (type cmbn cmbn))
-   (the cmbn
-      (let ((list (cmbn-list cmbn)))
+  (declare
+   (type cmprf cmpr)
+   (fixnum cffc)  ;; non-zero
+   (type gnrt gnrt)
+   (type cmbn cmbn))
+  (the cmbn
+       (let ((list (cmbn-list cmbn)))
          (declare (list list))
          (unless list
-            (push (term cffc gnrt) (cmbn-list cmbn))
-            (return-from dstr-add-term-to-cmbn cmbn))
+	   (push (term cffc gnrt) (cmbn-list cmbn))
+	   (return-from dstr-add-term-to-cmbn cmbn))
          (do ((mark2 nil mark1)
               (mark1 list (cdr mark1)))
              ((endp mark1) (setf (cdr mark2) (list (term cffc gnrt))))
-            (declare (list mark1 mark2))
-            (ecase (funcall cmpr gnrt (-gnrt mark1))
-               (:less
-                (if mark2
-                   (push (term cffc gnrt) (cdr mark2))
-                   (push (term cffc gnrt) (cmbn-list cmbn)))
-                (return))
-               (:equal
-                (let ((new-cffc (+ cffc (-cffc mark1))))
-                   (declare (fixnum new-cffc))
-                   (if (zerop new-cffc)
-                      (if mark2
-                         (pop (cdr mark2))
-                         (pop (cmbn-list cmbn)))
-                      (setf (-cffc mark1) new-cffc))
-                   (return)))
-               (:greater)))
+	   (declare (list mark1 mark2))
+	   (ecase (funcall cmpr gnrt (-gnrt mark1))
+	     (:less
+	      (if mark2
+		  (push (term cffc gnrt) (cdr mark2))
+		  (push (term cffc gnrt) (cmbn-list cmbn)))
+	      (return))
+	     (:equal
+	      (let ((new-cffc (+ cffc (-cffc mark1))))
+		(declare (fixnum new-cffc))
+		(if (zerop new-cffc)
+		    (if mark2
+			(pop (cdr mark2))
+			(pop (cmbn-list cmbn)))
+		    (setf (-cffc mark1) new-cffc))
+		(return)))
+	     (:greater)))
          cmbn)))
