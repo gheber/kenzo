@@ -111,74 +111,7 @@
                (declare (type homotopy-equivalence hmeq))
                (push hmeq *hmeq-list*)
                hmeq))))))
-#|
-  (cat-init)
-  (progn ;;;; reused in another test
-   (defun cdelta (dmns)
-     (build-chcm
-        :cmpr #'l-cmpr
-        :basis :locally-effective
-        :bsgn '(0)
-        :intr-dffr #'(lambda (degr gmsm)
-                        (make-cmbn
-                           :degr (1- degr)
-                           :list (do ((rslt +empty-list+
-                                           (cons (cons sign (append
-                                                               (subseq gmsm 0 nark)
-                                                               (subseq gmsm (1+ nark))))
-                                                 rslt))
-                                     (sign 1 (- sign))
-                                     (nark 0 (1+ nark)))
-                                    ((> nark degr) rslt))))
-        :strt :gnrt
-        :orgn `(locally effective version of C_* delta ,dmns)))
-   (defun make-f (tdmns bdmns)
-     (build-mrph
-        :sorc (cdelta tdmns) :trgt (cdelta bdmns) :degr 0
-        :intr #'(lambda (degr gmsm)
-                   (let ((pos (position-if #'(lambda (vertex) (>= vertex bdmns)) gmsm)))
-                      (if pos
-                         (if (< pos degr)
-                            (zero-cmbn degr)
-                            (cmbn degr 1 (nconc (butlast gmsm) (list bdmns))))
-                         (cmbn degr 1 gmsm))))
-        :strt :gnrt
-        :orgn `(projection delta ,tdmns => delta ,bdmns)))
-   (defun make-g (tdmns bdmns)
-     (build-mrph
-        :sorc (cdelta bdmns) :trgt (cdelta tdmns) :degr 0
-        :intr #'identity
-        :strt :cmbn
-        :orgn `(injection delta ,bdmns => delta ,tdmns)))
-   (defun make-h (tdmns bdmns)
-     (build-mrph
-        :sorc (cdelta tdmns) :trgt (cdelta tdmns) :degr +1
-        :intr #'(lambda (degr gmsm)
-                   (let ((pos (position-if #'(lambda (vertex) (>= vertex bdmns)) gmsm)))
-                      (if pos
-                         (if (member bdmns gmsm)
-                            (zero-cmbn (1+ degr))
-                            (cmbn (1+ degr) (-1-expt-n pos)
-                               (append (subseq gmsm 0 pos) (list bdmns) (subseq gmsm pos))))
-                         (zero-cmbn (1+ degr)))))
-        :strt :gnrt
-        :orgn `(homotopy for delta ,tdmns => ,bdmns)))
-   (defun make-rdct (tdmns bdmns)
-       (setf rdct (build-rdct
-                    :f (make-f tdmns bdmns)
-                    :g (make-g tdmns bdmns)
-                    :h (make-h tdmns bdmns)
-                    :orgn `(reduction delta ,tdmns ,bdmns)))))
-  (setf rdct (make-rdct 6 3))
-  (setf f (f rdct) g (g rdct) h (h rdct)
-        tcc (tcc rdct) bcc (bcc rdct))
-  (setf dh (cmps (dffr tcc) h))
-  (setf hd (cmps h (dffr tcc)))
-  (setf gf (cmps g f))
-  (setf id-gf-dh-hd (i-sbtr (idnt-mrph tcc) gf dh hd))
-  (setf c (cmbn 2 1 '(0 1 2) 10 '(1 2 3) 100 '(1 2 4) 1000 '(2 3 4)))
-  (cmbn-? id-gf-dh-hd c)
-|#
+
 
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :clos) nil))

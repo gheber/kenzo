@@ -30,15 +30,20 @@
 
 	   ;; classes.lisp
 
+	   BCC
 	   CHAIN-COMPLEX
 	   CMBN-CMBN
 	   CMBN-DEGR
+	   CMBN-LIST
 	   DEGR
 	   DFFR1
-	   CMBN-LIST
+	   F
+	   G
+	   H
 	   MAKE-CMBN
 	   MAKE-RESULT
 	   MORPHISM
+	   TCC
 
 	   ;; combinations.lisp
 
@@ -82,6 +87,7 @@
 	   CMPR
 	   DFFR
 	   GNRT
+	   I-SBTR
 	   TERM
 	   TERM-CMBN
 
