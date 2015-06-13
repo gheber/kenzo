@@ -29,9 +29,8 @@ throughout the source. Many work (most?), some don't. *Let's get to work! ...*
 
 ## Getting up and running
 
-I'm a big fan and supporter of Quicklisp, and use it for all my local projects.
-Assuming you've installed Quicklisp in `C:\home\quicklisp` or `/home/joeuser/quicklisp`,
-your *local projects directory* will be `C:\home\quicklisp\local-projects` or `/home/joeuser/quicklisp/local-projects`.
+I'm a big fan and supporter of [Quicklisp](http://www.quicklisp.org/beta/), and use it for all my local projects.
+Assuming you've installed Quicklisp in `C:\home\quicklisp` or `/home/joeuser/quicklisp`, your *local projects directory* will be `C:\home\quicklisp\local-projects` or `/home/joeuser/quicklisp/local-projects`.
 
 Making Kenzo `quickload`-able is a piece of cake:
 
