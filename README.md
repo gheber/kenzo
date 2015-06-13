@@ -23,3 +23,15 @@ This is work in progress. The entire code now compiles fine w/ SBCL, but that's
 just the first step. There are plenty of examples in
 [publications](http://www-fourier.ujf-grenoble.fr/~sergerar/Papers/) and scattered
 throughout the source. Many work (most?), some don't. *Let's get to work! ...*
+
+
+To load Kenzo as provided by this repo, make sure ASDF knowns where to find
+the source, e.g. by creating a link to this directory at 
+
+      ~/.local/share/common-lisp/source/
+
+Then in your Lisp (e.g. in ECL) type
+```lisp
+(require :asdf)
+(require :kenzo)
+```
