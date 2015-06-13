@@ -79,6 +79,9 @@
 ;;;  HOMOTOPY-EQUIVALENCES
 ;;;
 
+;;(defgeneric build-hmeq (keyword lrdct &key &allow-other-keys)
+(DEFGENERIC BUILD-HMEQ (keyword lrdct &key)
+  (:documentation "needed by ECL"))
 
 (DEFMETHOD BUILD-HMEQ ((keyword1 (eql :lrdct)) lrdct &key rrdct orgn)
    (declare
