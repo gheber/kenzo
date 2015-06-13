@@ -29,6 +29,23 @@ throughout the source. Many work (most?), some don't. *Let's get to work! ...*
 
 ## Getting up and running
 
+Here are two simple methods to get going: plain ASDF and Quicklisp.
+
+### Plain ASDF
+
+To load Kenzo as provided by this repo, make sure ASDF knowns where to find
+the source, e.g. by creating a link to this directory at
+
+      ~/.local/share/common-lisp/source/
+
+Then in your Lisp (e.g. in ECL) type
+```lisp
+(require :asdf)
+(require :kenzo)
+```
+
+### Quicklisp
+
 I'm a big fan and supporter of [Quicklisp](http://www.quicklisp.org/beta/), and use it for all my local projects.
 Assuming you've installed Quicklisp in `C:\home\quicklisp` or `/home/joeuser/quicklisp`, your *local projects directory* will be `C:\home\quicklisp\local-projects` or `/home/joeuser/quicklisp/local-projects`.
 
