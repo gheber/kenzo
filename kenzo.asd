@@ -11,9 +11,9 @@
   :description "A Symbolic Software for Effective Homology Computation by Francis Sergeraert"
   :serial t
   :components ((:file "package")
-               (:file "kenzo")
 	       (:module "src"
-			:components ((:file "macros")
+			:components ((:file "kenzo")
+                                     (:file "macros")
 				     (:file "various")
 				     (:file "classes")
 				     (:file "combinations")

@@ -2,6 +2,9 @@
 ;;;  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES
 ;;;  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES
 
+(DEFPACKAGE :CAT
+  (:USE CL))
+
 (IN-PACKAGE "COMMON-LISP-USER")
 
 (DEFUN KENZO-VERSION ()
@@ -11,7 +14,8 @@
 (PROCLAIM '(OPTIMIZE (speed 3) (safety 1) (space 0) (debug 0)))
 
 (DEFCONSTANT +FILE-LIST+
-    '("macros"
+    '("kenzo"
+      "macros"
       "various"
       "classes"
       "combinations"
@@ -28,16 +32,16 @@
       "algebras"
       "bar"
       "simplicial-sets"
-     "simplicial-mrphs"
+      "simplicial-mrphs"
       "delta"
       "special-smsts"
       "suspensions"
       "disk-pasting"
-     "cartesian-products"
+      "cartesian-products"
       "eilenberg-zilber"
       "kan"
       "simplicial-groups"
-     "fibrations"
+      "fibrations"
       "loop-spaces"
       "ls-twisted-products"
       "lp-space-efhm"
@@ -57,13 +61,16 @@
 
 (DEFCONSTANT +SOURCE-EXTENSION+
   #+(or allegro clisp lispworks) "cl"
-  #-(or allegro clisp lispworks)
-    (error "Not an Allegro or CLisp or LispWorks environment."))
+  #+(or sbcl) "lisp"
+  #-(or allegro clisp lispworks sbcl)
+    (error "Not an Allegro or CLisp or LispWorks or SBCL environment."))
 
 (DEFCONSTANT +COMPILED-EXTENSION+ 
     #+allegro "fasl"
     #+clisp "fas"
-    #+lispworks "ofasl")
+    #+lispworks "ofasl"
+    #+sbcl "fasl"
+    )
 
 (DEFUN LOAD-SFILES ()
    (mapc #'(lambda (file-name)

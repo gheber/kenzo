@@ -1,0 +1,4652 @@
+C:\home\quicklisp\local-projects\kenzo\src>sbcl
+This is SBCL 1.2.12, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+
+WARNING: the Windows port is fragile, particularly for multithreaded
+code.  Unfortunately, the development team currently lacks the time
+and resources this platform demands.
+* (load "cat-init")
+
+ FILE  1: kenzo
+ FILE  2: macros
+ FILE  3: various
+ FILE  4: classes
+ FILE  5: combinations
+ FILE  6: chain-complexes
+ FILE  7: chcm-elementary-op
+ FILE  8: effective-homology
+ FILE  9: homology-groups
+ FILE 10: searching-homology
+ FILE 11: cones
+ FILE 12: bicones
+ FILE 13: tensor-products
+ FILE 14: coalgebras
+ FILE 15: cobar
+ FILE 16: algebras
+ FILE 17: bar
+ FILE 18: simplicial-sets
+ FILE 19: simplicial-mrphs
+ FILE 20: delta
+ FILE 21: special-smsts
+ FILE 22: suspensions
+ FILE 23: disk-pasting
+ FILE 24: cartesian-products
+ FILE 25: eilenberg-zilber
+ FILE 26: kan
+ FILE 27: simplicial-groups
+ FILE 28: fibrations
+ FILE 29: loop-spaces
+ FILE 30: ls-twisted-products
+ FILE 31: lp-space-efhm
+ FILE 32: classifying-spaces
+ FILE 33: k-pi-n
+ FILE 34: serre
+ FILE 35: cs-twisted-products
+ FILE 36: cl-space-efhm
+ FILE 37: whitehead
+ FILE 38: smith
+T
+* (compile-files)
+
+*CMBN-CONTROL*  = T
+
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/kenzo.lisp" (writte
+n 01 JAN 2015 05:29:34 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (DEFUN KENZO-VERSION ...)
+; compiling (DECLAIM (OPTIMIZE # ...))
+; compiling (DEFMACRO DEFINE-CONSTANT ...)
+; compiling (DEFVAR *CMBN-CONTROL*)
+; compiling (SETF *CMBN-CONTROL* ...)
+; compiling (DEFINE-CONSTANT +EMPTY-LIST+ ...)
+; compiling (DEFINE-CONSTANT +F-EMPTY-VECTOR+ ...)
+; compiling (DEFINE-CONSTANT +S-EMPTY-VECTOR+ ...)
+; compiling (DEFINE-CONSTANT +TRUE+ ...)
+; compiling (DEFINE-CONSTANT +FALSE+ ...)
+; compiling (DEFINE-CONSTANT +2-EXP+ ...)
+; compiling (DEFINE-CONSTANT +MASK+ ...)
+; compiling (DEFVAR *LIST-LIST* ...)
+; compiling (DEFVAR *CHCM-LIST*)
+; compiling (SETF *CHCM-LIST* ...)
+; compiling (PUSHNEW (QUOTE *CHCM-LIST*) ...)
+; compiling (DEFPARAMETER +MAXIMAL-DIMENSION+ ...)
+; compiling (DEFVAR *MRPH-LIST*)
+; compiling (SETF *MRPH-LIST* ...)
+; compiling (PUSHNEW (QUOTE *MRPH-LIST*) ...)
+; compiling (DEFVAR *START-STACK* ...)
+; compiling (DEFPARAMETER +TOO-MUCH-TIME+ ...)
+; compiling (DEFVAR *RESULTS-MAX* ...)
+; compiling (DEFVAR *RESULTS-COEF* ...)
+; compiling (DEFVAR *RESULTS-CMLT-TM* ...)
+; compiling (DEFVAR *RESULTS-N* ...)
+; compiling (DEFVAR *RESULTS-VERBOSE* ...)
+; compiling (DEFVAR *FUTURE-DISPLAY* ...)
+; compiling (DEFVAR *TIME-INTERVAL* ...)
+; compiling (DEFVAR *RDCT-LIST*)
+; compiling (SETF *RDCT-LIST* ...)
+; compiling (PUSHNEW (QUOTE *RDCT-LIST*) ...)
+; compiling (DEFVAR *HMEQ-LIST*)
+; compiling (SETF *HMEQ-LIST* ...)
+; compiling (PUSHNEW (QUOTE *HMEQ-LIST*) ...)
+; compiling (DEFVAR *TDD*)
+; compiling (DEFVAR *BDD*)
+; compiling (DEFVAR *ID-FG*)
+; compiling (DEFVAR *ID-GF-DH-HD*)
+; compiling (DEFVAR *HH*)
+; compiling (DEFVAR *FH*)
+; compiling (DEFVAR *HG*)
+; compiling (DEFVAR *DF-FD*)
+; compiling (DEFVAR *DG-GD*)
+; compiling (DEFVAR *TC*)
+; compiling (DEFVAR *BC*)
+; compiling (DEFVAR *HOMOLOGY-VERBOSE* ...)
+; compiling (DEFVAR *TNPR-WITH-DEGREES* ...)
+; compiling (DEFVAR *CLGB-LIST*)
+; compiling (SETF *CLGB-LIST* ...)
+; compiling (PUSHNEW (QUOTE *CLGB-LIST*) ...)
+; compiling (DEFVAR *ALGB-LIST*)
+; compiling (SETF *ALGB-LIST* ...)
+; compiling (PUSHNEW (QUOTE *ALGB-LIST*) ...)
+; compiling (DEFVAR *HOPF-LIST*)
+; compiling (SETF *HOPF-LIST* ...)
+; compiling (PUSHNEW (QUOTE *HOPF-LIST*) ...)
+; compiling (DEFVAR *SMST-LIST*)
+; compiling (SETF *SMST-LIST* ...)
+; compiling (PUSHNEW (QUOTE *SMST-LIST*) ...)
+; compiling (DEFVAR *SMMR-LIST*)
+; compiling (SETF *SMMR-LIST* ...)
+; compiling (PUSHNEW (QUOTE *SMMR-LIST*) ...)
+; compiling (DEFVAR *KAN-LIST*)
+; compiling (SETF *KAN-LIST* ...)
+; compiling (PUSHNEW (QUOTE *KAN-LIST*) ...)
+; compiling (DEFVAR *SMGR-LIST*)
+; compiling (SETF *SMGR-LIST* ...)
+; compiling (PUSHNEW (QUOTE *SMGR-LIST*) ...)
+
+; C:/home/quicklisp/local-projects/kenzo/src/kenzo.fasl written
+; compilation finished in 0:00:00.129
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/macros.lisp" (writt
+en 02 JAN 2015 07:44:04 AM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "macros")
+; compiling (DEFMACRO -1-EXPT-N ...)
+; compiling (DEFMACRO -1-EXPT-N+1 ...)
+; compiling (DEFMACRO -1-EXPT-N-1 ...)
+; compiling (DEFMACRO 2-EXP ...)
+; compiling (DEFMACRO MASK ...)
+; compiling (DEFMACRO BINOMIAL-P-Q ...)
+; compiling (DEFMACRO LEXICO ...)
+; compiling (DEFMACRO TERM ...)
+; compiling (DEFMACRO -TERM ...)
+; compiling (DEFMACRO CFFC ...)
+; compiling (DEFMACRO -CFFC ...)
+; compiling (DEFMACRO GNRT ...)
+; compiling (DEFMACRO -GNRT ...)
+; compiling (DEFMACRO WITH-TERM ...)
+; compiling (DEFMACRO WITH--TERM ...)
+; compiling (DEFMACRO WITH-CMBN ...)
+; compiling (DEFMACRO TERM-CMBN ...)
+; compiling (DEFMACRO CMBN-NON-ZERO-P ...)
+; compiling (DEFMACRO CMBN-ZERO-P ...)
+; compiling (DEFMACRO CONTROL ...)
+; compiling (DEFMACRO CONTROLN ...)
+; compiling (DEFVAR *WRONG-CMBN*)
+; compiling (DEFMACRO CMPR ...)
+; compiling (DEFMACRO CMPR3 ...)
+; compiling (DEFMACRO BASIS ...)
+; compiling (DEFMACRO BASIS3 ...)
+; compiling (DEFMACRO DFFR ...)
+; compiling (DEFMACRO ? ...)
+; compiling (DEFMACRO I-CMPS ...)
+; compiling (DEFMACRO I-ADD ...)
+; compiling (DEFMACRO I-SBTR ...)
+; compiling (DEFMACRO BCC ...)
+; compiling (DEFMACRO TCC ...)
+; compiling (DEFMACRO F ...)
+; compiling (DEFMACRO G ...)
+; compiling (DEFMACRO H ...)
+; compiling (DEFMACRO LBCC ...)
+; compiling (DEFMACRO RBCC ...)
+; compiling (DEFMACRO LF ...)
+; compiling (DEFMACRO LG ...)
+; compiling (DEFMACRO LH ...)
+; compiling (DEFMACRO RF ...)
+; compiling (DEFMACRO RG ...)
+; compiling (DEFMACRO RH ...)
+; compiling (DEFMACRO BASELIG ...)
+; compiling (DEFMACRO BASECOL ...)
+; compiling (DEFMACRO CON0 ...)
+; compiling (DEFMACRO CON1 ...)
+; compiling (DEFMACRO WITH-CONE ...)
+; compiling (DEFMACRO BCNB ...)
+; compiling (DEFMACRO BCNC ...)
+; compiling (DEFMACRO BCND ...)
+; compiling (DEFMACRO WITH-BICN ...)
+; compiling (DEFMACRO TNPR ...)
+; compiling (DEFMACRO WITH-TNPR ...)
+; compiling (DEFMACRO CPRD ...)
+; compiling (DEFMACRO CBGN ...)
+; compiling (DEFMACRO CDEGR ...)
+; compiling (DEFMACRO CGNRT ...)
+; compiling (DEFMACRO -CDEGR ...)
+; compiling (DEFMACRO -CGNRT ...)
+; compiling (DEFMACRO WITH-CBGN ...)
+; compiling (DEFMACRO WITH--CBGN ...)
+; compiling (DEFMACRO WITH-ALLP ...)
+; compiling (DEFMACRO GNRT-ALLP-TNPR ...)
+; compiling (DEFMACRO APRD ...)
+; compiling (DEFMACRO BRGN ...)
+; compiling (DEFMACRO BDEGR ...)
+; compiling (DEFMACRO BGNRT ...)
+; compiling (DEFMACRO -BDEGR ...)
+; compiling (DEFMACRO -BGNRT ...)
+; compiling (DEFMACRO WITH-BRGN ...)
+; compiling (DEFMACRO WITH--BRGN ...)
+; compiling (DEFMACRO WITH-ABAR ...)
+; compiling (DEFMACRO WITH-GBAR ...)
+; compiling (DEFMACRO ABSM ...)
+; compiling (DEFMACRO WITH-ABSM ...)
+; compiling (DEFMACRO DEGENERATE-P ...)
+; compiling (DEFMACRO NON-DEGENERATE-P ...)
+; compiling (DEFMACRO BSPN ...)
+; compiling (DEFMACRO BNDR ...)
+; compiling (DEFMACRO DGNL ...)
+; compiling (DEFMACRO FACE ...)
+; compiling (DEFMACRO D ...)
+; compiling (DEFMACRO MAKE-GMSM-FACES-INFO ...)
+; compiling (DEFMACRO INFO-GMSM ...)
+; compiling (DEFMACRO INFO-FACES ...)
+; compiling (DEFMACRO INFO-FACE-I ...)
+; compiling (DEFMACRO INFO-BNDR ...)
+; compiling (DEFMACRO CRPR ...)
+; compiling (DEFMACRO CRPR2 ...)
+; compiling (DEFMACRO CRPR4 ...)
+; compiling (DEFMACRO ABSM1 ...)
+; compiling (DEFMACRO ABSM2 ...)
+; compiling (DEFMACRO WITH-CRPR ...)
+; compiling (DEFMACRO WITH-CRPR-2 ...)
+; compiling (DEFMACRO WITH-CRPR-4 ...)
+; compiling (DEFMACRO EILENBERG-ZILBER ...)
+; compiling (DEFMACRO KFLL ...)
+; compiling (DEFMACRO KFLL4 ...)
+; compiling (DEFMACRO GRML ...)
+; compiling (DEFMACRO GRIN ...)
+; compiling (DEFMACRO BUILD-AB-SMGR ...)
+; compiling (DEFMACRO POWR ...)
+; compiling (DEFMACRO PGMSM ...)
+; compiling (DEFMACRO EXPN ...)
+; compiling (DEFMACRO WITH-POWR ...)
+; compiling (DEFMACRO WITH-APOWR ...)
+; compiling (DEFMACRO APOWR ...)
+; compiling (DEFMACRO APDGOP ...)
+; compiling (DEFMACRO APGMSM ...)
+; compiling (DEFMACRO APEXPN ...)
+; compiling (DEFMACRO LINE-NUMBER ...)
+; compiling (DEFMACRO COLUMN-NUMBER ...)
+; compiling (DEFMACRO LINE-OP-5 ...)
+; compiling (DEFMACRO COLUMN-OP-5 ...)
+; compiling (DEFMACRO LINE-SWAP-5 ...)
+; compiling (DEFMACRO COLUMN-SWAP-5 ...)
+; compiling (DEFMACRO LINE-MINUS-5 ...)
+; compiling (DEFMACRO COLUMN-MINUS-5 ...)
+; compiling (DEFMACRO GNRT-NAME ...)
+
+; C:/home/quicklisp/local-projects/kenzo/src/macros.fasl written
+; compilation finished in 0:00:00.548
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/various.lisp" (writ
+ten 02 JAN 2015 07:42:24 AM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "various")
+; compiling (DEFUN BINOMIAL-N-P ...)
+; compiling (SETF *PRINT-LEVEL* ...)
+; compiling (DEFUN <A-B< ...)
+; compiling (DEFUN <A-B> ...)
+; compiling (DEFUN >A-B< ...)
+; compiling (DEFUN >A-B> ...)
+; compiling (DEFUN V<A-B> ...)
+; compiling (DEFUN SRANDOM ...)
+; compiling (DEFUN CLOCK ...)
+; compiling (DEFUN DONE ...)
+
+; C:/home/quicklisp/local-projects/kenzo/src/various.fasl written
+; compilation finished in 0:00:00.036
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/classes.lisp" (writ
+ten 02 JAN 2015 07:32:42 AM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "classes")
+; compiling (DEFTYPE ANY ...)
+; compiling (DEFSTRUCT (CMBN #) ...)
+; compiling (DEFUN CFFC-P ...)
+; compiling (DEFTYPE CFFC ...)
+; compiling (DEFTYPE GNRT ...)
+; compiling (DEFTYPE CMPR ...)
+; compiling (DEFTYPE CMPRF ...)
+; compiling (DEFUN TERM-P ...)
+; compiling (DEFTYPE TERM ...)
+; compiling (DEFUN ICMBN-P ...)
+; compiling (DEFTYPE ICMBN ...)
+; compiling (DEFTYPE BASIS ...)
+; compiling (DEFTYPE INTR-MRPH ...)
+; compiling (DEFCLASS CHAIN-COMPLEX ...)
+; compiling (DEFCLASS MORPHISM ...)
+; compiling (DEFCLASS HOMOTOPY-EQUIVALENCE ...)
+; compiling (DEFVAR *IDNM-COUNTER*)
+; compiling (SETF *IDNM-COUNTER* ...)
+; compiling (DEFCLASS CHAIN-COMPLEX ...)
+; compiling (DEFTYPE STRT ...)
+; compiling (DEFCLASS MORPHISM ...)
+; compiling (DEFSTRUCT (RESULT #) ...)
+; compiling (DEFCLASS REDUCTION ...)
+; compiling (DEFCLASS HOMOTOPY-EQUIVALENCE ...)
+; compiling (DEFSTRUCT (MATRICE #) ...)
+; compiling (DEFSTRUCT (T-MAT #) ...)
+; compiling (DEFSTRUCT (CONE # ...) ...)
+; compiling (DEFSTRUCT (BICN # ...) ...)
+; compiling (DEFSTRUCT (TNPR # ...) ...)
+; compiling (DEFCLASS COALGEBRA ...)
+; compiling (DEFUN CBGN-P ...)
+; compiling (DEFTYPE CBGN ...)
+; compiling (DEFUN IALLP-P ...)
+; compiling (DEFTYPE IALLP ...)
+; compiling (DEFSTRUCT (ALLP #) ...)
+; compiling (DEFCLASS ALGEBRA ...)
+; compiling (DEFCLASS HOPF-ALGEBRA ...)
+; compiling (DEFUN BRGN-P ...)
+; compiling (DEFTYPE BRGN ...)
+; compiling (DEFUN IABAR-P ...)
+; compiling (DEFTYPE IABAR ...)
+; compiling (DEFSTRUCT (ABAR #) ...)
+; compiling (DEFTYPE DGOP ...)
+; compiling (DEFTYPE GMSM ...)
+; compiling (DEFTYPE DLOP ...)
+; compiling (DEFSTRUCT (ABSM # ...) ...)
+; compiling (DEFTYPE FACE ...)
+; compiling (DEFTYPE FACE* ...)
+; compiling (DEFCLASS SIMPLICIAL-SET ...)
+; compiling (DEFTYPE SINTR ...)
+; compiling (DEFCLASS SIMPLICIAL-MRPH ...)
+; compiling (DEFUN SOFT-DLOP-P ...)
+; compiling (DEFTYPE SOFT-DLOP ...)
+; compiling (DEFSTRUCT (CRPR # ...) ...)
+; compiling (DEFTYPE KFLL ...)
+; compiling (DEFCLASS KAN ...)
+; compiling (DEFUN FIBRATION-P ...)
+; compiling (DEFTYPE FIBRATION ...)
+; compiling (DEFCLASS SIMPLICIAL-GROUP ...)
+; compiling (DEFCLASS AB-SIMPLICIAL-GROUP ...)
+; compiling (DEFUN EXPN-P ...)
+; compiling (DEFTYPE EXPN ...)
+; compiling (DEFUN POWR-P ...)
+; compiling (DEFTYPE POWR ...)
+; compiling (DEFUN APOWR-P ...)
+; compiling (DEFTYPE APOWR ...)
+; compiling (DEFUN ILOOP-P ...)
+; compiling (DEFTYPE ILOOP ...)
+; compiling (SB-EXT:UNLOCK-PACKAGE :COMMON-LISP)
+; compiling (DEFSTRUCT (LOOP #) ...)
+; compiling (SB-EXT:LOCK-PACKAGE :COMMON-LISP)
+; compiling (DEFSTRUCT (GBAR #) ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/classes.lisp
+; in: DEFSTRUCT ABAR
+;     (DEFSTRUCT (CAT::ABAR (:PRINT-FUNCTION CAT::ABAR-PRINT)) (LIST))
+; --> PROGN DEFMETHOD PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN
+; --> SB-PCL::LOAD-DEFMETHOD SB-PCL::LOAD-DEFMETHOD LIST* LET*
+; --> SB-INT:NAMED-LAMBDA FUNCTION SYMBOL-MACROLET
+; --> SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK FUNCALL
+; ==>
+;   (SB-C::%FUNCALL #'CAT::ABAR-PRINT #:OBJECT938 #:STREAM939
+;                   SB-KERNEL:*CURRENT-LEVEL-IN-PRINT*)
+;
+; caught STYLE-WARNING:
+;   undefined function: ABAR-PRINT
+
+; in: DEFSTRUCT ABSM
+;     (DEFSTRUCT (CAT::ABSM (:CONC-NAME NIL) (:PRINT-FUNCTION CAT::ABSM-PRINT))
+;       (CAT::DGOP)
+;       (CAT::GMSM))
+; --> PROGN DEFMETHOD PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN
+; --> SB-PCL::LOAD-DEFMETHOD SB-PCL::LOAD-DEFMETHOD LIST* LET*
+; --> SB-INT:NAMED-LAMBDA FUNCTION SYMBOL-MACROLET
+; --> SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK FUNCALL
+; ==>
+;   (SB-C::%FUNCALL #'CAT::ABSM-PRINT #:OBJECT1022 #:STREAM1023
+;                   SB-KERNEL:*CURRENT-LEVEL-IN-PRINT*)
+;
+; caught STYLE-WARNING:
+;   undefined function: ABSM-PRINT
+
+; in: DEFSTRUCT ALLP
+;     (DEFSTRUCT (CAT::ALLP (:PRINT-FUNCTION CAT::ALLP-PRINT)) (LIST))
+; --> PROGN DEFMETHOD PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN
+; --> SB-PCL::LOAD-DEFMETHOD SB-PCL::LOAD-DEFMETHOD LIST* LET*
+; --> SB-INT:NAMED-LAMBDA FUNCTION SYMBOL-MACROLET
+; --> SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK FUNCALL
+; ==>
+;   (SB-C::%FUNCALL #'CAT::ALLP-PRINT #:OBJECT824 #:STREAM825
+;                   SB-KERNEL:*CURRENT-LEVEL-IN-PRINT*)
+;
+; caught STYLE-WARNING:
+;   undefined function: ALLP-PRINT
+
+; in: DEFSTRUCT BICN
+;     (DEFSTRUCT (CAT::BICN (:CONC-NAME NIL) (:PRINT-FUNCTION CAT::BICN-PRINT))
+;       (CAT::BCNX)
+;       (CAT::IBICN))
+; --> PROGN DEFMETHOD PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN
+; --> SB-PCL::LOAD-DEFMETHOD SB-PCL::LOAD-DEFMETHOD LIST* LET*
+; --> SB-INT:NAMED-LAMBDA FUNCTION SYMBOL-MACROLET
+; --> SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK FUNCALL
+; ==>
+;   (SB-C::%FUNCALL #'CAT::BICN-PRINT #:OBJECT567 #:STREAM568
+;                   SB-KERNEL:*CURRENT-LEVEL-IN-PRINT*)
+;
+; caught STYLE-WARNING:
+;   undefined function: BICN-PRINT
+
+; in: DEFSTRUCT CMBN
+;     (DEFSTRUCT (CAT::CMBN (:PRINT-FUNCTION CAT::CMBN-PRINT))
+;       (CAT::DEGR -1 :TYPE FIXNUM)
+;       (LIST NIL :TYPE LIST))
+; --> PROGN DEFMETHOD PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN
+; --> SB-PCL::LOAD-DEFMETHOD SB-PCL::LOAD-DEFMETHOD LIST* LET*
+; --> SB-INT:NAMED-LAMBDA FUNCTION SYMBOL-MACROLET
+; --> SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK FUNCALL
+; ==>
+;   (SB-C::%FUNCALL #'CAT::CMBN-PRINT #:OBJECT0 #:STREAM1
+;                   SB-KERNEL:*CURRENT-LEVEL-IN-PRINT*)
+;
+; caught STYLE-WARNING:
+;   undefined function: CMBN-PRINT
+
+; in: DEFSTRUCT CONE
+;     (DEFSTRUCT (CAT::CONE (:CONC-NAME NIL) (:PRINT-FUNCTION CAT::CONE-PRINT))
+;       (CAT::CONX)
+;       (CAT::ICON))
+; --> PROGN DEFMETHOD PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN
+; --> SB-PCL::LOAD-DEFMETHOD SB-PCL::LOAD-DEFMETHOD LIST* LET*
+; --> SB-INT:NAMED-LAMBDA FUNCTION SYMBOL-MACROLET
+; --> SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK FUNCALL
+; ==>
+;   (SB-C::%FUNCALL #'CAT::CONE-PRINT #:OBJECT472 #:STREAM473
+;                   SB-KERNEL:*CURRENT-LEVEL-IN-PRINT*)
+;
+; caught STYLE-WARNING:
+;   undefined function: CONE-PRINT
+
+; in: DEFSTRUCT CRPR
+;     (DEFSTRUCT (CAT::CRPR (:PRINT-FUNCTION CAT::CRPR-PRINT) (:CONC-NAME NIL))
+;       (CAT::DGOP1)
+;       (CAT::GMSM1)
+;       (CAT::DGOP2)
+;       (CAT::GMSM2))
+; --> PROGN DEFMETHOD PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN
+; --> SB-PCL::LOAD-DEFMETHOD SB-PCL::LOAD-DEFMETHOD LIST* LET*
+; --> SB-INT:NAMED-LAMBDA FUNCTION SYMBOL-MACROLET
+; --> SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK FUNCALL
+; ==>
+;   (SB-C::%FUNCALL #'CAT::CRPR-PRINT #:OBJECT1121 #:STREAM1122
+;                   SB-KERNEL:*CURRENT-LEVEL-IN-PRINT*)
+;
+; caught STYLE-WARNING:
+;   undefined function: CRPR-PRINT
+
+; in: DEFSTRUCT GBAR
+;     (DEFSTRUCT (CAT::GBAR (:PRINT-FUNCTION CAT::GBAR-PRINT))
+;       (CAT::DMNS -1 :TYPE FIXNUM)
+;       (LIST NIL :TYPE LIST))
+; --> PROGN DEFMETHOD PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN
+; --> SB-PCL::LOAD-DEFMETHOD SB-PCL::LOAD-DEFMETHOD LIST* LET*
+; --> SB-INT:NAMED-LAMBDA FUNCTION SYMBOL-MACROLET
+; --> SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK FUNCALL
+; ==>
+;   (SB-C::%FUNCALL #'CAT::GBAR-PRINT #:OBJECT1381 #:STREAM1382
+;                   SB-KERNEL:*CURRENT-LEVEL-IN-PRINT*)
+;
+; caught STYLE-WARNING:
+;   undefined function: GBAR-PRINT
+
+; in: DEFSTRUCT LOOP
+;     (DEFSTRUCT (LOOP (:PRINT-FUNCTION CAT::LOOP-PRINT)) (LIST))
+; --> PROGN DEFMETHOD PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN
+; --> SB-PCL::LOAD-DEFMETHOD SB-PCL::LOAD-DEFMETHOD LIST* LET*
+; --> SB-INT:NAMED-LAMBDA FUNCTION SYMBOL-MACROLET
+; --> SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK FUNCALL
+; ==>
+;   (SB-C::%FUNCALL #'CAT::LOOP-PRINT #:OBJECT1302 #:STREAM1303
+;                   SB-KERNEL:*CURRENT-LEVEL-IN-PRINT*)
+;
+; caught STYLE-WARNING:
+;   undefined function: LOOP-PRINT
+
+; in: DEFSTRUCT RESULT
+;     (DEFSTRUCT (CAT::RESULT (:PRINT-FUNCTION CAT::RESULT-PRINT))
+;       (CAT::GNRT NIL :TYPE CAT::GNRT)
+;       (CAT::VALUE NIL :TYPE CAT::CMBN)
+;       (CAT::CLNM 0 :TYPE FIXNUM)
+;       (CAT::RNTM 0.0 :TYPE SINGLE-FLOAT))
+; --> PROGN DEFMETHOD PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN
+; --> SB-PCL::LOAD-DEFMETHOD SB-PCL::LOAD-DEFMETHOD LIST* LET*
+; --> SB-INT:NAMED-LAMBDA FUNCTION SYMBOL-MACROLET
+; --> SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK FUNCALL
+; ==>
+;   (SB-C::%FUNCALL #'CAT::RESULT-PRINT #:OBJECT137 #:STREAM138
+;                   SB-KERNEL:*CURRENT-LEVEL-IN-PRINT*)
+;
+; caught STYLE-WARNING:
+;   undefined function: RESULT-PRINT
+
+; in: DEFSTRUCT TNPR
+;     (DEFSTRUCT (CAT::TNPR (:CONC-NAME NIL) (:PRINT-FUNCTION CAT::TNPR-PRINT))
+;       CAT::DEGR1
+;       CAT::GNRT1
+;       CAT::DEGR2
+;       CAT::GNRT2)
+; --> PROGN DEFMETHOD PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN
+; --> SB-PCL::LOAD-DEFMETHOD SB-PCL::LOAD-DEFMETHOD LIST* LET*
+; --> SB-INT:NAMED-LAMBDA FUNCTION SYMBOL-MACROLET
+; --> SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK FUNCALL
+; ==>
+;   (SB-C::%FUNCALL #'CAT::TNPR-PRINT #:OBJECT662 #:STREAM663
+;                   SB-KERNEL:*CURRENT-LEVEL-IN-PRINT*)
+;
+; caught STYLE-WARNING:
+;   undefined function: TNPR-PRINT
+;
+; compilation unit finished
+;   Undefined functions:
+;     ABAR-PRINT ABSM-PRINT ALLP-PRINT BICN-PRINT CMBN-PRINT CONE-PRINT CRPR-PRI
+NT GBAR-PRINT LOOP-PRINT RESULT-PRINT TNPR-PRINT
+;   caught 11 STYLE-WARNING conditions
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/classes.fasl written
+; compilation finished in 0:00:00.680
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/combinations.lisp"
+(written 02 JAN 2015 07:40:46 AM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "combinations")
+; compiling (DEFUN CMBN-PRINT ...)
+; compiling (DEFUN MAPLEXICO ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/combinations.lisp
+; in: DEFUN MAPLEXICO
+;     (THE BOOLEAN
+;          (DO ((CAT::MARK1 CAT::LIST1 (CDR CAT::MARK1))
+;               (CAT::MARK2 CAT::LIST2 (CDR CAT::MARK2)))
+;              (NIL)
+;            (DECLARE (LIST CAT::MARK1 CAT::MARK2))
+;            (UNLESS CAT::MARK1
+;              (RETURN-FROM CAT::MAPLEXICO
+;                (IF CAT::MARK2
+;                    :LESS
+;                    :EQUAL)))
+;            (UNLESS CAT::MARK2 (RETURN-FROM CAT::MAPLEXICO :GREATER))
+;            (CASE (FUNCALL CAT::CMPR (CAR CAT::MARK1) (CAR CAT::MARK2))
+;              (:LESS (RETURN-FROM CAT::MAPLEXICO :LESS))
+;              (:GREATER (RETURN-FROM CAT::MAPLEXICO :GREATER)))))
+;
+; note: deleting unreachable code
+
+; compiling (DEFUN S-CMPR ...)
+; compiling (DEFUN F-CMPR ...)
+; compiling (DEFUN L-CMPR ...)
+; compiling (DEFUN CMBN ...)
+; compiling (DEFUN CHECK-CMBN ...)
+; compiling (DEFUN ZERO-CMBN ...)
+; compiling (DEFUN ZERO-INTR-DFFR ...)
+; compiling (DEFINE-CONSTANT +ZERO-NEGATIVE-CMBN+ ...)
+; compiling (DEFUN CMBN-OPPS ...)
+; compiling (DEFUN N-CMBN ...)
+; compiling (DEFUN 2CMBN-ADD ...)
+; compiling (DEFUN 2CMBN-SBTR ...)
+; compiling (DEFUN 2N-2CMBN ...)
+; compiling (DEFUN CMBN-CMBN ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/combinations.lisp
+; in: DEFUN CMBN-CMBN
+;     (THE CAT::CMBN
+;          (LET ((CAT::NEW-RSLT CAT::+EMPTY-LIST+))
+;            (DECLARE (LIST CAT::NEW-RSLT))
+;            (DO ((CAT::MARK1 # #)
+;                 (CAT::MARK2 CAT::N-CMBN-LIST #))
+;                ((ENDP CAT::MARK2))
+;              (DECLARE (LIST CAT::MARK1 CAT::MARK2))
+;              (WHEN (ENDP CAT::MARK1) (PUSH # CAT::NEW-RSLT) (RETURN))
+;              (PUSH (CAT::2N-2CMBN CAT::CMPR # # # #) CAT::NEW-RSLT))
+;            (LET ((CAT::OLD-RSLT CAT::+EMPTY-LIST+))
+;              (DECLARE (LIST CAT::OLD-RSLT))
+;              (LOOP (UNLESS # #)
+;                    (SETF #)
+;                    (DO # # # # #)))))
+;
+; note: deleting unreachable code
+
+; compiling (DEFUN NTERM-ADD ...)
+; compiling (DEFUN NCMBN-ADD ...)
+; compiling (DEFUN DSTR-ADD-TERM-TO-CMBN ...);
+; compilation unit finished
+;   printed 2 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/combinations.fasl written
+; compilation finished in 0:00:00.161
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/chain-complexes.lis
+p" (written 02 JAN 2015 07:30:05 AM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "chain-complexes")
+; compiling (DEFUN CAT-INIT ...)
+; compiling (DEFUN HOW-MANY-OBJECTS ...)
+; compiling (DEFUN ALL-OBJECTS ...)
+; compiling (DEFUN KD ...)
+; compiling (DEFUN K ...)
+; compiling (DEFUN KD2 ...)
+; compiling (DEFMETHOD PRINT-OBJECT ...)
+; compiling (DEFUN CHCM ...)
+; compiling (DEFUN RESULT-PRINT ...)
+; compiling (DEFMETHOD ?2 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chain-complexes.lisp
+; in: DEFMETHOD ?2 (MORPHISM T)
+;     (THE CAT::CMBN (CAT::CMBN-? CAT::MRPH CAT::CMBN))
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFMETHOD ?2 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chain-complexes.lisp
+; in: DEFMETHOD ?2 (CHAIN-COMPLEX T)
+;     (THE CAT::CMBN (CAT::CMBN-? (CAT::DFFR1 CAT::CHCM) CAT::CMBN))
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFMETHOD ?3 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chain-complexes.lisp
+; in: DEFMETHOD ?3 (MORPHISM T T)
+;     (THE CAT::CMBN (CAT::GNRT-? CAT::MRPH CAT::DEGR CAT::GNRT))
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFMETHOD ?3 ...)
+; compiling (DEFMETHOD PRINT-OBJECT ...)
+; compiling (DEFUN MRPH ...)
+; compiling (DEFUN BUILD-CHCM ...)
+; compiling (DEFUN BASIS2 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chain-complexes.lisp
+; in: DEFUN BASIS2
+;     (THE LIST
+;          (WITH-SLOTS (CAT::BASIS)
+;              CAT::OBJECT
+;            (DECLARE (TYPE CAT::BASIS CAT::BASIS))
+;            (WHEN (EQ :LOCALLY-EFFECTIVE CAT::BASIS)
+;              (ERROR "The object ~A is locally-effective." CAT::OBJECT))
+;            (FUNCALL CAT::BASIS CAT::N)))
+;
+; note: type assertion too complex to check:
+;  (VALUES &OPTIONAL LIST &REST T).
+
+; compiling (DEFUN BUILD-MRPH ...)
+; compiling (DEFUN NRESULTS ...)
+; compiling (DEFUN TIME-LIST ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chain-complexes.lisp
+; in: DEFUN TIME-LIST
+;     (LET ((CAT::RNTM (CAT::RESULT-RNTM CAT::RSLT)))
+;       (DECLARE (INTEGER CAT::RNTM))
+;       (WHEN (PLUSP CAT::RNTM) (PUSH CAT::RNTM CAT::TIME-LIST)))
+;
+; note: deleting unreachable code
+
+;     (PUSH CAT::RNTM CAT::TIME-LIST)
+; --> LET*
+; ==>
+;   CAT::RNTM
+;
+; note: deleting unreachable code
+
+; --> LET* SETQ THE CONS
+; ==>
+;   CAT::TIME-LIST
+;
+; note: deleting unreachable code
+
+;     (LET ((CAT::RNTM (CAT::RESULT-RNTM CAT::RSLT)))
+;       (DECLARE (INTEGER CAT::RNTM))
+;       (WHEN (PLUSP CAT::RNTM) (PUSH CAT::RNTM CAT::TIME-LIST)))
+;
+; caught WARNING:
+;   Derived type of (SB-KERNEL:%RAW-INSTANCE-REF/SINGLE (THE RESULT RSLT) 4) is
+;     (VALUES SINGLE-FLOAT &OPTIONAL),
+;   conflicting with its asserted type
+;     INTEGER.
+;   See also:
+;     The SBCL Manual, Node "Handling of Types"
+
+; compiling (DEFUN CLEAN-RESULTS ...)
+; compiling (DEFUN MRPH-GNRT ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chain-complexes.lisp
+; in: DEFUN MRPH-GNRT
+;     (LET ((CAT::RNTM (FLOAT (/ CAT::RUNTIME INTERNAL-TIME-UNITS-PER-SECOND))))
+
+;       (DECLARE (SINGLE-FLOAT CAT::RNTM))
+;       (INCF CAT::*RESULTS-CMLT-TM* CAT::RNTM)
+;       CAT::RNTM)
+;
+; note: deleting unreachable code
+
+; compiling (DEFUN MRPH-CMBN ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chain-complexes.lisp
+; in: DEFUN MRPH-CMBN
+;     (THE CAT::CMBN
+;          (CAT::WITH-CMBN (CAT::DEGR LIST) CAT::CMBN
+;                          (LET ((CAT::N-CMBN-LIST CAT::+EMPTY-LIST+))
+;                            (DECLARE (LIST CAT::N-CMBN-LIST))
+;                            (DO (#
+;                                 #)
+;                                (#)
+;                              (DECLARE #)
+;                              (MULTIPLE-VALUE-BIND # # # #))
+;                            (CAT::CMBN-CMBN CAT::TCMPR2 CAT::N-CMBN-LIST))))
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFUN DO-CONTROL ...)
+; compiling (DEFUN GNRT-? ...)
+; compiling (DEFUN CMBN-? ...);
+; compilation unit finished
+;   caught 1 WARNING condition
+;   printed 9 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/chain-complexes.fasl written
+; compilation finished in 0:00:00.378
+STYLE-WARNING: Implicitly creating new generic function CAT::?2.
+STYLE-WARNING: Implicitly creating new generic function CAT::?3.
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/chcm-elementary-op.
+lisp" (written 02 JAN 2015 07:31:43 AM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "chcm-elementary-op")
+; compiling (DEFUN Z-CHCM ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chcm-elementary-op.lisp
+; in: DEFUN Z-CHCM
+;     (THE CAT::CHAIN-COMPLEX
+;          (CAT::BUILD-CHCM :CMPR
+;                           #'(LAMBDA (CAT::GNRT1 CAT::GNRT2)
+;                               (DECLARE (IGNORE CAT::GNRT1 CAT::GNRT2))
+;                               (THE CAT::CMPR :EQUAL))
+;                           :BASIS
+;                           #'(LAMBDA (CAT::N)
+;                               (DECLARE (TYPE FIXNUM CAT::N))
+;                               (THE LIST
+;                                    (IF #
+;                                        #
+;                                        CAT::+EMPTY-LIST+)))
+;                           :BSGN :Z-GNRT :INTR-DFFR #'CAT::ZERO-INTR-DFFR :STRT
+
+;                           :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES CHAIN-COMPLEX &REST T).
+
+; compiling (DEFUN ZERO-MRPH ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chcm-elementary-op.lisp
+; in: DEFUN ZERO-MRPH
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::CHCM1 :TRGT CAT::CHCM2 :DEGR CAT::DEGR :I
+NTR
+;                           #'(LAMBDA (CAT::CMBN)
+;                               (DECLARE (TYPE CAT::CMBN CAT::CMBN))
+;                               (CAT::ZERO-CMBN (+ # CAT::DEGR)))
+;                           :STRT :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN IDNT-MRPH ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chcm-elementary-op.lisp
+; in: DEFUN IDNT-MRPH
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::CHCM :TRGT CAT::CHCM :DEGR 0 :INTR
+;                           #'IDENTITY :STRT :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN OPPS ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chcm-elementary-op.lisp
+; in: DEFUN OPPS
+;     (THE CAT::MORPHISM
+;          (WITH-SLOTS (CAT::SORC CAT::TRGT CAT::DEGR)
+;              CAT::MRPH
+;            (CAT::BUILD-MRPH :SORC CAT::SORC :TRGT CAT::TRGT :DEGR CAT::DEGR :I
+NTR
+;                             #'(LAMBDA (CAT::CMBN) (DECLARE #) (CAT::CMBN-OPPS
+#))
+;                             :STRT :CMBN :ORGN ...)))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFMETHOD CMPS ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chcm-elementary-op.lisp
+; in: DEFMETHOD CMPS (CHAIN-COMPLEX CHAIN-COMPLEX)
+;     (THE CAT::MORPHISM
+;          (CAT::CMPS (CAT::DFFR CAT::CHCM1) (CAT::DFFR CAT::CHCM2) CAT::STRT))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFMETHOD CMPS ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chcm-elementary-op.lisp
+; in: DEFMETHOD CMPS (CHAIN-COMPLEX MORPHISM)
+;     (THE CAT::MORPHISM (CAT::CMPS (CAT::DFFR CAT::CHCM1) CAT::MRPH2 CAT::STRT)
+)
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFMETHOD CMPS ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chcm-elementary-op.lisp
+; in: DEFMETHOD CMPS (MORPHISM CHAIN-COMPLEX)
+;     (THE CAT::MORPHISM (CAT::CMPS CAT::MRPH1 (CAT::DFFR CAT::CHCM2) CAT::STRT)
+)
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFMETHOD CMPS ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chcm-elementary-op.lisp
+; in: DEFMETHOD CMPS (MORPHISM MORPHISM)
+;     (THE CAT::CMBN (CAT::CMBN-? CAT::MRPH1 (CAT::CMBN-? CAT::MRPH2 CAT::CMBN))
+)
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+;     (THE CAT::CMBN
+;          (CAT::CMBN-? CAT::MRPH1 (CAT::GNRT-? CAT::MRPH2 CAT::DEGR CAT::GNRT))
+)
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+;     (DEFMETHOD CAT::CMPS
+;                ((CAT::MRPH1 CAT::MORPHISM) (CAT::MRPH2 CAT::MORPHISM)
+;                 &OPTIONAL CAT::STRT)
+;       (DECLARE (TYPE (OR CAT::STRT NULL) CAT::STRT))
+;       (THE CAT::MORPHISM
+;            (WITH-SLOTS ((CAT::SORC1 CAT::SORC) (CAT::TRGT1 CAT::TRGT)
+;                         (CAT::DEGR1 CAT::DEGR) (CAT::STRT1 CAT::STRT))
+;                CAT::MRPH1
+;              (DECLARE (TYPE CAT::CHAIN-COMPLEX CAT::SORC1 CAT::TRGT1)
+;                       (FIXNUM CAT::DEGR1)
+;                       (TYPE CAT::STRT CAT::STRT1))
+;              (WITH-SLOTS (# # # #)
+;                  CAT::MRPH2
+;                (DECLARE #
+;                         #
+;                         #)
+;                (UNLESS # #)
+;                (UNLESS CAT::STRT #)
+;                (WHEN # #)
+;                (WHEN # #)
+;                (WHEN # #)
+;                (ECASE CAT::STRT # #)))))
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET LET SB-PCL::BIND-ARGS
+; --> LET* LOCALLY SYMBOL-MACROLET BLOCK
+; ==>
+;   (THE CAT::MORPHISM
+;        (LET ((#:G166 CAT::MRPH1))
+;          (DECLARE (IGNORABLE #:G166))
+;          (DECLARE (SB-PCL::%VARIABLE-REBINDING #:G166 CAT::MRPH1))
+;          #:G166
+;          (SYMBOL-MACROLET ((CAT::SORC1 #)
+;                            (CAT::TRGT1 #)
+;                            (CAT::DEGR1 #)
+;                            (CAT::STRT1 #))
+;            (DECLARE (TYPE CAT::CHAIN-COMPLEX CAT::SORC1 CAT::TRGT1)
+;                     (FIXNUM CAT::DEGR1)
+;                     (TYPE CAT::STRT CAT::STRT1))
+;            (LET (#)
+;              (DECLARE #)
+;              (DECLARE #)
+;              #:G168
+;              (SYMBOL-MACROLET #
+;                #
+;                #
+;                #
+;                #
+;                #
+;                #
+;                #)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET LET SB-PCL::BIND-ARGS
+; --> LET* LOCALLY SYMBOL-MACROLET
+; ==>
+;   (BLOCK CAT::CMPS
+;     (THE CAT::MORPHISM
+;          (LET ((#:G166 CAT::MRPH1))
+;            (DECLARE (IGNORABLE #:G166))
+;            (DECLARE (SB-PCL::%VARIABLE-REBINDING #:G166 CAT::MRPH1))
+;            #:G166
+;            (SYMBOL-MACROLET (# # # #)
+;              (DECLARE #
+;                       #
+;                       #)
+;              (LET #
+;                #
+;                #
+;                #:G168
+;                #)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN N-MRPH-INTR ...)
+; compiling (DEFUN N-MRPH ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chcm-elementary-op.lisp
+; in: DEFUN N-MRPH
+;     (THE CAT::MORPHISM
+;          (WITH-SLOTS (CAT::SORC CAT::TRGT CAT::DEGR)
+;              CAT::MRPH
+;            (DECLARE (TYPE CAT::CHAIN-COMPLEX CAT::SORC CAT::TRGT)
+;                     (FIXNUM CAT::DEGR))
+;            (CAT::BUILD-MRPH :SORC CAT::SORC :TRGT CAT::TRGT :DEGR CAT::DEGR :I
+NTR
+;                             (CAT::N-MRPH-INTR CAT::N CAT::MRPH) :STRT :CMBN :O
+RGN
+;                             ...)))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFMETHOD ADD ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chcm-elementary-op.lisp
+; in: DEFMETHOD ADD (MORPHISM MORPHISM)
+;     (DEFMETHOD CAT::ADD
+;                ((CAT::MRPH1 CAT::MORPHISM) (CAT::MRPH2 CAT::MORPHISM)
+;                 &OPTIONAL CAT::STRT)
+;       (DECLARE (TYPE (OR NULL CAT::STRT) CAT::STRT))
+;       (THE CAT::MORPHISM
+;            (WITH-SLOTS ((CAT::SORC1 CAT::SORC) (CAT::TRGT1 CAT::TRGT)
+;                         (CAT::DEGR1 CAT::DEGR) (CAT::STRT1 CAT::STRT))
+;                CAT::MRPH1
+;              (DECLARE (TYPE CAT::CHAIN-COMPLEX CAT::SORC1 CAT::TRGT1)
+;                       (FIXNUM CAT::DEGR1)
+;                       (TYPE CAT::STRT CAT::STRT1))
+;              (WITH-SLOTS (# # # #)
+;                  CAT::MRPH2
+;                (DECLARE #
+;                         #
+;                         #)
+;                (UNLESS # #)
+;                (WHEN # #)
+;                (WHEN # #)
+;                (UNLESS CAT::STRT #)
+;                (WHEN # #)
+;                (LET #
+;                  #
+;                  #)))))
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET LET SB-PCL::BIND-ARGS
+; --> LET* LOCALLY SYMBOL-MACROLET BLOCK
+; ==>
+;   (THE CAT::MORPHISM
+;        (LET ((#:G323 CAT::MRPH1))
+;          (DECLARE (IGNORABLE #:G323))
+;          (DECLARE (SB-PCL::%VARIABLE-REBINDING #:G323 CAT::MRPH1))
+;          #:G323
+;          (SYMBOL-MACROLET ((CAT::SORC1 #)
+;                            (CAT::TRGT1 #)
+;                            (CAT::DEGR1 #)
+;                            (CAT::STRT1 #))
+;            (DECLARE (TYPE CAT::CHAIN-COMPLEX CAT::SORC1 CAT::TRGT1)
+;                     (FIXNUM CAT::DEGR1)
+;                     (TYPE CAT::STRT CAT::STRT1))
+;            (LET (#)
+;              (DECLARE #)
+;              (DECLARE #)
+;              #:G325
+;              (SYMBOL-MACROLET #
+;                #
+;                #
+;                #
+;                #
+;                #
+;                #
+;                #)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFMETHOD SBTR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chcm-elementary-op.lisp
+; in: DEFMETHOD SBTR (MORPHISM MORPHISM)
+;     (DEFMETHOD CAT::SBTR
+;                ((CAT::MRPH1 CAT::MORPHISM) (CAT::MRPH2 CAT::MORPHISM)
+;                 &OPTIONAL CAT::STRT)
+;       (DECLARE (TYPE (OR NULL CAT::STRT) CAT::STRT))
+;       (THE CAT::MORPHISM
+;            (WITH-SLOTS ((CAT::SORC1 CAT::SORC) (CAT::TRGT1 CAT::TRGT)
+;                         (CAT::DEGR1 CAT::DEGR) (CAT::STRT1 CAT::STRT))
+;                CAT::MRPH1
+;              (DECLARE (TYPE CAT::CHAIN-COMPLEX CAT::SORC1 CAT::TRGT1)
+;                       (FIXNUM CAT::DEGR1)
+;                       (TYPE CAT::STRT CAT::STRT1))
+;              (WITH-SLOTS (# # # #)
+;                  CAT::MRPH2
+;                (DECLARE #
+;                         #
+;                         #)
+;                (UNLESS # #)
+;                (WHEN # #)
+;                (WHEN # #)
+;                (UNLESS CAT::STRT #)
+;                (WHEN # #)
+;                (LET #
+;                  #
+;                  #)))))
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET LET SB-PCL::BIND-ARGS
+; --> LET* LOCALLY SYMBOL-MACROLET BLOCK
+; ==>
+;   (THE CAT::MORPHISM
+;        (LET ((#:G453 CAT::MRPH1))
+;          (DECLARE (IGNORABLE #:G453))
+;          (DECLARE (SB-PCL::%VARIABLE-REBINDING #:G453 CAT::MRPH1))
+;          #:G453
+;          (SYMBOL-MACROLET ((CAT::SORC1 #)
+;                            (CAT::TRGT1 #)
+;                            (CAT::DEGR1 #)
+;                            (CAT::STRT1 #))
+;            (DECLARE (TYPE CAT::CHAIN-COMPLEX CAT::SORC1 CAT::TRGT1)
+;                     (FIXNUM CAT::DEGR1)
+;                     (TYPE CAT::STRT CAT::STRT1))
+;            (LET (#)
+;              (DECLARE #)
+;              (DECLARE #)
+;              #:G455
+;              (SYMBOL-MACROLET #
+;                #
+;                #
+;                #
+;                #
+;                #
+;                #
+;                #)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN CHANGE-SORC-TRGT ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/chcm-elementary-op.lisp
+; in: DEFUN CHANGE-SORC-TRGT
+;     (THE CAT::MORPHISM
+;          (WITH-SLOTS (CAT::SORC CAT::TRGT CAT::DEGR CAT::INTR CAT::STRT)
+;              CAT::MRPH
+;            (CAT::BUILD-MRPH :SORC (OR CAT::NEW-SORC CAT::SORC) :TRGT
+;                             (OR CAT::NEW-TRGT CAT::TRGT) :DEGR CAT::DEGR :INTR
+
+;                             CAT::INTR :STRT CAT::STRT :ORGN ...)))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN DSTR-CHANGE-SORC-TRGT ...)
+; compiling (DEFMETHOD ADD ...);
+; compilation unit finished
+;   printed 15 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/chcm-elementary-op.fasl written
+; compilation finished in 0:00:00.577
+STYLE-WARNING: Implicitly creating new generic function CAT::CMPS.
+STYLE-WARNING: Implicitly creating new generic function CAT::ADD.
+STYLE-WARNING: Implicitly creating new generic function CAT::SBTR.
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/effective-homology.
+lisp" (written 01 JAN 2015 06:51:00 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "effective-homology")
+; compiling (DEFMETHOD PRINT-OBJECT ...)
+; compiling (DEFUN RDCT ...)
+; compiling (DEFUN BUILD-RDCT ...)
+; compiling (DEFUN TRIVIAL-RDCT ...)
+; compiling (DEFMETHOD BUILD-HMEQ ...)
+; compiling (DEFMETHOD PRINT-OBJECT ...)
+; compiling (DEFMETHOD HMEQ ...)
+; compiling (DEFMETHOD BUILD-HMEQ ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/effective-homology.lisp
+; in: DEFMETHOD BUILD-HMEQ ((EQL :LF) T)
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (PROGN
+;           (UNLESS CAT::ORGN (SETF CAT::ORGN `#))
+;           (LET ((CAT::ALREADY #))
+;             (DECLARE (TYPE # CAT::ALREADY))
+;             (WHEN CAT::ALREADY (RETURN-FROM CAT::BUILD-HMEQ CAT::ALREADY)))
+;           (CAT::BUILD-HMEQ :LRDCT
+;            (CAT::BUILD-RDCT :F CAT::LF :G CAT::LG :H CAT::LH :ORGN
+;             `(CAT::BUILD-HMEQ ,CAT::LF ,CAT::LG ,CAT::LH ,CAT::RF ,CAT::RG
+;               ,CAT::RH CAT::LRDCT))
+;            :RRDCT
+;            (CAT::BUILD-RDCT :F CAT::RF :G CAT::RG :H CAT::RH :ORGN
+;             `(CAT::BUILD-HMEQ ,CAT::LF ,CAT::LG ,CAT::LH ,CAT::RF ,CAT::RG
+;               ,CAT::RH CAT::RRDCT))
+;            :ORGN CAT::ORGN)))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+
+; compiling (DEFUN TRIVIAL-HMEQ ...)
+; compiling (DEFUN PRE-CHECK-RDCT ...)
+; compiling (DEFUN CHECK-RDCT ...)
+; compiling (DEFMETHOD CMPS ...)
+; compiling (DEFMETHOD ADD ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/effective-homology.lisp
+; in: DEFMETHOD ADD (REDUCTION MORPHISM)
+;     (ERROR "Why a third argument in (ADD REDUCTION MORPHISM)?")
+; ==>
+;   "Why a third argument in (ADD REDUCTION MORPHISM)?"
+;
+; note: deleting unreachable code
+
+; compiling (DEFUN BASIC-PERTURBATION-LEMMA ...)
+; compiling (DEFUN EASY-PERTURBATION-LEMMA ...)
+; compiling (DEFUN SPECIAL-BPL ...)
+; compiling (DEFUN SPECIAL-BPL-2 ...)
+; compiling (DEFUN BPL-*-SIGMA ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/effective-homology.lisp
+; in: DEFUN BPL-*-SIGMA
+;     (THE CAT::MORPHISM
+;          (LET ((CAT::CMPR (CAT::CMPR #))
+;                (CAT::H-DELTA (CAT::CMPS CAT::HOMOTOPY CAT::PERTURBATION)))
+;            (DECLARE (TYPE CAT::CMPRF CAT::CMPR)
+;                     (TYPE CAT::MORPHISM CAT::H-DELTA))
+;            (FLET ((CAT::SIGMA-* #
+;                     #
+;                     #))
+;              (CAT::BUILD-MRPH :SORC (CAT::SORC CAT::HOMOTOPY) :TRGT
+;                               (CAT::SORC CAT::HOMOTOPY) :DEGR 0 :INTR
+;                               #'CAT::SIGMA-* :STRT :GNRT :ORGN ...))))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFMETHOD ADD ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/effective-homology.lisp
+; in: DEFMETHOD ADD (HOMOTOPY-EQUIVALENCE MORPHISM)
+;     (DEFMETHOD CAT::ADD
+;                ((CAT::HMEQ CAT::HOMOTOPY-EQUIVALENCE)
+;                 (CAT::LB-PERTURBATION CAT::MORPHISM)
+;                 &OPTIONAL CAT::DUMMY)
+;       (DECLARE (IGNORE CAT::DUMMY))
+;       (THE CAT::HOMOTOPY-EQUIVALENCE
+;            (WITH-SLOTS (CAT::LRDCT CAT::RRDCT)
+;                CAT::HMEQ
+;              (DECLARE (TYPE CAT::REDUCTION CAT::LRDCT CAT::RRDCT))
+;              (MULTIPLE-VALUE-BIND (CAT::NEW-LRDCT CAT::TOP-PERTURBATION)
+;                  (CAT::ADD CAT::LRDCT CAT::LB-PERTURBATION)
+;                (DECLARE #
+;                         #)
+;                (CAT::BUILD-HMEQ :LRDCT CAT::NEW-LRDCT :RRDCT # :ORGN `#)))))
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET LET SB-PCL::BIND-ARGS
+; --> LET* LOCALLY SYMBOL-MACROLET BLOCK
+; ==>
+;   (THE CAT::HOMOTOPY-EQUIVALENCE
+;        (LET ((#:G1057 CAT::HMEQ))
+;          (DECLARE (IGNORABLE #:G1057))
+;          (DECLARE (SB-PCL::%VARIABLE-REBINDING #:G1057 CAT::HMEQ))
+;          #:G1057
+;          (SYMBOL-MACROLET ((CAT::LRDCT #) (CAT::RRDCT #))
+;            (DECLARE (TYPE CAT::REDUCTION CAT::LRDCT CAT::RRDCT))
+;            (MULTIPLE-VALUE-BIND (CAT::NEW-LRDCT CAT::TOP-PERTURBATION)
+;                (CAT::ADD # CAT::LB-PERTURBATION)
+;              (DECLARE #
+;                       #)
+;              (CAT::BUILD-HMEQ :LRDCT CAT::NEW-LRDCT :RRDCT # :ORGN `#)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+;
+; compilation unit finished
+;   printed 4 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/effective-homology.fasl written
+; compilation finished in 0:00:00.350
+STYLE-WARNING: Implicitly creating new generic function CAT::BUILD-HMEQ.
+STYLE-WARNING: Implicitly creating new generic function CAT::HMEQ.
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/homology-groups.lis
+p" (written 26 DEC 2014 07:39:46 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "homology-groups")
+; compiling (DEFUN CREER-MATRICE ...)
+; compiling (DEFUN CHERCHER-HOR ...)
+; compiling (DEFUN CHERCHER-VER ...)
+; compiling (DEFUN INSERER-TERME ...)
+; compiling (DEFUN SUPPRIMER-TERME ...)
+; compiling (DEFUN MAJ-TERME ...)
+; compiling (DEFUN MAJ-LIGNE ...)
+; compiling (DEFUN MAJ-COLONNE ...)
+; compiling (DEFUN MAJ-MATRICE ...)
+; compiling (DEFUN DISP-P ...)
+; compiling (DEFUN DISP-LIGNE ...)
+; compiling (DEFUN DISP-COLONNE ...)
+; compiling (DEFUN NLIG ...)
+; compiling (DEFUN NCOL ...)
+; compiling (DEFUN DISP-MATRICE ...)
+; compiling (DEFMETHOD PRINT-OBJECT ...)
+; compiling (DEFUN DISP-MATRICE-COLONNES ...)
+; compiling (DEFUN TERME ...)
+; compiling (DEFUN MAT-ALEAT ...)
+; compiling (DEFUN OP-ELEM ...)
+; compiling (DEFUN PEIGNE-VER ...)
+; compiling (DEFUN PEIGNE-HOR ...)
+; compiling (DEFUN OP-LIG ...)
+; compiling (DEFUN OP-COL ...)
+; compiling (DEFUN OP-LIG-N ...)
+; compiling (DEFUN OP-COL-N ...)
+; compiling (DEFUN N-LIG ...)
+; compiling (DEFUN N-COL ...)
+; compiling (DEFUN COPIER-MATRICE ...)
+; compiling (DEFUN RESTE ...)
+; compiling (DEFUN DIVISEUR ...)
+; compiling (DEFUN MAJ-PEIGNE-VER ...)
+; compiling (DEFUN MAJ-PEIGNE-HOR ...)
+; compiling (DEFUN IDENTITE ...)
+; compiling (DEFUN INIT-PEIGNE-VER ...)
+; compiling (DEFUN INIT-PEIGNE-HOR ...)
+; compiling (DEFUN DISP-PEIGNE ...)
+; compiling (DEFUN TERME-MINIMAL-MATRICE ...)
+; compiling (DEFUN TUER-LIGNE ...)
+; compiling (DEFUN TUER-COLONNE ...)
+; compiling (DEFUN PIVOT ...)
+; compiling (DEFUN PIVOT-PARALLELE ...)
+; compiling (DEFUN GENERATEUR-TORSION-H* ...)
+; compiling (DEFUN TERMINER-H* ...)
+; compiling (DEFUN RESTE-MINIMAL-LIGNE ...)
+; compiling (DEFUN RESTE-MINIMAL-COLONNE ...)
+; compiling (DEFUN HOMOLOGIE ...)
+; compiling (DEFUN CHCM-MAT ...)
+; compiling (DEFUN CHCM-HOMOLOGY ...)
+; compiling (DEFUN CHCM-HOMOLOGY-GEN ...)
+; compiling (DEFUN CHCM-HOMOLOGY-GEN-OLD ...)
+
+; C:/home/quicklisp/local-projects/kenzo/src/homology-groups.fasl written
+; compilation finished in 0:00:00.360
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/searching-homology.
+lisp" (written 24 DEC 2014 10:16:32 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "searching-homology")
+; compiling (DEFUN ECHCM ...)
+; compiling (DEFMETHOD HOMOLOGY ...)
+; compiling (DEFGENERIC SEARCH-EFHM ...)
+; compiling (DEFMETHOD SEARCH-EFHM ...)
+; compiling (DEFMETHOD SLOT-UNBOUND ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/searching-homology.lisp
+; in: DEFMETHOD SLOT-UNBOUND (T CHAIN-COMPLEX (EQL 'EFHM))
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (LET ((CAT::EFHM (CAT::SEARCH-EFHM CAT::CHCM #)))
+;            (SETF (CAT::EFHM CAT::CHCM) (OR CAT::EFHM # #))))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+;
+; compilation unit finished
+;   printed 1 note
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/searching-homology.fasl written
+; compilation finished in 0:00:00.045
+STYLE-WARNING: Implicitly creating new generic function CAT::HOMOLOGY.
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/cones.lisp" (writte
+n 01 JAN 2015 01:16:52 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "cones")
+; compiling (DEFUN CONE-PRINT ...)
+; compiling (DEFUN CONE-CMPR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cones.lisp
+; in: DEFUN CONE-CMPR
+;     (THE CAT::CMPR
+;          (LET ((CAT::IND1 (CAT::CONX CAT::GNRT1))
+;                (CAT::IND2 (CAT::CONX CAT::GNRT2))
+;                (CAT::GNRT11 (CAT::ICON CAT::GNRT1))
+;                (CAT::GNRT22 (CAT::ICON CAT::GNRT2)))
+;            (DECLARE (FIXNUM CAT::IND1 CAT::IND2)
+;                     (TYPE CAT::GNRT CAT::GNRT11 CAT::GNRT22))
+;            (ECASE CAT::IND1 (0 (ECASE CAT::IND2 # #)) (1 (ECASE CAT::IND2 # #)
+))))
+;
+; note: type assertion too complex to check:
+;  (VALUES (MEMBER :LESS :EQUAL :GREATER) &REST T).
+
+; compiling (DEFUN CONE-BASIS ...)
+; compiling (DEFUN TERM-CON0 ...)
+; compiling (DEFUN TERM-CON1 ...)
+; compiling (DEFUN TERM-UNCON ...)
+; compiling (DEFUN CMBN-CON0 ...)
+; compiling (DEFUN CMBN-CON1 ...)
+; compiling (DEFUN CONE-CMBN-SPLIT ...)
+; compiling (DEFUN CONE-2CMBN-APPEND ...)
+; compiling (DEFUN CONE-2MRPH-DIAG-IMPL ...)
+; compiling (DEFUN CONE-3MRPH-TRIANGLE-IMPL ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cones.lisp
+; in: DEFUN CONE-3MRPH-TRIANGLE-IMPL
+;     (THE CAT::CMBN
+;          (ECASE (CAT::CONX CAT::GNRT)
+;            (0 (CAT::CMBN-CON0 (CAT::? CAT::MRPH0 CAT::DEGR #)))
+;            (1
+;             (LET (#)
+;               (DECLARE #)
+;               (CAT::CONE-2CMBN-APPEND # #)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFUN CONE ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cones.lisp
+; in: DEFUN CONE
+;     (THE CAT::CHAIN-COMPLEX
+;          (LET ((CAT::CHCM0 (CAT::TRGT CAT::MRPH))
+;                (CAT::CHCM1 (CAT::SORC CAT::MRPH)))
+;            (DECLARE (TYPE CAT::CHAIN-COMPLEX CAT::CHCM0 CAT::CHCM1))
+;            (CAT::BUILD-CHCM :CMPR
+;                             (CAT::CONE-CMPR (CAT::CMPR CAT::CHCM0)
+;                              (CAT::CMPR CAT::CHCM1))
+;                             :BASIS
+;                             (CAT::CONE-BASIS (CAT::BASIS CAT::CHCM0)
+;                              (CAT::BASIS CAT::CHCM1))
+;                             :BSGN (CAT::CON0 (CAT::BSGN CAT::CHCM0)) :INTR-DFF
+R
+;                             (CAT::CONE-3MRPH-TRIANGLE-IMPL (CAT::CMPR CAT::CHC
+M0)
+;                              (CAT::DFFR CAT::CHCM0) (CAT::N-MRPH -1 #) CAT::MR
+PH)
+;                             :STRT :GNRT :ORGN ...)))
+;
+; note: type assertion too complex to check:
+;  (VALUES CHAIN-COMPLEX &REST T).
+
+; compiling (DEFUN CONE-2MRPH-DIAG ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cones.lisp
+; in: DEFUN CONE-2MRPH-DIAG
+;     (THE CAT::MORPHISM
+;          (PROGN
+;           (UNLESS (= (CAT::DEGR CAT::MRPH0) (CAT::DEGR CAT::MRPH1))
+;             (ERROR "Non-coherent degrees in CONE-2MRPH-DIAG."))
+;           (CAT::BUILD-MRPH :SORC CAT::SORC-CONE :TRGT CAT::TRGT-CONE :DEGR
+;                            (CAT::DEGR CAT::MRPH0) :INTR
+;                            (CAT::CONE-2MRPH-DIAG-IMPL CAT::MRPH0 CAT::MRPH1)
+;                            :STRT :CMBN :ORGN ...)))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN CONE-3MRPH-TRIANGLE ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cones.lisp
+; in: DEFUN CONE-3MRPH-TRIANGLE
+;     (THE CAT::MORPHISM
+;          (PROGN
+;           (UNLESS (= (CAT::DEGR CAT::MRPH0) (CAT::DEGR CAT::MRPH1))
+;             (ERROR "Non-coherent degrees in CONE-3MRPH-TRIANGLE."))
+;           (UNLESS (= (1+ #) (CAT::DEGR CAT::PHI))
+;             (ERROR "Non-coherent-degrees in CONE-3MRPH-TRIANGLE."))
+;           (CAT::BUILD-MRPH :SORC CAT::SORC-CONE :TRGT CAT::TRGT-CONE :DEGR
+;                            (CAT::DEGR CAT::MRPH0) :INTR
+;                            (CAT::CONE-3MRPH-TRIANGLE-IMPL (CAT::CMPR #)
+;                             CAT::MRPH0 CAT::MRPH1 CAT::PHI)
+;                            :STRT :GNRT :ORGN ...)))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN CONE-EFHM ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cones.lisp
+; in: DEFUN CONE-EFHM
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (LET* ((CAT::PHI (SECOND #))
+;                 (CAT::CHCM0 (CAT::TRGT CAT::PHI))
+;                 (CAT::CHCM1 (CAT::SORC CAT::PHI))
+;                 (CAT::EFHM0 (CAT::EFHM CAT::CHCM0))
+;                 (CAT::EFHM1 (CAT::EFHM CAT::CHCM1))
+;                 (CAT::LF0 (CAT::LF CAT::EFHM0))
+;                 (CAT::LG0 (CAT::LG CAT::EFHM0))
+;                 (CAT::LH0 (CAT::LH CAT::EFHM0))
+;                 (CAT::RF0 (CAT::RF CAT::EFHM0))
+;                 (CAT::RG0 (CAT::RG CAT::EFHM0))
+;                 (CAT::RH0 (CAT::RH CAT::EFHM0))
+;                 (CAT::LF1 (CAT::LF CAT::EFHM1))
+;                 ...)
+;            (DECLARE
+;             (TYPE CAT::CHAIN-COMPLEX CAT::CHCM0 CAT::CHCM1 CAT::HCONE CAT::ECO
+NE)
+;             (TYPE CAT::MORPHISM CAT::PHI CAT::LF0 CAT::LG0 CAT::LH0 CAT::RF0
+;              CAT::RG0 CAT::RH0 CAT::LF1 CAT::LG1 CAT::LH1 ...))
+;            (CAT::BUILD-HMEQ :LRDCT
+;                             (CAT::BUILD-RDCT :F CAT::LF :G CAT::LG :H CAT::LH
+;                                              :ORGN
+;                                              `(CAT::CONE-EFHM ,CAT::CONE
+;                                                CAT::LRDCT))
+;                             :RRDCT
+;                             (CAT::BUILD-RDCT :F CAT::RF :G CAT::RG :H CAT::RH
+;                                              :ORGN
+;                                              `(CAT::CONE-EFHM ,CAT::CONE
+;                                                CAT::RRDCT))
+;                             :ORGN `(CAT::CONE-EFHM ,CAT::CONE))))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+
+; compiling (DEFMETHOD SEARCH-EFHM ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cones.lisp
+; in: DEFMETHOD SEARCH-EFHM (T (EQL 'CONE))
+;     (THE CAT::HOMOTOPY-EQUIVALENCE (CAT::CONE-EFHM CAT::CHCM))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+;
+; compilation unit finished
+;   printed 7 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/cones.fasl written
+; compilation finished in 0:00:00.266
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/bicones.lisp" (writ
+ten 24 DEC 2014 10:18:22 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "bicones")
+; compiling (DEFUN DISPATCH-BICN-CMBN ...)
+; compiling (DEFUN BICN-CMBN-CMBNB ...)
+; compiling (DEFUN BICN-CMBN-CMBNC ...)
+; compiling (DEFUN BICN-CMBN-CMBND ...)
+; compiling (DEFUN MAKE-BICN-CMBN ...)
+; compiling (DEFUN BICN-PRINT ...)
+; compiling (DEFUN BICONE-CMPR ...)
+; compiling (DEFUN BICONE-BASIS ...)
+; compiling (DEFUN BICONE-INTR-DFFR ...)
+; compiling (DEFUN BICONE ...)
+; compiling (DEFMETHOD CMPS ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/bicones.lisp
+; in: DEFMETHOD CMPS (HOMOTOPY-EQUIVALENCE HOMOTOPY-EQUIVALENCE)
+;     (DEFMETHOD CAT::CMPS
+;                ((CAT::HMEQ1 CAT::HOMOTOPY-EQUIVALENCE)
+;                 (CAT::HMEQ2 CAT::HOMOTOPY-EQUIVALENCE)
+;                 &OPTIONAL CAT::DUMMY)
+;       (DECLARE (IGNORE CAT::DUMMY))
+;       (THE CAT::HOMOTOPY-EQUIVALENCE
+;            (PROGN
+;             (WHEN (EQ 'CAT::TRIVIAL-HMEQ #) (RETURN-FROM CAT::CMPS CAT::HMEQ1)
+)
+;             (WITH-SLOTS (# # # # # # # # #)
+;                 CAT::HMEQ1
+;               (DECLARE #
+;                        #)
+;               (WITH-SLOTS #
+;                   CAT::HMEQ2
+;                 #
+;                 #
+;                 #)))))
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET LET SB-PCL::BIND-ARGS
+; --> LET* LOCALLY SYMBOL-MACROLET BLOCK
+; ==>
+;   (THE CAT::HOMOTOPY-EQUIVALENCE
+;        (PROGN
+;         (WHEN (EQ 'CAT::TRIVIAL-HMEQ (CAT::ORGN CAT::HMEQ2))
+;           (RETURN-FROM CAT::CMPS CAT::HMEQ1))
+;         (LET ((#:G561 CAT::HMEQ1))
+;           (DECLARE (IGNORABLE #:G561))
+;           (DECLARE (SB-PCL::%VARIABLE-REBINDING #:G561 CAT::HMEQ1))
+;           #:G561
+;           (SYMBOL-MACROLET (# # # # # # # # #)
+;             (DECLARE #
+;                      #)
+;             (LET #
+;               #
+;               #
+;               #:G563
+;               #)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+;
+; compilation unit finished
+;   printed 1 note
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/bicones.fasl written
+; compilation finished in 0:00:00.212
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/tensor-products.lis
+p" (written 26 DEC 2014 07:41:48 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "tensor-products")
+; compiling (DEFUN TNPR-PRINT ...)
+; compiling (DEFUN 2CMBN-TNPR ...)
+; compiling (DEFUN TNSR-PRDC-CMPR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/tensor-products.lisp
+; in: DEFUN TNSR-PRDC-CMPR
+;     (THE CAT::CMPR
+;          (CAT::LEXICO
+;           (CAT::F-CMPR (CAT::DEGR1 CAT::TNPR1) (CAT::DEGR1 CAT::TNPR2))
+;           (FUNCALL CAT::CMPR1 (CAT::GNRT1 CAT::TNPR1) (CAT::GNRT1 CAT::TNPR2))
+
+;           (FUNCALL CAT::CMPR2 (CAT::GNRT2 CAT::TNPR1) (CAT::GNRT2 CAT::TNPR2))
+))
+;
+; note: type assertion too complex to check:
+;  (VALUES (MEMBER :LESS :EQUAL :GREATER) &REST T).
+
+; compiling (DEFUN TNSR-PRDC-BASIS ...)
+; compiling (DEFUN TNSR-PRDC-INTR-DFFR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/tensor-products.lisp
+; in: DEFUN TNSR-PRDC-INTR-DFFR
+;     (IF CAT::SIGN
+;         (- CAT::CFFC2)
+;         CAT::CFFC2)
+; ==>
+;   CAT::CFFC2
+;
+; note: deleting unreachable code
+
+;     (LET ((CAT::DEGR1-1 (1- CAT::DEGR1))
+;           (CAT::DEGR2-1 (1- CAT::DEGR2))
+;           (CAT::SIGN (ODDP CAT::DEGR1))
+;           (CAT::LIST1
+;            (CAT::CMBN-LIST (CAT::GNRT-? CAT::DFFR1 CAT::DEGR1 CAT::GNRT1)))
+;           (CAT::LIST2
+;            (CAT::CMBN-LIST (CAT::GNRT-? CAT::DFFR2 CAT::DEGR2 CAT::GNRT2))))
+;       (DECLARE (FIXNUM CAT::DEGR1-1 CAT::DEGR2-1 CAT::SIGN)
+;                (LIST CAT::LIST1 CAT::LIST2))
+;       (CAT::MAKE-CMBN :DEGR (1- CAT::DEGR) :LIST
+;                       (NCONC (MAPCAR #'(LAMBDA # # #) CAT::LIST1)
+;                              (MAPCAR #'(LAMBDA # # #) CAT::LIST2))))
+;
+; note: deleting unreachable code
+
+;     (NCONC
+;      (MAPCAR
+;       #'(LAMBDA (CAT::TERM1)
+;           (DECLARE (TYPE CAT::TERM CAT::TERM1))
+;           (CAT::WITH-TERM (CAT::CFFC1 CAT::GNRT1) CAT::TERM1
+;                           (CAT::TERM CAT::CFFC1 #)))
+;       CAT::LIST1)
+;      (MAPCAR
+;       #'(LAMBDA (CAT::TERM2)
+;           (DECLARE (TYPE CAT::TERM CAT::TERM2))
+;           (CAT::WITH-TERM (CAT::CFFC2 CAT::GNRT2) CAT::TERM2 (CAT::TERM # #)))
+
+;       CAT::LIST2))
+;
+; note: deleting unreachable code
+
+;     (THE CAT::CMBN
+;          (CAT::WITH-TNPR (CAT::DEGR1 CAT::GNRT1 CAT::DEGR2 CAT::GNRT2) CAT::TN
+PR
+;                          (LET ((CAT::DEGR1-1 #)
+;                                (CAT::DEGR2-1 #)
+;                                (CAT::SIGN #)
+;                                (CAT::LIST1 #)
+;                                (CAT::LIST2 #))
+;                            (DECLARE (FIXNUM CAT::DEGR1-1 CAT::DEGR2-1 CAT::SIG
+N)
+;                                     (LIST CAT::LIST1 CAT::LIST2))
+;                            (CAT::MAKE-CMBN :DEGR (1- CAT::DEGR) :LIST
+;                                            (NCONC # #)))))
+;
+; note: deleting unreachable code
+
+;     (MAPCAR
+;      #'(LAMBDA (CAT::TERM1)
+;          (DECLARE (TYPE CAT::TERM CAT::TERM1))
+;          (CAT::WITH-TERM (CAT::CFFC1 CAT::GNRT1) CAT::TERM1
+;                          (CAT::TERM CAT::CFFC1
+;                                     (CAT::TNPR CAT::DEGR1-1 CAT::GNRT1 CAT::DE
+GR2
+;                                                CAT::GNRT2))))
+;      CAT::LIST1)
+; --> LET LET SB-INT:DO-ANONYMOUS BLOCK LET
+; ==>
+;   CAT::LIST1
+;
+; note: deleting unreachable code
+
+;     #'(LAMBDA (CAT::TERM2)
+;         (DECLARE (TYPE CAT::TERM CAT::TERM2))
+;         (CAT::WITH-TERM (CAT::CFFC2 CAT::GNRT2) CAT::TERM2
+;                         (CAT::TERM
+;                          (IF CAT::SIGN
+;                              (- CAT::CFFC2)
+;                              CAT::CFFC2)
+;                          (CAT::TNPR CAT::DEGR1 CAT::GNRT1 CAT::DEGR2-1
+;                                     CAT::GNRT2))))
+;
+; note: deleting unreachable code
+
+;     (MAPCAR
+;      #'(LAMBDA (CAT::TERM2)
+;          (DECLARE (TYPE CAT::TERM CAT::TERM2))
+;          (CAT::WITH-TERM (CAT::CFFC2 CAT::GNRT2) CAT::TERM2
+;                          (CAT::TERM
+;                           (IF CAT::SIGN
+;                               #
+;                               CAT::CFFC2)
+;                           (CAT::TNPR CAT::DEGR1 CAT::GNRT1 CAT::DEGR2-1
+;                                      CAT::GNRT2))))
+;      CAT::LIST2)
+; --> LET LET SB-INT:DO-ANONYMOUS BLOCK LET
+; ==>
+;   CAT::LIST2
+;
+; note: deleting unreachable code
+
+;     (LET ((CAT::DEGR1-1 (1- CAT::DEGR1))
+;           (CAT::DEGR2-1 (1- CAT::DEGR2))
+;           (CAT::SIGN (ODDP CAT::DEGR1))
+;           (CAT::LIST1
+;            (CAT::CMBN-LIST (CAT::GNRT-? CAT::DFFR1 CAT::DEGR1 CAT::GNRT1)))
+;           (CAT::LIST2
+;            (CAT::CMBN-LIST (CAT::GNRT-? CAT::DFFR2 CAT::DEGR2 CAT::GNRT2))))
+;       (DECLARE (FIXNUM CAT::DEGR1-1 CAT::DEGR2-1 CAT::SIGN)
+;                (LIST CAT::LIST1 CAT::LIST2))
+;       (CAT::MAKE-CMBN :DEGR (1- CAT::DEGR) :LIST
+;                       (NCONC (MAPCAR #'(LAMBDA # # #) CAT::LIST1)
+;                              (MAPCAR #'(LAMBDA # # #) CAT::LIST2))))
+;
+; caught WARNING:
+;   Derived type of
+;     T and NIL
+;   in
+;     (ODDP DEGR1)
+;   is
+;     (VALUES (MEMBER T NIL) &OPTIONAL),
+;   conflicting with their asserted type
+;     FIXNUM.
+;   See also:
+;     The SBCL Manual, Node "Handling of Types"
+
+; compiling (DEFMETHOD TNSR-PRDC ...)
+; compiling (DEFUN TNSR-PRDC-INTR ...)
+; compiling (DEFMETHOD TNSR-PRDC ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/tensor-products.lisp
+; in: DEFMETHOD TNSR-PRDC (MORPHISM MORPHISM)
+;     (DEFMETHOD CAT::TNSR-PRDC
+;                ((CAT::MRPH1 CAT::MORPHISM) (CAT::MRPH2 CAT::MORPHISM))
+;       (THE CAT::MORPHISM
+;            (WITH-SLOTS ((CAT::SORC1 CAT::SORC) (CAT::TRGT1 CAT::TRGT)
+;                         (CAT::DEGR1 CAT::DEGR))
+;                CAT::MRPH1
+;              (WITH-SLOTS (# # #)
+;                  CAT::MRPH2
+;                (THE CAT::MORPHISM #)))))
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK THE LET SYMBOL-MACROLET LET SYMBOL-MACROLET
+
+; ==>
+;   (THE CAT::MORPHISM
+;        (PROGN
+;         (IF (AND (EQ 'CAT::IDNT-MRPH #) (EQ 'CAT::IDNT-MRPH #))
+;             (PROGN (RETURN-FROM CAT::TNSR-PRDC #))
+;             NIL)
+;         (IF (OR (EQ 'CAT::ZERO-MRPH #) (EQ 'CAT::ZERO-MRPH #))
+;             (PROGN (RETURN-FROM CAT::TNSR-PRDC #))
+;             NIL)
+;         (CAT::BUILD-MRPH :SORC
+;                          (CAT::TNSR-PRDC
+;                           (SB-PCL::ACCESSOR-SLOT-VALUE #:G363 'CAT::SORC)
+;                           (SB-PCL::ACCESSOR-SLOT-VALUE #:G365 'CAT::SORC))
+;                          :TRGT
+;                          (CAT::TNSR-PRDC
+;                           (SB-PCL::ACCESSOR-SLOT-VALUE #:G363 'CAT::TRGT)
+;                           (SB-PCL::ACCESSOR-SLOT-VALUE #:G365 'CAT::TRGT))
+;                          :DEGR
+;                          (+ (SB-PCL::ACCESSOR-SLOT-VALUE #:G363 'CAT::DEGR)
+;                             (SB-PCL::ACCESSOR-SLOT-VALUE #:G365 'CAT::DEGR))
+;                          :INTR (CAT::TNSR-PRDC-INTR CAT::MRPH1 CAT::MRPH2)
+;                          :STRT :GNRT :ORGN ...)))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFMETHOD TNSR-PRDC ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/tensor-products.lisp
+; in: DEFMETHOD TNSR-PRDC (REDUCTION REDUCTION)
+;     (DEFMETHOD CAT::TNSR-PRDC
+;                ((CAT::RDCT1 CAT::REDUCTION) (CAT::RDCT2 CAT::REDUCTION))
+;       (THE CAT::REDUCTION
+;            (PROGN
+;             (WHEN (AND # #) (RETURN-FROM CAT::TNSR-PRDC #))
+;             (WITH-SLOTS (# # # # #)
+;                 CAT::RDCT1
+;               (DECLARE #
+;                        #)
+;               (WITH-SLOTS #
+;                   CAT::RDCT2
+;                 #
+;                 #)))))
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK
+; ==>
+;   (THE CAT::REDUCTION
+;        (PROGN
+;         (WHEN (AND (EQ 'CAT::TRIVIAL-RDCT #) (EQ 'CAT::TRIVIAL-RDCT #))
+;           (RETURN-FROM CAT::TNSR-PRDC (CAT::TRIVIAL-RDCT #)))
+;         (LET ((#:G386 CAT::RDCT1))
+;           (DECLARE (IGNORABLE #:G386))
+;           (DECLARE (SB-PCL::%VARIABLE-REBINDING #:G386 CAT::RDCT1))
+;           #:G386
+;           (SYMBOL-MACROLET (# # # # #)
+;             (DECLARE #
+;                      #)
+;             (LET #
+;               #
+;               #
+;               #:G388
+;               #)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES REDUCTION &REST T).
+
+; compiling (DEFMETHOD TNSR-PRDC ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/tensor-products.lisp
+; in: DEFMETHOD TNSR-PRDC (HOMOTOPY-EQUIVALENCE HOMOTOPY-EQUIVALENCE)
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (CAT::BUILD-HMEQ :LRDCT
+;                           (CAT::TNSR-PRDC (CAT::LRDCT CAT::HMEQ1)
+;                            (CAT::LRDCT CAT::HMEQ2))
+;                           :RRDCT
+;                           (CAT::TNSR-PRDC (CAT::RRDCT CAT::HMEQ1)
+;                            (CAT::RRDCT CAT::HMEQ2))
+;                           :ORGN `(CAT::TNSR-PRDC ,CAT::HMEQ1 ,CAT::HMEQ2)))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+
+; compiling (DEFMETHOD SEARCH-EFHM ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/tensor-products.lisp
+; in: DEFMETHOD SEARCH-EFHM (T (EQL 'TNSR-PRDC))
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (CAT::TNSR-PRDC (CAT::EFHM (SECOND (CAT::ORGN CAT::CHCM)))
+;           (CAT::EFHM (THIRD (CAT::ORGN CAT::CHCM)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+;
+; compilation unit finished
+;   caught 1 WARNING condition
+;   printed 12 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/tensor-products.fasl written
+; compilation finished in 0:00:00.445
+STYLE-WARNING: Implicitly creating new generic function CAT::TNSR-PRDC.
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/coalgebras.lisp" (w
+ritten 26 DEC 2014 07:42:51 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "coalgebras")
+; compiling (DEFMETHOD PRINT-OBJECT ...)
+; compiling (DEFUN CLGB ...)
+; compiling (DEFUN BUILD-CLGB ...)
+; compiling (DEFUN CHANGE-CHCM-TO-CLGB ...)
+
+; C:/home/quicklisp/local-projects/kenzo/src/coalgebras.fasl written
+; compilation finished in 0:00:00.042
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/cobar.lisp" (writte
+n 25 DEC 2014 09:02:57 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "cobar")
+; compiling (DEFUN ALLP ...)
+; compiling (DEFPARAMETER +NULL-ALLP+ ...)
+; compiling (DEFUN ALLP-PRINT ...)
+; compiling (DEFUN COBAR-CMPR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cobar.lisp
+; in: DEFUN COBAR-CMPR
+;     (THE CAT::CMPR
+;          (LET ((CAT::LIST1 (CAT::ALLP-LIST CAT::ALLP1))
+;                (CAT::LIST2 (CAT::ALLP-LIST CAT::ALLP2)))
+;            (DECLARE (TYPE CAT::IALLP CAT::LIST1 CAT::LIST2))
+;            (CAT::LEXICO (CAT::F-CMPR (LENGTH CAT::LIST1) (LENGTH CAT::LIST2))
+;                         (CAT::MAPLEXICO #'(LAMBDA # #) CAT::LIST1 CAT::LIST2))
+))
+;
+; note: type assertion too complex to check:
+;  (VALUES (MEMBER :LESS :EQUAL :GREATER) &REST T).
+
+; compiling (DEFUN COBAR-BASIS-LENGTH ...)
+; compiling (DEFUN COBAR-BASIS ...)
+; compiling (DEFUN COBAR-INTR-VRTC-DFFR ...)
+; compiling (DEFMETHOD VRTC-COBAR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cobar.lisp
+; in: DEFMETHOD VRTC-COBAR (CHAIN-COMPLEX)
+;     (DEFMETHOD CAT::VRTC-COBAR ((CAT::CHCM CAT::CHAIN-COMPLEX))
+;       (THE CAT::CHAIN-COMPLEX
+;            (WITH-SLOTS (CAT::CMPR CAT::BASIS CAT::DFFR)
+;                CAT::CHCM
+;              (DECLARE (TYPE CAT::CMPRF CAT::CMPR)
+;                       (TYPE CAT::BASIS CAT::BASIS)
+;                       (TYPE CAT::MORPHISM CAT::DFFR))
+;              (CAT::BUILD-CHCM :CMPR (CAT::COBAR-CMPR CAT::CMPR) :BASIS
+;                               (CAT::COBAR-BASIS CAT::BASIS) :BSGN
+;                               CAT::+NULL-ALLP+ :INTR-DFFR
+;                               (CAT::COBAR-INTR-VRTC-DFFR CAT::DFFR) :STRT :GNR
+T
+;                               :ORGN ...))))
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK
+; ==>
+;   (THE CAT::CHAIN-COMPLEX
+;        (LET ((#:G297 CAT::CHCM))
+;          (DECLARE (IGNORABLE #:G297))
+;          (DECLARE (SB-PCL::%VARIABLE-REBINDING #:G297 CAT::CHCM))
+;          #:G297
+;          (SYMBOL-MACROLET ((CAT::CMPR #) (CAT::BASIS #) (CAT::DFFR #))
+;            (DECLARE (TYPE CAT::CMPRF CAT::CMPR)
+;                     (TYPE CAT::BASIS CAT::BASIS)
+;                     (TYPE CAT::MORPHISM CAT::DFFR))
+;            (CAT::BUILD-CHCM :CMPR (CAT::COBAR-CMPR #) :BASIS
+;                             (CAT::COBAR-BASIS #) :BSGN CAT::+NULL-ALLP+
+;                             :INTR-DFFR (CAT::COBAR-INTR-VRTC-DFFR #) :STRT
+;                             :GNRT :ORGN ...))))
+;
+; note: type assertion too complex to check:
+;  (VALUES CHAIN-COMPLEX &REST T).
+
+; compiling (DEFUN COBAR-INTR-HRZN-DFFR ...)
+; compiling (DEFUN COBAR-HRZN-DFFR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cobar.lisp
+; in: DEFUN COBAR-HRZN-DFFR
+;     (THE CAT::MORPHISM
+;          (WITH-SLOTS (CAT::CPRD)
+;              CAT::CLGB
+;            (DECLARE (TYPE CAT::MORPHISM CAT::CPRD))
+;            (CAT::BUILD-MRPH :SORC (CAT::VRTC-COBAR CAT::CLGB) :TRGT
+;                             (CAT::VRTC-COBAR CAT::CLGB) :DEGR -1 :INTR
+;                             (CAT::COBAR-INTR-HRZN-DFFR CAT::CPRD) :STRT :GNRT
+;                             :ORGN ...)))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN COBAR-INTR-DFFR ...)
+; compiling (DEFMETHOD COBAR ...)
+; compiling (DEFUN CMBN-ALLP-CMBN-TNPR ...)
+; compiling (DEFUN NCMBN-COBAR ...)
+; compiling (DEFUN MRPH-VRTC-COBAR-INTR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cobar.lisp
+; in: DEFUN MRPH-VRTC-COBAR-INTR
+;     (THE CAT::CMBN
+;          (CAT::NCMBN-COBAR
+;           (MAPCAR
+;            #'(LAMBDA (CAT::CBGN) (DECLARE #) (CAT::WITH-CBGN # CAT::CBGN #))
+;            (CAT::ALLP-LIST CAT::ALLP))))
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFMETHOD VRTC-COBAR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cobar.lisp
+; in: DEFMETHOD VRTC-COBAR (MORPHISM)
+;     (THE CAT::MORPHISM
+;          (IF (EQ (FIRST (CAT::ORGN CAT::MRPH)) 'CAT::IDNT-MRPH)
+;              (CAT::IDNT-MRPH (CAT::VRTC-COBAR (CAT::SORC CAT::MRPH)))
+;              (CAT::BUILD-MRPH :SORC (CAT::VRTC-COBAR (CAT::SORC CAT::MRPH)) :T
+RGT
+;                               (CAT::VRTC-COBAR (CAT::TRGT CAT::MRPH)) :DEGR 0
+;                               :INTR (CAT::MRPH-VRTC-COBAR-INTR CAT::MRPH) :STR
+T
+;                               :GNRT :ORGN ...)))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN HMTP-VRTC-COBAR-INTR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cobar.lisp
+; in: DEFUN HMTP-VRTC-COBAR-INTR
+;     (LET* ((CAT::CBGN-LIST (REVERSE (CAT::ALLP-LIST CAT::ALLP)))
+;            (CAT::RSLT (LIST NIL))
+;            (CAT::SIGN (ODDP (APPLY #'+ #)))
+;            (CAT::GFGF-TAIL (CAT::TERM-CMBN 0 1 CAT::+NULL-ALLP+)))
+;       (DECLARE (LIST CAT::CBGN-LIST CAT::RSLT)
+;                (FIXNUM CAT::SIGN)
+;                (TYPE CAT::CMBN CAT::GFGF-TAIL))
+;       (UNLESS CAT::CBGN-LIST (RETURN-FROM CAT::RSLT (CAT::ZERO-CMBN 1)))
+;       (LOOP
+;        (LET ((CAT::CBGN #))
+;          (DECLARE (TYPE CAT::CBGN CAT::CBGN))
+;          (CAT::WITH-CBGN (CAT::DEGR CAT::GNRT) CAT::CBGN (WHEN # #)
+;                          (INCF CAT::DEGR)
+;                          (LET #
+;                            #
+;                            #)
+;                          (UNLESS CAT::CBGN-LIST #) (SETF #))))
+;       (CAT::MAKE-CMBN :DEGR (1+ CAT::DEGR) :LIST (REST CAT::RSLT)))
+;
+; note: deleting unreachable code
+
+;     (NOT CAT::SIGN)
+; --> IF
+; ==>
+;   CAT::SIGN
+;
+; note: deleting unreachable code
+
+;     (NCONC CAT::RSLT CAT::HGFGF)
+; ==>
+;   CAT::RSLT
+;
+; note: deleting unreachable code
+
+;     (UNLESS CAT::CBGN-LIST (RETURN))
+; --> IF
+; ==>
+;   CAT::CBGN-LIST
+;
+; note: deleting unreachable code
+
+;     (CAT::GNRT-? CAT::GF CAT::DEGR CAT::GNRT)
+; ==>
+;   CAT::GF
+;
+; note: deleting unreachable code
+
+;     (LET ((CAT::CBGN (CAR CAT::CBGN-LIST)))
+;       (DECLARE (TYPE CAT::CBGN CAT::CBGN))
+;       (CAT::WITH-CBGN (CAT::DEGR CAT::GNRT) CAT::CBGN
+;                       (WHEN (EVENP CAT::DEGR) (SETF CAT::SIGN #))
+;                       (INCF CAT::DEGR)
+;                       (LET ((CAT::H-GNRT #))
+;                         (DECLARE (TYPE CAT::CMBN CAT::H-GNRT))
+;                         (LET (#)
+;                           (DECLARE #)
+;                           (WHEN CAT::SIGN #)
+;                           (SETF #)
+;                           (LET #
+;                             #
+;                             #)
+;                           (NCONC CAT::RSLT CAT::HGFGF)))
+;                       (UNLESS CAT::CBGN-LIST (RETURN))
+;                       (SETF CAT::GFGF-TAIL
+;                               (CAT::CMBN-ALLP-CMBN-TNPR # CAT::GFGF-TAIL))))
+;
+; note: deleting unreachable code
+;
+; note: deleting unreachable code
+
+;     (EVENP CAT::DEGR)
+; --> NOT IF LOGTEST
+; ==>
+;   CAT::DEGR
+;
+; note: deleting unreachable code
+
+;     (INCF CAT::DEGR)
+; --> SETQ THE +
+; ==>
+;   CAT::DEGR
+;
+; note: deleting unreachable code
+
+;     (LET ((CAT::H-GNRT (CAT::GNRT-? CAT::H CAT::DEGR CAT::GNRT)))
+;       (DECLARE (TYPE CAT::CMBN CAT::H-GNRT))
+;       (LET ((CAT::HGFGF (CAT::CMBN-LIST #)))
+;         (DECLARE (TYPE CAT::CMBN CAT::HGFGF))
+;         (WHEN CAT::SIGN (MAPC #'(LAMBDA # # #) CAT::HGFGF))
+;         (SETF CAT::CBGN-LIST (REST CAT::CBGN-LIST))
+;         (LET ((CAT::HEAD #))
+;           (DECLARE (LIST CAT::HEAD))
+;           (MAPC #'(LAMBDA # #) CAT::HGFGF))
+;         (NCONC CAT::RSLT CAT::HGFGF)))
+;
+; note: deleting unreachable code
+
+;     (LET ((CAT::HGFGF
+;            (CAT::CMBN-LIST
+;             (CAT::CMBN-ALLP-CMBN-TNPR CAT::H-GNRT CAT::GFGF-TAIL))))
+;       (DECLARE (TYPE CAT::CMBN CAT::HGFGF))
+;       (WHEN CAT::SIGN
+;         (MAPC #'(LAMBDA (CAT::TERM) (DECLARE #) (SETF #)) CAT::HGFGF))
+;       (SETF CAT::CBGN-LIST (REST CAT::CBGN-LIST))
+;       (LET ((CAT::HEAD (REVERSE CAT::CBGN-LIST)))
+;         (DECLARE (LIST CAT::HEAD))
+;         (MAPC #'(LAMBDA (CAT::TERM) (SETF #)) CAT::HGFGF))
+;       (NCONC CAT::RSLT CAT::HGFGF))
+;
+; note: deleting unreachable code
+
+;     #'(LAMBDA (CAT::TERM)
+;         (DECLARE (TYPE CAT::TERM CAT::TERM))
+;         (SETF (CAT::CFFC CAT::TERM) (- (CAT::CFFC CAT::TERM))))
+;
+; note: deleting unreachable code
+
+;     (MAPC
+;      #'(LAMBDA (CAT::TERM)
+;          (DECLARE (TYPE CAT::TERM CAT::TERM))
+;          (SETF (CAT::CFFC CAT::TERM) (- #)))
+;      CAT::HGFGF)
+; --> LET LET
+; ==>
+;   CAT::HGFGF
+;
+; note: deleting unreachable code
+
+;     (REST CAT::CBGN-LIST)
+; --> CDR
+; ==>
+;   CAT::CBGN-LIST
+;
+; note: deleting unreachable code
+
+;     (LET ((CAT::HEAD (REVERSE CAT::CBGN-LIST)))
+;       (DECLARE (LIST CAT::HEAD))
+;       (MAPC #'(LAMBDA (CAT::TERM) (SETF # #)) CAT::HGFGF))
+;
+; note: deleting unreachable code
+
+;     (MAPC #'(LAMBDA (CAT::TERM) (SETF (CAT::ALLP-LIST #) (APPEND CAT::HEAD #))
+)
+;           CAT::HGFGF)
+; --> LET LET
+; ==>
+;   CAT::HGFGF
+;
+; note: deleting unreachable code
+
+;     (1+ CAT::DEGR)
+; --> +
+; ==>
+;   CAT::DEGR
+;
+; note: deleting unreachable code
+
+;     (CAT::ZERO-CMBN 1)
+;
+; note: deleting unreachable code
+
+;     (LET* ((CAT::CBGN-LIST (REVERSE (CAT::ALLP-LIST CAT::ALLP)))
+;            (CAT::RSLT (LIST NIL))
+;            (CAT::SIGN (ODDP (APPLY #'+ #)))
+;            (CAT::GFGF-TAIL (CAT::TERM-CMBN 0 1 CAT::+NULL-ALLP+)))
+;       (DECLARE (LIST CAT::CBGN-LIST CAT::RSLT)
+;                (FIXNUM CAT::SIGN)
+;                (TYPE CAT::CMBN CAT::GFGF-TAIL))
+;       (UNLESS CAT::CBGN-LIST (RETURN-FROM CAT::RSLT (CAT::ZERO-CMBN 1)))
+;       (LOOP
+;        (LET ((CAT::CBGN #))
+;          (DECLARE (TYPE CAT::CBGN CAT::CBGN))
+;          (CAT::WITH-CBGN (CAT::DEGR CAT::GNRT) CAT::CBGN (WHEN # #)
+;                          (INCF CAT::DEGR)
+;                          (LET #
+;                            #
+;                            #)
+;                          (UNLESS CAT::CBGN-LIST #) (SETF #))))
+;       (CAT::MAKE-CMBN :DEGR (1+ CAT::DEGR) :LIST (REST CAT::RSLT)))
+;
+; caught WARNING:
+;   Derived type of
+;     T and NIL
+;   in
+;     (ODDP (APPLY #'+ (MAPCAR #'CAR CBGN-LIST)))
+;   is
+;     (VALUES (MEMBER T NIL) &OPTIONAL),
+;   conflicting with their asserted type
+;     FIXNUM.
+;   See also:
+;     The SBCL Manual, Node "Handling of Types"
+
+; compiling (DEFUN HMTP-VRTC-COBAR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cobar.lisp
+; in: DEFUN HMTP-VRTC-COBAR
+;     (THE CAT::MORPHISM
+;          (IF (EQ (FIRST (CAT::ORGN CAT::H)) 'CAT::ZERO-MRPH)
+;              (CAT::ZERO-MRPH (CAT::VRTC-COBAR (CAT::SORC CAT::H)))
+;              (CAT::BUILD-MRPH :SORC (CAT::VRTC-COBAR (CAT::SORC CAT::H)) :TRGT
+
+;                               (CAT::VRTC-COBAR (CAT::SORC CAT::H)) :DEGR 1 :IN
+TR
+;                               (CAT::HMTP-VRTC-COBAR-INTR CAT::H CAT::GF) :STRT
+
+;                               :GNRT :ORGN ...)))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFMETHOD VRTC-COBAR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cobar.lisp
+; in: DEFMETHOD VRTC-COBAR (REDUCTION)
+;     (DEFMETHOD CAT::VRTC-COBAR ((CAT::RDCT CAT::REDUCTION))
+;       (THE CAT::REDUCTION
+;            (IF (EQ (FIRST #) 'CAT::TRIVIAL-RDCT)
+;                (CAT::TRIVIAL-RDCT (CAT::VRTC-COBAR #))
+;                (WITH-SLOTS (CAT::F CAT::G CAT::H)
+;                    CAT::RDCT
+;                  (CAT::BUILD-RDCT :F # :G # :H # :ORGN `#)))))
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK
+; ==>
+;   (THE CAT::REDUCTION
+;        (IF (EQ (FIRST (CAT::ORGN CAT::RDCT)) 'CAT::TRIVIAL-RDCT)
+;            (CAT::TRIVIAL-RDCT (CAT::VRTC-COBAR (CAT::BCC CAT::RDCT)))
+;            (LET ((#:G634 CAT::RDCT))
+;              (DECLARE (IGNORABLE #:G634))
+;              (DECLARE (SB-PCL::%VARIABLE-REBINDING #:G634 CAT::RDCT))
+;              #:G634
+;              (SYMBOL-MACROLET (# # #)
+;                (CAT::BUILD-RDCT :F # :G # :H # :ORGN `#)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES REDUCTION &REST T).
+
+; compiling (DEFMETHOD VRTC-COBAR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cobar.lisp
+; in: DEFMETHOD VRTC-COBAR (HOMOTOPY-EQUIVALENCE)
+;     (DEFMETHOD CAT::VRTC-COBAR ((CAT::HMEQ CAT::HOMOTOPY-EQUIVALENCE))
+;       (THE CAT::HOMOTOPY-EQUIVALENCE
+;            (IF (EQ (FIRST #) 'CAT::TRIVIAL-HMEQ)
+;                (CAT::TRIVIAL-HMEQ (CAT::VRTC-COBAR #))
+;                (WITH-SLOTS (CAT::LRDCT CAT::RRDCT)
+;                    CAT::HMEQ
+;                  (CAT::BUILD-HMEQ :LRDCT # :RRDCT # :ORGN `#)))))
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK
+; ==>
+;   (THE CAT::HOMOTOPY-EQUIVALENCE
+;        (IF (EQ (FIRST (CAT::ORGN CAT::HMEQ)) 'CAT::TRIVIAL-HMEQ)
+;            (CAT::TRIVIAL-HMEQ (CAT::VRTC-COBAR (CAT::LBCC CAT::HMEQ)))
+;            (LET ((#:G650 CAT::HMEQ))
+;              (DECLARE (IGNORABLE #:G650))
+;              (DECLARE (SB-PCL::%VARIABLE-REBINDING #:G650 CAT::HMEQ))
+;              #:G650
+;              (SYMBOL-MACROLET (# #)
+;                (CAT::BUILD-HMEQ :LRDCT # :RRDCT # :ORGN `#)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+
+; compiling (DEFMETHOD COBAR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cobar.lisp
+; in: DEFMETHOD COBAR (HOMOTOPY-EQUIVALENCE)
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (IF (EQ (FIRST (CAT::ORGN CAT::HMEQ)) 'CAT::TRIVIAL-HMEQ)
+;              (CAT::TRIVIAL-HMEQ (CAT::COBAR (CAT::LBCC CAT::HMEQ)))
+;              (CAT::ADD (CAT::VRTC-COBAR CAT::HMEQ)
+;                        (CAT::COBAR-HRZN-DFFR (CAT::LBCC CAT::HMEQ)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+;
+; compilation unit finished
+;   caught 1 WARNING condition
+;   printed 27 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/cobar.fasl written
+; compilation finished in 0:00:00.621
+STYLE-WARNING: Implicitly creating new generic function CAT::VRTC-COBAR.
+STYLE-WARNING: Implicitly creating new generic function CAT::COBAR.
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/algebras.lisp" (wri
+tten 26 DEC 2014 07:44:40 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "algebras")
+; compiling (DEFMETHOD PRINT-OBJECT ...)
+; compiling (DEFUN ALGB ...)
+; compiling (DEFUN BUILD-ALGB ...)
+; compiling (DEFUN CHANGE-CHCM-TO-ALGB ...)
+; compiling (DEFMETHOD PRINT-OBJECT ...)
+; compiling (DEFUN HOPF ...)
+
+; C:/home/quicklisp/local-projects/kenzo/src/algebras.fasl written
+; compilation finished in 0:00:00.055
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/bar.lisp" (written
+25 DEC 2014 09:02:01 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "bar")
+; compiling (DEFUN ABAR ...)
+; compiling (DEFPARAMETER +NULL-ABAR+ ...)
+; compiling (DEFUN ABAR-PRINT ...)
+; compiling (DEFUN BAR-CMPR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/bar.lisp
+; in: DEFUN BAR-CMPR
+;     (THE CAT::CMPR
+;          (LET ((CAT::LIST1 (CAT::ABAR-LIST CAT::ABAR1))
+;                (CAT::LIST2 (CAT::ABAR-LIST CAT::ABAR2)))
+;            (DECLARE (LIST CAT::LIST1 CAT::LIST2))
+;            (CAT::LEXICO (CAT::F-CMPR (LENGTH CAT::LIST1) (LENGTH CAT::LIST2))
+;                         (CAT::MAPLEXICO #'(LAMBDA # #) CAT::LIST1 CAT::LIST2))
+))
+;
+; note: type assertion too complex to check:
+;  (VALUES (MEMBER :LESS :EQUAL :GREATER) &REST T).
+
+; compiling (DEFUN BAR-BASIS-LENGTH ...)
+; compiling (DEFUN BAR-BASIS ...)
+; compiling (DEFUN BAR-INTR-VRTC-DFFR ...)
+; compiling (DEFMETHOD VRTC-BAR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/bar.lisp
+; in: DEFMETHOD VRTC-BAR (CHAIN-COMPLEX)
+;     (DEFMETHOD CAT::VRTC-BAR ((CAT::CHCM CAT::CHAIN-COMPLEX))
+;       (THE CAT::CHAIN-COMPLEX
+;            (WITH-SLOTS (CAT::CMPR CAT::BASIS CAT::DFFR)
+;                CAT::CHCM
+;              (DECLARE (TYPE CAT::CMPRF CAT::CMPR)
+;                       (TYPE CAT::BASIS CAT::BASIS)
+;                       (TYPE CAT::MORPHISM CAT::DFFR))
+;              (CAT::BUILD-CHCM :CMPR (CAT::BAR-CMPR CAT::CMPR) :BASIS
+;                               (CAT::BAR-BASIS CAT::BASIS) :BSGN CAT::+NULL-ABA
+R+
+;                               :INTR-DFFR (CAT::BAR-INTR-VRTC-DFFR CAT::DFFR)
+;                               :STRT :GNRT :ORGN ...))))
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK
+; ==>
+;   (THE CAT::CHAIN-COMPLEX
+;        (LET ((#:G283 CAT::CHCM))
+;          (DECLARE (IGNORABLE #:G283))
+;          (DECLARE (SB-PCL::%VARIABLE-REBINDING #:G283 CAT::CHCM))
+;          #:G283
+;          (SYMBOL-MACROLET ((CAT::CMPR #) (CAT::BASIS #) (CAT::DFFR #))
+;            (DECLARE (TYPE CAT::CMPRF CAT::CMPR)
+;                     (TYPE CAT::BASIS CAT::BASIS)
+;                     (TYPE CAT::MORPHISM CAT::DFFR))
+;            (CAT::BUILD-CHCM :CMPR (CAT::BAR-CMPR #) :BASIS (CAT::BAR-BASIS #)
+;                             :BSGN CAT::+NULL-ABAR+ :INTR-DFFR
+;                             (CAT::BAR-INTR-VRTC-DFFR #) :STRT :GNRT :ORGN
+;                             ...))))
+;
+; note: type assertion too complex to check:
+;  (VALUES CHAIN-COMPLEX &REST T).
+
+; compiling (DEFUN BAR-INTR-HRZN-DFFR ...)
+; compiling (DEFUN BAR-HRZN-DFFR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/bar.lisp
+; in: DEFUN BAR-HRZN-DFFR
+;     (THE CAT::MORPHISM
+;          (WITH-SLOTS (CAT::APRD)
+;              CAT::ALGB
+;            (DECLARE (TYPE CAT::MORPHISM CAT::APRD))
+;            (CAT::BUILD-MRPH :SORC (CAT::VRTC-BAR CAT::ALGB) :TRGT
+;                             (CAT::VRTC-BAR CAT::ALGB) :DEGR -1 :INTR
+;                             (CAT::BAR-INTR-HRZN-DFFR CAT::APRD) :STRT :GNRT :O
+RGN
+;                             ...)))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN BAR-INTR-DFFR ...)
+; compiling (DEFMETHOD BAR ...)
+; compiling (DEFUN CMBN-ABAR-CMBN-TNPR ...)
+; compiling (DEFUN NCMBN-BAR ...)
+; compiling (DEFUN MRPH-VRTC-BAR-INTR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/bar.lisp
+; in: DEFUN MRPH-VRTC-BAR-INTR
+;     (THE CAT::CMBN
+;          (CAT::NCMBN-BAR
+;           (MAPCAR
+;            #'(LAMBDA (CAT::BRGN) (DECLARE #) (CAT::WITH-BRGN # CAT::BRGN #))
+;            (CAT::ABAR-LIST CAT::ABAR))))
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFMETHOD VRTC-BAR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/bar.lisp
+; in: DEFMETHOD VRTC-BAR (MORPHISM)
+;     (THE CAT::MORPHISM
+;          (IF (EQ (FIRST (CAT::ORGN CAT::MRPH)) 'CAT::IDNT-MRPH)
+;              (CAT::IDNT-MRPH (CAT::VRTC-BAR (CAT::SORC CAT::MRPH)))
+;              (CAT::BUILD-MRPH :SORC (CAT::VRTC-BAR (CAT::SORC CAT::MRPH)) :TRG
+T
+;                               (CAT::VRTC-BAR (CAT::TRGT CAT::MRPH)) :DEGR 0 :I
+NTR
+;                               (CAT::MRPH-VRTC-BAR-INTR CAT::MRPH) :STRT :GNRT
+;                               :ORGN ...)))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN HMTP-VRTC-BAR-INTR ...)
+; compiling (DEFUN HMTP-VRTC-BAR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/bar.lisp
+; in: DEFUN HMTP-VRTC-BAR
+;     (THE CAT::MORPHISM
+;          (IF (EQ (FIRST (CAT::ORGN CAT::H)) 'CAT::ZERO-MRPH)
+;              (CAT::ZERO-MRPH (CAT::VRTC-BAR (CAT::SORC CAT::H)))
+;              (CAT::BUILD-MRPH :SORC (CAT::VRTC-BAR (CAT::SORC CAT::H)) :TRGT
+;                               (CAT::VRTC-BAR (CAT::SORC CAT::H)) :DEGR 1 :INTR
+
+;                               (CAT::HMTP-VRTC-BAR-INTR CAT::H CAT::GF) :STRT
+;                               :GNRT :ORGN ...)))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFMETHOD VRTC-BAR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/bar.lisp
+; in: DEFMETHOD VRTC-BAR (REDUCTION)
+;     (DEFMETHOD CAT::VRTC-BAR ((CAT::RDCT CAT::REDUCTION))
+;       (THE CAT::REDUCTION
+;            (IF (EQ (FIRST #) 'CAT::TRIVIAL-RDCT)
+;                (CAT::TRIVIAL-RDCT (CAT::VRTC-BAR #))
+;                (WITH-SLOTS (CAT::F CAT::G CAT::H)
+;                    CAT::RDCT
+;                  (CAT::BUILD-RDCT :F # :G # :H # :ORGN `#)))))
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK
+; ==>
+;   (THE CAT::REDUCTION
+;        (IF (EQ (FIRST (CAT::ORGN CAT::RDCT)) 'CAT::TRIVIAL-RDCT)
+;            (CAT::TRIVIAL-RDCT (CAT::VRTC-BAR (CAT::BCC CAT::RDCT)))
+;            (LET ((#:G669 CAT::RDCT))
+;              (DECLARE (IGNORABLE #:G669))
+;              (DECLARE (SB-PCL::%VARIABLE-REBINDING #:G669 CAT::RDCT))
+;              #:G669
+;              (SYMBOL-MACROLET (# # #)
+;                (CAT::BUILD-RDCT :F # :G # :H # :ORGN `#)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES REDUCTION &REST T).
+
+; compiling (DEFMETHOD VRTC-BAR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/bar.lisp
+; in: DEFMETHOD VRTC-BAR (HOMOTOPY-EQUIVALENCE)
+;     (DEFMETHOD CAT::VRTC-BAR ((CAT::HMEQ CAT::HOMOTOPY-EQUIVALENCE))
+;       (THE CAT::HOMOTOPY-EQUIVALENCE
+;            (IF (EQ (FIRST #) 'CAT::TRIVIAL-HMEQ)
+;                (CAT::TRIVIAL-HMEQ (CAT::VRTC-BAR #))
+;                (WITH-SLOTS (CAT::LRDCT CAT::RRDCT)
+;                    CAT::HMEQ
+;                  (CAT::BUILD-HMEQ :LRDCT # :RRDCT # :ORGN `#)))))
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK
+; ==>
+;   (THE CAT::HOMOTOPY-EQUIVALENCE
+;        (IF (EQ (FIRST (CAT::ORGN CAT::HMEQ)) 'CAT::TRIVIAL-HMEQ)
+;            (CAT::TRIVIAL-HMEQ (CAT::VRTC-BAR (CAT::LBCC CAT::HMEQ)))
+;            (LET ((#:G685 CAT::HMEQ))
+;              (DECLARE (IGNORABLE #:G685))
+;              (DECLARE (SB-PCL::%VARIABLE-REBINDING #:G685 CAT::HMEQ))
+;              #:G685
+;              (SYMBOL-MACROLET (# #)
+;                (CAT::BUILD-HMEQ :LRDCT # :RRDCT # :ORGN `#)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+
+; compiling (DEFMETHOD BAR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/bar.lisp
+; in: DEFMETHOD BAR (HOMOTOPY-EQUIVALENCE)
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (IF (EQ (FIRST (CAT::ORGN CAT::HMEQ)) 'CAT::TRIVIAL-HMEQ)
+;              (CAT::TRIVIAL-HMEQ (CAT::BAR (CAT::LBCC CAT::HMEQ)))
+;              (CAT::ADD (CAT::VRTC-BAR CAT::HMEQ)
+;                        (CAT::BAR-HRZN-DFFR (CAT::LBCC CAT::HMEQ)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+;
+; compilation unit finished
+;   printed 9 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/bar.fasl written
+; compilation finished in 0:00:00.385
+STYLE-WARNING: Implicitly creating new generic function CAT::VRTC-BAR.
+STYLE-WARNING: Implicitly creating new generic function CAT::BAR.
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/simplicial-sets.lis
+p" (written 26 DEC 2014 07:46:13 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "simplicial-sets")
+; compiling (DEFUN DGOP-EXT-INT ...)
+; compiling (DEFUN DGOP-INT-EXT ...)
+; compiling (DEFUN HYPHENIZE-LIST ...)
+; compiling (DEFUN ABSM-PRINT ...)
+; compiling (DEFUN FACE4 ...)
+; compiling (DEFMETHOD PRINT-OBJECT ...)
+; compiling (DEFUN SMST ...)
+; compiling (DEFUN BUILD-SMST ...)
+; compiling (DEFUN A-BASIS2 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/simplicial-sets.lisp
+; in: DEFUN A-BASIS2
+;     (MAKE-ARRAY (1+ CAT::DMNS) :ELEMENT-TYPE 'LIST)
+; --> LOCALLY
+; ==>
+;   (MAKE-ARRAY (1+ CAT::DMNS) :ELEMENT-TYPE 'LIST)
+;
+; caught STYLE-WARNING:
+;   The default initial element 0 is not a LIST.
+
+; compiling (DEFUN INTR-DIAGONAL ...)
+; compiling (DEFUN FACE-BNDR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/simplicial-sets.lisp
+; in: DEFUN FACE-BNDR
+;     (THE CAT::CMBN
+;          (PROGN
+;           (WHEN (ZEROP CAT::DMNS)
+;             (RETURN-FROM CAT::RSLT CAT::+ZERO-NEGATIVE-CMBN+))
+;           (LET ((CAT::PRE-RSLT CAT::+EMPTY-LIST+))
+;             (DECLARE (LIST CAT::PRE-RSLT))
+;             (DOTIMES (CAT::INDX #)
+;               (DECLARE #)
+;               (LET #
+;                 #
+;                 #))
+;             (APPLY #'CAT::NTERM-ADD CAT::CMPR (1- CAT::DMNS) CAT::PRE-RSLT))))
+
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFUN FACE*-BNDR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/simplicial-sets.lisp
+; in: DEFUN FACE*-BNDR
+;     (THE CAT::CMBN
+;          (PROGN
+;           (WHEN (ZEROP CAT::DMNS)
+;             (RETURN-FROM CAT::RSLT CAT::+ZERO-NEGATIVE-CMBN+))
+;           (LET ((CAT::PRE-RSLT CAT::+EMPTY-LIST+))
+;             (DECLARE (LIST CAT::PRE-RSLT))
+;             (DOTIMES (CAT::INDX #)
+;               (DECLARE #)
+;               (LET #
+;                 #
+;                 #))
+;             (APPLY #'CAT::NTERM-ADD CAT::CMPR (1- CAT::DMNS) CAT::PRE-RSLT))))
+
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFUN A-CMPR3 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/simplicial-sets.lisp
+; in: DEFUN A-CMPR3
+;     (THE CAT::CMPR
+;          (CAT::WITH-ABSM (CAT::DGOP1 CAT::GMSM1) CAT::ABSM1
+;                          (CAT::WITH-ABSM (CAT::DGOP2 CAT::GMSM2) CAT::ABSM2
+;                                          (CAT::LEXICO
+;                                           (CAT::F-CMPR CAT::DGOP1 CAT::DGOP2)
+;                                           (FUNCALL CAT::CMPR CAT::GMSM1
+;                                                    CAT::GMSM2)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES (MEMBER :LESS :EQUAL :GREATER) &REST T).
+
+; compiling (DEFUN BSPN-P ...)
+; compiling (DEFUN DLOP-EXT-INT ...)
+; compiling (DEFUN DLOP-INT-EXT ...)
+; compiling (DEFUN 1DGOP*DGOP ...)
+; compiling (DEFUN DGOP*DGOP ...)
+; compiling (DEFUN REMOVE-BIT ...)
+; compiling (DEFUN DGOP/DGOP ...)
+; compiling (DEFUN 1DLOP-DGOP ...)
+; compiling (DEFUN A-FACE4 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/simplicial-sets.lisp
+; in: DEFUN A-FACE4
+;     (CAT::ABSM CAT::DGOP2 CAT::GMSM)
+; --> CAT::MAKE-ABSM
+; ==>
+;   CAT::DGOP2
+;
+; note: deleting unreachable code
+
+; compiling (DEFUN 1DGNR ...)
+; compiling (DEFUN NDGNR ...)
+; compiling (DEFUN NFACE ...)
+; compiling (DEFUN CHECK-FACES ...)
+; compiling (DEFUN CHECK-SMST ...);
+; compilation unit finished
+;   caught 1 STYLE-WARNING condition
+;   printed 4 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/simplicial-sets.fasl written
+; compilation finished in 0:00:00.255
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/simplicial-mrphs.li
+sp" (written 26 DEC 2014 07:47:43 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "simplicial-mrphs")
+; compiling (DEFMETHOD ?3 ...)
+; compiling (DEFMETHOD PRINT-OBJECT ...)
+; compiling (DEFUN SMMR ...)
+; compiling (DEFUN SINTR-INTR ...)
+; compiling (DEFUN BUILD-SMMR ...)
+; compiling (DEFUN TW-A-SINTR3 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/simplicial-mrphs.lisp
+; in: DEFUN TW-A-SINTR3
+;     (THE CAT::ABSM
+;          (CAT::WITH-ABSM (CAT::DGOP CAT::GMSM) CAT::ABSM
+;                          (LET ((CAT::DMNS-1 #))
+;                            (DECLARE (FIXNUM CAT::DMNS-1))
+;                            (IF (LOGBITP CAT::DMNS-1 CAT::DGOP)
+;                                (CAT::ABSM # CAT::BSPN)
+;                                (CAT::NDGNR CAT::DGOP #)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES ABSM &REST T).
+;
+; compilation unit finished
+;   printed 1 note
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/simplicial-mrphs.fasl written
+; compilation finished in 0:00:00.069
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/delta.lisp" (writte
+n 24 DEC 2014 10:50:38 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "delta")
+; compiling (DEFMETHOD PRINT-KEYCONS ...)
+; compiling (DEFUN SOFT-DELTA-CMPR ...)
+; compiling (DEFUN DELTA-FACE ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/delta.lisp
+; in: DEFUN DELTA-FACE
+;     (THE CAT::ABSM
+;          (DO ((CAT::PMARK 1 (ASH CAT::PMARK 1))
+;               (CAT::BMARK CAT::INDX)
+;               (CAT::GMSM2 CAT::GMSM (ASH CAT::GMSM2 -1)))
+;              (NIL)
+;            (DECLARE (FIXNUM CAT::PMARK CAT::BMARK CAT::GMSM2))
+;            (WHEN (ODDP CAT::GMSM2)
+;              (WHEN (MINUSP #) (RETURN-FROM CAT::DELTA-FACE #)))))
+;
+; note: deleting unreachable code
+
+; compiling (DEFUN SOFT-DELTA-FACE ...)
+; compiling (DEFUN DELTA-BNDR ...)
+; compiling (DEFUN SOFT-DELTA-BNDR ...)
+; compiling (DEFUN DELTA-DGNL ...)
+; compiling (DEFUN SOFT-DELTA-DGNL ...)
+; compiling (DEFUN DELTA-INFINITY ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/delta.lisp
+; in: DEFUN DELTA-INFINITY
+;     (THE CAT::SIMPLICIAL-SET
+;          (CAT::BUILD-SMST :CMPR #'CAT::F-CMPR :BASIS :LOCALLY-EFFECTIVE :BSPN
+1
+;                           :FACE #'CAT::DELTA-FACE :INTR-DGNL #'CAT::DELTA-DGNL
+
+;                           :DGNL-STRT ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES SIMPLICIAL-SET &REST T).
+
+; compiling (DEFUN SOFT-DELTA-INFINITY ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/delta.lisp
+; in: DEFUN SOFT-DELTA-INFINITY
+;     (THE CAT::SIMPLICIAL-SET
+;          (CAT::BUILD-SMST :CMPR #'CAT::SOFT-DELTA-CMPR :BASIS :LOCALLY-EFFECTI
+VE
+;                           :BSPN (CAT::D 1) :FACE #'CAT::SOFT-DELTA-FACE
+;                           :INTR-DGNL #'CAT::SOFT-DELTA-DGNL :DGNL-STRT ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES SIMPLICIAL-SET &REST T).
+
+; compiling (DEFUN DELTA-N-BASIS ...)
+; compiling (DEFUN SOFT-DELTA-N-BASIS ...)
+; compiling (DEFUN DELTA ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/delta.lisp
+; in: DEFUN DELTA
+;     (THE CAT::SIMPLICIAL-SET
+;          (CAT::BUILD-SMST :CMPR #'CAT::F-CMPR :BASIS
+;                           (CAT::DELTA-N-BASIS CAT::DMNS) :BSPN 1 :FACE
+;                           #'CAT::DELTA-FACE :INTR-DGNL #'CAT::DELTA-DGNL
+;                           :DGNL-STRT ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES SIMPLICIAL-SET &REST T).
+
+; compiling (DEFUN SOFT-DELTA ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/delta.lisp
+; in: DEFUN SOFT-DELTA
+;     (THE CAT::SIMPLICIAL-SET
+;          (CAT::BUILD-SMST :CMPR #'CAT::SOFT-DELTA-CMPR :BASIS
+;                           (CAT::SOFT-DELTA-N-BASIS CAT::DMNS) :BSPN (CAT::D 1)
+
+;                           :FACE #'CAT::SOFT-DELTA-FACE :INTR-DGNL
+;                           #'CAT::SOFT-DELTA-DGNL :DGNL-STRT ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES SIMPLICIAL-SET &REST T).
+
+; compiling (DEFUN DELTAB-CMPR ...)
+; compiling (DEFUN DELTAB-BNDR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/delta.lisp
+; in: DEFUN DELTAB-BNDR
+;     (THE CAT::CMBN
+;          (IF (< CAT::DMNS 2)
+;              (CAT::ZERO-CMBN (1- CAT::DMNS))
+;              (CAT::MAKE-CMBN :DEGR (1- CAT::DMNS) :LIST
+;                              (DO (#
+;                                   #
+;                                   #
+;                                   #)
+;                                  (# CAT::RSLT)
+;                                (DECLARE #
+;                                         #)
+;                                (WHEN # # #)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFUN DELTAB2-FACE ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/delta.lisp
+; in: DEFUN DELTAB2-FACE
+;     (THE CAT::ABSM
+;          (PROGN
+;           (WHEN (= 2 CAT::DMNS) (RETURN-FROM CAT::DELTAB2-FACE (CAT::ABSM 1 1)
+))
+;           (DO ((CAT::PMARK 1 #)
+;                (CAT::BMARK CAT::INDX)
+;                (CAT::GMSM2 CAT::GMSM #))
+;               (NIL)
+;             (DECLARE (FIXNUM CAT::PMARK CAT::BMARK CAT::GMSM2))
+;             (WHEN (ODDP CAT::GMSM2) (WHEN # #)))))
+;
+; note: deleting unreachable code
+
+; compiling (DEFUN DELTAB2-DGNL ...)
+; compiling (DEFUN DELTAB2-BNDR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/delta.lisp
+; in: DEFUN DELTAB2-BNDR
+;     (THE CAT::CMBN
+;          (IF (< CAT::DMNS 3)
+;              (CAT::ZERO-CMBN (1- CAT::DMNS))
+;              (CAT::MAKE-CMBN :DEGR (1- CAT::DMNS) :LIST
+;                              (DO (#
+;                                   #
+;                                   #
+;                                   #)
+;                                  (# CAT::RSLT)
+;                                (DECLARE #
+;                                         #)
+;                                (WHEN # # #)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFUN DELTAB ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/delta.lisp
+; in: DEFUN DELTAB
+;     (THE CAT::SIMPLICIAL-SET
+;          (CAT::BUILD-SMST :CMPR #'CAT::DELTAB-CMPR :BASIS :LOCALLY-EFFECTIVE
+;                           :BSPN 1 :FACE #'CAT::DELTA-FACE :INTR-DGNL
+;                           #'CAT::DELTA-DGNL :DGNL-STRT ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES SIMPLICIAL-SET &REST T).
+
+; compiling (DEFUN DELTAB2 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/delta.lisp
+; in: DEFUN DELTAB2
+;     (THE CAT::SIMPLICIAL-SET
+;          (CAT::BUILD-SMST :CMPR #'CAT::F-CMPR :BASIS :LOCALLY-EFFECTIVE :BSPN
+1
+;                           :FACE #'CAT::DELTAB2-FACE :INTR-DGNL
+;                           #'CAT::DELTAB2-DGNL :DGNL-STRT ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES SIMPLICIAL-SET &REST T).
+;
+; compilation unit finished
+;   printed 10 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/delta.fasl written
+; compilation finished in 0:00:00.261
+STYLE-WARNING: Implicitly creating new generic function CAT::PRINT-KEYCONS.
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/special-smsts.lisp"
+ (written 24 DEC 2014 10:51:30 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "special-smsts")
+; compiling (DEFUN FINITE-SS-PRE-TABLE ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/special-smsts.lisp
+; in: DEFUN FINITE-SS-PRE-TABLE
+;     (ERROR "In BUILD-FINITE-SS, the argument ~A does not make sense." CAT::ITE
+M)
+; ==>
+;   "In BUILD-FINITE-SS, the argument ~A does not make sense."
+;
+; note: deleting unreachable code
+;
+; note: deleting unreachable code
+
+; compiling (DEFUN FINITE-SS-PRE-TABLE-TABLE ...)
+; compiling (DEFUN FINITE-SS-FIND-GMSM ...)
+; compiling (DEFUN FINITE-SS-FINISH-TABLE ...)
+; compiling (DEFUN FINITE-SS-FINISH-LINE ...)
+; compiling (DEFUN FINITE-SS-FINISH-ENTRY ...)
+; compiling (DEFUN FINITE-SS-TABLE ...)
+; compiling (DEFUN FINITE-SS-BASIS ...)
+; compiling (DEFUN FINITE-SS-FACE ...)
+; compiling (DEFUN FINITE-SS-INTR-BNDR ...)
+; compiling (DEFUN BUILD-FINITE-SS ...)
+; compiling (DEFUN SPHERE-CMPR ...)
+; compiling (DEFUN SPHERE-BASIS ...)
+; compiling (DEFUN SPHERE-FACE ...)
+; compiling (DEFUN SPHERE ...)
+; compiling (DEFUN SPHERE-WEDGE-BASIS ...)
+; compiling (DEFUN SPHERE-WEDGE-FACE ...)
+; compiling (DEFUN SPHERE-WEDGE ...)
+; compiling (DEFUN MOORE-CMPR ...)
+; compiling (DEFUN MOORE-BASIS ...)
+; compiling (DEFUN MOORE-FACE ...)
+; compiling (DEFUN MOORE-INTR-BNDR ...)
+; compiling (DEFUN MOORE ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/special-smsts.lisp
+; in: DEFUN MOORE
+;     (THE CAT::SIMPLICIAL-SET
+;          (CAT::BUILD-SMST :CMPR #'CAT::MOORE-CMPR :BASIS
+;                           (CAT::MOORE-BASIS CAT::DMNS) :FACE
+;                           (CAT::MOORE-FACE CAT::PII CAT::DMNS) :INTR-BNDR
+;                           (CAT::MOORE-INTR-BNDR CAT::PII CAT::DMNS) :BNDR-STRT
+
+;                           :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES SIMPLICIAL-SET &REST T).
+
+; compiling (DEFUN R-PROJ-SPACE-CMPR ...)
+; compiling (DEFUN R-PROJ-SPACE-BASIS ...)
+; compiling (DEFUN R-PROJ-SPACE-FACE ...)
+; compiling (DEFUN R-PROJ-SPACE-INTR-BNDR ...)
+; compiling (DEFUN R-PROJ-SPACE ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/special-smsts.lisp
+; in: DEFUN R-PROJ-SPACE
+;     (THE CAT::SIMPLICIAL-SET
+;          (CAT::BUILD-SMST :CMPR #'CAT::R-PROJ-SPACE-CMPR :BASIS
+;                           (CAT::R-PROJ-SPACE-BASIS CAT::K CAT::L) :BSPN 0 :FAC
+E
+;                           (CAT::R-PROJ-SPACE-FACE CAT::K) :INTR-BNDR
+;                           (CAT::R-PROJ-SPACE-INTR-BNDR CAT::K) :BNDR-STRT ...)
+)
+;
+; note: type assertion too complex to check:
+;  (VALUES SIMPLICIAL-SET &REST T).
+
+; compiling (DEFUN CMBN-GMSMS ...)
+; compiling (DEFUN GMSMS-SUBSMST ...);
+; compilation unit finished
+;   printed 4 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/special-smsts.fasl written
+; compilation finished in 0:00:00.208
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/suspensions.lisp" (
+written 24 DEC 2014 10:57:09 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "suspensions")
+; compiling (DEFUN SUSPENSION-CMPR ...)
+; compiling (DEFUN SUSPENSION-BASIS ...)
+; compiling (DEFUN SUSPENSION-INTR-DFFR ...)
+; compiling (DEFUN SUSPENSION ...)
+; compiling (DEFMETHOD SUSPENSION-1 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/suspensions.lisp
+; in: DEFMETHOD SUSPENSION-1 (CHAIN-COMPLEX)
+;     (DEFMETHOD CAT::SUSPENSION-1 ((CAT::CHCM CAT::CHAIN-COMPLEX))
+;       (THE CAT::CHAIN-COMPLEX
+;            (WITH-SLOTS (CAT::CMPR CAT::BASIS CAT::DFFR)
+;                CAT::CHCM
+;              (CAT::BUILD-CHCM :CMPR (CAT::SUSPENSION-CMPR CAT::CMPR) :BASIS
+;                               (CAT::SUSPENSION-BASIS CAT::BASIS) :BSGN :S-BSGN
+
+;                               :INTR-DFFR (CAT::SUSPENSION-INTR-DFFR CAT::DFFR)
+
+;                               :STRT :CMBN :ORGN ...))))
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET BLOCK
+; ==>
+;   (THE CAT::CHAIN-COMPLEX
+;        (LET ((#:G66 CAT::CHCM))
+;          (DECLARE (IGNORABLE #:G66))
+;          (DECLARE (SB-PCL::%VARIABLE-REBINDING #:G66 CAT::CHCM))
+;          #:G66
+;          (SYMBOL-MACROLET ((CAT::CMPR #) (CAT::BASIS #) (CAT::DFFR #))
+;            (CAT::BUILD-CHCM :CMPR (CAT::SUSPENSION-CMPR #) :BASIS
+;                             (CAT::SUSPENSION-BASIS #) :BSGN :S-BSGN :INTR-DFFR
+
+;                             (CAT::SUSPENSION-INTR-DFFR #) :STRT :CMBN :ORGN
+;                             ...))))
+;
+; note: type assertion too complex to check:
+;  (VALUES CHAIN-COMPLEX &REST T).
+
+; compiling (DEFUN SUSPENSION-INTR-CPRD ...)
+; compiling (DEFMETHOD SUSPENSION-1 ...)
+; compiling (DEFUN SUSPENSION-FACE ...)
+; compiling (DEFMETHOD SUSPENSION-1 ...)
+; compiling (DEFUN SUSPENSION-INTR ...)
+; compiling (DEFMETHOD SUSPENSION-1 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/suspensions.lisp
+; in: DEFMETHOD SUSPENSION-1 (MORPHISM)
+;     (THE CAT::MORPHISM
+;          (LET ((CAT::ORGN (CAT::ORGN CAT::MRPH)))
+;            (DECLARE (LIST CAT::ORGN))
+;            (WHEN (EQ (FIRST CAT::ORGN) 'CAT::ZERO-MRPH)
+;              (RETURN-FROM CAT::SUSPENSION-1 (CAT::ZERO-MRPH # # #)))
+;            (WHEN (EQ (FIRST CAT::ORGN) 'CAT::IDNT-MRPH)
+;              (RETURN-FROM CAT::SUSPENSION-1 (CAT::IDNT-MRPH #)))
+;            (CAT::BUILD-MRPH :SORC (CAT::SUSPENSION (CAT::SORC CAT::MRPH)) :TRG
+T
+;                             (CAT::SUSPENSION (CAT::TRGT CAT::MRPH)) :DEGR
+;                             (CAT::DEGR CAT::MRPH) :INTR
+;                             (CAT::SUSPENSION-INTR CAT::MRPH) :STRT :CMBN :ORGN
+
+;                             ...)))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFMETHOD SUSPENSION-1 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/suspensions.lisp
+; in: DEFMETHOD SUSPENSION-1 (REDUCTION)
+;     (THE CAT::REDUCTION
+;          (PROGN
+;           (WHEN (EQ (FIRST #) 'CAT::TRIVIAL-RDCT)
+;             (RETURN-FROM CAT::SUSPENSION-1 (CAT::TRIVIAL-RDCT #)))
+;           (CAT::BUILD-RDCT :F (CAT::SUSPENSION (CAT::F CAT::RDCT)) :G
+;                            (CAT::SUSPENSION (CAT::G CAT::RDCT)) :H
+;                            (CAT::SUSPENSION (CAT::H CAT::RDCT)) :ORGN
+;                            `(CAT::SUSPENSION ,CAT::RDCT))))
+;
+; note: type assertion too complex to check:
+;  (VALUES REDUCTION &REST T).
+
+; compiling (DEFMETHOD SUSPENSION-1 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/suspensions.lisp
+; in: DEFMETHOD SUSPENSION-1 (HOMOTOPY-EQUIVALENCE)
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (PROGN
+;           (WHEN (EQ (FIRST #) 'CAT::TRIVIAL-HMEQ)
+;             (RETURN-FROM CAT::SUSPENSION-1 (CAT::TRIVIAL-HMEQ #)))
+;           (CAT::BUILD-HMEQ :LRDCT (CAT::SUSPENSION (CAT::LRDCT CAT::HMEQ)) :RR
+DCT
+;                            (CAT::SUSPENSION (CAT::RRDCT CAT::HMEQ)) :ORGN
+;                            `(CAT::SUSPENSION ,CAT::HMEQ))))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+
+; compiling (DEFMETHOD SEARCH-EFHM ...);
+; compilation unit finished
+;   printed 4 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/suspensions.fasl written
+; compilation finished in 0:00:00.206
+STYLE-WARNING: Implicitly creating new generic function CAT::SUSPENSION-1.
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/disk-pasting.lisp"
+(written 24 DEC 2014 10:58:09 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "disk-pasting")
+; compiling (DEFUN DISK-PASTING-CMPR ...)
+; compiling (DEFUN DISK-PASTING-BASIS ...)
+; compiling (DEFUN DISK-PASTING-INTR-DFFR ...)
+; compiling (DEFUN CHCM-DISK-PASTING ...)
+; compiling (DEFUN DISK-PASTING-FACE ...)
+; compiling (DEFUN DISK-PASTING ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/disk-pasting.lisp
+; in: DEFUN DISK-PASTING
+;     (THE CAT::SIMPLICIAL-SET
+;          (WITH-SLOTS (CAT::CMPR CAT::BASIS CAT::BSGN CAT::FACE CAT::DFFR)
+;              CAT::SMST
+;            (DECLARE (TYPE CAT::CMPRF CAT::CMPR)
+;                     (TYPE CAT::BASIS CAT::BASIS)
+;                     (TYPE CAT::GMSM CAT::BSGN)
+;                     (TYPE CAT::FACE CAT::FACE)
+;                     (TYPE CAT::MORPHISM CAT::DFFR))
+;            (LET ((CAT::NEW-FACE #) (CAT::NEW-BNDR #))
+;              (DECLARE (TYPE CAT::FACE CAT::NEW-FACE)
+;                       (TYPE CAT::CMBN CAT::NEW-BNDR))
+;              (DO (#
+;                   #)
+;                  (#)
+;                (DECLARE #
+;                         #)
+;                (LET #
+;                  #
+;                  #))
+;              (CAT::BUILD-SMST :CMPR (CAT::DISK-PASTING-CMPR CAT::CMPR CAT::NEW
+)
+;                               :BASIS
+;                               (CAT::DISK-PASTING-BASIS CAT::BASIS CAT::DMNS
+;                                CAT::NEW)
+;                               :BSPN CAT::BSGN :FACE CAT::NEW-FACE :INTR-BNDR
+;                               (CAT::DISK-PASTING-INTR-DFFR CAT::DFFR CAT::DMNS
+
+;                                CAT::NEW CAT::NEW-BNDR)
+;                               :BNDR-STRT ...))))
+;
+; note: type assertion too complex to check:
+;  (VALUES SIMPLICIAL-SET &REST T).
+
+; compiling (DEFUN MRPH-DISK-PASTING-INTR ...)
+; compiling (DEFUN MRPH-DISK-PASTING ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/disk-pasting.lisp
+; in: DEFUN MRPH-DISK-PASTING
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::NEW-SORC :TRGT CAT::NEW-TRGT :DEGR
+;                           (CAT::DEGR CAT::MRPH) :INTR
+;                           (CAT::MRPH-DISK-PASTING-INTR CAT::MRPH
+;                            (CAT::CMPR CAT::NEW-TRGT) CAT::DMNS CAT::NEW
+;                            CAT::NEW-IM)
+;                           :STRT :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN HMEQ-DISK-PASTING ...)
+; compiling (DEFMETHOD SEARCH-EFHM ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/disk-pasting.lisp
+; in: DEFMETHOD SEARCH-EFHM (T (EQL 'DISK-PASTING))
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (DESTRUCTURING-BIND
+;              (CAT::OLD-SMST CAT::DMNS CAT::NEW CAT::FACES)
+;              (REST (CAT::ORGN CAT::SMST))
+;            (DECLARE (TYPE CAT::SIMPLICIAL-SET CAT::OLD-SMST)
+;                     (FIXNUM CAT::DMNS)
+;                     (SYMBOL CAT::NEW)
+;                     (IGNORE CAT::FACES))
+;            (CAT::HMEQ-DISK-PASTING (CAT::EFHM CAT::OLD-SMST) CAT::DMNS CAT::NE
+W
+;             (CAT::? CAT::SMST CAT::DMNS CAT::NEW) :NEW-LBCC CAT::SMST)))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+;
+; compilation unit finished
+;   printed 3 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/disk-pasting.fasl written
+; compilation finished in 0:00:00.152
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/cartesian-products.
+lisp" (written 24 DEC 2014 10:58:35 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "cartesian-products")
+; compiling (DEFUN CRPR-PRINT ...)
+; compiling (DEFUN EXTRACT-COMMON-DGOP ...)
+; compiling (DEFUN 2ABSM-ACRPR ...)
+; compiling (DEFUN CRTS-PRDC-CMPR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cartesian-products.lisp
+; in: DEFUN CRTS-PRDC-CMPR
+;     (THE CAT::CMPR
+;          (CAT::LEXICO
+;           (CAT::F-CMPR (CAT::DGOP1 CAT::CRPR1) (CAT::DGOP1 CAT::CRPR2))
+;           (CAT::F-CMPR (CAT::DGOP2 CAT::CRPR1) (CAT::DGOP2 CAT::CRPR2))
+;           (FUNCALL CAT::CMPR1 (CAT::GMSM1 CAT::CRPR1) (CAT::GMSM1 CAT::CRPR2))
+
+;           (FUNCALL CAT::CMPR2 (CAT::GMSM2 CAT::CRPR1) (CAT::GMSM2 CAT::CRPR2))
+))
+;
+; note: type assertion too complex to check:
+;  (VALUES (MEMBER :LESS :EQUAL :GREATER) &REST T).
+
+; compiling (DEFUN CRTS-PRDC-BASIS ...)
+; compiling (DEFUN CRTS-PRDC-FACE ...)
+; compiling (DEFUN CRTS-PRDC-FACE* ...)
+; compiling (DEFUN CRTS-PRDC ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cartesian-products.lisp
+; in: DEFUN CRTS-PRDC
+;     (THE CAT::SIMPLICIAL-SET
+;          (CAT::BUILD-SMST :CMPR (CAT::CRTS-PRDC-CMPR CAT::CMPR1 CAT::CMPR2)
+;                           :BASIS (CAT::CRTS-PRDC-BASIS CAT::BASIS1 CAT::BASIS2
+)
+;                           :BSPN (CAT::CRPR 0 CAT::BSPN1 0 CAT::BSPN2) :FACE
+;                           (CAT::CRTS-PRDC-FACE CAT::FACE1 CAT::FACE2) :FACE*
+;                           (CAT::CRTS-PRDC-FACE* CAT::FACE1 CAT::FACE2) :ORGN .
+..))
+;
+; note: type assertion too complex to check:
+;  (VALUES SIMPLICIAL-SET &REST T).
+;
+; compilation unit finished
+;   printed 2 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/cartesian-products.fasl written
+; compilation finished in 0:00:00.111
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/eilenberg-zilber.li
+sp" (written 24 DEC 2014 10:58:54 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "eilenberg-zilber")
+; compiling (DEFUN SHUFFLE-SIGN ...)
+; compiling (DEFUN INTR-EML ...)
+; compiling (DEFUN EML ...)
+; compiling (DEFUN INTR-PHI ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/eilenberg-zilber.lisp
+; in: DEFUN INTR-PHI
+;     (THE CAT::CMBN
+;          (LET* ((CAT::N (CAT::CMBN-DEGR CAT::CMBN))
+;                 (CAT::N+1 (1+ CAT::N))
+;                 (CAT::ARRAY-PQ (MAKE-ARRAY #)))
+;            (DECLARE (FIXNUM CAT::N CAT::N+1)
+;                     (SIMPLE-ARRAY CAT::ARRAY-PQ))
+;            (DO ((CAT::I 1 #))
+;                ((> CAT::I CAT::N+1))
+;              (DECLARE (FIXNUM CAT::I))
+;              (DO (#
+;                   #)
+;                  (#)
+;                (DECLARE #)
+;                (SETF #)))
+;            (DOLIST (CAT::TERM (CAT::CMBN-LIST CAT::CMBN))
+;              (DECLARE (TYPE CAT::TERM CAT::TERM))
+;              (CAT::WITH-TERM (CAT::CFFC CAT::CRPR) CAT::TERM
+;                              (LET #
+;                                #
+;                                #)))
+;            (CAT::INTR-PHI-2 CAT::ARRAY-PQ CAT::CMPR)))
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFUN INTR-PHI-2 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/eilenberg-zilber.lisp
+; in: DEFUN INTR-PHI-2
+;     (THE CAT::CMBN
+;          (LET* ((CAT::N+1 (1- #))
+;                 (CAT::N (1- CAT::N+1))
+;                 (CAT::CMBN-LIST CAT::+EMPTY-LIST+))
+;            (DECLARE (FIXNUM CAT::N CAT::N+1)
+;                     (LIST CAT::CMBN-LIST))
+;            (DO ((CAT::I 1 #)
+;                 (CAT::CMBN-I # #)
+;                 (CAT::MASK # #))
+;                ((= CAT::I CAT::N+1))
+;              (DECLARE (FIXNUM CAT::I CAT::MASK)
+;                       (LIST CAT::CMBN-I))
+;              (LET (#)
+;                (DECLARE #)
+;                (DO # # # #)))
+;            (IF CAT::CMBN-LIST
+;                (APPLY #'CAT::NCMBN-ADD CAT::CMPR CAT::CMBN-LIST)
+;                (CAT::ZERO-CMBN CAT::N+1))))
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFUN PHI ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/eilenberg-zilber.lisp
+; in: DEFUN PHI
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC (CAT::CRTS-PRDC CAT::SMST1 CAT::SMST2) :TRGT
+;                           (CAT::CRTS-PRDC CAT::SMST1 CAT::SMST2) :DEGR 1 :INTR
+
+;                           (CAT::INTR-PHI CAT::SMST1 CAT::SMST2) :STRT :CMBN :O
+RGN
+;                           ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN INTR-AW ...)
+; compiling (DEFUN AW ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/eilenberg-zilber.lisp
+; in: DEFUN AW
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::CRTS-PRDC :TRGT CAT::TNSR-PRDC :DEGR 0 :I
+NTR
+;                           (CAT::INTR-AW CAT::FACE1 CAT::FACE2) :STRT :GNRT :OR
+GN
+;                           ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN EZ ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/eilenberg-zilber.lisp
+; in: DEFUN EZ
+;     (THE CAT::REDUCTION
+;          (CAT::BUILD-RDCT :F (CAT::AW CAT::SMST1 CAT::SMST2) :G
+;                           (CAT::EML CAT::SMST1 CAT::SMST2) :H
+;                           (CAT::PHI CAT::SMST1 CAT::SMST2) :ORGN
+;                           `(CAT::EILENBERG-ZILBER ,CAT::SMST1 ,CAT::SMST2)))
+;
+; note: type assertion too complex to check:
+;  (VALUES REDUCTION &REST T).
+
+; compiling (DEFUN LEFT-CRTS-PRDC-EFHM ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/eilenberg-zilber.lisp
+; in: DEFUN LEFT-CRTS-PRDC-EFHM
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (CAT::BUILD-HMEQ :LRDCT
+;                           (CAT::TRIVIAL-RDCT
+;                            (CAT::CRTS-PRDC CAT::SMST1 CAT::SMST2))
+;                           :RRDCT (CAT::EZ CAT::SMST1 CAT::SMST2)))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+
+; compiling (DEFMETHOD SEARCH-EFHM ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/eilenberg-zilber.lisp
+; in: DEFMETHOD SEARCH-EFHM (T (EQL 'CRTS-PRDC))
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (CAT::CMPS
+;           (CAT::LEFT-CRTS-PRDC-EFHM (SECOND (CAT::ORGN CAT::SMST))
+;            (THIRD (CAT::ORGN CAT::SMST)))
+;           (CAT::TNSR-PRDC (CAT::EFHM (SECOND #)) (CAT::EFHM (THIRD #)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+;
+; compilation unit finished
+;   printed 7 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/eilenberg-zilber.fasl written
+; compilation finished in 0:00:00.215
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/kan.lisp" (written
+26 DEC 2014 07:50:18 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "kan")
+; compiling (DEFUN KAN ...)
+; compiling (DEFMETHOD PRINT-OBJECT ...)
+; compiling (DEFUN SMST-KAN ...)
+; compiling (DEFUN CHECK-HAT ...)
+; compiling (DEFUN CHECK-KAN ...)
+
+; C:/home/quicklisp/local-projects/kenzo/src/kan.fasl written
+; compilation finished in 0:00:00.039
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/simplicial-groups.l
+isp" (written 26 DEC 2014 07:51:23 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "simplicial-groups")
+; compiling (DEFUN SMGR ...)
+; compiling (DEFMETHOD PRINT-OBJECT ...)
+; compiling (DEFMETHOD PRINT-OBJECT ...)
+; compiling (DEFUN BUILD-SMGR ...)
+; compiling (DEFUN A-GRML4 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/simplicial-groups.lisp
+; in: DEFUN A-GRML4
+;     (THE CAT::ABSM
+;          (LET ((CAT::ACRPR (CAT::2ABSM-ACRPR CAT::ABSM1 CAT::ABSM2)))
+;            (DECLARE (TYPE CAT::ABSM CAT::ACRPR))
+;            (CAT::WITH-ABSM (CAT::DGOP CAT::CRPR) CAT::ACRPR
+;                            (CAT::NDGNR CAT::DGOP
+;                                        (FUNCALL CAT::SINTR-GRML # CAT::CRPR)))
+))
+;
+; note: type assertion too complex to check:
+;  (VALUES ABSM &REST T).
+
+; compiling (DEFUN A-GRIN4 ...)
+; compiling (DEFMETHOD SLOT-UNBOUND ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/simplicial-groups.lisp
+; in: DEFMETHOD SLOT-UNBOUND (T SIMPLICIAL-GROUP (EQL 'KFLL))
+;     (DEFMETHOD SLOT-UNBOUND
+;                (CLASS (CAT::SMGR CAT::SIMPLICIAL-GROUP)
+;                 (CAT::NAME (EQL (QUOTE CAT::KFLL))))
+;       (DECLARE (IGNORE CLASS))
+;       (THE CAT::KFLL (PROGN (PUSH CAT::SMGR CAT::*KAN-LIST*) (SETF # #))))
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET SB-PCL::PV-BINDING SB-PCL::PV-BINDING1
+; --> SB-PCL::PV-ENV LOCALLY LET BLOCK THE PROGN
+; --> SB-PCL::OPTIMIZED-SET-SLOT-VALUE LET SB-PCL::INSTANCE-WRITE
+; --> SB-PCL::INSTANCE-WRITE-STANDARD LOCALLY LET TYPECASE LET COND IF PROGN
+; --> AND IF
+; ==>
+;   NIL
+;
+; caught STYLE-WARNING:
+;   This is not a FUNCTION:
+;     NIL
+;   See also:
+;     The SBCL Manual, Node "Handling of Types"
+
+; compiling (DEFUN SMGR-KFLL-INTR ...)
+; compiling (DEFUN SMGR-KFLL ...)
+; compiling (DEFMETHOD SLOT-UNBOUND ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/simplicial-groups.lisp
+; in: DEFMETHOD SLOT-UNBOUND (T SIMPLICIAL-GROUP (EQL 'APRD))
+;     (DEFMETHOD SLOT-UNBOUND
+;                (CLASS (CAT::SMGR CAT::SIMPLICIAL-GROUP)
+;                 (CAT::NAME (EQL (QUOTE CAT::APRD))))
+;       (DECLARE (IGNORE CLASS))
+;       (THE CAT::MORPHISM (PROGN (PUSH CAT::SMGR CAT::*HOPF-LIST*) (SETF # #)))
+)
+; --> PROGN EVAL-WHEN SB-PCL::%DEFMETHOD-EXPANDER PROGN SB-PCL::LOAD-DEFMETHOD
+; --> SB-PCL::LOAD-DEFMETHOD LIST* LET* SB-INT:NAMED-LAMBDA FUNCTION
+; --> SYMBOL-MACROLET SB-PCL::FAST-LEXICAL-METHOD-FUNCTIONS
+; --> SB-PCL::BIND-FAST-LEXICAL-METHOD-FUNCTIONS FLET SB-PCL::BIND-ARGS LET*
+; --> LOCALLY SYMBOL-MACROLET SB-PCL::PV-BINDING SB-PCL::PV-BINDING1
+; --> SB-PCL::PV-ENV LOCALLY LET BLOCK THE PROGN
+; --> SB-PCL::OPTIMIZED-SET-SLOT-VALUE LET SB-PCL::INSTANCE-WRITE
+; --> SB-PCL::INSTANCE-WRITE-STANDARD LOCALLY LET TYPECASE LET COND IF PROGN
+; --> AND IF
+; ==>
+;   NIL
+;
+; caught STYLE-WARNING:
+;   This is not a MORPHISM:
+;     NIL
+;   See also:
+;     The SBCL Manual, Node "Handling of Types"
+
+; compiling (DEFUN SMGR-APRD ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/simplicial-groups.lisp
+; in: DEFUN SMGR-APRD
+;     (THE CAT::MORPHISM
+;          (LET ((CAT::EML (CAT::EML CAT::SMGR CAT::SMGR))
+;                (CAT::GRML (CAT::GRML CAT::SMGR)))
+;            (DECLARE (TYPE CAT::MORPHISM CAT::EML)
+;                     (TYPE CAT::SIMPLICIAL-MRPH CAT::GRML))
+;            (CAT::CMPS CAT::GRML CAT::EML)))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+;
+; compilation unit finished
+;   caught 2 STYLE-WARNING conditions
+;   printed 2 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/simplicial-groups.fasl written
+; compilation finished in 0:00:00.204
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/fibrations.lisp" (w
+ritten 24 DEC 2014 10:59:37 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "fibrations")
+; compiling (DEFUN FIBRATION-TOTAL-FACE ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/fibrations.lisp
+; in: DEFUN FIBRATION-TOTAL-FACE
+;     (THE CAT::ABSM
+;          (PROGN
+;           (WHEN (< CAT::INDX CAT::DMNS)
+;             (RETURN-FROM CAT::RSLT
+;               (FUNCALL CAT::UFACE CAT::INDX CAT::DMNS CAT::CRPR)))
+;           (CAT::WITH-CRPR (CAT::B-ABSM CAT::F-ABSM) CAT::CRPR
+;                           (LET (# # #)
+;                             (DECLARE #)
+;                             (CAT::2ABSM-ACRPR CAT::DELN-B #)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES ABSM &REST T).
+
+; compiling (DEFUN FIBRATION-TOTAL ...)
+; compiling (DEFUN FIBRATION-KFLL ...);
+; compilation unit finished
+;   printed 1 note
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/fibrations.fasl written
+; compilation finished in 0:00:00.052
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/loop-spaces.lisp" (
+written 25 DEC 2014 09:01:28 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "loop-spaces")
+; compiling (DEFPARAMETER +NULL-LOOP+ ...)
+; compiling (DEFUN NORMALIZE-LOOP ...)
+; compiling (DEFUN UNNORMALIZE-LOOP ...)
+; compiling (DEFUN LOOP3 ...)
+; compiling (DEFUN LOOP-PRINT ...)
+; compiling (DEFUN APOWR-NILOOP ...)
+; compiling (DEFUN LOOP-SPACE-CMPR ...)
+; compiling (DEFUN APOWR-FACE4 ...)
+; compiling (DEFUN APOWR-LASTFACE4 ...)
+; compiling (DEFUN LOOP-SPACE-FACE ...)
+; compiling (DEFUN LOOP-SPACE-FACE* ...)
+; compiling (DEFUN LOOP-SPACE-GRIN-SINTR ...)
+; compiling (DEFUN LOOP-SPACE-GRML-SINTR ...)
+; compiling (DEFUN LOOP-SPACE ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/loop-spaces.lisp
+; in: DEFUN LOOP-SPACE
+;     (THE CAT::SIMPLICIAL-GROUP
+;          (IF (= CAT::N 1)
+;              (WITH-SLOTS (CAT::CMPR CAT::FACE)
+;                  CAT::SMST
+;                (DECLARE (TYPE CAT::CMPRF CAT::CMPR)
+;                         (TYPE CAT::FACE CAT::FACE))
+;                (CAT::BUILD-SMGR :CMPR (CAT::LOOP-SPACE-CMPR CAT::CMPR) :BASIS
+;                                 :LOCALLY-EFFECTIVE :BSPN CAT::+NULL-LOOP+ :FAC
+E
+;                                 (CAT::LOOP-SPACE-FACE CAT::CMPR CAT::FACE) :FA
+CE*
+;                                 (CAT::LOOP-SPACE-FACE* CAT::CMPR CAT::FACE)
+;                                 :SINTR-GRML ...))
+;              (CAT::LOOP-SPACE (CAT::LOOP-SPACE CAT::SMST) (1- CAT::N))))
+;
+; note: type assertion too complex to check:
+;  (VALUES SIMPLICIAL-GROUP &REST T).
+
+; compiling (DEFUN GDELTAB ...);
+; compilation unit finished
+;   printed 1 note
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/loop-spaces.fasl written
+; compilation finished in 0:00:00.158
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/ls-twisted-products
+.lisp" (written 24 DEC 2014 11:00:19 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "ls-twisted-products")
+; compiling (DEFUN ABSM-LOOPABSM ...)
+; compiling (DEFUN TWISTED-CRTS-PRDC-FACE ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/ls-twisted-products.lisp
+; in: DEFUN TWISTED-CRTS-PRDC-FACE
+;     (THE CAT::ABSM
+;          (PROGN
+;           (UNLESS (= CAT::INDX CAT::DMNS)
+;             (RETURN-FROM CAT::RSLT
+;               (FUNCALL CAT::NON-TWISTED-FACE CAT::INDX CAT::DMNS CAT::CRPR)))
+;           (CAT::WITH-CRPR (CAT::ABSM1 CAT::ABSM2) CAT::CRPR
+;                           (LET (# #)
+;                             (DECLARE #)
+;                             (SETF #)
+;                             (CAT::2ABSM-ACRPR CAT::FACE1 CAT::FACE2)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES ABSM &REST T).
+
+; compiling (DEFUN TWISTED-CRTS-PRDC ...)
+; compiling (DEFUN DTAU-D-INTR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/ls-twisted-products.lisp
+; in: DEFUN DTAU-D-INTR
+;     (THE CAT::CMBN
+;          (LET ((CAT::DMNS-1 (1- CAT::DMNS)))
+;            (DECLARE (FIXNUM CAT::DMNS-1))
+;            (WHEN (LOGBITP CAT::DMNS-1 (CAT::DGOP1 CAT::CRPR))
+;              (RETURN-FROM CAT::RSLT (CAT::ZERO-CMBN CAT::DMNS-1)))
+;            (LET ((CAT::FACE-TAU #) (CAT::FACE #) (CAT::SIGN #))
+;              (DECLARE (TYPE CAT::ABSM CAT::FACE-TAU CAT::FACE)
+;                       (FIXNUM CAT::SIGN))
+;              (CAT::WITH-ABSM (CAT::DGOP-TAU CAT::GMSM-TAU) CAT::FACE-TAU
+;                              (CAT::WITH-ABSM # CAT::FACE #)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFUN DTAU-D ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/ls-twisted-products.lisp
+; in: DEFUN DTAU-D
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::CRTS-PRDC :TRGT CAT::CRTS-PRDC :DEGR -1
+;                           :INTR
+;                           (CAT::DTAU-D-INTR CAT::CRTS-PRDC-CMPR
+;                            CAT::CRTS-PRDC-FACE CAT::TWISTED-CRTS-PRDC-FACE)
+;                           :STRT :GNRT :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN SZCZARBA ...)
+; compiling (DEFUN TWISTED-TNSR-PRDC ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/ls-twisted-products.lisp
+; in: DEFUN TWISTED-TNSR-PRDC
+;     (THE CAT::CHAIN-COMPLEX (CAT::BCC CAT::SZCZARBA))
+;
+; note: type assertion too complex to check:
+;  (VALUES CHAIN-COMPLEX &REST T).
+
+; compiling (DEFUN POP-FIRST-ABSM ...)
+; compiling (DEFUN CRTS-CONTRACTION-INTR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/ls-twisted-products.lisp
+; in: DEFUN CRTS-CONTRACTION-INTR
+;     (CAT::H-TILDE CAT::Y-N+1 CAT::GP-N)
+;
+; note: deleting unreachable code
+
+;     (IF (CAT::DEGENERATE-P CAT::GP-N)
+;         CAT::H-TILDES
+;         (CAT::2CMBN-ADD CAT::CRTS-CMPR
+;                         (CAT::H-HAT (CAT::LOOP-LIST (CAT::GMSM CAT::GP-N)))
+;                         CAT::H-TILDES))
+; ==>
+;   CAT::H-TILDES
+;
+; note: deleting unreachable code
+
+;     (CAT::2CMBN-ADD CAT::CRTS-CMPR
+;                     (CAT::H-HAT (CAT::LOOP-LIST (CAT::GMSM CAT::GP-N)))
+;                     CAT::H-TILDES)
+; ==>
+;   CAT::CRTS-CMPR
+;
+; note: deleting unreachable code
+
+;     (LOGAND (CAT::DGOP CAT::NEXT-X-N) (CAT::DGOP CAT::GP-N))
+;
+; note: deleting unreachable code
+
+;     (CAT::2CMBN-SBTR CAT::CRTS-CMPR (CAT::HH CAT::NEXT-X-N CAT::GP-N)
+;                      CAT::H-TILDE)
+; ==>
+;   CAT::CRTS-CMPR
+;
+; note: deleting unreachable code
+
+;     (CAT::CMBN-OPPS CAT::H-TILDE)
+; ==>
+;   CAT::H-TILDE
+;
+; note: deleting unreachable code
+
+;     (THE CAT::CMBN
+;          (LET ((CAT::N+1 (1+ CAT::N)))
+;            (DECLARE (FIXNUM CAT::N+1))
+;            (LABELS ((CAT::HH #
+;                       #
+;                       #)
+;                     (CAT::H-TILDE #
+;                       #
+;                       #
+;                       #)
+;                     (CAT::H-HAT #
+;                       #
+;                       #))
+;              (CAT::WITH-CRPR (CAT::ABSM1 CAT::LOOP-ABSM2) CAT::CRPR
+;                              (CAT::HH CAT::ABSM1 CAT::LOOP-ABSM2)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+;     (CAT::DGOP CAT::GP-N)
+; --> SB-KERNEL:%INSTANCE-REF
+; ==>
+;   (THE CAT::ABSM CAT::GP-N)
+;
+; caught WARNING:
+;   Derived type of GP-N is
+;     (VALUES LOOP &OPTIONAL),
+;   conflicting with its asserted type
+;     ABSM.
+;   See also:
+;     The SBCL Manual, Node "Handling of Types"
+
+;     (CAT::H-TILDE CAT::Y-N+1 CAT::GP-N)
+;
+; caught WARNING:
+;   Derived type of GP-N is
+;     (VALUES LOOP &OPTIONAL),
+;   conflicting with its asserted type
+;     ABSM.
+;   See also:
+;     The SBCL Manual, Node "Handling of Types"
+
+; compiling (DEFUN CRTS-CONTRACTION ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/ls-twisted-products.lisp
+; in: DEFUN CRTS-CONTRACTION
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::TWISTED-CRTS-PRDC :TRGT
+;                           CAT::TWISTED-CRTS-PRDC :DEGR 1 :INTR
+;                           (CAT::CRTS-CONTRACTION-INTR (CAT::CMPR SPACE)
+;                            (CAT::BSPN SPACE) (CAT::FACE SPACE)
+;                            (CAT::CMPR CAT::TWISTED-CRTS-PRDC))
+;                           :STRT :GNRT :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN TNPR-CONTRACTION ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/ls-twisted-products.lisp
+; in: DEFUN TNPR-CONTRACTION
+;     (THE CAT::MORPHISM (CAT::I-CMPS CAT::F CAT::CRTS-CONTRACTION CAT::G))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+;
+; compilation unit finished
+;   caught 2 WARNING conditions
+;   printed 13 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/ls-twisted-products.fasl written
+; compilation finished in 0:00:00.306
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/lp-space-efhm.lisp"
+ (written 24 DEC 2014 11:00:46 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "lp-space-efhm")
+; compiling (DEFUN LS-HAT-U-U ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/lp-space-efhm.lisp
+; in: DEFUN LS-HAT-U-U
+;     (THE CAT::CHAIN-COMPLEX (CAT::TNSR-PRDC CAT::COBAR CAT::SPAC-TNSR-LPSP))
+;
+; note: type assertion too complex to check:
+;  (VALUES CHAIN-COMPLEX &REST T).
+
+; compiling (DEFUN LS-HAT-LEFT-PERTURBATION-INTR ...)
+; compiling (DEFUN LS-HAT-LEFT-PERTURBATION ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/lp-space-efhm.lisp
+; in: DEFUN LS-HAT-LEFT-PERTURBATION
+;     (THE CAT::MORPHISM
+;          (LET ((CAT::LS-HAT-U-U (CAT::LS-HAT-U-U SPACE)))
+;            (CAT::BUILD-MRPH :SORC CAT::LS-HAT-U-U :TRGT CAT::LS-HAT-U-U :DEGR
+-1
+;                             :INTR (CAT::LS-HAT-LEFT-PERTURBATION-INTR SPACE)
+;                             :STRT :GNRT :ORGN ...)))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN LS-HAT-T-U ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/lp-space-efhm.lisp
+; in: DEFUN LS-HAT-T-U
+;     (THE CAT::CHAIN-COMPLEX
+;          (PROGN
+;           (SETF (SLOT-VALUE CAT::LS-HAT-LEFT-PERTURBATION 'CAT::SORC)
+;                   CAT::LS-HAT-U-U
+;                 (SLOT-VALUE CAT::LS-HAT-LEFT-PERTURBATION 'CAT::TRGT)
+;                   CAT::LS-HAT-U-U)
+;           (CAT::ADD CAT::LS-HAT-U-U CAT::LS-HAT-LEFT-PERTURBATION)))
+;
+; note: type assertion too complex to check:
+;  (VALUES CHAIN-COMPLEX &REST T).
+
+; compiling (DEFUN LS-HAT-RIGHT-PERTURBATION ...)
+; compiling (DEFUN LS-HAT-U-T ...)
+; compiling (DEFUN LS-LEFT-HMEQ-HAT ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/lp-space-efhm.lisp
+; in: DEFUN LS-LEFT-HMEQ-HAT
+;     (THE CAT::CHAIN-COMPLEX
+;          (CAT::ADD CAT::LS-HAT-U-T CAT::LS-HAT-LEFT-PERTURBATION))
+;
+; note: type assertion too complex to check:
+;  (VALUES CHAIN-COMPLEX &REST T).
+
+; compiling (DEFUN LS-PRE-LEFT-HMEQ-LEFT-REDUCTION-INTR-F ...)
+; compiling (DEFUN LS-PRE-LEFT-HMEQ-LEFT-REDUCTION-F ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/lp-space-efhm.lisp
+; in: DEFUN LS-PRE-LEFT-HMEQ-LEFT-REDUCTION-F
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::LS-HAT-T-U :TRGT CAT::LOOP-SPACE :DEGR 0
+;                           :INTR #'CAT::LS-PRE-LEFT-HMEQ-LEFT-REDUCTION-INTR-F
+;                           :STRT :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN LS-LEFT-HMEQ-LEFT-REDUCTION-G-INTR ...)
+; compiling (DEFUN LS-LEFT-HMEQ-LEFT-REDUCTION-G ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/lp-space-efhm.lisp
+; in: DEFUN LS-LEFT-HMEQ-LEFT-REDUCTION-G
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::LOOP-SPACE :TRGT CAT::LS-HAT-T-U :DEGR 0
+;                           :INTR
+;                           (CAT::LS-LEFT-HMEQ-LEFT-REDUCTION-G-INTR CAT::BSPN)
+;                           :STRT :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN LS-PRE-LEFT-HMEQ-LEFT-REDUCTION-H-INTR ...)
+; compiling (DEFUN LS-PRE-LEFT-HMEQ-LEFT-REDUCTION-H ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/lp-space-efhm.lisp
+; in: DEFUN LS-PRE-LEFT-HMEQ-LEFT-REDUCTION-H
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::LS-HAT-T-U :TRGT CAT::LS-HAT-T-U :DEGR 1
+;                           :INTR
+;                           (CAT::LS-PRE-LEFT-HMEQ-LEFT-REDUCTION-H-INTR SPACE)
+;                           :STRT :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN LS-PRE-LEFT-HMEQ-LEFT-REDUCTION ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/lp-space-efhm.lisp
+; in: DEFUN LS-PRE-LEFT-HMEQ-LEFT-REDUCTION
+;     (THE CAT::REDUCTION
+;          (CAT::BUILD-RDCT :F (CAT::LS-PRE-LEFT-HMEQ-LEFT-REDUCTION-F SPACE) :G
+
+;                           (CAT::LS-LEFT-HMEQ-LEFT-REDUCTION-G SPACE) :H
+;                           (CAT::LS-PRE-LEFT-HMEQ-LEFT-REDUCTION-H SPACE) :ORGN
+
+;                           `(CAT::LS-PRE-LEFT-HMEQ-LEFT-REDUCTION ,SPACE)))
+;
+; note: type assertion too complex to check:
+;  (VALUES REDUCTION &REST T).
+
+; compiling (DEFUN LS-LEFT-HMEQ-LEFT-REDUCTION ...)
+; compiling (DEFUN LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-INTR-F ...)
+; compiling (DEFUN LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-F ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/lp-space-efhm.lisp
+; in: DEFUN LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-F
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::LS-HAT-U-T :TRGT CAT::COBAR :DEGR 0 :INTR
+
+;                           #'CAT::LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-INTR-F :STRT
+
+;                           :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-INTR-G ...)
+; compiling (DEFUN LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-G ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/lp-space-efhm.lisp
+; in: DEFUN LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-G
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::COBAR :TRGT CAT::LS-HAT-U-T :DEGR 0 :INTR
+
+;                           (CAT::LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-INTR-G
+;                            CAT::BSPN)
+;                           :STRT :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-H ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/lp-space-efhm.lisp
+; in: DEFUN LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-H
+;     (THE CAT::MORPHISM
+;          (CAT::TNSR-PRDC (CAT::IDNT-MRPH CAT::COBAR) CAT::TNPR-CONTRACTION))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/lp-space-efhm.lisp
+; in: DEFUN LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION
+;     (THE CAT::REDUCTION
+;          (CAT::BUILD-RDCT :F (CAT::LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-F SPACE) :
+G
+;                           (CAT::LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-G SPACE) :H
+;                           (CAT::LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-H SPACE) :ORG
+N
+;                           `(CAT::LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION ,SPACE)))
+;
+; note: type assertion too complex to check:
+;  (VALUES REDUCTION &REST T).
+
+; compiling (DEFUN LS-LEFT-HMEQ-RIGHT-REDUCTION ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/lp-space-efhm.lisp
+; in: DEFUN LS-LEFT-HMEQ-RIGHT-REDUCTION
+;     (THE CAT::REDUCTION
+;          (PROGN
+;           (SETF (SLOT-VALUE CAT::PERTURBATION 'CAT::SORC)
+;                   (CAT::TCC CAT::PRE-REDUCTION)
+;                 (SLOT-VALUE CAT::PERTURBATION 'CAT::TRGT)
+;                   (CAT::TCC CAT::PRE-REDUCTION))
+;           (CAT::SPECIAL-BPL CAT::PRE-REDUCTION CAT::PERTURBATION)))
+;
+; note: type assertion too complex to check:
+;  (VALUES REDUCTION &REST T).
+
+; compiling (DEFUN LS-LEFT-HMEQ ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/lp-space-efhm.lisp
+; in: DEFUN LS-LEFT-HMEQ
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (CAT::BUILD-HMEQ :LRDCT (CAT::LS-LEFT-HMEQ-LEFT-REDUCTION SPACE) :RRD
+CT
+;                           (CAT::LS-LEFT-HMEQ-RIGHT-REDUCTION SPACE) :ORGN
+;                           `(CAT::LS-LEFT-HMEQ ,SPACE)))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+
+; compiling (DEFUN LOOP-SPACE-EFHM ...)
+; compiling (DEFMETHOD SEARCH-EFHM ...);
+; compilation unit finished
+;   printed 14 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/lp-space-efhm.fasl written
+; compilation finished in 0:00:00.328
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/classifying-spaces.
+lisp" (written 25 DEC 2014 09:04:09 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "classifying-spaces")
+; compiling (DEFPARAMETER +NULL-GBAR+ ...)
+; compiling (DEFUN GBAR-PRINT ...)
+; compiling (DEFUN NORMALIZE-GBAR ...)
+; compiling (DEFUN UNNORMALIZE-GBAR ...)
+; compiling (DEFUN GBAR ...)
+; compiling (DEFUN CLASSIFYING-SPACE-CMPR ...)
+; compiling (DEFUN CLASSIFYING-SPACE-BASIS ...)
+; compiling (DEFUN CLASSIFYING-SPACE-FACE ...)
+; compiling (DEFMETHOD CLASSIFYING-SPACE ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/classifying-spaces.lisp
+; in: DEFMETHOD CLASSIFYING-SPACE (SIMPLICIAL-GROUP)
+;     (THE CAT::SIMPLICIAL-SET
+;          (CAT::BUILD-SMST :CMPR
+;                           (CAT::CLASSIFYING-SPACE-CMPR (CAT::CMPR CAT::SMGR))
+;                           :BASIS
+;                           (CAT::CLASSIFYING-SPACE-BASIS (CAT::BASIS CAT::SMGR)
+)
+;                           :BSPN CAT::+NULL-GBAR+ :FACE
+;                           (CAT::CLASSIFYING-SPACE-FACE (CAT::FACE CAT::SMGR)
+;                            (CAT::SINTR (CAT::GRML CAT::SMGR)))
+;                           :ORGN `(CAT::CLASSIFYING-SPACE ,CAT::SMGR)))
+;
+; note: type assertion too complex to check:
+;  (VALUES SIMPLICIAL-SET &REST T).
+
+; compiling (DEFUN CLASSIFYING-SPACE-GRML-SINTR ...)
+; compiling (DEFUN CLASSIFYING-SPACE-GRIN-SINTR ...)
+; compiling (DEFMETHOD CLASSIFYING-SPACE ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/classifying-spaces.lisp
+; in: DEFMETHOD CLASSIFYING-SPACE (AB-SIMPLICIAL-GROUP)
+;     (THE CAT::AB-SIMPLICIAL-GROUP
+;          (CHANGE-CLASS
+;           (CAT::BUILD-SMGR :CMPR
+;                            (CAT::CLASSIFYING-SPACE-CMPR (CAT::CMPR CAT::SMGR))
+
+;                            :BASIS
+;                            (CAT::CLASSIFYING-SPACE-BASIS (CAT::BASIS CAT::SMGR
+))
+;                            :BSPN CAT::+NULL-GBAR+ :FACE
+;                            (CAT::CLASSIFYING-SPACE-FACE (CAT::FACE CAT::SMGR)
+;                             (CAT::SINTR #))
+;                            :SINTR-GRML
+;                            (CAT::CLASSIFYING-SPACE-GRML-SINTR
+;                             (CAT::BSPN CAT::SMGR) (CAT::SINTR #))
+;                            :SINTR-GRIN ...)
+;           'CAT::AB-SIMPLICIAL-GROUP))
+;
+; note: type assertion too complex to check:
+;  (VALUES AB-SIMPLICIAL-GROUP &REST T).
+;
+; compilation unit finished
+;   printed 2 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/classifying-spaces.fasl written
+; compilation finished in 0:00:00.167
+STYLE-WARNING: Implicitly creating new generic function CAT::CLASSIFYING-SPACE.
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp" (writt
+en 24 DEC 2014 11:01:38 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "k-pi-1")
+; compiling (DEFUN K-Z-1-CMPR ...)
+; compiling (DEFUN K-Z-1-FACE ...)
+; compiling (DEFUN Z-ABSM-BAR ...)
+; compiling (DEFUN Z-BAR-ABSM ...)
+; compiling (DEFUN K-Z-1-GRML ...)
+; compiling (DEFUN K-Z-1-GRIN ...)
+; compiling (DEFUN K-Z-1 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN K-Z-1
+;     (THE CAT::AB-SIMPLICIAL-GROUP
+;          (CAT::BUILD-AB-SMGR :CMPR #'CAT::K-Z-1-CMPR :BASIS :LOCALLY-EFFECTIVE
+
+;                              :BSPN CAT::+EMPTY-LIST+ :FACE #'CAT::K-Z-1-FACE
+;                              :SINTR-GRML #'CAT::K-Z-1-GRML :SINTR-GRIN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES AB-SIMPLICIAL-GROUP &REST T).
+
+; compiling (DEFUN K-Z ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN K-Z
+;     (THE CAT::AB-SIMPLICIAL-GROUP
+;          (IF (= CAT::N 1)
+;              (CAT::K-Z-1)
+;              (CAT::CLASSIFYING-SPACE (CAT::K-Z (1- CAT::N)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES AB-SIMPLICIAL-GROUP &REST T).
+
+; compiling (DEFUN CIRCLE-CMPR ...)
+; compiling (DEFUN CIRCLE-BASIS ...)
+; compiling (DEFUN CIRCLE ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN CIRCLE
+;     (THE CAT::CHAIN-COMPLEX
+;          (CAT::BUILD-CHCM :CMPR #'CAT::CIRCLE-CMPR :BASIS #'CAT::CIRCLE-BASIS
+;                           :BSGN '* :INTR-DFFR #'CAT::ZERO-INTR-DFFR :STRT :CMB
+N
+;                           :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES CHAIN-COMPLEX &REST T).
+
+; compiling (DEFUN KZ1-RDCT-F-INTR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN KZ1-RDCT-F-INTR
+;     (THE CAT::CMBN
+;          (CAT::WITH-CMBN (CAT::DEGR LIST) CAT::CMBN
+;                          (CASE CAT::DEGR
+;                            (0
+;                             (IF LIST
+;                                 #
+;                                 #))
+;                            (1
+;                             (LET #
+;                               #))
+;                            (OTHERWISE (CAT::ZERO-CMBN CAT::DEGR)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFUN KZ1-RDCT-F ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN KZ1-RDCT-F
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC (CAT::K-Z-1) :TRGT (CAT::CIRCLE) :DEGR 0 :INTR
+
+;                           #'CAT::KZ1-RDCT-F-INTR :STRT :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN KZ1-RDCT-G-INTR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN KZ1-RDCT-G-INTR
+;     (THE CAT::CMBN
+;          (CAT::WITH-CMBN (CAT::DEGR LIST) CAT::CMBN
+;                          (IF LIST
+;                              (ECASE CAT::DEGR (0 #) (1 #))
+;                              (CAT::ZERO-CMBN CAT::DEGR))))
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFUN KZ1-RDCT-G ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN KZ1-RDCT-G
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC (CAT::CIRCLE) :TRGT (CAT::K-Z-1) :DEGR 0 :INTR
+
+;                           #'CAT::KZ1-RDCT-G-INTR :STRT :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN KZ1-RDCT-H-INTR ...)
+; compiling (DEFUN KZ1-RDCT-H ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN KZ1-RDCT-H
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC (CAT::K-Z-1) :TRGT (CAT::K-Z-1) :DEGR 1 :INTR
+;                           #'CAT::KZ1-RDCT-H-INTR :STRT :GNRT :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN KZ1-RDCT ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN KZ1-RDCT
+;     (THE CAT::REDUCTION
+;          (CAT::BUILD-RDCT :F (CAT::KZ1-RDCT-F) :G (CAT::KZ1-RDCT-G) :H
+;                           (CAT::KZ1-RDCT-H) :ORGN '(CAT::KZ1-RDCT)))
+;
+; note: type assertion too complex to check:
+;  (VALUES REDUCTION &REST T).
+
+; compiling (DEFUN KZ1-EFHM ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN KZ1-EFHM
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (CAT::BUILD-HMEQ :LRDCT (CAT::TRIVIAL-RDCT (CAT::K-Z-1)) :RRDCT
+;                           (CAT::KZ1-RDCT) :ORGN '(CAT::KZ1-EFHM)))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+
+; compiling (DEFMETHOD SEARCH-EFHM ...)
+; compiling (DEFUN K-Z2-1-GRML-INTR ...)
+; compiling (DEFUN K-Z2-1-GRML ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN K-Z2-1-GRML
+;     (THE CAT::SIMPLICIAL-MRPH
+;          (CAT::BUILD-SMMR :SORC
+;                           (CAT::CRTS-PRDC (CAT::R-PROJ-SPACE)
+;                                           (CAT::R-PROJ-SPACE))
+;                           :TRGT (CAT::R-PROJ-SPACE) :DEGR 0 :SINTR
+;                           #'CAT::K-Z2-1-GRML-INTR :ORGN '(CAT::K-Z2-1-GRML)))
+;
+; note: type assertion too complex to check:
+;  (VALUES SIMPLICIAL-MRPH &REST T).
+
+; compiling (DEFUN K-Z2-1-GRIN-INTR ...)
+; compiling (DEFUN K-Z2-1-GRIN ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN K-Z2-1-GRIN
+;     (THE CAT::SIMPLICIAL-MRPH
+;          (CAT::BUILD-SMMR :SORC (CAT::R-PROJ-SPACE) :TRGT (CAT::R-PROJ-SPACE)
+;                           :DEGR 0 :SINTR #'CAT::K-Z2-1-GRIN-INTR :INTR #'IDENT
+ITY
+;                           :STRT ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES SIMPLICIAL-MRPH &REST T).
+
+; compiling (DEFUN K-Z2-1 ...)
+; compiling (DEFUN K-Z2 ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN K-Z2
+;     (THE CAT::AB-SIMPLICIAL-GROUP
+;          (IF (= CAT::N 1)
+;              (CAT::K-Z2-1)
+;              (CAT::CLASSIFYING-SPACE (CAT::K-Z2 (1- CAT::N)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES AB-SIMPLICIAL-GROUP &REST T).
+
+; compiling (DEFUN Z2-ABSM-BAR ...)
+; compiling (DEFUN Z2-BAR-ABSM ...)
+; compiling (DEFUN HOPF-FIBRATION-SINTR ...)
+; compiling (DEFUN HOPF-FIBRATION ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN HOPF-FIBRATION
+;     (THE CAT::SIMPLICIAL-MRPH
+;          (CAT::BUILD-SMMR :SORC (CAT::SPHERE 2) :TRGT (CAT::K-Z-1) :DEGR -1
+;                           :SINTR (CAT::HOPF-FIBRATION-SINTR CAT::N) :ORGN
+;                           `(CAT::HOPF-FIBRATION ,CAT::N)))
+;
+; note: type assertion too complex to check:
+;  (VALUES SIMPLICIAL-MRPH &REST T).
+
+; compiling (DEFUN Z-FUNDAMENTAL-GMSM ...)
+; compiling (DEFUN INTERESTING-FACES ...)
+; compiling (DEFUN GMSM-COCYCLE ...)
+; compiling (DEFUN Z-COCYCLE-GBAR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN Z-COCYCLE-GBAR
+;     (THE CAT::ABSM
+;          (COND ((= CAT::N 1) (CAT::Z-BAR-ABSM (NREVERSE #)))
+;                ((= CAT::N CAT::DMNS)
+;                 (LET (#)
+;                   (DECLARE #)
+;                   (IF #
+;                       #
+;                       #)))
+;                (T
+;                 (LET (# #)
+;                   (DECLARE #)
+;                   (DOLIST # # #)
+;                   (SETF #)
+;                   (MAPC #'# CAT::COCYCLE2)
+;                   (LET #
+;                     #
+;                     #)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES ABSM &REST T).
+
+; compiling (DEFUN Z-COCYCLE-GBAR-HEAD ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN Z-COCYCLE-GBAR-HEAD
+;     (THE CAT::ABSM
+;          (COND
+;           ((= CAT::N 1)
+;            (ERROR
+;             "In Z-COCYCLE-GBAR-HEAD, this point should not have been reached."
+))
+;           ((= CAT::N CAT::DMNS)
+;            (LET (#)
+;              (DECLARE #)
+;              (IF #
+;                  #
+;                  #)))
+;           (T
+;            (LET (# #)
+;              (DECLARE #)
+;              (DOLIST # # #)
+;              (SETF #)
+;              (MAPC #'# CAT::COCYCLE2)
+;              (CAT::Z-COCYCLE-GBAR # # CAT::COCYCLE2)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES ABSM &REST T).
+
+; compiling (DEFUN Z2-FUNDAMENTAL-GMSM ...)
+; compiling (DEFUN Z2-COCYCLE-GBAR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN Z2-COCYCLE-GBAR
+;     (THE CAT::ABSM
+;          (PROGN
+;           (MAPC #'(LAMBDA (CONS) (DECLARE #) (SETF #)) CAT::COCYCLE)
+;           (COND ((= CAT::N 1) (CAT::Z2-BAR-ABSM #))
+;                 ((= CAT::N CAT::DMNS)
+;                  (LET #
+;                    #
+;                    #))
+;                 (T
+;                  (LET #
+;                    #
+;                    #
+;                    #
+;                    #
+;                    #)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES ABSM &REST T).
+
+; compiling (DEFUN Z2-COCYCLE-GBAR-HEAD ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN Z2-COCYCLE-GBAR-HEAD
+;     (THE CAT::ABSM
+;          (PROGN
+;           (MAPC #'(LAMBDA (CONS) (SETF #)) CAT::COCYCLE)
+;           (COND
+;            ((= CAT::N 1)
+;             (ERROR
+;              "In Z2-COCYCLE-GBAR-HEAD, this point should not have been reached
+."))
+;            ((= CAT::N CAT::DMNS)
+;             (LET #
+;               #
+;               #))
+;            (T
+;             (LET #
+;               #
+;               #
+;               #
+;               #
+;               #)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES ABSM &REST T).
+
+; compiling (DEFUN K-Z-FUNDAMENTAL-CLASS ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN K-Z-FUNDAMENTAL-CLASS
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC (CAT::K-Z CAT::N) :TRGT (CAT::Z-CHCM) :DEGR
+;                           (- CAT::N) :INTR
+;                           #'(LAMBDA (CAT::DMNS CAT::GMSM)
+;                               (DECLARE (FIXNUM CAT::DMNS)
+;                                        (TYPE CAT::GMSM CAT::GMSM))
+;                               (IF (= CAT::DMNS CAT::N)
+;                                   (DO # # #)
+;                                   (CAT::ZERO-CMBN #)))
+;                           :STRT :GNRT :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN K-Z2-FUNDAMENTAL-CLASS ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.lisp
+; in: DEFUN K-Z2-FUNDAMENTAL-CLASS
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC (CAT::K-Z2 CAT::N) :TRGT (CAT::Z-CHCM) :DEGR
+;                           (- CAT::N) :INTR
+;                           #'(LAMBDA (CAT::DMNS CAT::GMSM)
+;                               (DECLARE (FIXNUM CAT::DMNS)
+;                                        (IGNORE CAT::GMSM))
+;                               (IF (= CAT::DMNS CAT::N)
+;                                   (CAT::TERM-CMBN 0 1 :Z-GNRT)
+;                                   (CAT::ZERO-CMBN #)))
+;                           :STRT :GNRT :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+;
+; compilation unit finished
+;   printed 20 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/k-pi-n.fasl written
+; compilation finished in 0:00:00.514
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/serre.lisp" (writte
+n 24 DEC 2014 11:01:57 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "serre")
+; compiling (DEFUN FIBRATION-DTAU-D-INTR ...)
+; compiling (DEFUN FIBRATION-DTAU-D ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/serre.lisp
+; in: DEFUN FIBRATION-DTAU-D
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::UTOTAL :TRGT CAT::UTOTAL :DEGR -1 :INTR
+;                           (CAT::FIBRATION-DTAU-D-INTR CAT::FIBRATION) :STRT :G
+NRT
+;                           :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN BROWN-REDUCTION ...)
+; compiling (DEFUN LEFT-SERRE-EFHM ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/serre.lisp
+; in: DEFUN LEFT-SERRE-EFHM
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (CAT::BUILD-HMEQ :LRDCT
+;                           (CAT::TRIVIAL-RDCT
+;                            (CAT::FIBRATION-TOTAL CAT::FIBRATION))
+;                           :RRDCT (CAT::BROWN-REDUCTION CAT::FIBRATION)))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+
+; compiling (DEFUN RIGHT-SERRE-EFHM ...)
+; compiling (DEFUN FIBRATION-TOTAL-EFHM ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/serre.lisp
+; in: DEFUN FIBRATION-TOTAL-EFHM
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (CAT::CMPS (CAT::LEFT-SERRE-EFHM CAT::FIBRATION)
+;                     (CAT::RIGHT-SERRE-EFHM CAT::FIBRATION)))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+
+; compiling (DEFMETHOD SEARCH-EFHM ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/serre.lisp
+; in: DEFMETHOD SEARCH-EFHM (T (EQL 'FIBRATION-TOTAL))
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (CAT::FIBRATION-TOTAL-EFHM (SECOND (CAT::ORGN CAT::SMST))))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+;
+; compilation unit finished
+;   printed 4 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/serre.fasl written
+; compilation finished in 0:00:00.121
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/cs-twisted-products
+.lisp" (written 24 DEC 2014 11:02:17 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "cs-twisted-products")
+; compiling (DEFUN SMGR-FIBRATION-SINTR ...)
+; compiling (DEFUN SMGR-FIBRATION ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cs-twisted-products.lisp
+; in: DEFUN SMGR-FIBRATION
+;     (THE CAT::FIBRATION
+;          (CAT::BUILD-SMMR :SORC (CAT::CLASSIFYING-SPACE CAT::SMGR) :TRGT
+;                           CAT::SMGR :DEGR -1 :SINTR #'CAT::SMGR-FIBRATION-SINT
+R
+;                           :ORGN `(CAT::SIMPLICIAL-GROUP-FIBRATION ,CAT::SMGR))
+)
+;
+; note: type assertion too complex to check:
+;  (VALUES &OPTIONAL (SATISFIES FIBRATION-P) &REST T).
+
+; compiling (DEFUN SMGR-CRTS-CONTRACTION-INTR ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cs-twisted-products.lisp
+; in: DEFUN SMGR-CRTS-CONTRACTION-INTR
+;     (THE CAT::CMBN
+;          (CAT::WITH-CRPR (CAT::ABSM1 CAT::ABSM2) CAT::CRPR
+;                          (IF (= (CAT::DGOP CAT::ABSM2) (CAT::MASK CAT::DEGR))
+;                              (CAT::ZERO-CMBN CAT::DEGR+1)
+;                              (CAT::TERM-CMBN CAT::DEGR+1
+;                                              (CAT::-1-EXPT-N+1 CAT::DEGR)
+;                                              (CAT::CRPR 0 # # CAT::IDNT)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES CMBN &REST T).
+
+; compiling (DEFUN SMGR-CRTS-CONTRACTION ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cs-twisted-products.lisp
+; in: DEFUN SMGR-CRTS-CONTRACTION
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC
+;                           (CAT::FIBRATION-TOTAL (CAT::SMGR-FIBRATION CAT::SMGR
+))
+;                           :TRGT
+;                           (CAT::FIBRATION-TOTAL (CAT::SMGR-FIBRATION CAT::SMGR
+))
+;                           :DEGR 1 :INTR
+;                           (CAT::SMGR-CRTS-CONTRACTION-INTR (CAT::BSPN CAT::SMG
+R))
+;                           :STRT :GNRT :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN SMGR-TNPR-CONTRACTION ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cs-twisted-products.lisp
+; in: DEFUN SMGR-TNPR-CONTRACTION
+;     (THE CAT::MORPHISM (CAT::I-CMPS CAT::F CAT::CHI CAT::G))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+;
+; compilation unit finished
+;   printed 4 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/cs-twisted-products.fasl written
+; compilation finished in 0:00:00.096
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/cl-space-efhm.lisp"
+ (written 24 DEC 2014 11:02:36 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "cl-space-efhm")
+; compiling (DEFUN CS-HAT-U-U ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cl-space-efhm.lisp
+; in: DEFUN CS-HAT-U-U
+;     (THE CAT::CHAIN-COMPLEX (CAT::TNSR-PRDC CAT::CLSP-TNSR-SMGR CAT::BAR))
+;
+; note: type assertion too complex to check:
+;  (VALUES CHAIN-COMPLEX &REST T).
+
+; compiling (DEFUN CS-HAT-RIGHT-PERTURBATION-INTR ...)
+; compiling (DEFUN CS-HAT-RIGHT-PERTURBATION ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cl-space-efhm.lisp
+; in: DEFUN CS-HAT-RIGHT-PERTURBATION
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::HAT-U-U :TRGT CAT::HAT-U-U :DEGR -1 :INTR
+
+;                           (CAT::CS-HAT-RIGHT-PERTURBATION-INTR CAT::SMGR) :STR
+T
+;                           :GNRT :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN CS-HAT-U-T ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cl-space-efhm.lisp
+; in: DEFUN CS-HAT-U-T
+;     (THE CAT::CHAIN-COMPLEX
+;          (PROGN
+;           (SETF (SLOT-VALUE CAT::HAT-RIGHT-PERTURBATION 'CAT::SORC) CAT::HAT-U
+-U
+;                 (SLOT-VALUE CAT::HAT-RIGHT-PERTURBATION 'CAT::TRGT) CAT::HAT-U
+-U)
+;           (CAT::ADD CAT::HAT-U-U CAT::HAT-RIGHT-PERTURBATION)))
+;
+; note: type assertion too complex to check:
+;  (VALUES CHAIN-COMPLEX &REST T).
+
+; compiling (DEFUN CS-HAT-LEFT-PERTURBATION ...)
+; compiling (DEFUN CS-HAT-T-U ...)
+; compiling (DEFUN CS-LEFT-HMEQ-HAT ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cl-space-efhm.lisp
+; in: DEFUN CS-LEFT-HMEQ-HAT
+;     (THE CAT::CHAIN-COMPLEX (CAT::ADD CAT::HAT-T-U CAT::HAT-RIGHT-PERTURBATION
+))
+;
+; note: type assertion too complex to check:
+;  (VALUES CHAIN-COMPLEX &REST T).
+
+; compiling (DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-INTR-F ...)
+; compiling (DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-F ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cl-space-efhm.lisp
+; in: DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-F
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::HAT-U-T :TRGT CAT::CLASSIFYING-SPACE :DEG
+R 0
+;                           :INTR #'CAT::CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-INTR-F
+;                           :STRT :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-INTR-G ...)
+; compiling (DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-G ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cl-space-efhm.lisp
+; in: DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-G
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::CLASSIFYING-SPACE :TRGT CAT::HAT-U-T :DEG
+R 0
+;                           :INTR
+;                           (CAT::CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-INTR-G
+;                            (CAT::BSPN CAT::SMGR))
+;                           :STRT :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-INTR-H ...)
+; compiling (DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-H ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cl-space-efhm.lisp
+; in: DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-H
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::HAT-U-T :TRGT CAT::HAT-U-T :DEGR 1 :INTR
+;                           (CAT::CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-INTR-H
+;                            (CAT::CMPR CAT::HAT-U-T) (CAT::BSPN CAT::SMGR))
+;                           :STRT :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cl-space-efhm.lisp
+; in: DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION
+;     (THE CAT::REDUCTION
+;          (CAT::BUILD-RDCT :F (CAT::CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-F CAT::SMGR
+)
+;                           :G (CAT::CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-G CAT::SMGR
+)
+;                           :H (CAT::CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-H CAT::SMGR
+)
+;                           :ORGN
+;                           `(CAT::CS-PRE-LEFT-HMEQ-LEFT-REDUCTION ,CAT::SMGR)))
+
+;
+; note: type assertion too complex to check:
+;  (VALUES REDUCTION &REST T).
+
+; compiling (DEFUN CS-LEFT-HMEQ-LEFT-REDUCTION ...)
+; compiling (DEFUN CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-INTR-F ...)
+; compiling (DEFUN CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-F ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cl-space-efhm.lisp
+; in: DEFUN CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-F
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::HAT-T-U :TRGT CAT::BAR :DEGR 0 :INTR
+;                           #'CAT::CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-INTR-F :STRT
+
+;                           :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-INTR-G ...)
+; compiling (DEFUN CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-G ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cl-space-efhm.lisp
+; in: DEFUN CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-G
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC CAT::BAR :TRGT CAT::HAT-T-U :DEGR 0 :INTR
+;                           (CAT::CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-INTR-G
+;                            CAT::IDNT)
+;                           :STRT :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-H ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cl-space-efhm.lisp
+; in: DEFUN CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-H
+;     (THE CAT::MORPHISM
+;          (CAT::TNSR-PRDC CAT::TNPR-CONTRACTION (CAT::IDNT-MRPH CAT::BAR)))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+
+; compiling (DEFUN CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cl-space-efhm.lisp
+; in: DEFUN CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION
+;     (THE CAT::REDUCTION
+;          (CAT::BUILD-RDCT :F (CAT::CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-F CAT::SMG
+R)
+;                           :G (CAT::CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-G CAT::SMG
+R)
+;                           :H (CAT::CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-H CAT::SMG
+R)
+;                           :ORGN
+;                           `(CAT::CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION ,CAT::SMGR))
+)
+;
+; note: type assertion too complex to check:
+;  (VALUES REDUCTION &REST T).
+
+; compiling (DEFUN CS-LEFT-HMEQ-RIGHT-REDUCTION ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cl-space-efhm.lisp
+; in: DEFUN CS-LEFT-HMEQ-RIGHT-REDUCTION
+;     (THE CAT::REDUCTION
+;          (PROGN
+;           (SETF (SLOT-VALUE CAT::PERTURBATION 'CAT::SORC)
+;                   (CAT::TCC CAT::PRE-REDUCTION)
+;                 (SLOT-VALUE CAT::PERTURBATION 'CAT::TRGT)
+;                   (CAT::TCC CAT::PRE-REDUCTION))
+;           (CAT::SPECIAL-BPL-2 CAT::PRE-REDUCTION CAT::PERTURBATION)))
+;
+; note: type assertion too complex to check:
+;  (VALUES REDUCTION &REST T).
+
+; compiling (DEFUN CS-LEFT-HMEQ ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/cl-space-efhm.lisp
+; in: DEFUN CS-LEFT-HMEQ
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (CAT::BUILD-HMEQ :LRDCT (CAT::CS-LEFT-HMEQ-LEFT-REDUCTION CAT::SMGR)
+;                           :RRDCT (CAT::CS-LEFT-HMEQ-RIGHT-REDUCTION CAT::SMGR)
+
+;                           :ORGN `(CAT::CS-LEFT-HMEQ ,CAT::SMGR)))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+
+; compiling (DEFUN CLASSIFYING-SPACE-EFHM ...)
+; compiling (DEFMETHOD SEARCH-EFHM ...);
+; compilation unit finished
+;   printed 14 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/cl-space-efhm.fasl written
+; compilation finished in 0:00:00.382
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/whitehead.lisp" (wr
+itten 24 DEC 2014 11:02:57 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "whitehead")
+; compiling (DEFUN Z-WWHITEHEAD-SINTR ...)
+; compiling (DEFUN Z-WHITEHEAD-SINTR ...)
+; compiling (DEFUN Z-WHITEHEAD ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/whitehead.lisp
+; in: DEFUN Z-WHITEHEAD
+;     (THE CAT::FIBRATION
+;          (CAT::BUILD-SMMR :SORC CAT::SMST :TRGT (CAT::K-Z (1- CAT::N)) :DEGR -
+1
+;                           :SINTR
+;                           (CAT::Z-WHITEHEAD-SINTR CAT::SMST CAT::N
+;                            CAT::CHML-CLSS)
+;                           :ORGN `(CAT::Z-WHITEHEAD ,CAT::SMST)))
+;
+; note: type assertion too complex to check:
+;  (VALUES &OPTIONAL (SATISFIES FIBRATION-P) &REST T).
+
+; compiling (DEFUN Z2-WWHITEHEAD-SINTR ...)
+; compiling (DEFUN Z2-WHITEHEAD-SINTR ...)
+; compiling (DEFUN Z2-WHITEHEAD ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/whitehead.lisp
+; in: DEFUN Z2-WHITEHEAD
+;     (THE CAT::FIBRATION
+;          (CAT::BUILD-SMMR :SORC CAT::SMST :TRGT (CAT::K-Z2 (1- CAT::N)) :DEGR
+-1
+;                           :SINTR
+;                           (CAT::Z2-WHITEHEAD-SINTR CAT::SMST CAT::N
+;                            CAT::CHML-CLSS)
+;                           :ORGN `(CAT::Z2-WHITEHEAD ,CAT::SMST)))
+;
+; note: type assertion too complex to check:
+;  (VALUES &OPTIONAL (SATISFIES FIBRATION-P) &REST T).
+;
+; compilation unit finished
+;   printed 2 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/whitehead.fasl written
+; compilation finished in 0:00:00.084
+; compiling file "C:/home/quicklisp/local-projects/kenzo/src/smith.lisp" (writte
+n 24 DEC 2014 11:03:15 PM):
+; compiling (IN-PACKAGE #:CAT)
+; compiling (PROVIDE "smith")
+; compiling (DEFTYPE MATRIX ...)
+; compiling (DEFUN RANDOM-MATRIX ...)
+; compiling (DEFUN IDNT-MTRX ...)
+; compiling (DEFUN COPY-MTRX ...)
+; compiling (DEFUN LEFT-SUBMATRIX ...)
+; compiling (DEFUN MTRX-PRDC ...)
+; compiling (DEFUN CHCM-MTRX ...)
+; compiling (DEFUN LINE-OP ...)
+; compiling (DEFUN COLUMN-OP ...)
+; compiling (DEFUN LINE-SWAP ...)
+; compiling (DEFUN COLUMN-SWAP ...)
+; compiling (DEFUN LINE-MINUS ...)
+; compiling (DEFUN COLUMN-MINUS ...)
+; compiling (DEFUN MINIMAL-TERM ...)
+; compiling (DEFUN MINIMAL-REST-1 ...)
+; compiling (DEFUN MINIMAL-REST-2 ...)
+; compiling (DEFUN MINIMAL-TERM-TOP-LEFT ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/smith.lisp
+; in: DEFUN MINIMAL-TERM-TOP-LEFT
+;     (THE CAT::MATRIX
+;          (PROGN
+;           (WHEN (< CAT::BEGIN CAT::IL)
+;             (CAT::LINE-SWAP-5 CAT::MTRX-LIST CAT::BEGIN CAT::BEGIN CAT::IL))
+;           (WHEN (< CAT::BEGIN CAT::IC)
+;             (CAT::COLUMN-SWAP-5 CAT::MTRX-LIST CAT::BEGIN CAT::BEGIN CAT::IC))
+
+;           (WHEN (MINUSP (AREF # CAT::BEGIN CAT::BEGIN))
+;             (CAT::LINE-MINUS-5 CAT::MTRX-LIST CAT::BEGIN CAT::BEGIN))
+;           CAT::MTRX-LIST))
+;
+; note: deleting unreachable code
+;
+; caught WARNING:
+;   Derived type of MTRX-LIST is
+;     (VALUES LIST &OPTIONAL),
+;   conflicting with its asserted type
+;     (ARRAY FIXNUM (* *)).
+;   See also:
+;     The SBCL Manual, Node "Handling of Types"
+
+; compiling (DEFUN PIVOTT ...)
+; compiling (DEFUN LIST-SMITH ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/smith.lisp
+; in: DEFUN LIST-SMITH
+;     (PROGN
+;      (LET ((CAT::MATRIX (THIRD CAT::MTRX-LIST)) (CAT::BEGIN 0))
+;        (DECLARE (TYPE CAT::MATRIX CAT::MATRIX)
+;                 (FIXNUM CAT::BEGIN))
+;        (LOOP
+;         (MULTIPLE-VALUE-BIND (CAT::TERM CAT::IL CAT::IC)
+;             (CAT::MINIMAL-TERM CAT::MATRIX CAT::BEGIN)
+;           (DECLARE #)
+;           (WHEN # #)
+;           (CAT::MINIMAL-TERM-TOP-LEFT CAT::MTRX-LIST CAT::BEGIN CAT::IL CAT::I
+C))
+;         (LOOP (MULTIPLE-VALUE-BIND # # # #))
+;         (INCF CAT::BEGIN)))
+;      CAT::MTRX-LIST)
+; ==>
+;   CAT::MTRX-LIST
+;
+; note: deleting unreachable code
+
+; compiling (DEFUN SMITH ...)
+; compiling (UNLESS (FIND-PACKAGE "GNRTS") ...)
+; compiling (DEFCONSTANT +GNRTS-PCKG+ ...)
+; compiling (DEFUN GNRT-NAME-BASIS ...)
+; compiling (DEFUN ECHCM-KILL-EPI-F-INTR ...)
+; compiling (DEFUN ECHCM-KILL-EPI-G-INTR ...)
+; compiling (DEFUN ECHCM-KILL-EPI-H-INTR ...)
+; compiling (DEFUN ECHCM-WITHOUT-EPI ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/smith.lisp
+; in: DEFUN ECHCM-WITHOUT-EPI
+;     (THE CAT::CHAIN-COMPLEX
+;          (WITH-SLOTS (CAT::CMPR CAT::BASIS CAT::DFFR CAT::ORGN)
+;              CAT::ECHCM
+;            (DECLARE (TYPE CAT::CMPRF CAT::CMPR)
+;                     (TYPE CAT::BASIS CAT::BASIS)
+;                     (TYPE CAT::MORPHISM CAT::DFFR)
+;                     (LIST CAT::ORGN))
+;            (CAT::BUILD-CHCM :CMPR
+;                             #'(LAMBDA (CAT::GNRT1 CAT::GNRT2)
+;                                 (IF #
+;                                     #
+;                                     #))
+;                             :BASIS
+;                             #'(LAMBDA (CAT::DEGR) (DECLARE #) (COND # # #))
+;                             :INTR-DFFR
+;                             #'(LAMBDA (CAT::CMBN) (DECLARE #) (CASE # # # #))
+;                             :STRT :CMBN :ORGN
+;                             `(CAT::ECHCM-WITHOUT-EPI ,CAT::ECHCM))))
+;
+; note: type assertion too complex to check:
+;  (VALUES CHAIN-COMPLEX &REST T).
+
+; compiling (DEFUN ECHCM-KILL-EPI ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/smith.lisp
+; in: DEFUN ECHCM-KILL-EPI
+;     (THE CAT::REDUCTION
+;          (WITH-SLOTS (CAT::CMPR CAT::BASIS)
+;              CAT::ECHCM
+;            (DECLARE (TYPE CAT::CMPRF CAT::CMPR)
+;                     (TYPE CAT::BASIS CAT::BASIS))
+;            (ASSERT (NOT (EQ CAT::BASIS :LOCALLY-EFFECTIVE)))
+;            (LET* ((CAT::F-BASIS #)
+;                   (CAT::F+1-BASIS #)
+;                   (CAT::MTRX-LIST #)
+;                   (CAT::SMITH #)
+;                   (CAT::M #)
+;                   (CAT::N #)
+;                   (CAT::INTR-F #)
+;                   (CAT::INTR-G #)
+;                   (CAT::INTR-H #)
+;                   (CAT::ECHCM2 #))
+;              (DECLARE (LIST CAT::MTRX-LIST)
+;                       (TYPE CAT::MATRIX CAT::SMITH)
+;                       (FIXNUM CAT::M CAT::N)
+;                       (TYPE CAT::INTR-MRPH CAT::INTR-F CAT::INTR-G CAT::INTR-H
+)
+;                       (TYPE CAT::CHAIN-COMPLEX CAT::ECHCM2))
+;              (ASSERT (DOTIMES # #))
+;              (CAT::BUILD-RDCT :F
+;                               (CAT::BUILD-MRPH :SORC CAT::ECHCM :TRGT CAT::ECH
+CM2
+;                                                :DEGR 0 :INTR CAT::INTR-F :STRT
+
+;                                                :CMBN :ORGN ...)
+;                               :G
+;                               (CAT::BUILD-MRPH :SORC CAT::ECHCM2 :TRGT CAT::EC
+HCM
+;                                                :DEGR 0 :INTR CAT::INTR-G :STRT
+
+;                                                :CMBN :ORGN ...)
+;                               :H
+;                               (CAT::BUILD-MRPH :SORC CAT::ECHCM :TRGT CAT::ECH
+CM
+;                                                :DEGR 1 :INTR CAT::INTR-H :STRT
+
+;                                                :CMBN :ORGN ...)
+;                               :ORGN `(CAT::ECHCM-KILL-EPI ,CAT::ECHCM)))))
+;
+; note: type assertion too complex to check:
+;  (VALUES REDUCTION &REST T).
+
+; compiling (DEFUN KILL-EPI ...)
+; compiling (DEFUN KILL-EPIS ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/smith.lisp
+; in: DEFUN KILL-EPIS
+;     (THE CAT::HOMOTOPY-EQUIVALENCE
+;          (PROGN
+;           (DO ((CAT::INDX FIRST #))
+;               ((= CAT::INDX CAT::END))
+;             (DECLARE (FIXNUM CAT::INDX))
+;             (CAT::KILL-EPI CAT::CHCM CAT::INDX))
+;           (CAT::EFHM CAT::CHCM)))
+;
+; note: type assertion too complex to check:
+;  (VALUES HOMOTOPY-EQUIVALENCE &REST T).
+
+; compiling (DEFUN CHML-CLSS-INTR ...)
+; compiling (DEFUN CHML-CLSS ...)
+; file: C:/home/quicklisp/local-projects/kenzo/src/smith.lisp
+; in: DEFUN CHML-CLSS
+;     (THE CAT::MORPHISM
+;          (CAT::BUILD-MRPH :SORC (CAT::ECHCM CAT::CHCM) :TRGT (CAT::Z-CHCM) :DE
+GR
+;                           (- FIRST) :INTR (CAT::CHML-CLSS-INTR CAT::CHCM FIRST
+)
+;                           :STRT :CMBN :ORGN ...))
+;
+; note: type assertion too complex to check:
+;  (VALUES MORPHISM &REST T).
+;
+; compilation unit finished
+;   caught 1 WARNING condition
+;   printed 6 notes
+
+
+; C:/home/quicklisp/local-projects/kenzo/src/smith.fasl written
+; compilation finished in 0:00:00.451
+("kenzo" "macros" "various" "classes" "combinations" "chain-complexes"
+ "chcm-elementary-op" "effective-homology" "homology-groups"
+ "searching-homology" ...)
+* (load-cfiles)
+
+("kenzo" "macros" "various" "classes" "combinations" "chain-complexes"
+ "chcm-elementary-op" "effective-homology" "homology-groups"
+ "searching-homology" ...)
+* (exit)
+
+C:\home\quicklisp\local-projects\kenzo\src>
