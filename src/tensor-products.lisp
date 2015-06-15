@@ -140,6 +140,7 @@
      (print (funcall bas i))))
 |#
 
+#|
 (DEFUN TNSR-PRDC-INTR-DFFR (dffr1 dffr2)
    (declare (type morphism dffr1 dffr2))
    (flet ((rslt (degr tnpr)
@@ -174,6 +175,7 @@
                                                 (tnpr degr1 gnrt1 degr2-1 gnrt2))))
                                      list2))))))))
       (the intr-mrph #'rslt)))
+|#
 
 #|
   (cat-init)

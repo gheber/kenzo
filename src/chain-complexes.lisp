@@ -225,7 +225,6 @@
 
 ;;; FUNCTIONS
 
-
 (DEFUN NRESULTS ()
   (the fixnum
        (let ((nrslts 0))
@@ -240,6 +239,7 @@
 		  (rslts item))))
 	 nrslts)))
 
+#|
 (DEFUN TIME-LIST ()
   (the list
        (let ((time-list +empty-list+))
@@ -258,6 +258,7 @@
 			       drslt))
 		  (rslts item))))
 	 (sort time-list #'>))))
+|#
 
 (DEFUN CLEAN-RESULTS (&optional (results-coef *results-coef*))
   (declare
@@ -290,8 +291,6 @@
 		   (setf (aref rslts i) output))))))
 	 (when *results-verbose*
 	   (format t "~%*CR* -- Cut = ~A -- N = ~A" cut *results-n*)))))
-
-
 
 
 (DEFUN MRPH-GNRT (cmpr2 intr degr gnrt memory
@@ -393,7 +392,6 @@
 		    (cdar mark1)))))
   cmbn)
 
-
 #|
 (DEFVAR *PROFILER-STACK*)
 (SETF *PROFILER-STACK* +empty-list+)
@@ -418,6 +416,7 @@
 	  *profiler-stack*)
     (incf (wrtm mrph) time-spent)))
 |#
+
 
 (DEFUN GNRT-? (mrph degr gnrt)
   (declare
