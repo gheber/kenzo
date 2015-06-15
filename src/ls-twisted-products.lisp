@@ -372,8 +372,7 @@
      (multiple-value-bind (expn y-n+1 gp-n) (pop-first-absm n g-n)
         (declare
            (fixnum expn)
-           (type absm y-n+1)
-           (type loop gp-n))  ;;; ***
+           (type absm y-n+1 gp-n))
         (ecase expn
            (0 (zero-cmbn (1+ n)))
            (+1

@@ -155,8 +155,9 @@
                          (list1 (cmbn-list (gnrt-? dffr1 degr1 gnrt1)))
                          (list2 (cmbn-list (gnrt-? dffr2 degr2 gnrt2))))
                       (declare
-                         (fixnum degr1-1 degr2-1 sign)
-                         (list list1 list2))
+		       (fixnum degr1-1 degr2-1)
+		       (boolean sign)
+		       (list list1 list2))
                       (make-cmbn
                          :degr (1- degr)
                          :list (nconc

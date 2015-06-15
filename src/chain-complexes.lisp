@@ -252,7 +252,7 @@
 			  (map nil #'(lambda (rslt)
 				       (declare (type result rslt))
 				       (let ((rntm (result-rntm rslt)))
-					 (declare (integer rntm))
+					 (declare (single-float rntm))
 					 (when (plusp rntm)
 					   (push rntm time-list))))
 			       drslt))

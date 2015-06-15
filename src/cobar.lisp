@@ -543,7 +543,7 @@
                     (gfgf-tail (term-cmbn 0 1 +null-allp+)))
                 (declare
                    (list cbgn-list rslt)
-                   (fixnum sign)
+                   (boolean sign)
                    (type cmbn gfgf-tail))
                 (unless cbgn-list
                    (return-from rslt (zero-cmbn 1)))
@@ -557,7 +557,7 @@
                          (let ((h-gnrt (gnrt-? h degr gnrt)))
                             (declare (type cmbn h-gnrt))
                             (let ((hgfgf (cmbn-list (cmbn-allp-cmbn-tnpr h-gnrt gfgf-tail))))
-                               (declare (type cmbn hgfgf))
+                               (declare (type list hgfgf))
                                (when sign
                                   (mapc #'(lambda (term)
                                              (declare (type term term))

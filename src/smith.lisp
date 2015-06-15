@@ -472,7 +472,7 @@
    (declare
      (list mtrx-list)
      (fixnum begin il ic))
-   (the matrix (progn
+   (the list (progn
    (when (< begin il)
       (line-swap-5 mtrx-list begin begin il))
    (when (< begin ic)
