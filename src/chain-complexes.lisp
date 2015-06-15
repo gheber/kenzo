@@ -239,7 +239,7 @@
 		  (rslts item))))
 	 nrslts)))
 
-#|
+
 (DEFUN TIME-LIST ()
   (the list
        (let ((time-list +empty-list+))
@@ -258,7 +258,7 @@
 			       drslt))
 		  (rslts item))))
 	 (sort time-list #'>))))
-|#
+
 
 (DEFUN CLEAN-RESULTS (&optional (results-coef *results-coef*))
   (declare

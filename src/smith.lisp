@@ -467,7 +467,7 @@
 (minimal-rest-2 m 1)
 |#
 
-#|
+
 (DEFUN MINIMAL-TERM-TOP-LEFT (mtrx-list begin il ic)
    (declare
      (list mtrx-list)
@@ -480,7 +480,7 @@
    (when (minusp (aref (third mtrx-list) begin begin))
       (line-minus-5 mtrx-list begin begin))
    mtrx-list)))
-|#
+
 
 #|
 (setf p (idnt-mtrx 4) p-1 (idnt-mtrx 4)

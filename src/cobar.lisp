@@ -530,7 +530,7 @@
   (? cf 2 (allp 1 (crpr 0 (d 7) 0 (d 7)) 1 (crpr 0 (d 56) 0 (d 56))))
 |#
 
-#|
+
 (DEFUN HMTP-VRTC-COBAR-INTR (h gf)
    (declare (type morphism h gf))
    (flet ((rslt (degr allp)
@@ -579,7 +579,7 @@
                    :degr (1+ degr)
                    :list (rest rslt)))))
       (the intr-mrph #'rslt)))
-|#
+
 
 #|
   (require "special-smsts")

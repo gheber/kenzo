@@ -319,7 +319,7 @@
 (pop-first-absm 4 (cdr (loop3 2 'a +1 1 'b 3)))
 |#
 
-#|
+
 (DEFUN CRTS-CONTRACTION-INTR (base-cmpr base-bspn base-face crts-cmpr)
    (declare
       (type cmprf base-cmpr crts-cmpr)
@@ -401,7 +401,7 @@
        (hh absm1 loop-absm2)))))))
     
     (the intr-mrph #'rslt)))
-|#
+
 
 #|
 ()
