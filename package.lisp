@@ -4,6 +4,7 @@
   (:use #:cl)
   (:export KENZO-VERSION
 	   *CMBN-CONTROL*
+           *LIST-LIST*
 
 	   ;; chain-complexes.lisp
 
@@ -102,6 +103,7 @@
 	   ;; special-smsts.lisp
 
 	   SPHERE
+	   BUILD-FINITE-SS
 
 	   ;; various.lisp
 
