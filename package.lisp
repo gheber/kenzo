@@ -41,6 +41,7 @@
 	   F
 	   G
 	   H
+	   IABSM
 	   MAKE-CMBN
 	   MAKE-RESULT
 	   MORPHISM

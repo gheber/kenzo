@@ -338,7 +338,6 @@
 ;;  DLOP = DeL OPerator
 (DEFTYPE DLOP () 'dgop) 
 
-#|
 ;; IABSM = Internal ABstract SiMplex
 (DEFUN IABSM-P (object)
   (declare (type any object))
@@ -348,7 +347,6 @@
 	    (typep (cdr object) 'gmsm))))
 
 (DEFTYPE IABSM () '(satisfies iabsm-p))
-|#
 
 (DEFSTRUCT (ABSM (:conc-name nil) (:print-function absm-print))
   (dgop #+allegro :type #+allegro dgop)

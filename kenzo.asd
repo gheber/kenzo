@@ -49,5 +49,10 @@
 				     (:file "cs-twisted-products")
 				     (:file "cl-space-efhm")
 				     (:file "whitehead")
-				     (:file "smith")))))
+				     (:file "smith")
+				     (:module "anromero"
+					      :components
+					      ((:file "bicomplexes")
+					       (:file "filtered-complexes")
+					       (:file "spectral-sequences")))))))
 
