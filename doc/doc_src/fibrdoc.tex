@@ -1,0 +1,418 @@
+\chapter {Fibrations}
+
+In {tt Kenzo}, the fibration\index{fibrations} theory is applied in the simplicial frame
+and limited to the {\em simplicial principal fiber spaces}.
+
+\section {Notion of fibration}
+
+Let $B$ a simplicial set and $\cal G$ a simplicial group. A {\em (right--hand) simplicial fibration} is
+defined by a {\bf twisting operator}\index{fibration!twisting operator}, $\tau : B \longrightarrow {\cal G}$, 
+of degree $-1$.
+For any dimension $n$ and for any element $b \in B_n$, the face and degeneracy operators must
+satisfy the following relations:
+\begin{eqnarray*}
+\partial_i(\tau b) & = & \tau(\partial_i b), \qquad i < n-1, \\
+\partial_{n-1}(\tau b) & = & [\tau(\partial_n b)]^{-1}.\tau(\partial_{n-1} b), \\
+\eta_i(\tau b)  & = & \tau (\eta_i b), \qquad i \leq n-1, \\
+e_n             & = & \tau(\eta_n b). 
+\end{eqnarray*}
+where $e_n$ is the neutral element of ${\cal G}_n$.
+\vskip 0.30cm
+Now, the twisting operator $\tau$ defines a fibration of base space $B$, of fiber space $\cal G$
+and of total space $B \times_{\tau} {\cal G}$, whose simplicial components  are:
+$$ (B \times_{\tau} {\cal G})_n = (B \times {\cal G})_n = (B_n \times {\cal G}_n), $$
+and whose  face operators are defined, 
+in any dimension $n$ and for any pair $(b,g),\, b \in B_n,\, g \in {\cal G}_n$ by:
+\begin{eqnarray*}
+\partial_i(b,g) & = & (\partial_i b, \partial_i g), \quad i < n, \\
+\partial_n(b,g) & = & (\partial_n b, \tau(b).\partial_n g).
+\end{eqnarray*}
+As it is well known, there are $4$ natural choices for such a definition. The action of the
+group can be from the right or from the left and the critical index can be the last one ($n$) or
+the first one ($0$). In {\tt Kenzo}, the implementor has chosen the non--usual one (i.e. action
+on the right hand and critical index, the last one), leading to the
+Szczarba formulas, the best choice in the case of the loop spaces.
+
+\section {Building a twisting operator}
+
+To build a twisting operator, one uses the function {\tt build-smmr} designed as a convenient tool
+to build a simplicial morphism. The source (keyword {\tt :sorc}) is the base space, a {\bf reduced} simplicial
+set, the target (keyword {\tt :trgt}) is the fiber space, a simplicial group. The degree is $-1$ and
+the morphism (keyword {\tt :sintr}) is the internal lisp function implementing $\tau$. See the example
+below, where $\tau$ is a simple twisting operator, applying in particular the only (geometrical) simplex
+of degree $2$  of $S^2$ upon the bar object  $[1] \in (K({\Z}_2,1))_1$. \par
+In {\tt Kenzo}, the type {\tt FIBRATION} is defined. An object of this type must be of type
+{\tt SIMPLICIAL-MRPH}, the degree of the corresponding morphism  being  $-1$. To apply the morphism, 
+one uses the well known macro {\tt ?} or the special macro {\tt tw-a-sintr3}.
+\vskip 0.30cm
+{\parindent=0mm
+{\leftskip=5mm
+{\tt ?} {\em twop dmns gmsm}  \hfill {\em [Macro]} \par}
+{\leftskip=15mm
+Apply the twisting operator {\em twop} to the geometrical simplex {\em gmsm} in dimension
+{\em dmns}. Of course, {\tt ?} works as well with a combination of geometric simplices
+as in  {\tt (? {\em twop cmbn})}. \par}
+{\leftskip=5mm
+{\tt tw-a-sintr3} {\em sintr dmns absm bspn} \hfill {\em [Macro]} \par}
+{\leftskip=15mm
+Apply the internal lisp function {\em sintr} implementing a twisting o\-pe\-ra\-tor to the
+abstract simplex {\em absm} in dimension {\em dmns}. The base point {\em bspn} of the
+target simplicial set (a simplicial group) must be given, since the function may return the neutral
+element in dimension $dmns - 1$. \par}
+}
+\newpage
+
+\section {Constructing the total space}
+
+The total space\index{fibration!total space} associated to a twisting operator is constructed 
+by the function {\tt fibration-total}.
+\vskip 0.30cm
+{\parindent=0mm
+{\leftskip=5mm
+{\tt fibration-total} {\em fibration} \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build the simplicial set, total space of the fibration. This function
+extracts from the simplicial morphism {\em fibration} (a previously defined twisting operator), 
+the base space (a simplicial set) 
+and the fiber space (a simplicial group) and constructs
+the twisted cartesian product of these simplicial sets. 
+The face function is built using the internal function {\tt fibration-total-face}.
+The non--degenerate simplices of the total space are coded exactly as those of
+the non--twisted product ($ B \times {\cal G}$) obtained by the lisp call
+{\tt (crts-prdc {\em base} {\em fiber})}. This non-twisted cartesian product is saved
+into the slot {\tt grmd} (graded module) of the instance object.
+If the base space  and the fiber space  are both of type {\tt KAN}, then the filling function is computed
+by the internal function {\tt fibration-kfll} and  the function {\tt fibration-total}
+returns  an object of type {\tt KAN}.  \par}
+}
+
+\subsection* {Examples}
+
+{\footnotesize\begin{verbatim}
+
+(setf s2 (sphere 2))  ==>
+
+[K1 Simplicial-Set]
+
+(setf kz2 (k-z2-1))  ==>
+
+[K6 Abelian-Simplicial-Group]
+
+(setf tw2 (build-smmr
+             :sorc s2
+             :trgt kz2
+             :degr -1
+             :sintr #'(lambda (dmns gmsm) (absm 0 1))
+             :orgn '(s2-tw-kz2)))   ==>
+
+[K18 Fibration]
+\end{verbatim}}
+\newpage
+{\footnotesize\begin{verbatim}
+(inspect tw2)  ==>
+
+SIMPLICIAL-MRPH @ #x4a54c2 = [K18 Fibration]
+   0 Class --------> #<STANDARD-CLASS SIMPLICIAL-MRPH>
+   1 ORGN ---------> (S2-TW-KZ2), a proper list with 1 element
+   2 IDNM ---------> fixnum 18 [#x00000048]
+   3 RSLTS --------> simple T vector (15) = #(#() #() #() ...)
+   4 ?-CLNM -------> fixnum 0 [#x00000000]
+   5 ???-CLNM -----> fixnum 0 [#x00000000]
+   6 STRT ---------> The symbol :GNRT
+   7 INTR ---------> The symbol NIL
+   8 DEGR ---------> fixnum -1 [#xfffffffc]
+   9 TRGT ---------> [K6 Abelian-Simplicial-Group]
+  10 SORC ---------> [K1 Simplicial-Set]
+  11 SINTR --------> #<Interpreted Function (unnamed) @ #x4a545a>
+\end{verbatim}}
+The following statement show how to apply the twisting operator to a 
+{\em geometrical} simplex. But if we have an abstract simplex, one must
+use the special function {\tt tw-a-sintr3}.
+{\footnotesize\begin{verbatim}
+(? tw2 2 's2)  ==>
+
+<AbSm - 1>
+
+(tw-a-sintr3 (sintr tw2) 3 (absm 1 's2) nil)  ==>
+
+<AbSm 0 1>
+
+(tw-a-sintr3 (sintr tw2) 3 (absm 7 '*) nil)  ==>
+
+<AbSm 1-0 NIL>
+
+(dotimes (i 3) (print (tw-a-sintr3 (sintr tw2) 3 
+                                   (absm i 's2) nil)))  ==>
+
+<AbSm - 1> 
+<AbSm 0 1> 
+<AbSm 1 1> 
+\end{verbatim}}
+Let us build the total space of the fibration (a simplicial set). We show some basis and compute
+some homology groups. The method to compute the homology groups will be explained in a following
+chapter.
+{\footnotesize\begin{verbatim}
+(setf tot-spc2 (fibration-total tw2))  ==>
+
+[K24 Simplicial-Set]
+
+(inspect tot-spc2)  ==>
+
+SIMPLICIAL-SET @ #x4a87f2 = [K24 Simplicial-Set]
+   0 Class --------> #<STANDARD-CLASS SIMPLICIAL-SET>
+   1 ORGN ---------> <...>, a proper list with 2 elements
+   2 IDNM ---------> fixnum 24 [#x00000060]
+   3 EFHM ---------> The symbol :--UNBOUND--
+   4 GRMD ---------> [K19 Simplicial-Set]
+   5 DFFR ---------> [K25 Morphism (degree -1)]
+   6 BSGN ---------> <CrPr - * - 0>, a dotted list with 3 elements
+   7 BASIS --------> #<Closure (FLET CRTS-PRDC-BASIS RSLT) @ #x4a735a>
+   8 CMPR ---------> #<Closure (FLET CRTS-PRDC-CMPR RSLT) [#'SPHERE-CMPR] @ #x4a732a>
+   9 CPRD ---------> [K28 Morphism (degree 0)]
+  10 FACE ---------> #<Closure (FLET FIBRATION-TOTAL-FACE RSLT) @ #x4a8752>
+
+(basis tot-spc2 0)  ==>
+
+(<CrPr - * - 0>)
+
+(basis tot-spc2 1)  ==>
+
+(<CrPr 0 * - 1>)
+
+(basis tot-spc2 2)  ==>
+
+(<CrPr - S2 - 2> <CrPr - S2 0 1> <CrPr - S2 1 1> <CrPr - S2 1-0 0> <CrPr 1-0 * - 2>)
+
+(basis tot-spc2 3)  ==>
+
+(<CrPr 0 S2 - 3> <CrPr 0 S2 1 2> <CrPr 0 S2 2 2> <CrPr 0 S2 2-1 1> <CrPr 1 S2 - 3> 
+ <CrPr 1 S2 0 2> <CrPr 1 S2 2 2> <CrPr 1 S2 2-0 1> <CrPr 2 S2 - 3> <CrPr 2 S2 0 2> 
+ <CrPr 2 S2 1 2> <CrPr 2 S2 1-0 1> <CrPr 2-1-0 * - 3>)
+
+(homology tot-spc2 0 8) ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+---done---
+
+Homology in dimension 2 :
+
+Component Z
+
+Homology in dimension 3 :
+
+Component Z/4Z
+
+Homology in dimension 4 :
+
+---done---
+
+Homology in dimension 5 :
+
+Component Z/4Z
+
+Homology in dimension 6 :
+
+---done---
+
+Homology in dimension 7 :
+
+Component Z/4Z
+\end{verbatim}}
+In the following example, we take $K({\Z},1)$ and build a similar twisting o\-pe\-ra\-tor. Note
+that in $(K({\Z},1))_1$, the bar object $[1]$ is represented as {\tt (1)} whereas in $K({\Z}_2,1)$ it
+is {\tt 1}. In this case, it is known that the total space is a model of the sphere $S^3$ 
+(Hopf fibration - see below). 
+{\footnotesize\begin{verbatim}
+(setf s2 (sphere 2))  ==>
+
+[K1 Simplicial-Set]
+
+(setf kz1 (k-z-1))  ==>
+
+[K6 Abelian-Simplicial-Group]
+
+(setf tw1 (build-smmr
+             :sorc s2
+             :trgt kz1
+             :degr -1
+             :sintr #'(lambda (dmns gmsm) (absm 0 (list 1)))
+             :orgn '(s2-tw-kz1)))  ==>
+
+[K18 Fibration]
+
+(setf tot-spc1 (fibration-total tw1))  ==>
+
+[K24 Simplicial-Set]
+
+(homology tot-spc1 0 6)  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+---done---
+
+Homology in dimension 2 :
+
+---done---
+
+Homology in dimension 3 :
+
+Component Z
+
+Homology in dimension 4 :
+
+---done---
+
+Homology in dimension 5 :
+
+---done---
+\end{verbatim}}
+We may also obtain the boundary and faces of elements of the total space:
+{\footnotesize\begin{verbatim}
+(setf elem (crpr 0 's2 0 '(1 2)))  ==>
+
+<CrPr - S2 - (1 2)>
+
+(? tot-spc1 2 elem)  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<2 * <CrPr 0 * - (2)>>
+<-1 * <CrPr 0 * - (3)>>
+------------------------------------------------------------------------------
+
+(? tot-spc1 *)  ==>
+
+----------------------------------------------------------------------{CMBN 0}
+------------------------------------------------------------------------------
+
+(dotimes (i 3) (print (face tot-spc1 i 2 elem)))  ==>
+
+<AbSm - <CrPr 0 * - (2)>> 
+<AbSm - <CrPr 0 * - (3)>> 
+<AbSm - <CrPr 0 * - (2)>> 
+\end{verbatim}}
+\newpage
+The system {\tt Kenzo} provides the function {\tt hopf} to build  
+Hopf fibrations\index{fibrations! of Hopf}. The lisp definition is the following:
+{\footnotesize\begin{verbatim}
+(defun HOPF (n)
+  (declare (fixnum n))
+  (the simplicial-mrph
+     (build-smmr
+        :sorc (sphere 2)
+        :trgt (k-z-1)
+        :degr -1
+        :sintr (hopf-sintr n)
+        :orgn `(hopf ,n))))
+
+(defun HOPF-SINTR (n)
+  (declare (fixnum n))
+  (flet ((rslt (dmns gmsm)
+         (declare (ignore dmns gmsm))
+         (if (zerop n)
+             (absm 1 +empty-list+)
+             (absm 0 (list n)))))
+         (the sintr #'rslt)))
+\end{verbatim}}
+In the definition of the lisp function for the slot {\tt sintr}, we see that the simplicial morphism 
+applies in particular the only geometric simplex in dimension $2$ of $S^2$ onto the bar object 
+$[n] \in (K({\Z},1))_1$. If $n=0$, this is $\eta_0 [\ ]$, i.e. the $0$--degeneracy of the base point
+{\tt NIL}. We give some examples of some fibrations and of the corresponding total spaces in function of the 
+parameter {\tt n}. First we generate $4$ fibrations and apply the twisting operator
+on the geometrical simplex {\tt s2}. 
+{\footnotesize\begin{verbatim}
+(setf h1 (hopf 1) h2 (hopf 2) h3 (hopf 3) h10 (hopf 10))
+
+(mapcar #'(lambda (h) (funcall (sintr (eval h)) 2 's2)) '(h1 h2 h3 h10)) ==>
+
+(<AbSm - (1)> <AbSm - (2)> <AbSm - (3)> <AbSm - (10)>)
+\end{verbatim}}
+Then we generate the corresponding total space and get some homology groups.
+{\footnotesize\begin{verbatim}
+(setf t1 (fibration-total h1) t2  (fibration-total h2) 
+      t3 (fibration-total h3) t10 (fibration-total h10))
+
+(homology t1 0 10)  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+---done---
+
+Homology in dimension 2 :
+
+---done---
+
+Homology in dimension 3 :
+
+Component Z
+
+Homology in dimension 4 :
+
+---done---
+
+......... all next groups null .....
+
+(homology t2 0 10)  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+Component Z/2Z
+
+Homology in dimension 2 :
+
+---done---
+
+Homology in dimension 3 :
+
+Component Z
+
+---done---
+
+......... all next groups null .....
+
+(homology t3 0 4)  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+Component Z/3Z
+
+Homology in dimension 2 :
+
+---done---
+
+Homology in dimension 3 :
+
+Component Z
+
+(homology t10 1)  ==>
+
+Homology in dimension 1 :
+
+Component Z/10Z
+\end{verbatim}}
+
+\subsection* {Lisp file concerned in this chapter}
+
+{\tt fibrations.lisp}.
+
+

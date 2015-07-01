@@ -1,0 +1,135 @@
+\documentstyle[psfig,11pt]{report}
+\pagestyle{headings}
+\makeindex
+\parindent=0mm
+%\textwidth=6.0in
+%\textheight=8.0in
+%\oddsidemargin=-.35i
+%\evensidemargin=-.35in
+%\topmargin=-.50in
+
+\input amssym.def
+\input amssym.tex
+\newtheorem{thr}{Theorem}
+%\font\bb=msym10
+\def\N{{\Bbb N}}
+\def\Z{{\Bbb Z}}
+\def\R{{\Bbb R}}
+%
+% macros pour les diagrammes rectangulaires
+%
+\def\hfl#1#2{\smash{\mathop{\hbox to 15mm{\rightarrowfill}}
+\limits^{\scriptstyle#1}_{\scriptstyle#2}}}
+%
+\def\hflr#1#2{\smash{\mathop{\hbox to 15mm{\rightarrowfill}}
+\limits^{\scriptstyle#1}_{\scriptstyle#2}}}
+%
+\def\hfll#1#2{\smash{\mathop{\hbox to 15mm{\leftarrowfill}}
+\limits^{\scriptstyle#1}_{\scriptstyle#2}}}
+%
+\def\vfl#1#2{\llap{$\scriptstyle #1$}\left\downarrow
+\vbox to 7mm{}\right.\rlap{$\scriptstyle #2$}}
+%
+\def\vflu#1#2{\llap{$\scriptstyle #1$}\left\uparrow
+\vbox to 7mm{}\right.\rlap{$\scriptstyle #2$}}
+%
+\def\diagram#1{\def\normalbaselines{\baselineskip=0pt
+\lineskip=10pt\lineskiplimit=1pt} \matrix{#1}}
+%
+% macro tvi pour les lignes verticales et horizontales dans un tableau
+%
+\def\tvi{\vrule height 12pt depth 5pt width 0pt}
+\def\tv{\tvi\vrule}
+
+\begin{document}
+\pagenumbering{roman}
+\begin{titlepage}
+\   \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ 
+\begin{center}
+ {\huge KENZO} \\ 
+\    \\
+ {\Large a Symbolic Software} \\
+  for \\
+ {\Large  Effective Homology Computation} 
+\vskip 0.5cm
+-----
+\vskip 0.5cm
+Julio Rubio Garcia\\
+Francis Sergeraert \\
+Yvon Siret
+\vskip 0.20cm
+-----
+\vskip 0.20cm
+Institut Fourier \\
+Grenoble, France \\
+\vskip 0.20cm
+-----
+\vskip 0.20cm
+\end{center}
+\vskip 0.5cm
+This document is a user guide for the 
+basic modules of the Effective Ho\-mo\-lo\-gy Software ({\bf Kenzo} Version 1998). \\
+It is also available by anonymous ftp ({\bf ftp fourier.ujf-grenoble.fr})
+in the directory {\bf /pub/KENZO}. \\
+\vskip 0.5cm
+\begin{center}
+{\em \today} \\
+\end{center}
+\end{titlepage}
+\vskip 1in
+\centerline {FOREWORD}
+\vskip 0.5in
+   The {\bf Kenzo}  program implements the general  ideas of  the second author
+about \emph{Effective Homology}\footnote{{\bf Francis Sergeraert.}
+\emph{The computability problem in algebraic topology}.
+Advances in Mathematics, 1994, vol. 104, pp 1-29.},
+mainly around the Serre and Eilenberg--Moore spectral sequences.
+The first author (re--) discovered the importance
+of the  \emph{Basic  Perturbation Lemma}  in these  questions, already
+noted by  Victor  Gugenheim\footnote{{\bf V.K.A.M. Gugenheim.}
+\emph{On a perturbation theory for the homology of the loop space}.
+Journal of Pure and Applied Algebra, 1982, vol. 25, pp 197-205.}
+and this  program  directly
+implements and  directly uses this ``lemma''  which should be called the
+\emph{Fundamental Theorem of   Algebraic  Topology}. The first version of the program, 
+called {\bf EAT}, was written in  1989-90 by the  first and the second authors.
+It  has been demonstrated in  several universities: France: Grenoble and
+Montpellier, Belgium:  Louvain-la-Neuve, Italy: Genoa and Pisa, 
+Sweden: Stockolm, Japan:
+Sapporo, Morioka, Urawa, Tokyo,  Kyoto, Nara, Osaka and Hiroshima. 
+\par
+In this {\bf Kenzo} version, numerous improvements have been integrated in comparison with
+{\bf EAT}.
+\begin{enumerate}
+\item Standard CLOS (Common Lisp Object System) techniques.
+\item Use of the Zermelo theorem about ordered sets (!): any set can be
+well ordered and this remark gives important new ideas to improve
+execution speed.
+\item Better memory management.
+\item Use of Szczarba's formulas instead of Shih's for implementing the twisted
+Eilenberg--Zilber theorem.
+\item New mathematical objects:
+\begin{itemize}
+\item Serre spectral sequences.
+\item Differentials algebras.
+\item Simplicial morphisms.
+\item Kan simplicial sets.
+\item Simplicial groups.
+\item Fibrations.
+\item Classifying spaces.
+\end{itemize}
+In particular, using these tools, the first homotopy groups of {\em arbitrary} 
+simplicial sets with effective homology, are now reachable.
+\end{enumerate}
+\par
+The present documentation is a joint work between the second and third authors.
+\cleardoublepage
+\input {kenovrvw}
+%\tableofcontents
+\cleardoublepage
+\input kendoc.toc
+\pagenumbering{arabic}
+\begin{theindex}
+\input kendoc.ind
+\end{theindex}
+\end{document}

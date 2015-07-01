@@ -1,0 +1,179 @@
+\chapter {Simplicial morphisms}
+
+The software {\tt Kenzo} implements simplicial morphisms in a way analogous to
+chain complex morphisms.\index{simplicial morphisms}
+
+\section {Representation of a  simplicial morphism}
+
+A simplicial morphism is  an instance\index{class!{\tt SIMPLICIAL-MRPH}} of the class {\tt SIMPLICIAL-MRPH}, 
+subclass of the class {\tt MORPHISM}.
+{\footnotesize\begin{verbatim}
+(DEFCLASS SIMPLICIAL-MRPH (morphism)
+  ((sintr :type sintr :initarg :sintr :reader sintr)))
+\end{verbatim}}
+It has one slot of its own:
+\begin{description}
+\item {{\tt sintr}}, an object of type {\tt SINTR}, in fact a lisp function defining the morphism
+between the source and target simplicial sets. It must have  $2$ parameters:  a dimension (an integer)
+and a geometric simplex of this dimension (a generator of any type) .
+It must return  an abstract simplex, image in the target simplicial set of this geometric simplex.
+\end{description}
+A printing method has been associated to the class {\tt SIMPLICIAL-MRPH}.
+A string like {\tt [K{\em n} Simplicial-Morphism]} is the  external representation of an instance of
+such a class,  where {\em n} is the number plate of the {\tt Kenzo} object.
+
+\section {The function build-smmr}
+
+To\index{function!{\tt build-smmr}} facilitate the construction of instances 
+of the class {\tt SIMPLICIAL-MRPH} and to free  the user to call
+the standard constructor {\tt make-instance}, the software provides the function
+\vskip 0.35cm
+{\tt build-smmr :sorc} {\em sorc} {\tt :trgt} {\em trgt} {\tt :degr} {\em degr} {\tt :sintr} {\em sintr}
+{\tt :intr} {\em intr} \par
+\hspace*{22.5mm}{\tt :strt} {\em strt} {\tt :orgn} {\em orgn}
+\vskip 0.35cm
+defined with keyword parameters and returning an instance of the class {\tt SIMPLICIAL-MRPH}.
+The keyword arguments of {\tt build-smmr} are:
+
+\begin{itemize}
+\item [--] {\em sorc}, the source object, an object of type {\tt SIMPLICIAL-SET}.
+\item [--] {\em trgt}, the target object, an object of type {\tt SIMPLICIAL-SET}.
+\item [--] {\em degr}, the degree of the morphism, an integer. In this chapter, we  consider only the
+$0$ degree case (the usual one). The case $-1$ is particularly important: it allows to implement the notion
+of twisting operator defining a fibration (See the chapter Fibration).
+\item [--] {\em sintr}, the internal lisp function defining the effective mapping between simplicial sets.
+If the integer {\em degr} is $0$ and if the following keyword argument {\em intr} is omitted, then 
+the function {\tt build-smmr} builds a lisp function implementing the induced mapping between the
+underlying source and target chain complexes. This function is installed in the slot {\tt intr}.
+The strategy is then set to {\tt :gnrt}.
+\item [--] {\em intr}, a user defined morphism for the underlying chain complexes. This argument is optional and
+taken in account only if the degree is $0$ and in this case, supersedes the previous derived  mapping. 
+The strategy is then mandatory.
+If the degree is not null, the implementor has decided  to set the corresponding slot to {\tt NIL}.
+\item [--] {\em strt}, the strategy, i.e. {\tt :gnrt} or {\tt :cmbn} attached to the previous function.
+\item [--] {\em orgn}, a relevant comment list.
+\end{itemize}
+
+After a call to {\tt build-smmr}, the simplicial morphism instance 
+is added to a list of previously constructed  ones ({\tt *smmr-list*}). 
+As the other similar lists,
+the list {\tt *smmr-list*} may be cleared by the function {\tt cat-init}.
+\par
+The effective application of a simplicial morphism upon arguments, 
+is re\-a\-li\-zed with the macro {\tt ?} which  calls the adequate method
+defined for this kind of objects.
+\newpage
+{\parindent=0mm
+{\leftskip=5mm
+{\tt ? \&rest} {\em args} \hfill {\em [Macro]} \par}
+{\leftskip=15mm
+Versatile macro for applying a simplicial morphism  indifferently
+as {\tt (? {\em smmr dmns absm-or-gmsm})} or  {\tt (? {\em smmr cmbn})}. In the first case, the
+third argument is either an abstract simplex or a geometric one. In the second case, if the
+second argument is a combination, {\em smmr} is then considered as a chain complex  morphism and
+it is the function in the slot {\tt intr} which is applied, so that it makes sense
+only if the degree of the mapping is $0$. \par}
+}
+
+\subsection* {Examples}
+
+In the following examples, we work with $\Delta_3$. We define three simplicial morphisms, {\tt sm1}, {\tt sm2}
+and {\tt sm3}. In {\tt sm1}, the mapping is the identity mapping and we can see that this identity mapping
+has been propagated on the underlying chain complex.
+{\footnotesize\begin{verbatim}
+(setf d3 (delta 3))  ==>
+
+[K1 Simplicial-Set]
+
+(setf sm1 (build-smmr
+            :sorc d3 :trgt d3 :degr 0
+            :sintr #'(lambda (dmns gmsm)
+                        (absm 0 gmsm))
+            :orgn '(identity delta-3)))   ==>
+
+[K6 Simplicial-Morphism]
+
+(? sm1 2 7)  ==>
+
+<AbSm - 7>
+
+(? sm1 1 (absm 1 1))  ==>
+
+<AbSm 0 1>
+
+(? sm1 (cmbn 2 1 7))  ==>
+
+----------------------------------------------------------------------{CMBN 2}
+<1 * 7>
+------------------------------------------------------------------------------
+\end{verbatim}}
+In the simplicial morphism {\tt sm2}, the mapping is the ``null'' mapping. In
+fact, it consists in  applying any abstract simplex in dimension $n$ upon the $n$--degenerate base point. 
+Of course, in terms of chain complex, the cor\-res\-pon\-ding mapping applies any chain complex element
+upon the null combination of same degree.
+{\footnotesize\begin{verbatim}
+(setf sm2 (build-smmr
+            :sorc d3 :trgt d3 :degr 0
+            :sintr #'(lambda (dmns gmsm)
+                       (absm (mask dmns) 1))    ;;; mask(n)=2^n - 1 
+            :orgn '(null delta-3)))  ==>
+
+[K7 Simplicial-Morphism]
+
+(? sm2 0 4)  ==>
+
+<AbSm - 1>
+
+(? sm2 2 7)  ==>
+
+<AbSm 1-0 1>
+
+(? sm2 1 (absm 1 1))  ==>
+
+<AbSm 0 1>
+
+(? sm2 3 15)  ==>
+
+<AbSm 2-1-0 1>
+
+(? sm2 (cmbn 3 2 15))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+------------------------------------------------------------------------------
+\end{verbatim}}
+In the simplicial morphism {\tt sm3}, we keep the same ``null'' mapping as in {\tt sm2}
+but we choose as mapping for the underlying chain complex the opposite of any chain complex 
+element.
+{\footnotesize\begin{verbatim}
+(setf sm3 (build-smmr
+            :sorc d3 :trgt d3 :degr 0
+            :sintr #'(lambda (dmns gmsm)
+                       (absm (mask dmns) 1))
+            :intr #'cmbn-opps
+            :strt :cmbn
+            :orgn '(null and opposite delta-3)))  ==>
+
+[K8 Simplicial-Morphism]
+
+(? sm3 3 15)  ==>
+
+<AbSm 2-1-0 1>
+
+(? sm3 (cmbn 3 7 15))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<-7 * 15>
+------------------------------------------------------------------------------
+
+(? sm3 (cmbn 3 11 (dlop-ext-int '(0 1 2 3))))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<-11 * 15>
+------------------------------------------------------------------------------
+\end{verbatim}}
+
+\subsection* {Lisp files concerned in this chapter}
+
+{\tt simplicial-mrphs.lisp}.
+\par
+[{\tt classes.lisp}, {\tt macros.lisp}, {\tt various.lisp}].

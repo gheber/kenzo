@@ -1,0 +1,368 @@
+\chapter {Eilenberg-Moore spectral sequence II}
+
+\section{Introduction}
+
+This chapter is devoted to the effective homology version of the spectral
+sequence of Eilenberg-Moore, in the particular case of classifying spaces.
+More precisely, let ${\cal G}$ be a simplicial group; then its classifying space 
+$\bar{\cal W}{\cal G}$ is a simplicial set canonically defined\footnote
+{{\bf J. Peter May}. {\em Simplicial objects in algebraic topology}, Van Nostrand, 1967.}.
+Furthermore, if ${\cal G}$ is an Abelian simplicial group, then  $\bar{\cal W}{\cal G}$
+is again an Abelian simplicial group with natural structure, so that the $\bar{\cal W}$
+construction can be iterated. The $\bar{\cal W}$ construction is implemented in {\tt Kenzo}
+only if ${\cal G}$ is reduced (${\cal G}_0$ has only one element). In particular if
+${\cal G}$ is a simplicial group with effective homology, then {\tt Kenzo} constructs
+a version of $\bar{\cal W}{\cal G}$ also with effective homology. 
+
+\newpage
+
+\section{The detailed construction}
+
+Let ${\cal G}$ be  a simplicial group with effective homology. This means that 
+a  homotopy equivalence:
+$$\diagram{
+  & \hat{C}_* \cr
+ \swarrow\nearrow & & \searrow\nwarrow \cr
+{\cal C}_*({\cal G})  & & EG_* \cr
+          }$$
+
+is provided, where  the chain complex $EG_*$ is effective 
+and must be con\-si\-de\-red as describing
+the homology of ${\cal C}_*({\cal G})$. This scheme includes the case where
+${\cal C}_*({\cal G})$ itself is  effective; without any other information, 
+the program  constructs automatically a trivial homotopy equivalence.
+\par
+Now, if we apply the  {\em Bar} functor to this homotopy equivalence
+we obtain the homotopy equivalence $H_R$:
+$$\diagram{
+  &{\widetilde{Bar}}^{\hat{ C}_*} \cr
+ \swarrow\nearrow & & \searrow\nwarrow \cr
+Bar^{{\cal C}_*({\cal G})}({\Z}, {\Z})  & & {\widetilde{Bar}}^{EG_*}({\Z}, {\Z}) \cr
+          }$$
+
+in which the $\widetilde{Bar}$'s are Bars constructions with respect to 
+the $A_\infty$ structure on $\hat{C}_*$ and $EG_*$ defined by
+the initial homotopy equivalence.
+\par
+By analogy  with the result of Julio Rubio\footnote{{\bf J.J. Rubio-Garcia}. {\em Homologie
+effective des espaces de lacets it\'er\'es: un logiciel}, Th\`ese, Institut Fourier, 1991.}
+one may show  that it is possible to construct another homotopy equivalence, $H_L$:
+$$\diagram{
+  & Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes_t {\cal C}_*({\cal G}),{\Z}) \cr
+ \swarrow\nearrow & & \searrow\nwarrow \cr
+ {\cal C}_*(\bar{\cal W}{\cal G})  & & Bar^{{\cal C}_*({\cal G})}({\Z}, {\Z}) \cr
+          }$$
+Both reductions of $H_L$ are obtained by the basic perturbation lemma, as explained
+in the following section.
+The composition of both homotopy e\-qui\-va\-len\-ces, $H_L$ and $H_R$, makes the link between $\bar{\cal W}{\cal G}$,  
+the classifying space of  the simplicial group ${\cal G}$
+and the effective  right bottom  chain complex of $H_R$.
+
+\subsection {Obtaining the left reduction $H_L$}
+
+The homotopy equivalence  $H_L$ is obtained by a sequence of intermediate constructions
+based mainly upon two applications of the basic perturbation lemma.
+We are led to consider the two following modules:
+\begin{itemize}
+\item ${\cal C}_*({\cal G})$ module on itself, with the canonical product.
+$${\cal C}_*({\cal G})\otimes {\cal C}_*({\cal G})\stackrel {\Pi}{\longrightarrow} {\cal C}_*({\cal G}).$$
+\item ${\check{\cal C}}_*({\cal G})$, module on ${\cal C}_*({\cal G})$, with a ``trivial''
+product 
+$${\check{\cal C}}_*({\cal G})\otimes{\cal C}_*({\cal G}) \stackrel {\check{\Pi}}{\longrightarrow} 
+{\check{\cal C}}_*({\cal G})$$
+defined by
+$$\sigma \otimes \tau \longmapsto \sigma . \varepsilon(\tau),$$
+where $\varepsilon$ is the traditional augmentation of ${\cal C}_*({\cal G})$.
+\end{itemize}
+Now, we consider the set of the followings Bars
+(where $u$ means {\em ``untwisted''} and $t$ {\em ``twisted''}):
+\begin{eqnarray*}
+{\rm Hat}_{uu} &=& Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes {\check{\cal C}}_*({\cal G}),{\Z}),\\
+{\rm Hat}_{ut} &=& Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes {\cal C}_*({\cal G}),{\Z}),\\
+{\rm Hat}_{tu} &=& Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes_t{\check{\cal C}}_*({\cal G}),{\Z}),\\
+{\rm Hat}_{tt} &=& Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes_t {\cal C}_*({\cal G}),{\Z}).
+\end{eqnarray*}
+
+One may always say that ${\rm Hat}_{ut}$ is obtained from ${\rm Hat}_{uu}$ by a perturbation $\delta_r$ ($r$: right)
+induced by the discrepancy between the products
+in ${\check{\cal C}}_*({\cal G})$ and ${\cal C}_*({\cal G})$ 
+and that ${\rm Hat}_{tu}$ is obtained from ${\rm Hat}_{uu}$
+by a perturbation $\delta_l$ ($l$: left) induced by the twisted tensor product $\otimes_t$.
+After that,
+${\rm Hat}_{tt}$ is obtained from ${\rm Hat}_{tu}$ by the perturbation $\delta_r$ as well as, by commutativity,
+from ${\rm Hat}_{ut}$ by the perturbation $\delta_l$. \par
+This is shown in the following diagram (here, the arrows are not reductions, but denote
+the  perturbations between  the differential morphisms):
+$$\diagram{ 
+  & {\rm Hat}_{uu} \cr
+ \delta_l \swarrow  & & \searrow \delta_r \cr
+{\rm Hat}_{tu}  & &  {\rm Hat}_{ut} \cr
+ \delta_r \searrow  & & \swarrow \delta_l \cr
+  & {\rm Hat}_{tt} \cr
+          }$$
+The underlying graded modules  ${\rm Hat}_{uu}$, ${\rm Hat}_{ut}$, ${\rm Hat}_{tu}$ and ${\rm Hat}_{tt}$ are the same
+and the program keeps ${\rm Hat}_{uu}$ as the underlying graded module for all the chain complexes.
+The  differential perturbations are given by the formulas:
+\begin{eqnarray*}
+\delta_l[(w\otimes {\check g}_0)\otimes (g_1 \otimes\cdots\otimes g_n)] &=&
+[d_{\otimes t}(w\otimes {\check g}_0) - d_\otimes (w\otimes {\check g}_0)] \otimes (g_1 \otimes\cdots\otimes g_n), \\
+\delta_r[(w\otimes {\check g}_0)\otimes (g_1 \otimes\cdots\otimes g_n)] &=& 
+w \otimes(g_0 . g_1) \otimes g_2 \otimes\cdots\otimes  g_n,
+\end{eqnarray*}
+where ${\check g}_0 \in {\check {\cal G}}_0,\, g_i \in {\cal G},\, w \in \bar{\cal W}{\cal G}.$
+\par
+Now, on the other hand, we know that there exists a reduction  
+$${\rm Hat}_{ut} = Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes 
+{\cal C}_*({\cal G}),{\Z}) \Longrightarrow {\cal C}_*(\bar{\cal W}{\cal G}),$$ 
+so,  perturbing this reduction by $\delta_l$, one obtains the Rubio reduction 
+$${\rm Hat}_{tt}=Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes_t 
+{\cal C}_*({\cal G}),{\Z}) \Longrightarrow {\cal C}_*(\bar{\cal W}{\cal G}).$$
+On the other hand, we know also that there exists a reduction 
+$${\rm Hat}_{tu} = Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes_t 
+{\check{\cal C}}_*({\cal G}),{\Z}) \Longrightarrow
+Bar^{{\cal C}_*({\cal G})}({\Z}, {\Z}),$$ 
+so, perturbing this reduction by $\delta_r$, one obtains the reduction 
+$${\rm Hat}_{tt}=Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes_t 
+{\cal C}_*({\cal G}),{\Z}) \Longrightarrow Bar^{{\cal C}_*({\cal G})}({\Z}, {\Z}).$$
+Finally, we have obtained the wished left homotopy equivalence $H_L$:
+$$\diagram{
+  & Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes_t {\cal C}_*({\cal G}),{\Z}) \cr
+    \swarrow\nearrow & & \searrow\nwarrow \cr
+ {\cal C}_*(\bar{\cal W}{\cal G})  & & Bar^{{\cal C}_*({\cal G})}({\Z}, {\Z}) \cr
+          }$$
+
+\subsection {The useful functions}
+
+For the applications, the only function that the user must know is the function {\tt classifying-space-efhm}
+which builds the final homotopy equivalence. But for the
+interested user, we give nevertheless a short description of all the functions
+involved in the described process.
+
+\vskip 0.30cm
+{\parindent=0mm
+{\leftskip=5mm
+{\tt classifying-space-efhm} {\em smgr}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+From the simplicial group ${\cal G}$ ($0$-reduced) with effective homology (here the argument {\em smgr}), build
+a homotopy equivalence giving an effective homology version  of the classifying space $\bar{\cal W}{\cal G}$ of ${\cal G}$. 
+This homotopy
+equivalence will be used by the homology function to compute the homology groups. In fact, due to
+the slot-unbound mechanism of CLOS, this function will be automatically called, as soon
+as the user requires a homology group for a classifying space. \par}
+{\leftskip=5mm
+{\tt cs-hat-u-u} {\em smgr}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Return the chain complex 
+$Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes {\check{\cal C}}_*({\cal G}),{\Z})$. Because of
+the particular structure of ${\check{\cal C}}_*({\cal G})$, this chain complex is nothing but
+$[{\cal C}_*(\bar{\cal W}{\cal G})\otimes {\check{\cal C}}_*({\cal G})]\otimes Bar^{{\cal C}_*({\cal G})}({\Z},{\Z}).$
+\par}
+{\leftskip=5mm
+{\tt cs-hat-right-perturbation} {\em smgr}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Return the morphism corresponding to the differential perturbation $\delta_r$, induced by
+the discrepancy between the respective products in  ${\check{\cal C}}_*({\cal G})$ and 
+in ${\cal C}_*({\cal G})$. \par}
+{\leftskip=5mm
+{\tt cs-hat-u-t} {\em smgr}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Return the chain complex
+$Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes {\cal C}_*({\cal G}),{\Z})$ by applying
+the differential perturbation {\tt hat-right-perturbation} upon
+the chain complex {\tt hat-u-u {\em smgr}}. This is realized by the method
+{\tt add}. \par}
+{\leftskip=5mm
+{\tt cs-hat-t-u} {\em smgr}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Return the chain complex
+$Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes_t {\check{\cal C}}_*({\cal G}),{\Z})$. Because of
+the particular structure of ${\check{\cal C}}_*({\cal G})$, this chain complex is nothing but
+$[{\cal C}_*(\bar{\cal W}{\cal G})\otimes_t {\check{\cal C}}_*({\cal G})]\otimes Bar^{{\cal C}_*({\cal G})}({\Z},{\Z}),$
+where the twisted tensor product is the botton chain complex of the Brown reduction
+of the fibration of the simplicial group. \par}
+{\leftskip=5mm
+{\tt cs-hat-left-perturbation} {\em smgr}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Return the morphism corresponding to the differential perturbation $\delta_l$ induced
+by the twisted tensor product. This morphism is nothing but the tensor product of two
+morphisms: the perturbation morphism by-product of the Brown reduction of the fibration of
+the simplicial group and the identity morphism on $Bar^{{\cal C}_*({\cal G})}({\Z},{\Z})$. \par}
+{\leftskip=5mm
+{\tt cs-left-hmeq-hat} {\em smgr}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Return the chain complex 
+${\rm Hat}_{tt}=Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes_t {\cal C}_*({\cal G}),{\Z})$ by 
+perturbing the chain complex ${\rm Hat}_{ut}$ by the perturbation $\delta_l$. \par}
+{\leftskip=5mm
+{\tt cs-pre-left-hmeq-left-reduction} {\em smgr}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build the reduction
+$${\rm Hat}_{tu}=Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes {\cal C}_*({\cal G}),{\Z}) \Longrightarrow {\cal C}_*(\bar{\cal W}{\cal G}).$$ 
+\par}
+{\leftskip=5mm
+{\tt cs-pre-left-hmeq-right-reduction} {\em smgr}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build the reduction
+$${\rm Hat}_{ut}=Bar^{{\cal C}_*({\cal G})}({\check{\cal C}}_*({\cal G})\otimes_t {\cal C}_*(\bar{\cal W}{\cal G}),{\Z}) \Longrightarrow
+Bar^{{\cal C}_*({\cal G})}({\Z}, {\Z}).$$ \par}
+{\leftskip=5mm
+{\tt cs-left-hmeq-left-reduction} {\em smgr}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build the Rubio reduction 
+$$Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes_t {\cal C}_*({\cal G}),{\Z}) \Longrightarrow{\cal C}_*(\bar{\cal W}{\cal G})$$
+by perturbing by the perturbation $\delta_r$ the reduction
+$${\rm Hat}_{tu} \Longrightarrow {\cal C}_*(\bar{\cal W}{\cal G})$$ 
+obtained by the function {\tt pre-left-hmeq-left-reduction}. \par}
+{\leftskip=5mm
+{\tt cs-left-hmeq-right-reduction} {\em smgr}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build the reduction 
+$$Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes_t {\cal C}_*({\cal G}),{\Z}) \Longrightarrow 
+Bar^{{\cal C}_*({\cal G})}({\Z}, {\Z})$$
+by perturbing by the perturbation $\delta_l$ the reduction 
+$${\rm Hat}_{ut} \Longrightarrow Bar^{{\cal C}_*({\cal G})}({\Z}, {\Z})$$
+obtained by the function {\tt cs-pre-left-hmeq-right-reduction}. \par}
+{\leftskip=5mm
+{\tt cs-left-hmeq} {\em smgr}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build the homotopy equivalence
+$$\diagram{
+  & Bar^{{\cal C}_*({\cal G})}({\cal C}_*(\bar{\cal W}{\cal G})\otimes_t {\cal C}_*({\cal G}),{\Z}) \cr
+    \swarrow\nearrow & & \searrow\nwarrow \cr
+ {\cal C}_*(\bar{\cal W}{\cal G})    & & Bar^{{\cal C}_*({\cal G})}({\Z}, {\Z}) \cr
+          }$$
+from the above reductions. The function {\tt classifying-space-efhm} composes this left homotopy
+equivalence $H_L$ with the homotopy equivalence $H_R$ which is the Bar of a pre-existing
+homotopy equivalence (possibly the trivial one) between the module ${\cal G}$ and an effective
+version of it, as described at the beginning of this chapter. 
+\par}
+}
+
+\subsection {Searching homology for classifying spaces}
+
+The \index{searching homology!classifying spaces} origin list of a classifying space object has the form 
+{\tt (CLASSIFYING-SPACE {\em smgr})}.
+The {\tt search-efhm} method applied to a classifying space object
+consists essentially in a call to the function {\tt classifying-space-efhm}
+described just above.
+{\footnotesize\begin{verbatim}
+(defmethod SEARCH-EFHM (classifying-space (orgn (eql 'classifying-space)))
+  (declare (type simplicial-set classifying-space))
+  (classifying-space-efhm (second (orgn classifying-space))))
+\end{verbatim}}
+The following Lisp definition of the function  {\tt classifying-space-efhm} shows that 
+the process may be recursif if it happens that {\em smrg} is itself a classifying space:
+{\footnotesize\begin{verbatim}
+(defun CLASSIFYING-SPACE-EFHM (smgr)
+  (declare (type simplicial-group smgr))
+  (let ((left-hmeq (cs-left-hmeq smgr))
+        (right-hmeq (bar (efhm smgr))))
+        (declare (type homotopy-equivalence left-hmeq right-hmeq))
+        (cmps left-hmeq right-hmeq)))
+\end{verbatim}}
+
+
+\subsection* {Examples}
+
+{\footnotesize\begin{verbatim}
+(setf kz1 (k-z-1))  ==>
+
+[K1 Abelian-Simplicial-Group]
+
+(homology kz1 0 10)  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+Component Z
+
+Homology in dimension 2 :
+
+Homology in dimension 3 :
+
+Homology in dimension 4 :
+
+Homology in dimension 5 :
+
+Homology in dimension 6 :
+
+Homology in dimension 7 :
+
+Homology in dimension 8 :
+
+Homology in dimension 9 :
+
+---done---
+
+(setf bkz1 (classifying-space kz1))  ==>
+
+[K23 Abelian-Simplicial-Group]
+
+(homology bkz1 0 10)  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+Homology in dimension 2 :
+
+Component Z
+
+Homology in dimension 3 :
+
+Homology in dimension 4 :
+
+Component Z
+
+Homology in dimension 5 :
+
+Homology in dimension 6 :
+
+Component Z
+
+Homology in dimension 7 :
+
+Homology in dimension 8 :
+
+Component Z
+
+Homology in dimension 9 :
+
+---done---
+
+(setf obkz1 (loop-space bkz1))  ==>
+
+[K154 Simplicial-Group]
+
+(homology obkz1 0 6)  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+Component Z
+
+Homology in dimension 2 :
+
+Homology in dimension 3 :
+
+Homology in dimension 4 :
+
+Homology in dimension 5 :
+
+---done---
+
+\end{verbatim}}
+
+\subsection* {Lisp files concerned in this chapter}
+
+{\tt cs-space-efhm.lisp}, {\tt searching-homology.lisp}.
+
+

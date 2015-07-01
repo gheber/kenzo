@@ -1,0 +1,34 @@
+\pagestyle{headings}
+\parindent=0mm
+\input amssym.def
+\input amssym.tex
+\newtheorem{thr}{Theorem}
+
+\def\N{{\Bbb N}}
+\def\Z{{\Bbb Z}}
+\def\R{{\Bbb R}}
+%
+% macros pour les diagrammes rectangulaires
+%
+\def\hfl#1#2{\smash{\mathop{\hbox to 15mm{\rightarrowfill}}
+\limits^{\scriptstyle#1}_{\scriptstyle#2}}}
+%
+\def\hflr#1#2{\smash{\mathop{\hbox to 15mm{\rightarrowfill}}
+\limits^{\scriptstyle#1}_{\scriptstyle#2}}}
+%
+\def\hfll#1#2{\smash{\mathop{\hbox to 15mm{\leftarrowfill}}
+\limits^{\scriptstyle#1}_{\scriptstyle#2}}}
+%
+\def\vfl#1#2{\llap{$\scriptstyle #1$}\left\downarrow
+\vbox to 7mm{}\right.\rlap{$\scriptstyle #2$}}
+%
+\def\vflu#1#2{\llap{$\scriptstyle #1$}\left\uparrow
+\vbox to 7mm{}\right.\rlap{$\scriptstyle #2$}}
+%
+\def\diagram#1{\def\normalbaselines{\baselineskip=0pt
+\lineskip=10pt\lineskiplimit=1pt} \matrix{#1}}
+%
+% macro tvi pour les lignes verticales et horizontales dans un tableau
+%
+\def\tvi{\vrule height 12pt depth 5pt width 0pt}
+\def\tv{\tvi\vrule}

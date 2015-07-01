@@ -1,0 +1,553 @@
+\chapter {Serre spectral sequence}
+
+\section {Introduction}
+
+This chapter is devoted to the {\tt Kenzo} implementation of the
+Serre spectral sequence\index{Serre spectral sequence} 
+with the aim to compute the homology groups
+of the total  space of a fibration. From the programming point of view,
+this method will be used according to our general scheme of searching homology 
+(generic function {\tt search-efhm}) applied  to an object of type {\tt fibration-total}.
+
+\section {The topological problem}
+
+Let ${\cal G}$ be a simplicial group (the fiber space),  $B$, a $1$--reduced simplicial set (the base space) and
+$\tau$ (the fibration), a simplicial morphism of degree $-1$, $\tau: B \longrightarrow {\cal G}$.
+We know, from a previous chapter (fibrations) that the software {\tt Kenzo} knows how to build
+the total space of the fibration: $B \times_\tau {\cal G}$, which has the same simplices as
+$B \times {\cal G}$ and the same face operators except the last one, given by:
+$$\partial_n(b,g)  =  (\partial_n b, \tau(b).\partial_n g), \quad b\in B, g \in {\cal G},$$
+where the '{\tt .}' denotes the group operation in ${\cal G}$. This discrepancy between the respective face operators
+$\partial_n$ induces a discrepancy between the differential operators. We suppose now, that 
+the base and  fiber  spaces are objects of effective homology type, i.e. there exists homotopy equivalences
+$$\diagram{
+  & \widehat{B}  & & & & \widehat{\cal G} & & \cr
+ \rho_1 \swarrow\nearrow  & & \searrow\nwarrow \rho_2 &\quad & \rho'_1\swarrow\nearrow & & \searrow\nwarrow\rho'_2 & \cr
+B  & & EB & & {\cal G}   & & EG \cr
+           }$$
+
+where the chain complexes $EB$ and $EG$ are effective. The problem consists in finding a homotopy equivalence
+between $B \times_\tau {\cal G}$ and an effective chain complex noted $EB \widetilde{\otimes} EG$; 
+the underlying graded module of $EB \widetilde{\otimes} EG$ is $EB \otimes EG$ but the differential
+is twisted in a rather complicated way. In fact, the chain complex $EB \widetilde{\otimes} EG$ is nothing
+but the Hirsh complex\footnote{{\bf Guy Hirsh.} {\em Sur les groupes d'homologie des espaces fibr\'es},
+Bulletin de la Soci\'et\'e Math\'ematique de Belgique, 1954, vol. 6, pp. 79-96.}.
+
+\subsection {The Ronald Brown reduction}
+
+We start from the Eilenberg-Zilber reduction  (built in {\tt Kenzo} by the function {\tt ez}).
+$$
+\diagram{
+{{\cal C}_*(B \times {\cal G})} & \stackrel{h}{\longrightarrow} & {}^s{{\cal C}_*(B \times {\cal G})} \cr
+ {\scriptstyle f} \downarrow \uparrow {\scriptstyle g}  \cr
+ {{\cal C}_*(B) \otimes {\cal C}_*({\cal G})} \cr
+}.
+$$
+But, in fact we are interested in the following one (the Ronald Brown reduction):
+$$
+\diagram{
+{{\cal C}_*(B \times_\tau {\cal G})} & \stackrel{h}{\longrightarrow} & {}^s{{\cal C}_*(B \times_\tau {\cal G})} \cr
+ {\scriptstyle f} \downarrow \uparrow {\scriptstyle g}  \cr
+ {{\cal C}_*(B) \otimes_t {\cal C}_*({\cal G})} \cr
+}
+$$
+where the symbol $\otimes_t$ represents a {\rm twisted tensor product}, induced by the twisting
+operator $\tau$; this twisting operator is nothing but the  Shih twisting cochain\footnote{{\bf Gugenheim.},
+  {\em On the chain complex of a fibration}.
+   Illinois Journal of Mathematics, 1972, vol. 16, pp. 398-414. } determined by Szczarba\footnote
+{{\bf R. H. Szczarba.}
+  {\em The homology of twisted cartesian products}.
+   Transactions of the American Mathematical Society,
+   1961, vol. 100, pp. 197-216.}. Here, to obtain the Szczarba cochain, we apply the perturbation lemma (Ronnie Brown).
+In effect, writing 
+$$ d_\tau = d + (d_\tau -d),$$
+one may consider that the differential $d_\tau$ of $B \times_\tau {\cal G}$ 
+is the differential $d$ of $B \times {\cal G}$ modified by the perturbation $d_\tau - d$.
+The perturbation morphism $d_\tau -d$ is deduced from the  difference  between both  $\partial_n$ face operators. 
+This being done,  a perturbation may possibly be 
+propagated along the Eilenberg-Zilber reduction  (see the method {\tt add} applied to a reduction)
+and  the perturbation lemma  gives also, as a bonus, the perturbation to be applied to the dif\-fe\-ren\-ti\-al 
+of $B \otimes {\cal G}$  to obtain the differential of $B \otimes_t {\cal G}$. 
+
+\subsection {The Gugenheim algorithm}
+
+On the other hand, from the homotopy equivalences
+$$\diagram{
+  & \widehat{B} & & & & \widehat{\cal G} & & \cr
+ \rho_1 \swarrow\nearrow  & & \searrow\nwarrow \rho_2 &\quad & \rho'_1\swarrow\nearrow & & \searrow\nwarrow\rho'_2 & \cr
+B  & & EB & & {\cal G}   & & EG \cr
+           }$$
+it is possible to build their tensor product, i.e. the   homotopy equivalence:
+$$\diagram{
+  & \widehat{B}\otimes \widehat{\cal G} &    \cr
+ \swarrow\nearrow & & \searrow\nwarrow \cr
+B\otimes {\cal G}  & & EB \otimes EG \cr}
+$$
+This is done in {\tt Kenzo} by the method  {\tt tnsr-prdc}.
+In fact, we are interested in the following one:
+$$\diagram{
+  & \widehat{B}\widetilde{\otimes}\widehat{\cal G} &    \cr
+ \swarrow\nearrow & & \searrow\nwarrow \cr
+B\otimes_t {\cal G}  & & EB \widetilde{\otimes} EG \cr}
+$$
+where $\widehat{B}\widetilde{\otimes}\widehat{\cal G}$ and $EB \widetilde{\otimes} EG$ are appropriate
+strongly twisted tensor products determined by the perturbation lemma: this last homotopy equivalence
+is obtained by propagating over the previous one, the perturbation to be applied to the differential 
+of $B \otimes {\cal G}$  to obtain the differential of $B \otimes_t {\cal G}$.
+The homotopy equivalence so obtained is called in {\tt Kenzo} the {\em right Serre homotopy equivalence}.
+
+\subsection {Assembling the puzzle}
+
+Let us build now the so-called {\em left Serre homotopy equivalence}, 
+$$\diagram{
+  & B\times_\tau{\cal G} &    \cr
+ \swarrow\nearrow & & \searrow\nwarrow \cr
+B\times_\tau {\cal G}  & & B\otimes_t {\cal G} \cr}
+$$
+where the left reduction is the trivial one and the right reduction is
+the Brown reduction. We may then compose both Serre homotopy equivalences to obtain
+what we were looking for: 
+$$\diagram{
+  & B\times_\tau {\cal G}  & & &\widehat{B}\otimes_t\widehat{\cal G} & & \cr
+ \rho_1 \swarrow\nearrow  & & \searrow\nwarrow \rho_2 & \rho'_1\swarrow\nearrow & & \searrow\nwarrow\rho'_2 & \cr
+B\times_\tau {\cal G}  & &B\otimes_t {\cal G} &B\otimes_t {\cal G} & &EB \otimes_t EG \cr
+           }$$
+
+\section {The functions for the Serre spectral sequence}
+
+The following functions are given for information purpose.
+\vskip 0.35cm
+{\parindent=0mm
+{\leftskip=5mm
+{\tt fibration-dtau-d-intr} {\em fibration}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build the lisp function corresponding to the difference $d_\tau - d$, where $d$ is the differential
+in $B \times {\cal G}$ and $d_\tau$ the differential in $B \times_\tau {\cal G}$. This is an internal
+function and is used in the following one. \par}
+{\leftskip=5mm
+{\tt fibration-dtau-d} {\em fibration}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build the morphism $d_\tau-d$, which is the perturbation morphism to be added to
+the differential  $d$ of $B \times {\cal G}$  to obtain  $d_\tau$, 
+the differential in $B \times_\tau {\cal G}$. We recall that both simplicial sets have
+the same simplices. The source and the target of this morphism is the total space
+$B \times_\tau {\cal G}$ and the degree is $-1$. \par}
+{\leftskip=5mm
+{\tt Brown-reduction} {\em fibration}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Return two values: a) the Brown reduction and b) the  perturbation to be applied to the differential of the tensor
+product $B \otimes {\cal G}$  to obtain the differential of the twisted tensor
+product $B \otimes_t {\cal G}$. \par}
+{\leftskip=5mm
+{\tt left-Serre-efhm} {\em fibration}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build the left Serre homotopy equivalence from the argument {\em fibration}. \par}
+{\leftskip=5mm
+{\tt right-Serre-efhm} {\em fibration}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build the right Serre homotopy equivalence from the argument {\em fibration}. \par}
+}
+
+\section {Searching homology for fibration total spaces}
+
+The comment list of a {\tt Kenzo} object which is the total space of a fibration has the form
+\index{searching homology!fibration total space}
+{\tt (fibration-total {\em fibration})}. The {\tt search-efhm} method applied to a simplicial
+set having this kind of comment list, builds the composition of the left and right Serre homotopy
+equivalences. The right one needs the homotopy equivalences attached respectively to the
+base and  fiber spaces. This may involve a recursive call of {\tt search-efhm}.
+If the base space or the fiber space
+are locally effective, the total space is locally effective and the method
+cannot compute the homology.
+{\footnotesize\begin{verbatim}
+(defmethod SEARCH-EFHM (smst (orgn (eql 'fibration-total)))
+  (declare
+     (type simplicial-set smst))
+  (the homotopy-equivalence
+     (fibration-total-efhm (second (orgn smst)))))
+
+(defun FIBRATION-TOTAL-EFHM (fibration)
+  (declare (type fibration fibration))
+  (the homotopy-equivalence
+       (cmps (left-serre-efhm fibration)
+             (right-serre-efhm fibration))))
+\end{verbatim}}
+
+\subsection* {Examples}
+
+We begin by some examples similar to examples that we have seen in the fibrations chapter.
+For the user, the delicate point is to write in Lisp a correct twisting operator. There is no check
+in this version of {\tt Kenzo} for the coherency of the twisting operator. In the first example
+we define a fibration $\tau: S^2 \rightarrow K({\Z},1)$ with $\tau(s2)= (2)$, then we build the
+total space of the fibration, namely $P^3{\R}$, and we compute some known homology groups.
+{\footnotesize\begin{verbatim}
+(setf sph2 (sphere 2))  ==>
+
+[K1 Simplicial-Set]
+
+(setf kz1 (k-z-1))  ==>
+
+[K6 Abelian-Simplicial-Group]
+
+(setf tw2 (build-smmr
+             :sorc sph2
+             :trgt kz1
+             :degr -1
+             :sintr #'(lambda (dmns gmsm)
+                        (unless (= dmns 2)
+                                (error "Dimension error for 
+                                        the twisting operator S2-->KZ1"))
+                        (absm 0 (list 2)))
+	     :orgn '(s2-tw-kz1)))            ==>
+
+[K18 Fibration]
+
+(? tw2 2 's2)  ==>
+
+<AbSm - (1)>
+
+(? tw2 0 '*)  ==>
+
+Error: Dimension error for the twisting operator S2-->KZ1
+
+(setf p3r (fibration-total tw2))  ==>
+
+[K24 Simplicial-Set]
+
+(homology p3r 0 10)   ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+Component Z/2Z
+
+Homology in dimension 2 :
+
+Homology in dimension 3 :
+
+Component Z
+
+Homology in dimension 4 :
+
+Homology in dimension 5 :
+
+Homology in dimension 5 :
+
+Homology in dimension 7 :
+
+Homology in dimension 8 :
+
+Homology in dimension 9 :
+
+--done--
+\end{verbatim}}
+Let us do the same kind of computations with $\tau(s2)= (5)$ and $\tau(s2)= (17)$.
+{\footnotesize\begin{verbatim}
+(setf tw5 (build-smmr
+             :sorc sph2
+             :trgt kz1
+             :degr -1
+             :sintr #'(lambda (dmns gmsm)
+                        (absm 0 (list 5)))
+             :orgn '(s2-tw-kz1-5)))         ==>
+
+[K110 Fibration]
+
+(setf total-5 (fibration-total tw5))  ==>
+
+[K111 Simplicial-Set]
+
+(homology total-5 0 5)
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+Component Z/5Z
+
+Homology in dimension 2 :
+
+Homology in dimension 3 :
+
+Component Z
+
+Homology in dimension 4 :
+
+(setf tw17 (build-smmr
+             :sorc sph2
+             :trgt kz1
+             :degr -1
+             :sintr #'(lambda (dmns gmsm)
+                        (absm 0 (list 17)))
+             :orgn '(s2-tw-kz1-17)))         ==>
+
+[K165 Fibration]
+
+(setf total-17 (fibration-total tw17))  ==>
+
+[K166 Simplicial-Set]
+
+(homology total-17 0 4)  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+Component Z/17Z
+
+Homology in dimension 2 :
+
+Homology in dimension 3 :
+
+Component Z
+\end{verbatim}}
+\newpage
+Using the last total space ({\tt total-17}), it is instructive to enter in the details
+of the resulting homotopy equivalence that the system builds to compute the homology
+groups. First, the function {\tt echcm} selects the {\bf effective} chain complex of the homotopy
+equivalence, value of the slot {\tt efhm} of the simplicial set {\tt total-17}, and we may 
+print some basis of this chain complex. In fact, all basis in dimension above $3$ are null.
+The presence of the symbol {\tt S1} is due to the fact that the effective chain complex
+used for the homology of $K({\Z},1)$ is the circle (see the classifying spaces chapter).
+{\footnotesize\begin{verbatim}
+(setf echcm (echcm total-17))  ==>
+
+[K205 Chain-Complex]
+
+(dotimes (i 6) (print (basis echcm i)))  ==>
+
+(<TnPr * *>) 
+(<TnPr * S1>) 
+(<TnPr S2 *>) 
+(<TnPr S2 S1>) 
+NIL
+NIL
+\end{verbatim}}
+The resulting homotopy equivalence built by the system, may be summarized
+by the diagram:
+
+$$\diagram{
+  &\widehat{S^2\times_\tau K({\Z},1)} &    \cr
+ f\swarrow\nearrow & & \searrow\nwarrow g \cr
+S^2\times_\tau K({\Z},1) & & [K205\, Chain\, Complex] \cr}
+$$
+
+where {\em f} and {\em g} are respectively the {\em descending} and {\em ascending}
+morphisms of the left and right reductions of the homotopy equivalence. We recall that
+these morphisms are obtained respectively by the functions {\tt lf} and {\tt rg}. We may
+compose these morphisms to create a morphism {\tt fg} from $[K205]$ to $S^2\times_\tau K({\Z},1)$ and
+see how it acts on the basis  elements in dimension $1$ and $2$:
+{\footnotesize\begin{verbatim}
+(setf fg (cmps (lf (efhm total-17)) (rg (efhm total-17))))  ==>
+
+[K220 Morphism (degree 0)]
+
+(setf gen1 (first (basis echcm 1)))  ==>
+
+<TnPr * S1>
+
+(? fg 1 gen1)  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<-1 * <CrPr 0 * - (1)>>
+------------------------------------------------------------------------------
+
+(setf gen2 (first (basis echcm 2)))  ==>
+
+<TnPr S2 *>
+
+(setf fg-gen2 (? fg 2 gen2))  ==>
+
+----------------------------------------------------------------------{CMBN 2}
+<-1 * <CrPr - S2 1-0 NIL>>
+<-1 * <CrPr 1-0 * - (1 1)>>
+<-1 * <CrPr 1-0 * - (1 2)>>
+<-1 * <CrPr 1-0 * - (1 3)>>
+<-1 * <CrPr 1-0 * - (1 4)>>
+<-1 * <CrPr 1-0 * - (1 5)>>
+<-1 * <CrPr 1-0 * - (1 6)>>
+<-1 * <CrPr 1-0 * - (1 7)>>
+<-1 * <CrPr 1-0 * - (1 8)>>
+<-1 * <CrPr 1-0 * - (1 9)>>
+<-1 * <CrPr 1-0 * - (1 10)>>
+<-1 * <CrPr 1-0 * - (1 11)>>
+<-1 * <CrPr 1-0 * - (1 12)>>
+<-1 * <CrPr 1-0 * - (1 13)>>
+<-1 * <CrPr 1-0 * - (1 14)>>
+<-1 * <CrPr 1-0 * - (1 15)>>
+<-1 * <CrPr 1-0 * - (1 16)>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+The boundary of this combination in $S^2\times_\tau K({\Z},1)$ is 
+{\footnotesize\begin{verbatim}
+(? total-17 *)
+
+----------------------------------------------------------------------{CMBN 1}
+<-17 * <CrPr 0 * - (1)>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+to which corresponds in the effective chain complex, the boundary of the basis
+element in dimension $2$, $gen2=s2 \otimes *$:
+{\footnotesize\begin{verbatim}
+(? echcm 2 gen2)  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<17 * <TnPr * S1>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+The printing of the $3$ faces of the $17$ simplices of the combination
+{\tt fg-gen2} shows the geometrical organisation of the twisted product:
+{\footnotesize\begin{verbatim}
+(dolist(iterm (cmbn-list fg-gen2))
+       (dotimes (i 3)(print (face total-17 i 2 (gnrt iterm)))) 
+                     (terpri))  ==>
+
+<AbSm 0 <CrPr - * - NIL>> 
+<AbSm 0 <CrPr - * - NIL>> 
+<AbSm - <CrPr 0 * - (17)>> 
+
+<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (2)>> 
+<AbSm - <CrPr 0 * - (1)>> 
+
+<AbSm - <CrPr 0 * - (2)>> 
+<AbSm - <CrPr 0 * - (3)>> 
+<AbSm - <CrPr 0 * - (1)>> 
+
+<AbSm - <CrPr 0 * - (3)>> 
+<AbSm - <CrPr 0 * - (4)>> 
+<AbSm - <CrPr 0 * - (1)>> 
+
+<AbSm - <CrPr 0 * - (4)>> 
+<AbSm - <CrPr 0 * - (5)>> 
+<AbSm - <CrPr 0 * - (1)>> 
+
+<AbSm - <CrPr 0 * - (5)>> 
+<AbSm - <CrPr 0 * - (6)>> 
+<AbSm - <CrPr 0 * - (1)>> 
+
+<AbSm - <CrPr 0 * - (6)>> 
+<AbSm - <CrPr 0 * - (7)>> 
+<AbSm - <CrPr 0 * - (1)>> 
+
+<AbSm - <CrPr 0 * - (7)>> 
+<AbSm - <CrPr 0 * - (8)>> 
+<AbSm - <CrPr 0 * - (1)>> 
+
+<AbSm - <CrPr 0 * - (8)>> 
+<AbSm - <CrPr 0 * - (9)>> 
+<AbSm - <CrPr 0 * - (1)>> 
+\end{verbatim}}
+\newpage
+{\footnotesize\begin{verbatim}
+<AbSm - <CrPr 0 * - (9)>> 
+<AbSm - <CrPr 0 * - (10)>> 
+<AbSm - <CrPr 0 * - (1)>> 
+
+<AbSm - <CrPr 0 * - (10)>> 
+<AbSm - <CrPr 0 * - (11)>> 
+<AbSm - <CrPr 0 * - (1)>> 
+
+<AbSm - <CrPr 0 * - (11)>> 
+<AbSm - <CrPr 0 * - (12)>> 
+<AbSm - <CrPr 0 * - (1)>> 
+
+<AbSm - <CrPr 0 * - (12)>> 
+<AbSm - <CrPr 0 * - (13)>> 
+<AbSm - <CrPr 0 * - (1)>> 
+
+<AbSm - <CrPr 0 * - (13)>> 
+<AbSm - <CrPr 0 * - (14)>> 
+<AbSm - <CrPr 0 * - (1)>> 
+
+<AbSm - <CrPr 0 * - (14)>> 
+<AbSm - <CrPr 0 * - (15)>> 
+<AbSm - <CrPr 0 * - (1)>> 
+
+<AbSm - <CrPr 0 * - (15)>> 
+<AbSm - <CrPr 0 * - (16)>> 
+<AbSm - <CrPr 0 * - (1)>> 
+
+<AbSm - <CrPr 0 * - (16)>> 
+<AbSm - <CrPr 0 * - (17)>> 
+<AbSm - <CrPr 0 * - (1)>> 
+\end{verbatim}}
+\begin{center}
+---------
+\end{center}
+We have seen that for the special case of loop spaces, there is a
+canonical fibration and that the function {\tt twisted-crts-prdc}
+builds the total space $X \times_\tau \Omega X$.
+{\footnotesize\begin{verbatim}
+(setf sph3 (sphere 3))  ==>
+
+[K221 Simplicial-Set]
+
+(setf tw3 (twisted-crts-prdc sph3))  ==>
+
+[K243 Simplicial-Set]
+
+(face tw3 3 3 (crpr 0 's3 7 +null-loop+))  ==>
+
+<AbSm - <CrPr 1-0 * - <<Loop[S3]>>>>
+\end{verbatim}}
+It is of course possible to study, any other fibration, provided one
+defines a correct fibration $\tau$. In the following example
+the fibration $\tau: S^3 \longrightarrow \Omega S^3$, is defined
+by 
+$\tau(s3)= s3^{-2},$ where $s3^{-2}$ is a word in the Kan simplicial version
+of the first loop space of $S^3$. In Kenzo, this object is created by the
+statement:
+{\footnotesize\begin{verbatim}
+(absm 0 (loop3 0 's3 -2))  ==>
+
+<AbSm - <<Loop[S3\-2]>>>
+
+(setf tws3 (build-smmr   :sorc sph3
+                         :trgt (loop-space sph3)
+                         :degr -1
+                         :sintr #'(lambda (dmns gmsm) (absm 0 (loop3 0 's3 -2)))
+                         :orgn '(s3-tw-lps3)))     ==>
+
+[K248 Fibration]
+
+(setf total (fibration-total tws3))  ==>
+
+[K249 Simplicial-Set]
+
+(homology total 0 7)  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+Homology in dimension 2 :
+
+Component Z/2Z
+
+Homology in dimension 3 :
+
+Homology in dimension 4 :
+
+Component Z/2Z
+
+Homology in dimension 5 :
+
+Homology in dimension 6 :
+
+Component Z/2Z
+\end{verbatim}}
+\newpage
+
+\subsection* {Lisp files concerned in this chapter}
+
+{\tt serre.lisp}, {\tt searching-homology.lisp}.

@@ -1,0 +1,362 @@
+\chapter{Tensor product of chain complexes}
+
+\section{Introduction}
+
+One knows that the homology groups of a cartesian product of two spaces
+$K$ and $L$ may be obtained by considering a chain complex derived from 
+respective chain complexes of $K$ and $L$ by taking their {\em tensor product}.
+But this is only one of the numerous uses  of tensor products of chain complexes
+in algebraic topology, so the {\tt Kenzo} software provides the handling of such
+an important tool.
+\par
+Let us recall that chain complexes are free $\Z$--modules with distinguished basis.
+A tensor product\index{tensor product!of chain complexes} of chain complexes 
+is itself a free $\Z$--module with a natural basis
+formed by the tensor product of the generators of the chain complex factors.
+The program conforms to that rule.
+
+\section{Tensor product of generators and combinations}
+
+An elementary tensor product\index{tensor product!of generators} 
+of two generators is represented, in the software,
+by a structured list in which we may find $4$ items for the description of the two generators 
+together with their respective degree. The internal representation of $gnrt1 \otimes gnrt2$ has
+the form:
+\begin{center} 
+{\tt (:tnpr ({\em degr1}.{\em gnrt1}).({\em degr2}.{\em gnrt2}))}
+\end{center}
+where,
+\begin{enumerate}
+\item {\em degr1} is an integer, the degree of the generator {\em gnrt1}.
+\item {\em gnrt1} is the first generator of the pair.
+\item {\em degr2} is an integer, the degree of the generator {\em gnrt2}.
+\item {\em gnrt2} is  the second generator of the pair.
+\end{enumerate}
+To construct such an object, one may use the macro {\tt tnpr}. The cor\-res\-pon\-ding  type  is {\tt TNPR}.
+The printing method prints the  tensor product under the form:
+\begin{center}
+{\tt <TnPr {\em gnrt1 gnrt2}>} or {\tt <TnPr {\em degr1 gnrt1 degr2 gnrt2}>}
+\end{center}
+according to the boolean value, {\tt NIL} (default) or {\tt T}  of the system variable 
+{\tt *tnpr-with-degrees*} (see the examples).
+
+\subsection {Simple functions for the tensor product}
+
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt tnpr} {\em degr1 gnrt1 degr2 gnrt2} \hfill {\em [Macro]} \par}
+{\leftskip=15mm 
+Build a tensor product $gnrt1 \otimes gnrt2$. \par}
+{\leftskip=5mm 
+{\tt tnpr-p} {\em object} \hfill {\em [Predicate]} \par}
+{\leftskip=15mm 
+Test if {\em object} is of type {\tt TNPR}. \par}
+{\leftskip=5mm 
+{\tt degr1} {\em tnpr} \hfill {\em [Macro]} \par}
+{\leftskip=15mm 
+Select the degree of the first generator in the tensor product {\em tnpr}. \par}
+{\leftskip=5mm 
+{\tt gnrt1} {\em tnpr} \hfill {\em [Macro]} \par}
+{\leftskip=15mm 
+Select the first generator from the object {\em tnpr}. \par}
+{\leftskip=5mm 
+{\tt degr2} {\em tnpr} \hfill {\em [Macro]} \par}
+{\leftskip=15mm 
+Select the degree of the second generator in the tensor product {\em tnpr}. \par}
+{\leftskip=5mm 
+{\tt gnrt2} {\em tnpr} \hfill {\em [Macro]} \par}
+{\leftskip=15mm 
+Select the second generator from the object {\em tnpr}. \par}
+{\leftskip=5mm 
+{\tt 2cmbn-tnpr} {\em cmbn1 cmbn2} \hfill {\em [Function]} \par}
+{\leftskip=15mm 
+Create, from two combinations {\em cmbn1} and {\em cmbn2} with respective degree {\em degr1} and {\em degr2}, 
+a combination of degree $dgr1 + dgr2$  by applying the tensorial distributive law on the two sums of terms
+of the combinations. \par}
+}
+
+\subsection* {Example}
+
+{\footnotesize\begin{verbatim}
+(tnpr 1 'a 2 'b)  ==>
+
+<TnPr A B>
+
+(tnpr-p *)  ==>
+
+T
+
+(tnpr-p (cmbn 0 1 'a 2 'b))  ==>
+
+NIL
+
+(setf *tnpr-with-degrees* t)  ==> 
+
+T
+
+(2cmbn-tnpr (cmbn 2 3 'a 4 'b -5 'c) (cmbn 3 4 'x -3 'y 2 'z))  ==>
+
+----------------------------------------------------------------------{CMBN 5}
+<12 * <TnPr 2 A 3 X>>
+<-9 * <TnPr 2 A 3 Y>>
+<6 * <TnPr 2 A 3 Z>>
+<16 * <TnPr 2 B 3 X>>
+<-12 * <TnPr 2 B 3 Y>>
+<8 * <TnPr 2 B 3 Z>>
+<-20 * <TnPr 2 C 3 X>>
+<15 * <TnPr 2 C 3 Y>>
+<-10 * <TnPr 2 C 3 Z>>
+------------------------------------------------------------------------------
+
+(setf *tnpr-with-degrees* nil)  ==>
+
+NIL
+
+**  ==>      ;;; ** is the last but one result 
+----------------------------------------------------------------------{CMBN 5}
+<12 * <TnPr A X>>
+<-9 * <TnPr A Y>>
+<6 * <TnPr A Z>>
+<16 * <TnPr B X>>
+<-12 * <TnPr B Y>>
+<8 * <TnPr B Z>>
+<-20 * <TnPr C X>>
+<15 * <TnPr C Y>>
+<-10 * <TnPr C Z>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+\newpage
+
+\section{Tensor product of chain complexes}
+
+The\index{tensor product!of chain complexes} software implements the tensor product of chain complexes according to
+the classical following definition. Let $C$ and $C'$ two chain complexes. The
+tensor product $C\otimes C'$ is the chain complex $D$ such that:
+$$ D_p=\bigoplus_{m+n=p}C_m\otimes C_n',$$
+$C_m\otimes C_n'$ being the tensor product of the two modules $C_m$ and $C_n'$.
+A basis for $D_p$ is the union of the basis of $C_m\otimes C_n'$, with $m+n=p$.
+\par
+The boundary operator $d^{\otimes}$ is defined, according to the Koszul rule, by:
+$$d^{\otimes}(c_m\otimes c_n')=d(c_m)\otimes c_n' +(-1)^m c_m\otimes d'(c_n'),$$
+with $c_m\in C_m,\ c_n'\in C_n'$ and $d$, $d'$ being the respective boundary operators
+of $C$ and $C'$.
+\par
+In the software, this is realized by the function {\tt tnsr-prdc}. 
+\vskip 0.40cm
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt tnsr-prdc} {\em chcm1 chcm2} \hfill {\em [Method]} \par}
+{\leftskip=15mm 
+Build a chain complex, tensor product of the two chain complexes {\em chcm1} and {\em chcm2}. The elements
+of this new chain complex are integer combinations of generators of {\tt TNPR} type. The creation of this
+new chain complex is done
+by a call to the function {\tt build-chcm} with actual parameters 
+defined from the constituting elements  of {\em chcm1} and {\em chcm2}, according to the
+mathematical definitions above. If both arguments are {\em effective}, the function
+constructs an {\em effective} chain complex. On the other hand, if at least one of the chain complex 
+is {\em locally effective}, the tensor product is also {\em locally effective}. In fact, the construction
+is correct only if both chain complexes are null in negative degrees, otherwise the result
+is undefined.
+\par}}
+
+\subsection* {Examples}
+
+Let us take the standard $2$--simplex, $\Delta^2$ and let us build $C_*(\Delta^2) \otimes C_*(\Delta^2)$. To build
+the corresponding chain complex, we use the function {\tt cdelta}, defined in a previous chapter.
+{\footnotesize\begin{verbatim}
+(setf triangle (cdelta 2))  ==>
+
+[K1 Chain-Complex]
+
+(basis triangle 1)  ==>
+
+((0 1) (0 2) (1 2))
+
+(setf tpr-triangles (tnsr-prdc triangle triangle))  ==>
+
+[K3 Chain-Complex]
+\end{verbatim}}
+Let us inspect some basis of this newly created chain complex.
+{\footnotesize\begin{verbatim}
+(basis tpr-triangles 0)  ==>
+
+(<TnPr (0) (0)> <TnPr (0) (1)> <TnPr (0) (2)> <TnPr (1) (0)> <TnPr (1) (1)> 
+ <TnPr (1) (2)> <TnPr (2) (0)> <TnPr (2) (1)> <TnPr (2) (2)>)
+
+(basis tpr-triangles 1)  ==>
+
+(<TnPr (0) (0 1)> <TnPr (0) (0 2)> <TnPr (0) (1 2)> <TnPr (1) (0 1)> 
+ <TnPr (1) (0 2)> <TnPr (1) (1 2)> <TnPr (2) (0 1)> <TnPr (2) (0 2)> 
+ <TnPr (2) (1 2)> <TnPr (0 1) (0)> <TnPr (0 1) (1)> <TnPr (0 1) (2)> 
+ <TnPr (0 2) (0)> <TnPr (0 2) (1)> <TnPr (0 2) (2)> <TnPr (1 2) (0)> 
+ <TnPr (1 2) (1)> <TnPr (1 2) (2)>)
+
+(basis tpr-triangles 2)  ==>
+
+(<TnPr (0) (0 1 2)> <TnPr (1) (0 1 2)> <TnPr (2) (0 1 2)> <TnPr (0 1) (0 1)> 
+ <TnPr (0 1) (0 2)> <TnPr (0 1) (1 2)> <TnPr (0 2) (0 1)> <TnPr (0 2) (0 2)> 
+ <TnPr (0 2) (1 2)> <TnPr (1 2) (0 1)> <TnPr (1 2) (0 2)> <TnPr (1 2) (1 2)> 
+ <TnPr (0 1 2) (0)> <TnPr (0 1 2) (1)> <TnPr (0 1 2) (2)>)
+
+(basis tpr-triangles 3)  ==>
+
+(<TnPr (0 1) (0 1 2)> <TnPr (0 2) (0 1 2)> <TnPr (1 2) (0 1 2)> 
+ <TnPr (0 1 2) (0 1)> <TnPr (0 1 2) (0 2)> <TnPr (0 1 2) (1 2)>)
+
+(basis tpr-triangles 4)  ==>
+
+(<TnPr (0 1 2) (0 1 2)>)
+\end{verbatim}}
+
+Let us consider now the  chain complex, $ccn$, that we used in the chain complex chapter.
+The basis in any degree are decades produced by the function {\tt <a-b<}. We build $ccn\otimes ccn$
+and we verify the fundamental property of the associated boundary operator:
+$$d^\otimes \circ d^\otimes=0.$$
+\newpage
+{\footnotesize\begin{verbatim}
+(setf ccn-boundary #'(lambda (dgr gnr)
+     (if (evenp (+ dgr gnr))
+         (cmbn (1- dgr) 1 (- gnr 10))
+         (cmbn (1- dgr)))))
+
+(setf ccn (build-chcm :cmpr #'f-cmpr
+                      :basis #'(lambda (n) (<a-b< (* 10 n) (* 10 (1+ n))))
+                      :intr-dffr  ccn-boundary
+                      :strt :gnrt
+                      :orgn '(ccn) ))  ==>
+
+[K5 Chain-Complex]
+
+(basis ccn 3)  ==>
+
+(30 31 32 33 34 35 36 37 38 39)
+
+(setf tpr-ccn-ccn (tnsr-prdc ccn ccn))   ==>
+
+[K7 Chain-Complex]
+
+(setf comb2 (cmbn 2 1 21 5 25 9 29))   ==>
+
+----------------------------------------------------------------------{CMBN 2}
+<1 * 21>
+<5 * 25>
+<9 * 29>
+------------------------------------------------------------------------------
+
+(setf comb3 (cmbn 3 2 32 3 33 -4 34 -6 36))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<2 * 32>
+<3 * 33>
+<-4 * 34>
+<-6 * 36>
+------------------------------------------------------------------------------
+
+(setf tcmb (2cmbn-tnpr comb2 comb3))  ==>
+
+----------------------------------------------------------------------{CMBN 5}
+<2 * <TnPr 21 32>>
+<3 * <TnPr 21 33>>
+<-4 * <TnPr 21 34>>
+<-6 * <TnPr 21 36>>
+<10 * <TnPr 25 32>>
+<15 * <TnPr 25 33>>
+<-20 * <TnPr 25 34>>
+<-30 * <TnPr 25 36>>
+<18 * <TnPr 29 32>>
+<27 * <TnPr 29 33>>
+<-36 * <TnPr 29 34>>
+<-54 * <TnPr 29 36>>
+------------------------------------------------------------------------------
+
+(? tpr-ccn-ccn *)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<3 * <TnPr 21 23>>
+<15 * <TnPr 25 23>>
+<27 * <TnPr 29 23>>
+------------------------------------------------------------------------------
+
+(? tpr-ccn-ccn *)  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+------------------------------------------------------------------------------
+\end{verbatim}}
+\newpage
+\section{Tensor product of morphisms, reductions, homotopy equivalences.}
+
+Let\index{tensor product!of morphisms} 
+$f:A_1 \longrightarrow A_2$ and $g:B_1 \longrightarrow B_2$ two morphisms between 
+two chain complexes. The tensor product $f \otimes g$ is the morphism
+$$f\otimes g : A_1\otimes B_1 \longrightarrow A_2\otimes B_2$$ 
+defined by the following formula respecting the Koszul rule:
+$$ (f\otimes g) (a_1 \otimes b_1)= (-1)^{deg(g)*deg(a1)}f(a_1) \otimes g(b_1).$$
+
+The method {\tt tnsr-prdc} already defined for chain complexes, may be also used for that purpose. 
+\vskip 0.45cm
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt tnsr-prdc} {\em mrph1 mrph2} \hfill {\em [Method]} \par}
+{\leftskip=15mm 
+Return the morphism, tensor product of the two morphisms {\em mrph1} and {\em mrph2}. The source
+and target of this new morphism are res\-pec\-ti\-ve\-ly the tensor product of the chain complexes source
+and target of {\em mrph1} and {\em mrph2}. The degree is the sum of the degrees of the parameters
+and the lisp function (the {\tt :pure} keyword argument of the function {\tt build-mrph})
+conforms to the mathematical definition above.  The strategy is by generator, i.e. the morphism
+is designed to work with $2$ arguments: a degree and a generator which must be
+an object of type {\tt TNPR}. \par}
+{\leftskip=5mm 
+{\tt tnsr-prdc} {\em rdct1 rdct2} \hfill {\em [Method]} \par}
+{\leftskip=15mm 
+Return the reduction\index{tensor product!of reductions}, 
+tensor product of the two reductions {\em rdct1} and {\em rdct2}. The
+algorithm consists essentially in defining
+$$f=f1 \otimes f2,\, g=g1 \otimes g2,\, h= h1 \otimes (g2 \circ g2) + Id_{tcc1} \otimes h2,$$
+where $Id_{tcc1}$ is the identity morphism in the top chain complex of the reduction {\em rdct1}.
+The returned reduction is then built by a call to the method {\tt build-rdct}.
+This defines completely the chain complexes involved in the reduction. \par}
+{\leftskip=5mm 
+{\tt tnsr-prdc} {\em hmeq1 hmeq2} \hfill {\em [Method]} \par}
+{\leftskip=15mm 
+Return\index{tensor product!of homotopy equivalence} 
+the homotopy equivalence, tensor product of the two homotopy equivalence {\em heqm1} and {\em heqm2}. 
+This is a homotopy equivalence where the new reductions are the tensor products of the arguments reductions
+(See the lisp definition just below). \par}
+}
+
+\subsection {Searching homology for tensor products}
+
+The\index{searching homology!tensor products} comment list of a tensor product of two chain complexes has the form 
+{\tt (TNSR-PRDC {\em chcm1} {\em chcm2})}.
+The {\tt search-efhm} method applied to a tensor product, looks for the value of the 
+respective {\tt efhm} slots of the chain complexes {\em chcm1} and {\em chcm2}, (i.e. two homotopy equivalences) or tries
+to settle  these slots if they are still unbound.
+Then it builds the tensor product of both homotopy equivalences, as shown in the following lisp listing. At its turn,
+the resulting homotopy equivalence will become the value of the {\tt efhm} slot of the initial tensor product 
+chain complex.
+{\footnotesize\begin{verbatim}
+(defmethod SEARCH-EFHM (chcm (orgn (eql 'tnsr-prdc)))
+  (declare (type chain-complex chcm))
+  (the homotopy-equivalence
+       (tnsr-prdc (efhm (second (orgn chcm)))
+                  (efhm (third (orgn chcm))))))
+
+(defmethod TNSR-PRDC ((hmeq1 homotopy-equivalence)
+		      (hmeq2 homotopy-equivalence))
+  (the homotopy-equivalence
+     (build-hmeq
+        :lrdct (tnsr-prdc (lrdct hmeq1) (lrdct hmeq2))
+        :rrdct (tnsr-prdc (rrdct hmeq1) (rrdct hmeq2))
+        :orgn `(tnsr-prdc ,hmeq1 ,hmeq2))))
+\end{verbatim}}
+
+\subsection* {Lisp file concerned in this chapter}
+
+{\tt tensor-products.lisp}, {\tt searching-homology.lisp}.
+
+
+
+
+
+
+

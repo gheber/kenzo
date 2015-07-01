@@ -1,0 +1,490 @@
+\chapter {Eilenberg-Moore spectral sequence I}
+
+\section{Introduction}
+
+This chapter is devoted to the effective homology version of the spectral
+sequence of Eilenberg-Moore, in the particular case of loop spaces.
+More precisely, let $X$ be a {\bf $1$-reduced} simplicial set with effective homology,
+the software {\tt Kenzo} constructs a $0$-reduced simplicial set $GX$ which is
+also with effective homology. In particular, if $X$ is $m$-reduced, this
+process may be iterated $m$ times, producing an effective homology
+version of $G^kX,\,k\leq m$. So, the software builds an object which contains
+a complete solution of the Adams problem about the iteration of the
+cobar construction. The user is advised to consult the paper
+{\em Stable homotopy and iterated loop spaces, pp. 545} by {\bf Gunnar Carlsson} and
+{\bf R.James Milgram} in {\em Handbook of Algebraic Topology, pp 545} edited
+by {\em I.M.James, North-Holland, 1995}.
+
+\section{The detailed construction}
+
+Let ${\cal C}_*(X)$ be  a coalgebra with effective homology. This means that 
+a   homotopy equivalence:
+$$\diagram{
+  & \hat{C}_* \cr
+ \swarrow\nearrow & & \searrow\nwarrow \cr
+{\cal C}_*(X)  & & EC_* \cr
+          }$$
+
+is provided, where  the chain complex $EC_*$ is effective 
+and must be con\-si\-de\-red as describing
+the homology of ${\cal C}_*(X)$. This scheme includes the case where
+${\cal C}_*(X)$ is itself effective; without any other information, 
+the program  constructs automatically a trivial homotopy equivalence.
+\par
+Now, if we apply the  {\em Cobar} functor to this homotopy equivalence
+we obtain the homotopy equivalence $H_R$:
+$$\diagram{
+  &{\widetilde{Cobar}}^{{\hat C}_*}({\Z},{\Z}) \cr
+ \swarrow\nearrow & & \searrow\nwarrow \cr
+Cobar^{{\cal C}_*(X)}({\Z}, {\Z})  & & {\widetilde{Cobar}}^{EC_*}({\Z}, {\Z}) \cr
+          }$$
+
+in which the $\widetilde{Cobar}$'s are cobars construction with respect to
+the $A_\infty$-co\-al\-ge\-bras structure on ${\hat C}_*$ and $EC_*$ defined by
+the initial homotopy equivalence.
+\par
+Secondly, Julio Rubio\footnote{{\bf J.J. Rubio-Garcia}. {\em Homologie
+effective des espaces de lacets it\'er\'es: un logiciel}, Th\`ese, Institut Fourier, 1991.}
+has shown that it is possible to construct another homotopy equivalence, $H_L$:
+$$\diagram{
+  & Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \cr
+ \swarrow\nearrow & & \searrow\nwarrow \cr
+ {\cal C_*}(GX)  & & Cobar^{{\cal C}_*(X)}({\Z}, {\Z}) \cr
+          }$$
+Both reductions of $H_L$ are obtained by the basic perturbation lemma, as explained
+in the following section.
+The composition of both homotopy e\-qui\-va\-len\-ces, $H_L$ and $H_R$, makes the link between $GX$, 
+i.e. the loop space of $X$
+and the effective right bottom chain complex of $H_R$.
+
+\subsection {Obtaining the left reduction $H_L$}
+
+The homotopy equivalence  $H_L$ is obtained by a sequence of intermediate constructions
+based mainly upon two applications of the basic perturbation lemma.
+We are led to consider the two following comodules:
+\begin{itemize}
+\item ${\cal C}_*(X)$ comodule on itself, with the canonical coproduct.
+$${\cal C}_*(X)\stackrel {\Delta}{\longrightarrow} {\cal C}_*(X)\otimes {\cal C}_*(X).$$
+\item ${\check{\cal C}}_*(X)$, comodule on ${\cal C}_*(X)$, with a ``trivial''
+coproduct 
+$${\check{\cal C}}_*(X) \stackrel {\check{\Delta}}{\longrightarrow}  {\cal C}_*(X)\otimes{\check{\cal C}}_*(X),\quad
+\sigma \rightarrow 1\otimes\sigma,\,\sigma \in {\check{\cal C}}_*(X).$$
+\end{itemize}
+Now, we consider the set of the followings cobars
+(where $u$ means {\em ``untwisted''} and $t$ {\em ``twisted''}):
+\begin{eqnarray*}
+{\rm Hat}_{uu} &=& Cobar^{{\cal C}_*(X)}({\Z}, {\check{\cal C}}_*(X)\otimes {\cal C_*}(GX)),\\
+{\rm Hat}_{ut} &=& Cobar^{{\cal C}_*(X)}({\Z}, {\check{\cal C}}_*(X)\otimes_t {\cal C_*}(GX)),\\
+{\rm Hat}_{tu} &=& Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes {\cal C_*}(GX)),\\
+{\rm Hat}_{tt} &=& Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)).
+\end{eqnarray*}
+
+One may always say that ${\rm Hat}_{ut}$ is obtained from ${\rm Hat}_{uu}$ by a perturbation $\delta_r$ ($r$: right)
+induced by the twisted tensor product $\otimes_t$ and that ${\rm Hat}_{tu}$ is obtained from ${\rm Hat}_{uu}$
+by a perturbation $\delta_l$ ($l$: left) induced by the discrepancy between the coproducts
+in ${\check{\cal C}}_*(X)$ and ${\cal C}_*(X)$. After that,
+${\rm Hat}_{tt}$ is obtained from ${\rm Hat}_{tu}$ by the perturbation $\delta_r$ as well as, by commutativity,
+from ${\rm Hat}_{ut}$ by the perturbation $\delta_l$. \par
+This is shown in the following diagram (here, the arrows are not reductions, but denote
+the  perturbations between  the differential morphisms):
+$$\diagram{ 
+  & {\rm Hat}_{uu} \cr
+ \delta_l \swarrow  & & \searrow \delta_r \cr
+{\rm Hat}_{tu}  & &  {\rm Hat}_{ut} \cr
+ \delta_r \searrow  & & \swarrow \delta_l \cr
+  & {\rm Hat}_{tt} \cr
+          }$$
+The underlying graded modules  ${\rm Hat}_{uu}$, ${\rm Hat}_{ut}$, ${\rm Hat}_{tu}$ and ${\rm Hat}_{tt}$ are the same
+and the program keeps ${\rm Hat}_{uu}$ as the underlying graded module for all the chain complexes.
+The  differential perturbations are given by the formulas:
+\begin{eqnarray*}
+\delta_r({\bar{c}}_1 \otimes \cdots \otimes {\bar{c}}_n \otimes c \otimes g) &=& 
+ [{\bar{c}}_1 \otimes \cdots \otimes {\bar{c}}_n] \otimes [d_{\otimes t}(c \otimes g)-d_\otimes (c \otimes g)], \\
+\delta_l({\bar{c}}_1 \otimes \cdots \otimes {\bar{c}}_n \otimes c \otimes g) &=&
+{\bar{c}}_1 \otimes \cdots \otimes {\bar{c}}_n \otimes {\bar{\Delta}}c \otimes g, 
+\end{eqnarray*}
+where ${\bar{c}}_i, c \in {\cal C}_*(X),\, g \in {\cal C_*}(GX))$ and $\bar{\Delta}= \Delta - \check{\Delta}$.
+\par
+\vskip 0.35cm
+Now, on one hand, we know that there exists a reduction  
+$${\rm Hat}_{tu}=Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes {\cal C_*}(GX)) \Longrightarrow {\cal C}_*(GX),$$ 
+so,  perturbing this reduction by $\delta_r$, one obtains the Rubio reduction 
+$${\rm Hat}_{tt}=Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow{\cal C}_*(GX).$$
+On the other hand, we know also that there exists a reduction 
+$${\rm Hat}_{ut}=Cobar^{{\cal C}_*(X)}({\Z}, {\check{\cal C}}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow
+Cobar^{{\cal C}_*(X)}({\Z}, {\Z}),$$ 
+so, perturbing this reduction by $\delta_l$, one obtains the reduction 
+$${\rm Hat}_{tt}=Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow 
+Cobar^{{\cal C}_*(X)}({\Z}, {\Z}).$$
+Finally, we have obtained the wished left homotopy equivalence $H_L$:
+$$\diagram{
+  & Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \cr
+    \swarrow\nearrow & & \searrow\nwarrow \cr
+ {\cal C_*}(GX)  & & Cobar^{{\cal C}_*(X)}({\Z}, {\Z}) \cr
+          }$$
+
+\subsection {The useful functions}
+
+For the applications, the only function that the user must know is the function {\tt loop-space-efhm}
+which builds the final homotopy equivalence. But for the
+interested user, we give nevertheless a short description of all the functions
+involved in the described process.
+
+\vskip 0.30cm
+{\parindent=0mm
+{\leftskip=5mm
+{\tt loop-space-efhm} {\em space}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+From the space $X$ ($1$-reduced) with effective homology (here the argument {\em space}), build
+a homotopy equivalence giving an effective homology version  of the space $GX$. This homotopy
+equivalence will be used by the homology function to compute the homology groups. In fact, due to
+the slot-unbound mechanism of CLOS, this function will be automatically called, as soon
+as the user requires a homology group of a loop-space.
+If $X$ is $n$-reduced and if the wished loop space is $\Omega^k X, \, k \leq n$, then 
+the process will be automatically  iterated. \par}
+{\leftskip=5mm
+{\tt ls-hat-u-u} {\em space}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Return the chain complex 
+$Cobar^{{\cal C}_*(X)}({\Z}, {\check{\cal C}}_*(X)\otimes {\cal C_*}(GX))$. Because of
+the particular structure of ${\check{\cal C}}_*(X)$, this chain complex is nothing but
+$Cobar^{{\cal C}_*(X)}({\Z},{\Z})\otimes {\check{\cal C}}_*(X)\otimes {\cal C_*}(GX).$
+\par}
+{\leftskip=5mm
+{\tt ls-hat-left-perturbation} {\em space}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Return the morphism corresponding to the differential perturbation $\delta_l$, induced by
+the discrepancy between the coproducts of  ${\check{\cal C}}_*(X)$ and ${\cal C}_*(X)$. \par}
+{\leftskip=5mm
+{\tt ls-hat-t-u} {\em space}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Return the chain complex
+$Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes {\cal C_*}(GX))$ by applying
+the differential perturbation {\tt hat-left-perturbation} upon
+the chain complex built by the function {\tt hat-u-u}. This is realized by the method
+{\tt add}. \par}
+{\leftskip=5mm
+{\tt ls-hat-u-t} {\em space}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Return the chain complex
+$Cobar^{{\cal C}_*(X)}({\Z},{\check{\cal C}}_*(X)\otimes_t {\cal C_*}(GX))$. Because of
+the particular structure of ${\check{\cal C}}_*(X)$, this chain complex is nothing but
+$Cobar^{{\cal C}_*(X)}({\Z},{\Z})\otimes[{\check{\cal C}}_*(X)\otimes_t {\cal C_*}(GX)],$
+where the twisted tensor product is obtained by a call to {\tt twisted-tnsr-prdc} 
+(see loop space fibrations chapter). \par}
+{\leftskip=5mm
+{\tt ls-hat-right-perturbation} {\em space}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Return the morphism corresponding to the differential perturbation $\delta_r$ induced
+by the twisted tensor product. This morphism is nothing but the tensor product of two
+morphisms: the identity morphism on $Cobar^{{\cal C}_*(X)}({\Z},{\Z})$ and 
+the perturbation morphism induced by the twisted tensor product. This last 
+morphism is a by-product of the function {\tt szczarba}. \par}
+{\leftskip=5mm
+{\tt ls-left-hmeq-hat} {\em space}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Return the chain complex 
+${\rm Hat}_{tt}=Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX))$ by 
+perturbing the chain complex ${\rm Hat}_{ut}$ by the perturbation $\delta_l$. \par}
+{\leftskip=5mm
+{\tt ls-pre-left-hmeq-left-reduction} {\em space}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build the reduction
+$${\rm Hat}_{tu}=Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes {\cal C_*}(GX)) \Longrightarrow {\cal C}_*(GX).$$ 
+\par}
+{\leftskip=5mm
+{\tt ls-pre-left-hmeq-right-reduction} {\em space}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build the reduction
+$${\rm Hat}_{ut}=Cobar^{{\cal C}_*(X)}({\Z},{\check{\cal C}}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow
+Cobar^{{\cal C}_*(X)}({\Z}, {\Z}).$$ \par}
+{\leftskip=5mm
+{\tt ls-left-hmeq-left-reduction} {\em space}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build the Rubio reduction 
+$$Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow{\cal C}_*(GX)$$
+by perturbing by the perturbation $\delta_r$ the reduction
+$${\rm Hat}_{tu} \Longrightarrow {\cal C}_*(GX)$$ 
+obtained by the function {\tt pre-left-hmeq-left-reduction}. \par}
+{\leftskip=5mm
+{\tt ls-left-hmeq-right-reduction} {\em space}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build the reduction 
+$$Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow 
+Cobar^{{\cal C}_*(X)}({\Z}, {\Z})$$
+by perturbing by the perturbation $\delta_l$ the reduction 
+$${\rm Hat}_{ut} \Longrightarrow Cobar^{{\cal C}_*(X)}({\Z}, {\Z})$$
+obtained by the function {\tt pre-left-hmeq-right-reduction}. \par}
+{\leftskip=5mm
+{\tt ls-left-hmeq} {\em space}  \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build the homotopy equivalence
+$$\diagram{
+  & Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \cr
+    \swarrow\nearrow & & \searrow\nwarrow \cr
+ {\cal C_*}(GX)  & & Cobar^{{\cal C}_*(X)}({\Z}, {\Z}) \cr
+          }$$
+from the above reductions. The function {\tt loop-space-efhm} composes this left homotopy
+equivalence $H_L$ with a homotopy equivalence $H_R$ which is the cobar of a pre-existing
+homotopy equivalence (possibly the trivial one) between the coalgebra $X$ and an effective
+version of it, as described at the beginning of this chapter. The Lisp definition is given
+in the next subsection.
+ \par}
+}
+\newpage
+
+\subsection {Searching homology for loop spaces}
+
+The \index{searching homology!loop spaces} origin list of a loop space object has the form {\tt (LOOP-SPACE {\em space})}.
+The {\tt search-efhm} method applied to a loop space object
+consists essentially in a call to the function {\tt loop-space-efhm}
+described in this chapter.
+{\footnotesize\begin{verbatim}
+(defmethod SEARCH-EFHM (loop-space (orgn (eql 'loop-space)))
+  (declare (type simplicial-set loop-space))
+  (loop-space-efhm (second (orgn loop-space))))
+\end{verbatim}}
+The lisp definition of the function {\tt loop-space-efhm} shows clearly
+the possible recursivity of the process is {\em space} is itself
+a loop space.
+{\footnotesize\begin{verbatim}
+(defun LOOP-SPACE-EFHM (space)
+  (declare (type simplicial-set space))
+  (let ((left-hmeq (ls-left-hmeq space))
+        (right-hmeq (cobar (efhm space))))
+    (declare (type homotopy-equivalence left-hmeq right-hmeq))
+    (cmps left-hmeq right-hmeq)))
+\end{verbatim}}
+
+\subsection* {Examples}
+
+Let us show first how to get the homology groups of some known loop spaces, 
+$\Omega {\cal S}^2$, $\Omega^3 {\cal S}^4$, $\Omega^2{\rm Moore}({\Z}/{2{\Z}},3)$.
+{\footnotesize\begin{verbatim}
+(setf s2 (sphere 2))  ==>
+
+[K1 Simplicial-Set]
+
+(setf os2 (loop-space s2))  ==>
+
+[K6 Simplicial-Group]
+
+(dotimes (k 10) (homology os2 k))  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+Component Z
+
+Homology in dimension 2 :
+
+Component Z
+
+Homology in dimension 3 :
+
+Component Z
+
+Homology in dimension 4 :
+
+Component Z
+
+Homology in dimension 5 :
+
+Component Z
+
+Homology in dimension 6 :
+
+Component Z
+
+Homology in dimension 7 :
+
+Component Z
+
+Homology in dimension 8 :
+
+Component Z
+
+Homology in dimension 9 :
+
+Component Z
+
+---done---
+
+(cat-init)
+
+(setf s4 (sphere 4))  ==>
+
+[K1 Simplicial-Set]
+
+(setf ooos4 (loop-space s4 3))  ==>
+
+[K30 Simplicial-Group]
+
+(dotimes (k 6) (homology ooos4 k))  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+Component Z
+
+Homology in dimension 2 :
+
+Component Z/2Z
+
+Homology in dimension 3 :
+
+Component Z/2Z
+
+Homology in dimension 4 :
+
+Component Z/3Z
+
+Component Z/2Z
+
+Component Z
+
+Homology in dimension 5 :
+
+Component Z/3Z
+
+Component Z/2Z
+
+Component Z
+
+---done---
+
+(setf moore-23 (moore 2 3))  ==>
+
+[K42 Simplicial-Set]
+
+(setf oo-moore-23 (loop-space moore-23 2))  ==>
+
+[K59 Simplicial-Group]
+
+(dotimes (k 6) (homology oo-moore-23 k))  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+Component Z/2Z
+
+Homology in dimension 2 :
+
+Component Z/2Z
+
+Homology in dimension 3 :
+
+Component Z/4Z
+
+Component Z/2Z
+
+Homology in dimension 4 :
+
+Component Z/2Z
+
+Component Z/2Z
+
+Component Z/2Z
+
+Homology in dimension 5 :
+
+Component Z/2Z
+
+Component Z/2Z
+
+Component Z/2Z
+
+Component Z/2Z
+
+---done---
+
+\end{verbatim}}
+
+\newpage
+
+\section {The solution of the Adams and Carlsson problem}
+
+Let\index{Adams's problem} $X$ an $n$-reduced simplicial set which is not a suspension. 
+The Adams and Carlsson
+problem\footnote{{\bf Gunnar Carlsson, R.James Milgram.} {\em Stable homotopy and iterated loop spaces}  in 
+{\em Handbook of Algebraic Topology, pp 545} edited by {\em I.M.James, North-Holland, 1995}.}
+asks for a finite CW-complex modelizing the iterated loop space $\Omega^n X$. We show in this section
+how the {\tt Kenzo} program builds the relevant solution.\par
+Let us consider for instance the truncated projective space $X=P^\infty {\R}/ P^3 {\R}$ (a non-suspended space)
+and let us build $\Omega^3 X$.
+{\footnotesize\begin{verbatim}
+(setf p4 (R-proj-space 4))  ==>
+
+[K1 Simplicial-Set]
+
+(setf o3p4 (loop-space p4 3))  ==>
+
+[K30 Simplicial-Group]
+
+(setf ecc (rbcc (efhm o3p4)))  ==>
+
+[K390 Chain-Complex]
+\end{verbatim}}
+The cellular homology of $\Omega^3 X$ is now known through the symbol {\tt ecc}. Note that $360$ objects
+($390-30$) have been built to get the final complex {\tt ecc}. From the printing of the length of the
+basis in dimensions $0$ to $5$,
+{\footnotesize\begin{verbatim}
+(dotimes (i 6) (print (length (basis ecc i))))  ==>
+
+1 
+1 
+2 
+5 
+13 
+33 
+\end{verbatim}}
+we see that the required CW-complex can be constructed using $1$ $0$-cell, $1$ $1$-cell, $2$ $2$-cells,
+$5$ $3$-cells, $13$ $4$-cells and $33$ $5$-cells. Let us print the incidence matrix between
+the $5$ and the $4$-cells:
+\newpage
+{\footnotesize\begin{verbatim}
+(chcm-mat ecc 5)  ==>
+
+========== MATRIX 13 lines + 33 columns =====
+
+L1=[C1=-2]
+L2=[C1=-1]
+L3=[C1=-4][C2=1][C3=-1][C4=-2]
+L4=[C2=1][C3=-1][C6=2]
+L5=[C1=6][C4=1][C6=1]
+L6=[C1=4][C4=4][C6=4][C7=3]
+L7=[C1=4][C12=-2][C14=2]
+L8=[C1=6][C4=1][C6=1]
+L9=[C1=4][C4=4][C6=4][C7=3]
+L10=[C8=4][C10=1][C11=-1][C14=-4][C15=-2][C20=-2]
+L11=[C1=4][C8=4][C10=1][C11=-1][C16=-4][C18=-1][C19=1][C23=-2]
+L12=[C12=4][C13=2][C16=-4][C18=-1][C19=1][C27=-2]
+L13=[C1=-1][C20=4][C21=2][C23=-4][C24=-2][C27=4][C28=2]
+
+========== END-MATRIX
+---done---
+\end{verbatim}}
+For instance, we see that the first $5$-cell,
+{\footnotesize\begin{verbatim}
+(first (basis ecc 5))  ==>
+
+<<AlLp[5 <<AlLp[6 <<AlLp[7 8]>>]>>]>>
+\end{verbatim}}
+is glued to the $4$-cells \#5 and \#8 by attaching  maps of degree $6$.
+The $5$-cell \#4 is also glued to the $4$-cell \#5 by an attaching map 
+of degree $1$, etc.
+
+\subsection* {Lisp files concerned in this chapter}
+
+{\tt lp-space-efhm.lisp}, {\tt searching-homology.lisp}.
+
+

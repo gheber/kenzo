@@ -1,0 +1,656 @@
+\chapter{Coalgebras and cobars}
+
+\section{Introduction}
+
+The implementation of coalgebras and cobars follows closely the section $6$ of the paper
+{\em Effective Homology: a survey}\footnote{Available
+at the web site {\bf http://www-fourier.ujf.grenoble.fr/\~\,sergerar/}}.
+
+\section{Coalgebras}
+
+A coalgebra  is a pair $(C, \chi)$ where
+\begin{enumerate}
+\item $C$ is a chain complex.
+\item $\chi$ (the {\em coproduct}) is a chain complex morphism 
+$$\chi: C \rightarrow C \otimes C.$$
+\end{enumerate}
+These components must satisfy the usual structural properties of the coalgebras\footnote
+{{\bf Mac Lane}, Homology, section VI-9. Springer 1970.}.
+
+\subsection {Implementation of a coalgebra}
+
+A coalgebra\index{class!{\tt COALGEBRA}}  is represented as an instance 
+of the CLOS class {\tt COALGEBRA}, subclass
+of the {\tt CHAIN COMPLEX} class. The definition of this new class is simply:
+{\footnotesize\begin{verbatim}
+(DEFCLASS COALGEBRA (chain-complex)
+    ((cprd :type morphism :initarg :cprd :reader cprd1)))   ;; coproduct
+\end{verbatim}}
+
+So, this new class inherits the slots of the {\tt CHAIN COMPLEX} class and has a slot
+of its own, namely {\tt cprd}, a morphism  object representing the coproduct. The user will note
+the important following fact that, {\bf once a coalgebra has been defined, one may use on it any
+function or method applicable to a chain complex}. 
+
+\subsection {The function build-clgb}
+
+To\index{function!{\tt build-clgb}} facilitate the construction of instances of the {\tt COALGEBRA} class, the
+software provides the function {\tt build-clgb},
+\vskip 0.40cm
+{\tt build-clgb :cmpr} {\em cmpr} {\tt :basis} {\em basis} {\tt :bsgn} {\em bsgn} {\tt :intr-dffr} {\em intr-dffr} \par
+\hspace*{22.5mm}{\tt :dffr-strt} {\em dffr-strt} {\tt :intr-cprd} {\em intr-cprd} \par
+\hspace*{22.5mm}{\tt :cprd-strt} {\em cprd-strt} {\tt :orgn} {\em orgn}
+\vskip 0.40cm
+defined with keyword parameters. The returned value is an instance of type {\tt COALGEBRA}. 
+The keyword arguments are:
+\begin{itemize}
+\item[--] {\em cmpr}, a comparison function for generators.
+\item[--] {\em basis}, the basis function for the underlying chain complex.
+\item[--] {\em bsgn}, the  base point, a generator of any type.
+\item[--] {\em intr-dffr}, the differential lisp function for the chain complex.
+\item[--] {\em dffr-strt}, the strategy ({\tt :gnrt} or {\tt :cmbn}) for the differential.
+\item[--] {\em intr-cprd}, the lisp function for the coproduct of the coalgebra.
+\item[--] {\em cprd-strt}, the strategy ({\tt :gnrt} or {\tt :cmbn}) for the coproduct.
+\item[--] {\em orgn}, an adequate comment list.
+\end{itemize}
+The function {\tt build-clgb} calls  the function {\tt build-chcm} and with the help of the function
+{\tt build-mrph} builds the coproduct morphism of degree $0$, to settle the
+slot {\tt crpd} of the instance. According to the definition, the
+source slot of the coproduct morphism is the underlying chain complex and the target slot
+is the tensor product of this chain complex with itself. As to the other objects,
+an identification number $n$ (slot {\tt idnm}) is assigned to this Kenzo object and the 
+{\tt COALGEBRA} instance is  pushed  onto the list {\tt *clgb-list*}. 
+The  associated printing method prints a string like 
+{\tt [K{\em n} Coalgebra]}.
+
+\subsection {Miscellaneous functions and macros for coalgebras}
+
+{\parindent=0mm
+{\leftskip=5mm
+{\tt cat-init} \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Clear among others, the list {\tt *clgb-list*}, list of user created coalgebras  and reset
+the global counter to $1$. \par}
+{\leftskip=5mm
+{\tt clgb} {\em n}\hfill {\em [Function]} \par}
+{\leftskip=15mm
+Retrieve in the list {\tt *clgb-list*} the coalgebra instance whose identification is $n$.
+If it does not exist, return {\tt NIL}. \par}
+{\leftskip=5mm
+{\tt cprd} {\em clgb} {\tt \&rest} \hfill {\em [Macro]} \par}
+{\leftskip=15mm
+Versatile macro relative to the coproduct of a coalgebra. The first argument is a {\tt COALGEBRA}
+instance. With only one argument, this macro returns the coproduct morphism of the coalgebra.
+With more arguments, it applies the coproduct morphism on a combination ({\tt (cprd {\em clgb cmbn})})
+or on a pair {\em degree, generator} ({\tt (cprd {\em clgb degr gnrt})}). \par}
+{\leftskip=5mm
+{\tt change-chcm-to-clgb} {\em chcm} {\tt :intr-cprd} {\em intr-cprd} {\tt :cprd-strt} {\em cprd-strt} \par
+\hspace* {10mm}{\tt :orgn} {\em orgn} \par}
+{\leftskip=15mm
+Build a coalgebra instance from the already created chain complex {\em chcm}. The user must give via key
+parameters a lisp function for the coproduct, the strategy and a comment list. \par}
+}
+
+\section {Cobar of a coalgebra}
+
+Let ${\cal A}$ be a coalgebra, ${\cal M}$ a  right ${\cal A}$-comodule, ${\cal N}$ a left ${\cal A}$-comodule.
+It means that there exist coproducts $\chi_{\cal M}$ and $\chi_{\cal N}$:
+$$\chi_{\cal M}: {\cal M} \longrightarrow {\cal M}\otimes {\cal A},\quad
+  \chi_{\cal N}: {\cal N} \longrightarrow {\cal A}\otimes {\cal N}.  $$
+It is possible to build a chain complex denoted $Cobar^{\cal A}({\cal M}, {\cal N})$, 
+$$Cobar^{\cal A}({\cal M}, {\cal N}) = \bigoplus_p
+{\cal M}\otimes {\bar{\cal A}}^{\otimes p} \otimes {\cal N}.$$
+This section  is devoted to the particular case ${\cal M}={\cal N}={\Z}$.
+\par
+So, let\index{cobar!of a coalgebra} ${\cal A}$ be  a coalgebra , assumed $1$--connected, 
+i.e. ${\cal A}_1 = 0$ and  ${\cal A}_0 \simeq {\Z}$,
+we consider the chain complex, $Cobar^{{\cal A}}({\Z}, {\Z})$, noted more simply  $Cobar({\cal A})$, 
+whose $n$-th component is:
+$$ [Cobar({\cal A})]_n = \bigoplus ({\bar{\cal A}}_{i1} \otimes \cdots \otimes {\bar{\cal A}}_{ik}),\quad i_j >0, \quad
+i1 + \cdots + ik= n+k.$$
+A tensor product $g_1 \otimes \cdots \otimes g_k$, where
+$g_i$ is a generator of ${\bar{\cal A}}_{i}$ is called, in the software {\tt Kenzo}, 
+an\index{algebraic loop} {\bf algebraic loop}.
+The reason is the following: if $X$ is a $1$--connected simplicial set, we shall see in a next
+chapter that the program {\tt Kenzo} constructs
+a homotopy equivalence between the chain complex of the loop space ${\cal C}_*(GX)$ 
+and $Cobar({\cal C}_*(X)) = Cobar^{{\cal C}_*(X)}({\Z}, {\Z})$,
+so that a generator of the last chain complex is a kind of ``algebraic'' version of a generator of a loop space.
+The definition of  differential of the Cobar is recalled hereafter.
+
+
+\subsection {Representation of an algebraic loop}
+
+An algebraic loop\index{algebraic loop!representation} is represented by a lisp object of the form:
+
+\begin{center} {\tt (:ALLP  ($i_1\,.\, g_1$) \ldots ($i_k\,.\, g_k$))} \end{center}
+where the $i_j$ are the degrees {\bf in the cobar chain complex} of the generators $g_j$.
+In the original coalgebra $\cal A$, the generators $g_j$ had the degree $i_j+1$.
+The corresponding type is {\tt ALLP}.
+The function to build such an object is also called {\tt allp}
+\vskip 0.35cm
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt allp} {\em  degr1 gnr1 degr2 gnr2 ... degrk gnrk}\hfill {\em [Function]} \par}
+{\leftskip=15mm 
+Construct an algebraic loop, i.e. a  tensorial product of degree $\sum degr_i$. The sequence of pairs
+$\lbrace degr_i,\,  gnr_i \rbrace$ has an undefinite length and  may be void. In this case,  the algebraic loop
+is the null algebraic loop, identified in the system by the constant {\tt +null-allp+}. 
+The function {\tt allp} accepts also as unique argument a list of the form
+{\em  {\tt (}degr1 gnr1 degr2 gnr2 ... degrk gnrk{\tt )}}    \par}
+{\leftskip=5mm 
+{\tt allp-p} {\em object}\hfill {\em [Function]} \par}
+{\leftskip=15mm 
+Test if {\em object} is an algebraic loop. \par}
+}
+\vskip 0.35cm
+The associated printing  method prints the object under the form:
+\begin{center} 
+{\tt <<AlLp [$i_1$ $g_1$] ... [$i_k$ $g_k$]>>}
+\end{center}
+The user will have noted that in the Cobar, each generator $g_i$ appears with its own degree in the
+underlying chain complex, {\bf lowered by $1$}. 
+
+\subsection {Definition of the chain complex Cobar}
+
+The\index{chain complex!cobar} definition of the differential\index{cobar!differential} in the Cobar, 
+will be done in three steps. This is better understood,
+if we consider the following diagram. We recall that the elements of $({\bar{\cal A}}_*^{\otimes_p})_q$ are
+by convention of degree $q-p$ in the Cobar. 
+\begin{itemize}
+\item A chain complex called {\tt vertical-cobar} is defined with the {\em vertical differential} $d_v$.
+In this case, only the  underlying  chain complex structure is used.
+\item A horizontal differential $d_h$ is defined. This uses  the co\-pro\-duct structure.
+\item The final chain complex {\tt cobar} is created with differential $d_v+d_h$.
+\end{itemize}
+
+$$\diagram{
+%       &             & \vdots      &  & \vdots  \cr
+       &             & \downarrow  &  & \downarrow \cr
+\cdots & \rightarrow & ({\bar{\cal A}}_*^{\otimes p})_q & \buildrel {d_h} \over \longrightarrow 
+                     & ({\bar{\cal A}}_*^{\otimes {p+1}})_q  & \rightarrow & \cdots \cr
+%       &             & \vfl {\displaystyle {d_v}}{} 
+%       &             & \vfl {\displaystyle {d_v}}{} \cr
+       &             &  \downarrow {\scriptstyle d}_v  &  &  \downarrow {\scriptstyle d}_v \cr
+\cdots & \rightarrow &({\bar{\cal A}}_*^{\otimes p})_{q-1} & \buildrel {d_h} \over \longrightarrow 
+                     & ({\bar{\cal A}}_*^{\otimes {p+1}})_{q-1}  & \rightarrow & \cdots \cr 
+       &             & \downarrow  &  & \downarrow \cr
+%       &             & \vdots      &  & \vdots  \cr
+          }$$
+
+\subsubsection {Definition of the vertical cobar}
+
+To\index{cobar!vertical} define the vertical cobar chain complex 
+from a chain complex ${\cal C}$, the following functions are provided:
+\vskip 0.35cm
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt cobar-cmpr} {\em cmpr}\hfill {\em [Function]} \par}
+{\leftskip=15mm 
+From the comparison function {\em cmpr}, build a comparison function for objects
+of algebraic loop type. \par}
+{\leftskip=5mm 
+{\tt cobar-basis} {\em basis}\hfill {\em [Function]} \par}
+{\leftskip=15mm 
+From the function {\em basis} of a  chain complex ${\cal C}$, build a basis
+function for the vertical cobar chain complex defined on ${\cal C}$. In dimension $0$, there
+is only one basis element, namely the null algebraic loop. If ${\cal C}$ is locally effective,
+this function returns the symbol {\tt :locally-effective}. \par}
+{\leftskip=5mm 
+{\tt cobar-intr-vrtc-dffr} {\em dffr}\hfill {\em [Function]} \par}
+{\leftskip=15mm 
+From the {\tt lisp} function {\em dffr} of a chain complex  ${\cal C}$, build a 
+lisp function for the differential of the vertical cobar chain complex, according to the formula
+$$d_v(g_1 \otimes \cdots \otimes g_n)=
+\sum_{i=1}^n{(-1)^{n-i+1+{\sum_{j=1}^{i-1}{\mid g_j \mid}}}
+  g_1 \otimes \cdots \otimes g_{i-1} \otimes {\bf dg_i} \otimes g_{i+1} \otimes \cdots \otimes g_n},$$
+where $dg_i$ is the differential of the generator $g_i$ in the original chain complex (function {\em dffr})
+and $\mid g_i \mid$ is the degree of the generator $g_i$ {\em in the cobar chain complex}.
+In general, the differential $dg_i$ is a sum of tensor products.
+So, applying the distribution law, the right member is a sum of tensor products, represented by a combination. \par}
+%}
+%\newpage
+%{\parindent=0mm
+{\leftskip=5mm 
+{\tt vrtc-cobar} {\em chcm}\hfill {\em [Method]} \par}
+{\leftskip=15mm 
+Build the vertical cobar chain complex with underlying chain complex {\em chcm}. This is simply done by the following
+call to {\tt build-chcm}:
+{\footnotesize\begin{verbatim}
+         (build-chcm
+            :cmpr (cobar-cmpr cmpr)
+            :basis (cobar-basis basis)
+            :bsgn +null-allp+
+            :intr-dffr (cobar-intr-vrtc-dffr dffr)
+            :strt :gnrt
+            :orgn `(vrtc-cobar ,chcm))
+\end{verbatim}}
+where, {\em cmpr}, {\em basis} and {\em dffr} are extracted from the chain complex {\em chcm}. Note that
+the base generator is the null algebraic loop. \par}
+}
+
+\subsection* {Example}
+
+We  are going to build a coalgebra  which will be reconsidered in a next chapter (Simplicial sets).
+It is the coalgebra canonicaly associated to the simplicial set $\Delta_2^{\N}$. This simplicial set is the
+quotient of $\Delta^{\N}$ -- the standard simplex spanned by the non--negative integers -- by the relation
+identifying, firstly all the vertices with a unique one  and then any $1$--simplex of $\Delta^{\N}$ with the
+unique degeneracy of this unique vertex. In other words, $\Delta_2^{\N}$ is $1$--reduced: $1$ vertex, no edges. \par
+Our implementation represents any non--degenerate $n$--simplex as an integer increasing list of length $n+1$.
+In dimension $0$, for every non--negative $m$ and $n$, the vertices {\tt (m)} and {\tt (n)} are identified; in
+dimension $1$, the list $(m\, n)$ is always an {\bf illegal} $1$--simplex. 
+This coalgebra will be located through the symbol {\tt smp-deltab2}. The lisp definition uses the function
+{\tt build-smst} that will be described in the simplicial set chapter. For the moment, it is
+sufficient to know, that the function {\tt build-smst} allows us to create a coalgebra
+suitable for the tests. The definition  of $\Delta_2^{\N}$ given here, is only for pedagogical 
+purpose, an efficient definition    using another representation for the simplices
+is provided in the software {\tt Kenzo}.
+
+{\footnotesize\begin{verbatim}
+(setf smp-deltab2
+   (build-smst
+        :cmpr #'(lambda(gsm1 gsm2)
+                       (if(rest gsm1) (l-cmpr gsm1 gsm2) :equal))
+        :basis :locally-effective
+        :bspn '(0)
+        :face #'(lambda (i dmn gsm)
+                        (case dmn
+                         (0 (error ``No face in dimension 0''))
+                         (1 (error ``No non-degenerate simplex in dimension 1''))
+                         (2 (absm 1 '(0)))
+                         (otherwise (absm 0 (append (subseq gsm 0 i)
+                                                    (subseq gsm (1+ i))))) ))
+        :orgn '(simple-deltab2)))
+\end{verbatim}}
+The following statements show the identification of vertices and that the boundary
+of a $2$--simplex  is null.
+{\footnotesize\begin{verbatim}
+(cmpr smp-deltab2 '(5) '(0))  ==>
+
+:EQUAL
+
+(? smp-deltab2 2 '(0 1 2))  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+------------------------------------------------------------------------------
+
+(? smp-deltab2 3 '(0 1 2 3))  ==>
+
+----------------------------------------------------------------------{CMBN 2}
+<-1 * (0 1 2)>
+<1 * (0 1 3)>
+<-1 * (0 2 3)>
+<1 * (1 2 3)>
+------------------------------------------------------------------------------
+\end{verbatim}}
+Let us build the vertical cobar on the coalgebra {\tt smp-deltab2} and apply
+the comparison function and the differential on some algebraic loops.
+{\footnotesize\begin{verbatim}
+(setf precobar (vrtc-cobar smp-deltab2))  ==>
+
+[K6 Chain-Complex]
+
+(bsgn precobar)  ==>
+
+(<<AlLp>>)
+
+(setf loop-1 (allp 2 '(0 1 2 3)))  ==>
+
+<<AlLp[2 (0 1 2 3)]>>
+
+(setf loop-2 (allp '(2 (1 2 3 4))))  ==>
+
+<<AlLp[2 (1 2 3 4)]>>
+
+(cmpr precobar loop-1 loop-2)  ==>
+
+:LESS
+
+(? precobar 2 loop-1)  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<1 * <<AlLp[1 (0 1 2)]>>>
+<-1 * <<AlLp[1 (0 1 3)]>>>
+<1 * <<AlLp[1 (0 2 3)]>>>
+<-1 * <<AlLp[1 (1 2 3)]>>>
+------------------------------------------------------------------------------
+
+(? precobar *)  ==>
+
+----------------------------------------------------------------------{CMBN 0}
+------------------------------------------------------------------------------
+
+(setf loop-3 (allp 3 '(0 1 2 3 4) 3 '(1 3 5 7 9)))  ==>
+
+<<AlLp[3 (0 1 2 3 4)][3 (1 3 5 7 9)]>>
+
+(? precobar 6 loop-3)  ==>
+
+----------------------------------------------------------------------{CMBN 5}
+<1 * <<AlLp[2 (0 1 2 3)][3 (1 3 5 7 9)]>>>
+<-1 * <<AlLp[2 (0 1 2 4)][3 (1 3 5 7 9)]>>>
+<1 * <<AlLp[2 (0 1 3 4)][3 (1 3 5 7 9)]>>>
+<-1 * <<AlLp[2 (0 2 3 4)][3 (1 3 5 7 9)]>>>
+<1 * <<AlLp[2 (1 2 3 4)][3 (1 3 5 7 9)]>>>
+<1 * <<AlLp[3 (0 1 2 3 4)][2 (1 3 5 7)]>>>
+<-1 * <<AlLp[3 (0 1 2 3 4)][2 (1 3 5 9)]>>>
+<1 * <<AlLp[3 (0 1 2 3 4)][2 (1 3 7 9)]>>>
+<-1 * <<AlLp[3 (0 1 2 3 4)][2 (1 5 7 9)]>>>
+<1 * <<AlLp[3 (0 1 2 3 4)][2 (3 5 7 9)]>>>
+------------------------------------------------------------------------------
+
+(? precobar *)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+------------------------------------------------------------------------------
+
+(setf loop-4 (allp 3 '(0 1 4 5 6) 4 '(2 3 4 5 6 8) 4 '(0 4 5 6 7 8)))  ==>
+
+<<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][4 (0 4 5 6 7 8)]>>
+
+(? precobar 11 loop-4)  ==>
+
+----------------------------------------------------------------------{CMBN 10}
+<-1 * <<AlLp[2 (0 1 4 5)][4 (2 3 4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<1 * <<AlLp[2 (0 1 4 6)][4 (2 3 4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<-1 * <<AlLp[2 (0 1 5 6)][4 (2 3 4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<1 * <<AlLp[2 (0 4 5 6)][4 (2 3 4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<-1 * <<AlLp[2 (1 4 5 6)][4 (2 3 4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<1 * <<AlLp[3 (0 1 4 5 6)][3 (2 3 4 5 6)][4 (0 4 5 6 7 8)]>>>
+<-1 * <<AlLp[3 (0 1 4 5 6)][3 (2 3 4 5 8)][4 (0 4 5 6 7 8)]>>>
+<1 * <<AlLp[3 (0 1 4 5 6)][3 (2 3 4 6 8)][4 (0 4 5 6 7 8)]>>>
+<-1 * <<AlLp[3 (0 1 4 5 6)][3 (2 3 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<1 * <<AlLp[3 (0 1 4 5 6)][3 (2 4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<-1 * <<AlLp[3 (0 1 4 5 6)][3 (3 4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<-1 * <<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][3 (0 4 5 6 7)]>>>
+<1 * <<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][3 (0 4 5 6 8)]>>>
+<-1 * <<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][3 (0 4 5 7 8)]>>>
+<1 * <<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][3 (0 4 6 7 8)]>>>
+<-1 * <<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][3 (0 5 6 7 8)]>>>
+<1 * <<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][3 (4 5 6 7 8)]>>>
+------------------------------------------------------------------------------
+
+(? precobar *)  ==>
+
+----------------------------------------------------------------------{CMBN 9}
+------------------------------------------------------------------------------
+\end{verbatim}}
+\newpage
+
+\subsubsection {Definition of the horizontal differential}
+
+So\index{differential!horizontal in cobar} far, the coalgebra structure has not been used 
+but now it will be the main ingredient.
+If we  make the convention that the elements of 
+$({\bar{\cal A}}_*^{\otimes_p})_q$ are of degree $q-p$, 
+we know that exists a canonical ``horizontal''  differential $d_h$,
+$$d_h:({\bar{\cal A}}_*^{\otimes p})_q \longrightarrow ({\bar{\cal A}}_*^{\otimes {p+1}})_q,$$
+\begin{eqnarray*}
+d_h( g_1 \otimes \cdots \otimes g_p)& = & (-1)^p \Delta g_1 \otimes g_2 \otimes  \cdots \otimes g_p \\
+                    & & + (-1)^{p-1} g_1 \otimes \Delta g_2 \otimes \cdots \otimes g_p \\
+                    & & \cdots  \\
+                    & & - g_1 \otimes g_2 \otimes \cdots \otimes g_{p-1} \otimes \Delta g_p,
+\end{eqnarray*}
+where $\Delta$ is the coproduct of the coalgebra. Two functions are designed for that:
+\vskip 0.45cm
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt cobar-intr-hrzn-dffr} {\em cprd}\hfill {\em [Function]} \par}
+{\leftskip=15mm 
+From the coproduct morphism {\em cprd}, build the lisp function with 2 arguments:
+a degree and an algebraic loop (i.e. a generator) implementing the algorithm for $d_h$. \par}
+{\leftskip=5mm 
+{\tt cobar-hrzn-dffr} {\em clbg}\hfill {\em [Function]} \par}
+{\leftskip=15mm 
+Build the horizontal differential morphism, using the slot co\-pro\-duct {\em cprd} of
+the coalgebra {\em clbg} and the previous function. 
+Note that when called, this function creates, if not already created,
+the vertical cobar chain complex on {\em clbg}:
+{\footnotesize\begin{verbatim}
+           (build-mrph
+             :sorc (vrtc-cobar clgb) 
+             :trgt (vrtc-cobar clgb) 
+             :degr -1
+             :intr (cobar-intr-hrzn-dffr cprd) 
+             :strt :gnrt
+             :orgn `(cobar-hrzn-dffr ,clgb))
+\end{verbatim}}
+\par}}
+
+\subsection* {Example}
+
+We still use our simple coalgebra {\tt smp-deltab2}. The horizontal differential uses the coproduct of the coalgebra.
+The following examples show the application of the coproduct (note that there are no 1-simplices in the tensor
+products). We verify also the property of the horizontal differential.
+{\footnotesize\begin{verbatim}
+(cprd smp-deltab2 2 '(0 1 2))  ==>
+
+----------------------------------------------------------------------{CMBN 2}
+<1 * <TnPr (0) (0 1 2)>>
+<1 * <TnPr (0 1 2) (0)>>
+------------------------------------------------------------------------------
+
+(cprd smp-deltab2 3 '(1 2 3 4))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * <TnPr (0) (1 2 3 4)>>
+<1 * <TnPr (1 2 3 4) (0)>>
+------------------------------------------------------------------------------
+
+(cprd smp-deltab2 4 '(0 1 2 3 4))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * <TnPr (0) (0 1 2 3 4)>>
+<1 * <TnPr (0 1 2) (2 3 4)>>
+<1 * <TnPr (0 1 2 3 4) (0)>>
+------------------------------------------------------------------------------
+
+(setf dh-mrph (cobar-hrzn-dffr smp-deltab2))  ==>
+
+[K8 Morphism (degree -1)]
+
+loop-1  ==>
+
+<<AlLp[2 (0 1 2 3)]>>
+
+(? dh-mrph 2 loop-1)  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+------------------------------------------------------------------------------
+
+loop-3  ==>
+
+<<AlLp[3 (0 1 2 3 4)][3 (1 3 5 7 9)]>>
+
+(? dh-mrph 6 loop-3)  ==>
+
+----------------------------------------------------------------------{CMBN 5}
+<1 * <<AlLp[1 (0 1 2)][1 (2 3 4)][3 (1 3 5 7 9)]>>>
+<-1 * <<AlLp[3 (0 1 2 3 4)][1 (1 3 5)][1 (5 7 9)]>>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+\newpage
+{\footnotesize\begin{verbatim}
+(? dh-mrph *)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+------------------------------------------------------------------------------
+
+loop-4  ==>
+
+<<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][4 (0 4 5 6 7 8)]>>
+
+(? dh-mrph 11 loop-4)  ==>
+
+----------------------------------------------------------------------{CMBN 10}
+<-1 * <<AlLp[1 (0 1 4)][1 (4 5 6)][4 (2 3 4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<1 * <<AlLp[3 (0 1 4 5 6)][1 (2 3 4)][2 (4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<1 * <<AlLp[3 (0 1 4 5 6)][2 (2 3 4 5)][1 (5 6 8)][4 (0 4 5 6 7 8)]>>>
+<-1 * <<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][1 (0 4 5)][2 (5 6 7 8)]>>>
+<-1 * <<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][2 (0 4 5 6)][1 (6 7 8)]>>>
+------------------------------------------------------------------------------
+
+(? dh-mrph *)  ==>
+
+----------------------------------------------------------------------{CMBN 9}
+------------------------------------------------------------------------------
+\end{verbatim}}
+
+\subsubsection {Final definition of the cobar of a coalgebra}
+
+To define completely the cobar chain complex\index{cobar! of a coalgebra}, 
+we have to provide the lisp function
+for the differential $d_v + d_h$ and, once created the vertical cobar chain complex,
+to call the building function {\tt build-chcm} with adequate arguments.
+\vskip 0.45cm
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt cobar-intr-dffr} {\em vrtc-dffr hrzn-dffr}\hfill {\em [Function]} \par}
+{\leftskip=15mm 
+Define the lisp function for the differential $d_v+d_h$ from the two morphisms
+{\em vrtc-dffr} and {\em hrzn-dffr}. For efficiency reasons, the implementor
+has chosen to define this new function rather than to use simply
+the addition of two morphisms.\par}
+{\leftskip=5mm 
+{\tt cobar} {\em coalgebra}\hfill {\em [Method]} \par}
+{\leftskip=15mm 
+Build first the vertical cobar chain complex on the coalgebra. Then return a chain complex
+with the same slots as the vertical cobar chain complex but with new {\tt :intr-dffr}
+and  {\tt :orgn} slots, as shown in the following definition: \par}
+}
+\newpage
+{\footnotesize\begin{verbatim}
+             (defmethod COBAR ((coalgebra coalgebra))
+                (let ((vrtc-cobar (vrtc-cobar coalgebra))
+                      (cobar-hrzn-dffr (cobar-hrzn-dffr coalgebra)))
+                (declare (type chain-complex vrtc-coabr hrzn-cobar))
+                (the chain-complex
+                    (build-chcm
+                       :cmpr (cmpr vrtc-cobar)
+                       :basis (basis vrtc-cobar)
+                       :bsgn +null-allp+
+                       :intr-dffr (cobar-intr-dffr (dffr vrtc-cobar) 
+                                                   cobar-hrzn-dffr)
+                       :strt :gnrt
+                       :orgn `(add ,vrtc-cobar ,cobar-hrzn-dffr)))))
+\end{verbatim}}
+
+\subsection* {Example}
+
+We may now build the cobar of {\tt smp-deltab2} and test the differential. 
+{\footnotesize \begin{verbatim}
+(setf cobar-deltab2 (cobar smp-deltab2))  ==>
+
+[K9 Chain-Complex]
+
+loop-3  ==>
+
+<<AlLp[3 (0 1 2 3 4)][3 (1 3 5 7 9)]>>
+
+
+(? cobar-deltab2 6 loop-3)  ==>
+
+----------------------------------------------------------------------{CMBN 5}
+<1 * <<AlLp[2 (0 1 2 3)][3 (1 3 5 7 9)]>>>
+<-1 * <<AlLp[2 (0 1 2 4)][3 (1 3 5 7 9)]>>>
+<1 * <<AlLp[2 (0 1 3 4)][3 (1 3 5 7 9)]>>>
+<-1 * <<AlLp[2 (0 2 3 4)][3 (1 3 5 7 9)]>>>
+<1 * <<AlLp[2 (1 2 3 4)][3 (1 3 5 7 9)]>>>
+<1 * <<AlLp[3 (0 1 2 3 4)][2 (1 3 5 7)]>>>
+<-1 * <<AlLp[3 (0 1 2 3 4)][2 (1 3 5 9)]>>>
+<1 * <<AlLp[3 (0 1 2 3 4)][2 (1 3 7 9)]>>>
+<-1 * <<AlLp[3 (0 1 2 3 4)][2 (1 5 7 9)]>>>
+<1 * <<AlLp[3 (0 1 2 3 4)][2 (3 5 7 9)]>>>
+<1 * <<AlLp[1 (0 1 2)][1 (2 3 4)][3 (1 3 5 7 9)]>>>
+<-1 * <<AlLp[3 (0 1 2 3 4)][1 (1 3 5)][1 (5 7 9)]>>>
+------------------------------------------------------------------------------
+
+(? cobar-deltab2 *)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+------------------------------------------------------------------------------
+
+loop-4  ==>
+
+<<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][4 (0 4 5 6 7 8)]>>
+
+(? cobar-deltab2 11 loop-4)  ==>
+
+----------------------------------------------------------------------{CMBN 10}
+<-1 * <<AlLp[2 (0 1 4 5)][4 (2 3 4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<1 * <<AlLp[2 (0 1 4 6)][4 (2 3 4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<-1 * <<AlLp[2 (0 1 5 6)][4 (2 3 4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<1 * <<AlLp[2 (0 4 5 6)][4 (2 3 4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<-1 * <<AlLp[2 (1 4 5 6)][4 (2 3 4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<1 * <<AlLp[3 (0 1 4 5 6)][3 (2 3 4 5 6)][4 (0 4 5 6 7 8)]>>>
+<-1 * <<AlLp[3 (0 1 4 5 6)][3 (2 3 4 5 8)][4 (0 4 5 6 7 8)]>>>
+<1 * <<AlLp[3 (0 1 4 5 6)][3 (2 3 4 6 8)][4 (0 4 5 6 7 8)]>>>
+<-1 * <<AlLp[3 (0 1 4 5 6)][3 (2 3 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<1 * <<AlLp[3 (0 1 4 5 6)][3 (2 4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<-1 * <<AlLp[3 (0 1 4 5 6)][3 (3 4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<-1 * <<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][3 (0 4 5 6 7)]>>>
+<1 * <<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][3 (0 4 5 6 8)]>>>
+<-1 * <<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][3 (0 4 5 7 8)]>>>
+<1 * <<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][3 (0 4 6 7 8)]>>>
+<-1 * <<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][3 (0 5 6 7 8)]>>>
+<1 * <<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][3 (4 5 6 7 8)]>>>
+<-1 * <<AlLp[1 (0 1 4)][1 (4 5 6)][4 (2 3 4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<1 * <<AlLp[3 (0 1 4 5 6)][1 (2 3 4)][2 (4 5 6 8)][4 (0 4 5 6 7 8)]>>>
+<1 * <<AlLp[3 (0 1 4 5 6)][2 (2 3 4 5)][1 (5 6 8)][4 (0 4 5 6 7 8)]>>>
+<-1 * <<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][1 (0 4 5)][2 (5 6 7 8)]>>>
+<-1 * <<AlLp[3 (0 1 4 5 6)][4 (2 3 4 5 6 8)][2 (0 4 5 6)][1 (6 7 8)]>>>
+------------------------------------------------------------------------------
+
+(? cobar-deltab2 *)  ==>
+
+----------------------------------------------------------------------{CMBN 9}
+------------------------------------------------------------------------------
+\end{verbatim}}
+\newpage
+
+\section {Other functions for the cobar construction} 
+
+The\index{functor!vertical cobar} vertical cobar construction is 
+{\em natural} and therefore defines a functor. 
+Consequently, the {\tt Kenzo} program contains the following methods.
+\vskip 0.45cm
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt vrtc-cobar} {\em mrph}\hfill {\em [Method]} \par}
+{\leftskip=15mm 
+From the morphism {\em mrph}, build a new morphism between the vertical-cobar of the source
+of {\em mrph} and the vertical cobar of the target of {\em mrph}, the morphism itself being
+induced in a natural way by the underlying morphism. \par}
+{\leftskip=5mm 
+{\tt vrtc-cobar} {\em rdct}\hfill {\em [Method]} \par}
+{\leftskip=15mm 
+From the reduction {\em rdct}, build a new reduction, by applying the vertical cobar
+method to the functions $f$ and $g$. The new homotopy cannot be obtained so simply, being
+a function of the $f$, $g$ and $h$ of {\em rdct}. Nevertheless, the source and target
+of the new homotopy are the vertical cobar of the underlying homotopy. \par}
+{\leftskip=5mm 
+{\tt vrtc-cobar} {\em hmeq}\hfill {\em [Method]} \par}
+{\leftskip=15mm 
+Build a homotopy equivalence by applying the vertical cobar cons\-truc\-ti\-on
+to the left and right reductions of the homotopy equivalence {\em hmeq}. \par}
+{\leftskip=5mm 
+{\tt cobar} {\em hmeq}\hfill {\em [Method]} \par}
+{\leftskip=15mm 
+Build a  homotopy equivalence where the cobar construction is applied to the
+underlying homotopy equivalence in the following way. First this construction is limited to the 
+case where the left bottom chain complex of {\em hmeq} is a {\bf coalgebra}. Then the vertical cobar
+construction is applied to {\em hmeq} and the horizontal differential of the left bottom chain complex
+is propagated upon the new homotopy equivalence with the help of the method {\tt add}. In other words,
+starting from the left bottom chain complex, firstly the easy pertubation lemma is applied to
+obtain a new differential on the top chain complex; then the basic perturbation lemma
+is applied to the right reduction.
+If {\em hmeq} is a
+trivial homotopy equivalence, this function returns a trivial one, built on the cobar of
+the left bottom chain complex of {\em hmeq}. \par}
+}
+
+\subsection* {Lisp files concerned in this chapter}
+
+{\tt coalgebras.lisp}, {\tt cobar.lisp}.
+\par
+[{\tt classes.lisp}, {\tt macros.lisp}, {\tt various.lisp}].

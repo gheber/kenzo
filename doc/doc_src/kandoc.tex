@@ -1,0 +1,182 @@
+\chapter {Programming the Kan theory}
+
+\section {Introduction}
+
+Let us recall some definitions in relation with the Kan simplicial sets.
+\vskip 0.40cm
+{\bf Definition 1.} A Kan ``hat''\index{Kan hat} of dimension $n$ and index $i$ is a collection
+of $n$ simplices of dimension  $(n-1)$, noted 
+$(\sigma_0, \ldots, \sigma_{i-1}, \sigma_{i+1}, \ldots, \sigma_n)$,
+such that the following conditions are fulfilled:
+$$ \partial_j\sigma_k=\partial_k\sigma_{j+1},\quad k \not= i,\quad j+1 \not= i, \quad 0 \leq j \leq n-1, \quad
+  0 \leq k \leq n-1, \quad k \leq j. $$
+Note that there is no $\sigma_i$ term in the list above; in a sense, the Kan process consists in
+constructing the missing $\sigma_i$ to be considered as a ``composition'' of the given $\sigma_j$'s.
+\subsection* {Example}
+
+We are going to work with the simplices of $\Delta^{\N}$. The set $(\sigma_1, \sigma_2) = $ {\tt ((0 2), (0 1))}
+is a Kan hat of dimension $2$ and index $0$. In effect, $\delta_1\sigma_1=\delta_1\sigma_2 = {\tt (0)}$. 
+Likewise, the two sets {\tt ((1 2), (0 1))} and {\tt ((1 2), (0 2))} are  Kan hats  of dimension $2$ and
+of respective index $1$ and $2$. Of course, this definition applies equally if the simplices
+are degenerate.
+\vskip 0.40cm
+{\bf Definition 2.} A {\em filling} of a Kan hat\index{Kan hat!filling},
+$(\sigma_0, \ldots, \sigma_{i-1}, \sigma_{i+1}, \ldots, \sigma_n)$,
+is an $n$--simplex $\tilde{\sigma}$, 
+such that for every $j \not= i$, $\partial_j\tilde{\sigma}=\sigma_j.$
+
+\subsection* {Example}
+
+A filling of {\tt ((0 2), (0 1))} is the $2$-simplex {\tt (0 1 2)}. A filling of the Kan hat
+{\tt ((1 1), (0 1))} is the degenerate $2$-simplex {\tt (0 1 1)}. A filling
+of the vertex {\tt (0)} is the degenerate $1$--simplex {\tt (0 0)}.
+\vskip 0.40cm
+{\bf Definition 3.} A simplicial set is a Kan simplicial set if for every hat there exists a filling.
+
+\subsection {Representation of a Kan simplicial set}
+
+A Kan simplicial set is implemented as an instance\index{class!{\tt KAN}} of the class {\tt KAN}, 
+subclass of the class {\tt SIMPLICIAL-SET}.
+{\footnotesize\begin{verbatim}
+(DEFCLASS KAN (simplicial-set)
+  ((kfll :type kfll :initarg :kfll :reader kfll1)))
+\end{verbatim}}
+We recall that this new class inherits also from the class {\tt CHAIN-COMPLEX}. It has one
+slot of its own:
+\begin{description}
+\item {{\tt kfll}}, an object of type {\tt KFLL}, in fact a lisp function with $3$ parameters describing
+a Kan hat:
+an index (an integer), a dimension (an integer) and the Kan hat (a list of abstract simplices). This function
+must return a filling of the Kan hat argument, i.e. an abstract simplex satisfying the theoritical
+definition.
+\end{description}
+A printing method has been associated to the class {\tt KAN} and the external re\-pre\-sen\-ta\-ti\-on
+of  an instance is a string like {\tt [K{\em n} Kan-Simplicial-Set]}, where {\em n} is the number plate of
+the Kenzo object.
+
+\subsection {Helpful functions on Kan simplicial sets}
+
+{\parindent=0mm
+{\leftskip=5mm
+{\tt cat-init} \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Clear in particular {\tt *Kan-list*}, the list of user created Kan simplicial sets  and reset
+the global counter to $1$. \par}
+{\leftskip=5mm 
+{\tt Kan} {\em n} \hfill {\em [Function]}\par}
+{\leftskip=15mm 
+Retrieve in the list {\tt *Kan-list*} the Kan object instance whose the Kenzo identification  is $n$.
+If it does not exist, return {\tt NIL}. \par}
+{\leftskip=5mm 
+{\tt kfll \&rest} {\em args} \hfill {\em [Macro]}\par}
+{\leftskip=15mm 
+With only one argument (a Kan instance) return the slot {\tt kfll} of this instance. With $4$ arguments
+like {\tt (kfll {\em kan indx dmns hat})}, return a filling of the Kan hat {\em hat}, of dimension {\em dmns}
+and of index {\em indx} by applying the filling function value of the slot {\tt kfll} of the Kan instance
+{\em kan}. \par}
+}
+\newpage
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt smst-kan} {\em smst kfll} \hfill {\em [Function]}\par}
+{\leftskip=15mm 
+With the filling lisp function {\em kfll}, 
+{\bf transform} the simplicial set {\em smst} in an object of type {\tt KAN} 
+(in other word, {\em smst} is {\tt modified}).
+This is the easiest way to build a Kan simplicial set. \par}
+{\leftskip=5mm 
+{\tt check-hat} {\em kan indx dmns hat} \hfill {\em [Function]}\par}
+{\leftskip=15mm 
+Useful verification function to check if the collection of simplices {\em hat} is a valid Kan hat
+of dimension {\em dmns} and of index {\em indx} in the Kan simplicial set {\em kan}. In fact this
+works equally if {\em kan} is a general simplicial set. \par}
+{\leftskip=5mm 
+{\tt check-kan} {\em kan indx dmns hat} \hfill {\em [Function]}\par}
+{\leftskip=15mm 
+Useful verification function to check if the collection of simplices {\em hat} is a valid Kan hat
+of dimension {\em dmns} and of index {\em indx} in the Kan simplicial set {\em kan}. This verification
+function applies the filling function of the instance {\em kan} to the argument {\em hat} and perform
+the  verification of the faces relations upon the resulting $dmns$--simplex. \par}
+}
+
+\subsection* {Examples}
+
+Let us take again the small examples of the introduction. First we  define a function {\tt dkfll}, 
+a filling function suitable for a  Kan hat in $\Delta^{\N}$. The user will note that
+in the abstract simplices the degeneracy operators and the geometric simplices are coded in binary.
+{\footnotesize\begin{verbatim}
+(defun dkfll (indx dmns hat)
+     (cond ((= 1 dmns)
+            (absm 1 (gmsm (first hat))))
+           ((= 0 indx)
+            (let ((del-1 (absm-int-ext (first hat)))
+                  (del-2 (absm-int-ext (second hat))))
+              (absm-ext-int
+                 (cons (first del-1)
+                       (cons (second del-2) (rest del-1))))))
+           ((= 1 indx)
+            (let ((del-0 (absm-int-ext (first hat)))
+                  (del-2 (absm-int-ext (second hat))))
+              (absm-ext-int
+                 (cons (first del-2) del-0))))
+           (t
+            (let ((del-0 (absm-int-ext (first hat)))
+                  (del-1 (absm-int-ext (second hat))))
+              (absm-ext-int
+                 (cons (first del-1) del-0))))))
+
+DKFLL
+
+(setf d (delta-infinity))  ==>
+
+[K5 Simplicial-Set]
+
+(smst-kan d #'dkfll)  ==>
+
+[K5 Kan-Simplicial-Set]
+
+(kfll d 0 1 (list (absm 0 1)))  ==>
+
+<AbSm 0 1>
+
+(kfll d 0 2 (list (absm 0 5) (absm 0 3)))  ==>
+
+<AbSm - 7>
+
+(kfll d 1 2 (list (absm 0 6) (absm 0 3)))  ==>
+
+<AbSm - 7>
+
+(kfll d 2 2 (list (absm 0 6) (absm 0 5)))  ==>
+
+<AbSm - 7>
+
+(kfll d 0 2 (list (absm 0 3) (absm 0 3)))  ==>
+
+<AbSm 1 3>
+
+(kfll d 1 2 (list (absm 1 2) (absm 0 3)))  ==>
+
+<AbSm 1 3>
+
+(check-hat d 1 2 (list (absm 1 2) (absm 0 3)))  ==>
+
+T
+
+(check-hat d 0 1 (list (absm 0 1)))  ==>
+
+T
+
+(check-kan d 0 1 (list (absm 0 1)))  ==>
+
+---done---
+\end{verbatim}}
+
+More elaborate examples with Kan simplicial sets will be given later in the
+loop spaces chapter.
+
+\subsection* {Lisp files concerned in this chapter}
+
+{\tt kan.lisp}.
+\par
+[{\tt classes.lisp }, {\tt macros.lisp}, {\tt various.lisp}].

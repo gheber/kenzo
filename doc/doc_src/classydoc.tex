@@ -1,0 +1,359 @@
+\chapter {Classifying Spaces}
+
+\section {Introduction}
+
+Let ${\cal G}$ be a simplicial group $0$--reduced. The software  {\tt Kenzo} allows 
+the construction of the universal bundle $\bar{\cal W}{\cal G}$, called the 
+classifying space\index{classifying space} of ${\cal G}$. 
+It is known that this is the base space of  a principal bundle
+such that the total space is contractible. We know also that if ${\cal G}$ is
+an Abelian simplicial group then $\bar{\cal W}{\cal G}$ is also an Abelian
+simplicial group, otherwise if ${\cal G}$ is non--Abelian, then $\bar{\cal W}{\cal G}$
+is only a simplicial set. In dimension $n$ the simplices of the
+classifying space are elements of the  product:
+$${\cal G}_{n-1}\times {\cal G}_{n-2}\times\cdots\times{\cal G}_0,$$
+where ${\cal G}_k$ is the set of the $k$--simplices of the given simplicial group. \par
+A simplex of $\bar{\cal W}{\cal G}$ is called {\bf gbar}\index{gbar} ({\em geometric} bar) 
+and  may be seen as an $n$--uple
+$$(g_{n-1}, g_{n-2}, \ldots, g_1, g_0),$$
+where the $g_i$'s are elements of ${\cal G}_i$, possibly {\em degenerated}.
+In {\tt Kenzo} a gbar is represented externally under the form:\index{gbar!representation}
+\begin{center}
+{\tt <<GBar < $[\eta g]_{n-1}$><$[\eta g]_{n-2}$ > ...  < $[\eta g]_1$ > < - $g_0$> >>}
+\end{center}
+where  a term such as $[\eta g]_i$ is a simplex of ${\cal G}_i$. Let us recall that
+our group ${\cal G}$ is assumed $0$--reduced; as a consequence, the $g_0$ compound
+of a gbar is necessarily the identity element of ${\cal G}$. \par
+In the  symbolic expression $[\eta g]_i$,  the operator
+$\eta$ represents a sequence (possibly the void one) of degeneracy operators
+applied coherently upon some element of ${\cal G}_k$, for $k\leq i$. For instance $[\eta g]_1$
+can be $\eta_0 g_0$, i.e. the $0$--degeneracy of the base point and $[\eta g]_2$ can be
+can be $\eta_1\eta_0 g_0$. To be more explicit, let us take the Abelian simplicial group
+$K({\Z}_2, 1)$ (see the simplicial groups chapter), then some elements of the basis in dimension $4$ of
+its classifying space are, for instance:
+{\footnotesize\begin{verbatim}
+<<GBar<- 3><- 2><- 1><- 0>>>
+<<GBar<- 3><1-0 0><0 0><- 0>>>
+<<GBar<1 2><- 2><0 0><- 0>>>
+<<GBar<1 2><0 1><0 0><- 0>>>
+<<GBar<2 2><1 1><0 0><- 0>>>
+<<GBar<2-0 1><1 1><0 0><- 0>>>
+<<GBar<2-1 1><1 1><- 1><- 0>>>
+<<GBar<2-1 1><0 1><0 0><- 0>>>
+\end{verbatim}}
+
+We recall that the symbol {\tt -}, in front of an element means ``no degeneracy''.
+
+\section {Face, degeneracy and group operations}
+
+Let us denote a gbar under the following generic form:
+$$g_{bar}=(g_{n-1}, g_{n-2}, \ldots, {\bf g_j}, \ldots, g_1, g_0).$$
+In this symbolism, $g_0$ is also the base point of the initial simplicial group.
+The rule for the face operators is the following:
+\begin{itemize}
+\item If $j=n$, $\delta_n g_{bar}= (g_{n-2}, g_{n-3}, \ldots, g_1, g_0).$
+\item If $j \not=n$, 
+  $\delta_j g_{bar}= (\delta_j g_{n-1}, \ldots, {\bf \delta_j g_{j+1}, g_{j-1}.\delta_j g_j, g_{j-1}}, \ldots, g_1, g_0),$
+where in the term $\bf g_{j-1}.\delta_j g_j$, the dot represents the group composition.
+\item If $j=0$, $\delta_0 g_{bar}= (\delta_0 g_{n-1}, \ldots, \delta_0 g_1).$
+\end{itemize}
+The rule for the degeneracy operators is:
+$$\eta_j g_{bar}= 
+ (\eta_j g_{n-1}, \ldots, {\bf \eta_j g_{j+1}, \eta_{j-1}\eta_{j-2}\ldots\eta_1\eta_0 g_0, g_{j-1}}, \ldots, g_1, g_0).$$
+If ${\cal G}$ is Abelian then $\bar{\cal W}{\cal G}$ is also  Abelian  and its
+composition law is simply:
+$$(g_{n-1}, \ldots, g_1, g_0).(g'_{n-1}, g'_1, g'_0)= 
+  (g_{n-1}.g'_{n-1},  \ldots, g_1.g'_1, g_0.g'_0).$$
+It is well known that if the initial group is not Abelian then, in general, the previous
+composition law is not compatible with the simplicial structure.
+
+\section {The functions for the classifying spaces}
+
+{\parindent=0mm
+{\leftskip=5mm
+{\tt gbar} {\em dmns dop-1 elem-1 ... dop-n elem-n} \hfill {\em [Macro]} \par}
+{\leftskip=15mm
+Build a gbar in dimension {\em dmns}. The sequence {\em dop-1 elem-1 ... dop-n elem-n}, 
+is a sequence of pairs ({\em dop-k, elem-k}), where {\em dop-k} is  a {\bf binary coded}
+degeneracy operator and {\em elem-k} a simplex of the initial simplicial group. The ordering of
+the pairs in the sequence must conform to the theoritical definition of a gbar. 
+If the sequence of pairs is void, the special call {\tt (gbar 0)}, 
+creates the base point of the classifying space
+externally represented by {\tt <<GBAR>>}. This base point can be reached through 
+the system symbol {\tt +null-gbar+}. \par}
+{\leftskip=5mm
+{\tt classifying-space-cmpr} {\em cmpr}\hfill {\em [Function]} \par}
+{\leftskip=15mm
+From a comparison function {\em cmpr} defined for a simplicial group ${\cal G}$, build a
+comparison function for the classifying space of ${\cal G}$. \par}
+{\leftskip=5mm
+{\tt classifying-space-basis} {\em basis}\hfill {\em [Function]} \par}
+{\leftskip=15mm
+From the basis function {\em basis} of a simplicial group ${\cal G}$, build a
+basis function for the classifying space of ${\cal G}$. If ${\cal G}$ is locally effective,
+this function returns the symbol {\tt :locally-effective}.\par}
+{\leftskip=5mm
+{\tt classifying-space-face} {\em face sintr-grml}\hfill {\em [Function]} \par}
+{\leftskip=15mm
+From the face function {\em face} and the lisp function for the group law, {\em sintr-grml},
+of a simplicial group ${\cal G}$, build a
+face function for the classifying space of ${\cal G}$. \par}
+{\leftskip=5mm
+{\tt classifying-space} {\em smgr}\hfill {\em [Method]} \par}
+{\leftskip=15mm
+Build the simplicial set, classifying space of the simplicial group {\em smgr}.
+The construction uses the three preceding auxiliary functions. The base point
+of the returned simplicial set is the null gbar {\tt +null-gbar+}. \par}
+{\leftskip=5mm
+{\tt classifying-space} {\em A-smgr}\hfill {\em [Method]} \par}
+{\leftskip=15mm
+Build the Abelian simplicial group, classifying space of the Abelian simplicial group {\em A-smgr}.
+The group law and its inverse (slots {\tt :sintr-grml} and {\tt :sintr-grin}) are built
+by the two auxiliary functions: \par}
+{\leftskip=20mm
+{\tt classifying-space-grml-sintr} and \par}
+{\leftskip=20mm
+{\tt classifying-space-grin-sintr}, \par}
+{\leftskip=15mm
+defining the laws of this new group from the corresponding laws of {\em A-smgr}. \par}
+}
+
+\section {Eilenberg-Mac Lane spaces $K(\pi,n)$}
+
+We\index{$K(\pi,n)$} have already described $K({\Z},1)$ and $K({\Z}_2,1)$ in the chapter on simplicial groups. 
+This section gives some complements about the construction of $K({\Z},n)$ and $K({\Z}_2,n)$. The trivial case
+for $n=0$ is not implemented in {\tt Kenzo}. For $n > 1$, these simplicial groups
+are built recursively as the classifying spaces of $K({\Z},n-1)$ and $K({\Z}_2,n-1)$, respectively, as shown
+in the following description:
+\par
+\vskip 0.40cm
+{\parindent=0mm
+{\leftskip=5mm
+{\tt k-z} {\em n} \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build $K({\Z},n)$ recursively from $K({\Z},n-1)$. If $n=1$, return $K({\Z},1)$
+{\footnotesize\begin{verbatim}
+     (defun K-Z (n)
+        (the ab-simplicial-group
+           (if (= n 1)
+               (k-z-1)
+               (classifying-space (k-z (1- n))))))
+\end{verbatim}}
+\par}
+{\leftskip=5mm
+{\tt k-z2} {\em n} \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build $K({\Z}_2,n)$ recursively from $K({\Z}_2,n-1)$. If $n=1$, return $K({\Z}_2,1)$
+{\footnotesize\begin{verbatim}
+     (defun K-Z2 (n)
+        (the ab-simplicial-group
+           (if (= n 1)
+               (k-z2-1)
+               (classifying-space (k-z2 (1- n))))))
+\end{verbatim}}
+\par}}
+These spaces have an effective homology which is computed via a {\em search-efhm} method (described in a next chapter).
+For the case $n=1$, we may recall here that $K({\Z},1)$, though being locally effective, 
+has the homology of $S^1$. The  {\em search-efhm} method applied to this chain complex does the following:  a reduction
+between $K({\Z},1)$ and the chain complex {\tt circle} (described in the chain complex chapter) is
+built using the function {\tt kz1-rdct} and the homotopy equivalence, value of the slot {\tt efhm}, is
+built between this reduction and the trivial reduction of $K({\Z},1)$ upon itself.\par
+On the other hand, $K({\Z},2)$ has a very simple finite basis in every dimension (see $\R$-projective 
+spaces), so its homology is computed directly from its basis. The  homotopy 
+equivalence, value of the slot {\tt efhm}, is the trivial homotopy equivalence of $K({\Z},2)$ upon
+itself. 
+\newpage
+
+\subsection* {Examples}
+
+Let us begin by showing some examples of gbars built  from various
+initial simplicial groups. In the second statement, the initial simplicial group
+is $K({\Z}_2, 1)$, in the third, it is $\Omega({\em Moore}(2,2))$. We recall that
+in the call of the function {\tt gbar}, the degeneracy operators appear as integers,
+according to the general rule in {\tt Kenzo}, but the printed result shows in clear
+the sequence of $\eta_i$'s.
+{\footnotesize\begin{verbatim}
+(gbar 2 1 'a 2 'b)  ==>
+
+<<GBar<0 A><1 B>>>
+
+(gbar 4 0 3 3 0 1 0 0 0)  ==>
+
+<<GBar<- 3><1-0 0><0 0><- 0>>>
+
+(setf gbar-mr22 (gbar 4 0 (loop3 3 'm2 1 4 'n3 1)
+                        0 (loop3 0 'n3 1)
+                        0 (loop3 0 'm2 1)
+                        0 +null-loop+))   ==>
+
+<<GBar<- <<Loop[1-0 M2][2 N3]>>><- <<Loop[N3]>>><- <<Loop[M2]>>>
+      <- <<Loop>>>>>
+\end{verbatim}}
+Let us test the face function upon this simplex. The user will note
+that the face function returns an abstract simplex.
+{\footnotesize\begin{verbatim}
+(setf om (loop-space (moore 2 2)))  ==>
+
+[K18 Simplicial-Group]
+
+(setf face (classifying-space-face (face om) (sintr (grml om))))  ==>
+
+#<Closure (FLET CLASSIFYING-SPACE-FACE RSLT) @ #x49af32>
+
+(dotimes (i 5) (print (funcall face i 4 gbar-m22)))  ==>
+
+<AbSm - <<GBar<- <<Loop[0 M2][1 M2]>>><- <<Loop[M2]>>><- <<Loop>>>>>> 
+<AbSm 0 <<GBar<- <<Loop[M2]>>><- <<Loop>>>>>> 
+<AbSm - <<GBar<- <<Loop[0 M2][N3]>>><- <<Loop[M2\2]>>><- <<Loop>>>>>> 
+<AbSm - <<GBar<- <<Loop[N3\2]>>><- <<Loop[M2]>>><- <<Loop>>>>>> 
+<AbSm - <<GBar<- <<Loop[N3]>>><- <<Loop[M2]>>><- <<Loop>>>>>> 
+\end{verbatim}}
+Let us work now, directly with the classifying space of $K({\Z}_2, 1)$.
+{\footnotesize\begin{verbatim}
+(setf cs-kz21 (classifying-space (k-z2-1)))  ==>
+
+[K13 Abelian-Simplicial-Group]
+\end{verbatim}}
+\newpage
+{\footnotesize\begin{verbatim}
+(orgn cs-kz21)  ==>
+
+(CLASSIFYING-SPACE [K1 Abelian-Simplicial-Group])
+
+(setf elem-1 (first (basis cs-kz21 4)))  ==>
+
+<<GBar<- 3><- 2><- 1><- 0>>>
+
+(? cs-kz21 4 elem-1)  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<2 * <<GBar<- 2><- 1><- 0>>>>
+------------------------------------------------------------------------------
+
+(? cs-kz21 *)  ==>
+
+----------------------------------------------------------------------{CMBN 2}
+------------------------------------------------------------------------------
+
+(cprd cs-kz21  4 elem-1)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * <TnPr <<GBar>> <<GBar<- 3><- 2><- 1><- 0>>>>>
+<1 * <TnPr <<GBar<- 1><- 0>>> <<GBar<- 1><- 0>>>>>
+<1 * <TnPr <<GBar<- 3><- 2><- 1><- 0>>> <<GBar>>>>
+------------------------------------------------------------------------------
+
+(dotimes (i 5)
+    (print (face cs-kz21 i 4 elem-1)))  ==>
+
+<AbSm - <<GBar<- 2><- 1><- 0>>>> 
+<AbSm 0 <<GBar<- 1><- 0>>>> 
+<AbSm 1 <<GBar<- 1><- 0>>>> 
+<AbSm 2 <<GBar<- 1><- 0>>>> 
+<AbSm - <<GBar<- 2><- 1><- 0>>>> 
+\end{verbatim}}
+Let us test the law group with $K({\Z}, 1)$. We recall the simplices
+of  this Abelian simplicial group are represented as lists of integers.
+The functions {\tt grml} and {\tt grin} accept also the gbars under the form
+of abstract simplices (see the last statement).
+{\footnotesize\begin{verbatim}
+(setf cs-kz1 (classifying-space (k-z-1)))  ==>
+
+[K13 Abelian-Simplicial-Group]
+
+(grml cs-kz1 3 (crpr 0 (gbar 3 0 '(1 2) 0 '(3) 0 '())
+                     0 (gbar 3 0 '(-1 -2) 0 '(-3) 0 '())))  ==>
+
+<AbSm 2-1-0 <<GBar>>>
+
+(grml cs-kz1 3 (crpr 0 (gbar 3 0 '(1 2) 0 '(3) 0 '())
+                     4 (gbar 2 0 '(-3) 0 '())))             ==>
+
+<AbSm - <<GBar<- (1 2)><0 NIL><- NIL>>>>
+
+(grml cs-kz1 3 (crpr 0 (gbar 3 0 '(1 2) 0 '(3) 0 '())
+                     1 (gbar 2 0 '(-3) 0 '())))             ==>
+
+<AbSm - <<GBar<- (1 -1)><- (3)><- NIL>>>>
+
+(grin cs-kz1 3 (gbar 3 0 '(1 2) 1 '() 0 '()))  ==>
+
+<AbSm - <<GBar<- (-1 -2)><0 NIL><- NIL>>>>
+
+(grin cs-kz1 3 *)  ==>
+
+<AbSm - <<GBar<- (1 2)><0 NIL><- NIL>>>>
+\end{verbatim}}
+As $K({\Z}, 1)$ and $K({\Z_2}, 1)$ are Abelian simplicial groups, we may iterate the classifying
+space construction and retrieve some known results.
+{\footnotesize\begin{verbatim}
+(cat-init)    ;; re-initialization
+
+(setf k-z-3 (k-z 3))  ==>
+
+[K25 Abelian-Simplicial-Group]
+
+(homology k-z-3 0 10)  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+Homology in dimension 2 :
+
+Homology in dimension 3 :
+
+Component Z
+
+Homology in dimension 4 :
+
+Homology in dimension 5 :
+
+Component Z/2Z
+
+Homology in dimension 6 :
+
+Homology in dimension 7 :
+
+Component Z/3Z
+
+Homology in dimension 8 :
+
+Component Z/2Z
+
+Homology in dimension 9 :
+
+Component Z/2Z
+
+(setf k-z2-5 (k-z2 5))  ==>
+
+[K342 Abelian-Simplicial-Group]
+
+(homology k-z2-5 0 7)  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+Homology in dimension 2 :
+
+Homology in dimension 3 :
+
+Homology in dimension 4 :
+
+Homology in dimension 5 :
+
+Component Z/2Z
+
+Homology in dimension 6 :
+
+--done--
+\end{verbatim}}
+
+\subsection* {Lisp files concerned in this chapter}
+
+{\tt classifying-space.lisp}, {\tt k-pi-n.lisp}.

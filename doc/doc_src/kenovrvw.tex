@@ -1,0 +1,475 @@
+\setcounter{chapter}{-1}
+\chapter {Overview}
+
+In this overview we try to  show, without entering in detailed
+explanations, various possibilities of {\tt Kenzo} in algebraic topology.
+The lines ended by the symbol $==>$ are the commands typed by the user 
+(don't type this symbol!).
+They are followed by the answer of the program. We have suppressed some
+extra informations, in particular the ones printed during the computation
+of homology groups.
+\vskip 0.5cm
+Let us begin by the space $Moore({\Z}/2{\Z}, 3)$ described as a simplicial set
+having only three non--degenerate simplices, namely in dimension
+$0$, $3$ and $4$. In the  representation created by the software, the $0$--simplex (base point),
+the $3$--simplex and the $4$--simplex are respectively labelled
+``{\tt *}'', {\tt M3} and {\tt N4}. Two faces of the $4$-simplex {\tt N4} are identified with the
+$3$-simplex {\tt M3}, the others being contracted on the base point. To create the simplicial set
+one types simply:
+{\footnotesize\begin{verbatim}
+(setf m23 (moore 2 3))  ==>
+\end{verbatim}}
+The system answers that a {\tt Kenzo} object has been created, with number $1$ and
+type {\tt SIMPLICIAL SET}. This object may be referenced  by the symbol {\tt m23}.
+{\footnotesize\begin{verbatim}
+[K1 Simplicial-Set]
+\end{verbatim}}
+We may compute the homology groups of this space, using the underlying chain complex
+induced by the simplicial set description. Here we compute the $ H_i$ from $0$ to $4$ included.
+When in the answer the component part is void, it means that the corresponding homology group is null.
+{\footnotesize\begin{verbatim}
+(homology m23 0 5)  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+--done--
+
+Homology in dimension 1 :
+
+--done--
+
+Homology in dimension 2 :
+
+--done--
+
+Homology in dimension 3 :
+
+Component Z/2Z
+
+--done--
+
+Homology in dimension 4 :
+
+---done---
+\end{verbatim}}
+As {\tt m23} is a simplicial set, it is possible to create the cartesian product
+$m23 \times m23$ by the function {\tt crts-prdc}. This is a new simplicial set.
+{\footnotesize\begin{verbatim}
+(setf m23xm23 (crts-prdc m23 m23))  ==>
+
+[K10 Simplicial-Set]
+\end{verbatim}}
+Being a simplicial set, {\tt m23xm23} is also a chain complex object and we may for instance ask for
+the basis in dimension $6$
+{\footnotesize\begin{verbatim}
+(basis m23xm23 6)  ==>
+
+(<CrPr 1-0 N4 3-2 N4> <CrPr 1-0 N4 4-2 N4> <CrPr 1-0 N4 4-3 N4> 
+ <CrPr 1-0 N4 4-3-2 M3>  <CrPr 1-0 N4 5-2 N4> <CrPr 1-0 N4 5-3 N4> 
+ <CrPr 1-0 N4 5-3-2 M3> <CrPr 1-0 N4 5-4 N4>
+                            ....  .... 
+ <CrPr 4-1 N4 5-3-2 M3> <CrPr 4-1-0 M3 3-2 N4> <CrPr 4-1-0 M3 5-2 N4> 
+ <CrPr 4-1-0 M3 5-3 N4> <CrPr 4-1-0 M3 5-3-2 M3> ... ... ...)
+
+(length *)  ==>        
+
+230
+\end{verbatim}}
+As shown by the last command (* means the previous result), 
+the number of elements of the basis is quite large (230). The user
+will note that the basis elements are formed by cartesian products of {\em degenerated simplices}. In
+the list, an element like {\tt <CrPr 1-0 N4 5-3-2 M3>} means $\eta_1\eta_0 N4 \times \eta_5\eta_3\eta_2 M3$.
+\par
+We may construct also the tensor product $m23 \otimes m23$ from the underlying chain complex
+of the simplicial set {\tt m23}. This tensor product is a new chain complex and we see that the
+basis in dimension $6$ has only one element:
+{\footnotesize\begin{verbatim}
+(setf t2m23 (tnsr-prdc m23 m23)) ==>
+
+[K3 Chain-Complex]
+
+(basis t2m23 6)  ==>
+
+(<TnPr M3 M3>)
+\end{verbatim}}
+The Eilenberg-Zilber theorem is used to compute the homology groups of the cartesian
+product space: as chain complexes, {\tt m23xm23} and {\tt t2m23} have the same homology groups,
+but the computations using the tensor product are considerably faster.
+{\footnotesize\begin{verbatim}
+(homology m23xm23 0 8)  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :    (meaning: Group null)
+
+Homology in dimension 2 :
+
+Homology in dimension 3 :
+
+Component Z/2Z
+
+Component Z/2Z
+
+Homology in dimension 4 :
+
+Homology in dimension 5 :
+
+Homology in dimension 6 :
+
+Component Z/2Z
+
+Homology in dimension 7 :
+
+Component Z/2Z
+
+---done---
+\end{verbatim}}
+\newpage
+Let us consider now the space $K({\Z}, 1)$. This is an Abelian simplicial group created  in {\tt Kenzo} 
+by the function {\tt k-z}.
+In this simplicial group, a  simplex  in dimension $n$ 
+is mathematically represented by a sequence of integers, known as a {\em bar} object:
+$$ [a_1 \mid a_2 \mid \ldots \mid a_n]. $$
+In {\tt Kenzo}, a non-degenerate simplex of $K({\Z},1)$ in dimension $n$ will be simply 
+a list of $n$ non-null integers, for instance: {\tt (2 3 4 5)}. In dimension $0$, the only
+simplex is {\tt NIL} (the base point).
+{\footnotesize\begin{verbatim}
+(setf kz1 (k-z 1))  ==>
+
+[K38 Abelian-Simplicial-Group]
+\end{verbatim}}
+But this object is also a {\em coalgebra} and an {\em algebra}, and we may
+see the effect of the respective induced {\em coproduct} and {\em product}:
+{\footnotesize\begin{verbatim}
+(cprd kz1 4 '(2 3 4 5))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * <TnPr NIL (2 3 4 5)>>
+<1 * <TnPr (2) (3 4 5)>>
+<1 * <TnPr (2 3) (4 5)>>
+<1 * <TnPr (2 3 4) (5)>>
+<1 * <TnPr (2 3 4 5) NIL>>
+------------------------------------------------------------------------------
+
+(aprd kz1 6 (tnpr 2 '(1 2) 4 '(3 4 5 6)))  ==>
+
+----------------------------------------------------------------------{CMBN 6}
+<1 * (1 2 3 4 5 6)>
+<-1 * (1 3 2 4 5 6)>
+<1 * (1 3 4 2 5 6)>
+<-1 * (1 3 4 5 2 6)>
+<1 * (1 3 4 5 6 2)>
+<1 * (3 1 2 4 5 6)>
+<-1 * (3 1 4 2 5 6)>
+<1 * (3 1 4 5 2 6)>
+<-1 * (3 1 4 5 6 2)>
+<1 * (3 4 1 2 5 6)>
+<-1 * (3 4 1 5 2 6)>
+<1 * (3 4 1 5 6 2)>
+<1 * (3 4 5 1 2 6)>
+<-1 * (3 4 5 1 6 2)>
+<1 * (3 4 5 6 1 2)>
+------------------------------------------------------------------------------
+\end{verbatim}}
+The printed results are the printed representation of {\em combinations}, i.e.
+integer linear combinations of generators resulting from the application of the
+morphisms. The degree of the combination is indicated by the information: {\tt CMBN $n$}.
+\par
+On the same way, we may create the Abelian simplicial groups $K({\Z}/2{\Z}, n)$:
+{\footnotesize\begin{verbatim}
+(setf k-z2-2 (k-z2 2))  ==>
+
+[K488 Abelian-Simplicial-Group]
+
+(homology k-z2-2 4)  ==>
+
+Homology in dimension 4 :
+
+Component Z/4Z
+
+---done---
+\end{verbatim}}
+
+\begin{center}
+----------
+\end{center}
+Let us play now with the sphere $S^3$ and its loop spaces. $S^3$ and $\Omega^2 S^3$ are created by
+respective calls to the functions {\tt sphere} and {\tt loop-space}. Then we compute the $H_4$ and $H_5$
+of $\Omega^2 S^3$:
+{\footnotesize\begin{verbatim}
+(setf s3 (sphere 3))  ==>
+
+[K52 Simplicial-Set]
+
+(setf o2s3 (loop-space s3 2))  ==>
+
+[K69 Simplicial-Group]
+
+(homology o2s3 4 6)  ==>
+
+Homology in dimension 4 :
+
+Component Z/3Z
+
+Component Z/2Z
+
+Homology in dimension 5 :
+
+Component Z/3Z
+
+Component Z/2Z
+
+---done---
+\end{verbatim}}
+\newpage
+Let us take now the first loop space $\Omega^1 S^3$ 
+{\footnotesize\begin{verbatim}
+(setf s3 (sphere 3))  ==>
+
+[K94 Simplicial-Set]
+
+(setf os3 (loop-space s3))  ==>
+
+[K99 Simplicial-Group]
+\end{verbatim}}
+In the following instruction, we locate in the symbol {\tt L1} the canonical generator of 
+$\pi_2 (\Omega^1S^3)$, that is the $2$--simplex coming from the original sphere. In fact, the object
+created by the command {\tt (loop3 0 's3 1)} is the ``word'' $S3^1$ belonging to the 
+Kan simplicial version $G(S^3)$ (a simplicial group) of the loop space $\Omega S^3$. 
+{\footnotesize\begin{verbatim}
+(setf L1  (loop3 0 's3 1))  ==>
+
+<AbSm - <<Loop[S3]>>>
+\end{verbatim}}
+Let us consider also the $2$--degeneracy of the base point of the loop space. In the printed
+result, the user will recognize the degeneracy $\eta_1\eta_0$ of the null loop, base point of
+$\Omega^1 S^3$:
+{\footnotesize\begin{verbatim}
+(setf null-simp (absm 3 +null-loop+))  ==>
+
+<AbSm 1-0 <<Loop>>>
+\end{verbatim}}
+We may  build now a new space by pasting a disk $D3$ as indicated by the 
+following call. It means that we ``paste'' to the space {\tt os3} a $3$--simplex named {\tt D3},
+the attaching map being described by the list of its faces in dimension $2$.
+
+{\footnotesize\begin{verbatim}
+(setf dos3 (disk-pasting os3 3 '<D3> 
+              (list L1 null-simp L1 null-simp)))  ==>
+
+[K212 Simplicial-Set]
+\end{verbatim}}
+Let us compute a few homology groups of the new space {\tt dos3}:
+{\footnotesize\begin{verbatim}
+(homology dos3 2 4)  ==>
+
+Homology in dimension 2 :
+
+Component Z/2Z
+
+Homology in dimension 3 :
+
+---done---
+\end{verbatim}}
+But more interesting, let us  build the  loop space of the object {\tt dos3} and 
+let us compute  the ho\-mo\-lo\-gy in dimension $5$:
+{\footnotesize\begin{verbatim}
+(setf odos3 (loop-space dos3))  ==>
+
+[K230 Simplicial-Group]
+
+(homology odos3 5)  ==>
+
+Homology in dimension 5 :
+
+Component Z/2Z
+
+Component Z/2Z
+
+Component Z/2Z
+
+Component Z/2Z
+
+Component Z/2Z
+
+Component Z/2Z
+
+Component Z
+
+--done--
+\end{verbatim}}
+\begin{center}
+--------
+\end{center}
+Let us continue with the Kan theory. First, we check that $S^3$ is not of type Kan and that $\Omega S^3$
+is indeed of type Kan and a non--Abelian simplicial group.
+{\footnotesize\begin{verbatim}
+(typep s3 'kan)  ==>
+
+NIL
+
+(typep os3 'kan)  ==>
+
+T
+
+(typep os3 'simplicial-group)  ==>
+
+T
+
+(typep os3 'ab-simplicial-group)  ==>
+
+NIL
+
+
+\end{verbatim}}
+Let us create the word $L2=(S3)^2$, i.e an object belonging to $\Omega S^3$ and let us
+apply the product of the underlying algebra upon $L2 \otimes L2$:
+{\footnotesize\begin{verbatim}
+(setf L2 (loop3 0 's3 2))  ==>
+
+<<Loop[S3\2]>>
+
+(setf square (aprd os3 4 (tnpr 2 L2 2 L2)))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * <<Loop[1-0 S3\2][3-2 S3\2]>>>
+<-1 * <<Loop[2-0 S3\2][3-1 S3\2]>>>       <-------
+<1 * <<Loop[2-1 S3\2][3-0 S3\2]>>>
+<1 * <<Loop[3-0 S3\2][2-1 S3\2]>>>
+<-1 * <<Loop[3-1 S3\2][2-0 S3\2]>>>
+<1 * <<Loop[3-2 S3\2][1-0 S3\2]>>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+We see that the result is a linear combination of words composed from degeneracies
+of {\tt L2}. The following instruction selects the generator part of the
+second element of the previous combination (noted by the reverse arrow).
+{\footnotesize\begin{verbatim}
+(setf L4 (gnrt (second (cmbn-list square))))  ==>
+
+<<Loop[2-0 S3\2][3-1 S3\2]>>
+\end{verbatim}}
+Let us use the lisp function {\tt mapcar} (one among the various iteration functions of Lisp) to
+create the list of the faces 1, 2, 3 and 4 of the object {\tt L4}, this list is a ``Kan hat''.
+{\footnotesize\begin{verbatim}
+(setf hat (mapcar #'(lambda (i) (face os3 i 4 l4)) '(1 2 3 4)))  ==>
+
+(<AbSm - <<Loop[1 S3\2][2 S3\2]>>> <AbSm - <<Loop[0 S3\2][2 S3\2]>>> 
+ <AbSm - <<Loop[0 S3\2][1 S3\2]>>> <AbSm 1 <<Loop[S3\2]>>>)
+\end{verbatim}}
+The function {\tt kfll} tries to find a filling of this ``Kan hat'', and we see that 
+the face $2$ of the resulting simplex (which is very different from {\tt L4}) is  the same 
+as the face $2$ of {\tt L4}.
+{\footnotesize\begin{verbatim}
+(setf kan-simplex (kfll os3 0 4 hat))  ==>
+
+<AbSm - <<Loop[3-1 S3\2][2-1 S3\-2][2-0 S3\2][1-0 S3\-2][2-1 S3\2][3-1 S3\-2]
+              [1-0 S3\2][3-1 S3\2][3-0 S3\-2][1-0 S3\-2][3-0 S3\2][2-0 S3\-2]
+              [1-0 S3\2][3-0 S3\-2][2-0 S3\2][3-0 S3\2]>>>
+
+(face os3 2 4 kan-simplex)  ==>
+
+<AbSm - <<Loop[0 S3\2][2 S3\2]>>>
+
+(second hat)  ==>
+
+<AbSm - <<Loop[0 S3\2][2 S3\2]>>>
+\end{verbatim}}
+\begin{center}
+--------
+\end{center}
+Let ${\cal G}$ be a simplicial group $0$--reduced. $\Omega S^3$ is such a group.
+The software  {\tt Kenzo} allows 
+the construction of the universal bundle $\bar{\cal W}{\cal G}$, i.e. the 
+classifying space of ${\cal G}$. In our case, as $\Omega S^3$ in non--Abelian, the
+result is not a simplicial group but only a simplicial set. We verify that the $H_4$ is null.
+{\footnotesize\begin{verbatim}
+(setf cls-os3 (classifying-space os3))  ==>
+
+[K598 Simplicial-Set]
+
+(typep cls-os3 'simplicial-group)  ==>
+
+NIL
+
+(homology cls-os3 4)  ==>
+
+Homology in dimension 4 :
+
+---done---
+\end{verbatim}}
+\begin{center}
+--------
+\end{center}
+\vskip 0.40cm
+Let us end this short overview with an example of computation of homotopy groups.
+The method used in {\tt Kenzo} is the Whitehead tower. 
+In this current version only the case where the first non--null
+homology group (in non--null dimension) is ${\Z}$ or ${\Z}/{2 {\Z}}$ can be processed; however if this 
+homology group is a direct sum of several copies of ${\Z}$ or ${\Z}/{2 {\Z}}$, then the corresponding
+stage of the Whitehead tower may also be constructed step by step.
+\vskip 0.40cm
+We take again $Moore({\Z}/2{\Z}, 3)$ whose $H_3$ is ${\Z}/2{\Z}$. First the fundamental cohomology
+class is constructed:
+{\footnotesize\begin{verbatim}
+(setf ch3 (chml-clss m23 3))  ==>
+
+[K729 Cohomology-Class on K1 of degree 3]
+\end{verbatim}}
+Then the function {\tt z2-whitehead} is called to build a fibration over the simplicial set {\tt m23}
+canonically associated to the cohomology class {\tt ch3}.
+{\footnotesize\begin{verbatim}
+(setf f3 (z2-whitehead m23 ch3))  ==>
+
+[K730 Fibration K1 -> K488]
+\end{verbatim}}
+Then the total space of the fibration is built:
+{\footnotesize\begin{verbatim}
+(setf x4 (fibration-total f3))  ==>
+
+[K736 Simplicial-Set]
+\end{verbatim}}
+The $H_4$ of this total space is the $\pi_4$ of $Moore({\Z}/2{\Z})$:
+{\footnotesize\begin{verbatim}
+(homology x4 3 5)  ==>
+
+Homology in dimension 3 :
+
+---done---
+
+Homology in dimension 4 :
+
+Component Z/2Z
+
+---done---
+\end{verbatim}}
+We may now iterate the process, to compute the $\pi_5$ of $Moore({\Z}/2{\Z})$:
+{\footnotesize\begin{verbatim}
+(setf ch4 (chml-clss x4 4))  ==>
+
+[K817 Cohomology-Class on K802 of degree 4]
+
+(setf f4 (z2-whitehead x4 ch4))  ==>
+
+[K832 Fibration K736 -> K818]
+
+(setf x5 (fibration-total f4))  ==>
+
+[K838 Simplicial-Set]
+
+(homology x5 4 6)  ==>
+
+Homology in dimension 4 :
+
+---done---
+
+Homology in dimension 5 :
+
+Component Z/4Z
+
+---done---
+\end{verbatim}}
+So $\pi_5(Moore({\Z}/2{\Z}))$ is ${\Z}/4{\Z}$.

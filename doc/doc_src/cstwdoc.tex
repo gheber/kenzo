@@ -1,0 +1,733 @@
+\chapter {Simplicial groups fibrations}
+
+\section {Introduction}
+
+This chapter\index{fibrations!simplicial groups} is analogous to the  Loop spaces fibrations chapter  
+where  algorithms have been specially designed for loop spaces. In the present case, we have at our
+disposal all the tools developped for the fibrations. Let ${\cal G}$
+be a $0$--reduced simplicial group and $\bar{\cal W}{\cal G}$, its
+classifying space.  We recall that if ${\cal G}$ is
+an Abelian simplicial group then $\bar{\cal W}{\cal G}$ is also an Abelian
+simplicial group, otherwise if ${\cal G}$ is non--Abelian, then $\bar{\cal W}{\cal G}$
+is only a simplicial set. The software {\tt Kenzo} implements the
+{\bf canonical} twisted cartesian product of $\bar{\cal W}{\cal G}$ by  ${\cal G}$, 
+denoted ${\cal WG}=\bar{\cal W}{\cal G} \times_\tau  {\cal G}$.
+The {\em canonical fibration}
+$$ {\cal G}\quad \hookrightarrow\quad  {\cal WG} \hskip 1.2em \longrightarrow \hskip -1.2em \longrightarrow  
+   \quad\bar{\cal W}{\cal G},$$
+is defined by the following twisting operator:
+$$\tau[(g_{n-1}, g_{n-2}, \ldots, g_0)]= g_{n-1}.$$
+The total space ${\cal WG}=\bar{\cal W}{\cal G} \times_\tau  {\cal G}$ is acyclic.
+
+\section {The function for the canonical fibration}
+
+{\parindent=0mm
+{\leftskip=5mm
+{\tt smgr-fibration} {\em smgr} \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build the simplicial morphism of degree $-1$ corresponding to the canonical fibration.
+The source is the classifying space of the simplicial group {\em smgr} 
+(built internally by the function), the target
+is {\em smgr} and the internal lisp function value of the slot {\tt :sintr} implements
+the twisting operator. The returned object is a fibration. \par}
+}
+
+\subsection* {Examples}
+
+Let us take the Abelian simplicial group $K({\Z},1)$ and  build the fibration morphism.
+{\footnotesize\begin{verbatim}
+(setf k1 (k-z-1))  ==>
+
+[K1 Abelian-Simplicial-Group]
+
+(setf tw (smgr-fibration k1))  ==>
+
+[K25 Fibration]
+\end{verbatim}}
+If needed, the classifying space may be found in the slot {\tt :sorc} of the fibration:
+{\footnotesize\begin{verbatim}
+(setf k2 (sorc tw))  ==>
+
+[K13 Abelian-Simplicial-Group]
+\end{verbatim}}
+We may build now the total space of the fibration. We see that {\tt Kenzo} returns
+a Kan simplicial set because the base and fiber spaces are also of
+Kan type. Then we test the face and differential operator upon a simplex of degree $4$ of
+the total space {\tt tt}.
+{\footnotesize\begin{verbatim}
+(setf tt (fibration-total tw))  ==>
+
+[K31 Kan-Simplicial-Set]
+
+(setf gmsm (crpr 0 (gbar 4 0 '(10 11 12) 0 '(20 21) 0 '(30) 0 '())
+                 0 '(2 4 6 8)))  ==>
+
+<CrPr - <<GBar<- (10 11 12)><- (20 21)><- (30)><- NIL>>> - (2 4 6 8)>
+
+(dotimes (i 5) (print (face tt i 4 gmsm)))  ==>
+
+<AbSm - <CrPr - <<GBar<- (11 12)><- (21)><- NIL>>> - (4 6 8)>> 
+<AbSm - <CrPr - <<GBar<- (21 12)><- (41)><- NIL>>> - (6 6 8)>> 
+<AbSm - <CrPr - <<GBar<- (10 23)><- (50)><- NIL>>> - (2 10 8)>> 
+<AbSm - <CrPr - <<GBar<- (30 32)><- (30)><- NIL>>> - (2 4 14)>> 
+<AbSm - <CrPr - <<GBar<- (20 21)><- (30)><- NIL>>> - (12 15 18)>> 
+
+(? tt 4 gmsm)  ==>
+\end{verbatim}}
+\newpage
+{\footnotesize\begin{verbatim}
+----------------------------------------------------------------------{CMBN 3}
+<1 * <CrPr - <<GBar<- (10 23)><- (50)><- NIL>>> - (2 10 8)>>
+<1 * <CrPr - <<GBar<- (11 12)><- (21)><- NIL>>> - (4 6 8)>>
+<1 * <CrPr - <<GBar<- (20 21)><- (30)><- NIL>>> - (12 15 18)>>
+<-1 * <CrPr - <<GBar<- (21 12)><- (41)><- NIL>>> - (6 6 8)>>
+<-1 * <CrPr - <<GBar<- (30 32)><- (30)><- NIL>>> - (2 4 14)>>
+------------------------------------------------------------------------------
+
+(? tt *)  ==>
+
+----------------------------------------------------------------------{CMBN 2}
+------------------------------------------------------------------------------
+\end{verbatim}}
+
+We may also build the Ronald Brown reduction and test the differential
+upon a simplex belonging to the twisted tensor product (slot {\tt :bcc} of the
+reduction).
+{\footnotesize\begin{verbatim}
+(setf br (brown-reduction tw))  ==>
+
+[K59 Reduction]
+
+(setf tw-pr (bcc br))  ==>
+
+[K57 Chain-Complex]
+
+(? tw-pr 4 (tnpr 4 (gbar 4 0 '(1 10 100) 0 '(1000 10000) 0 '(100000) 0 '())
+                           0 '()))
+
+----------------------------------------------------------------------{CMBN 3}
+<-1 * <TnPr <<GBar>> (111 11000 100000)>>
+<1 * <TnPr <<GBar>> (111 101000 10000)>>
+<1 * <TnPr <<GBar>> (11011 100 100000)>>
+<-1 * <TnPr <<GBar>> (11011 100000 100)>>
+<-1 * <TnPr <<GBar>> (101001 110 10000)>>
+<1 * <TnPr <<GBar>> (101001 10010 100)>>
+<1 * <TnPr <<GBar<- (100000)><- NIL>>> (100)>>
+<1 * <TnPr <<GBar<- (1 110)><- (101000)><- NIL>>> NIL>>
+<1 * <TnPr <<GBar<- (10 100)><- (10000)><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<- (11 100)><- (11000)><- NIL>>> NIL>>
+<1 * <TnPr <<GBar<- (1000 10000)><- (100000)><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<- (1001 10010)><- (100000)><- NIL>>> NIL>>
+------------------------------------------------------------------------------
+
+(? tw-pr *)  ==>
+
+----------------------------------------------------------------------{CMBN 2}
+------------------------------------------------------------------------------
+\end{verbatim}}
+
+\section {The essential contraction for simplicial groups fibrations}
+
+It is known that if ${\cal G}$ is a $0$--reduced simplicial group, 
+the space ${\cal WG}=\bar{\cal W}{\cal G} \times_\tau  {\cal G}$ is
+contractible. So it is possible to build a reduction of this space over ${\Z}$.
+This reduction depends on the important contraction
+$$\chi_{\times\tau}:  {\bar{\cal W}{\cal G} \times_\tau  {\cal G}} \longrightarrow 
+                      {\bar{\cal W}{\cal G} \times_\tau  {\cal G}}, $$
+defined by:
+$$\chi_{\times\tau}[(g_{n-1}, \ldots, g_0), g_n] = (-1)^{n+1} (g_n, g_{n-1}, \ldots, g_0, *),$$
+where $g_n \in {\cal G}$, $(g_{n-1}, \ldots, g_0)$ is a gbar in $\bar{\cal W}{\cal G}$,  and
+$*$ is the neutral element  of ${\cal G}_{n+1}$ (in fact the $n$--th degeneracy of the base point of
+${\cal G}$). We recall also that $\chi_{\times\tau}$
+is a homotopy operator (degree: $+1$) satisfying the relation
+$$d \circ \chi_{\times\tau} + \chi_{\times\tau} \circ d =1.$$
+In addition, if we consider the Brown reduction
+$$
+\diagram{
+{\bar{\cal W}{\cal G} \times_\tau  {\cal G}} & \stackrel{h}{\longrightarrow} & 
+ {}^s{\bar{\cal W}{\cal G} \times_\tau  {\cal G}} \cr
+ {\scriptstyle f} \downarrow \uparrow {\scriptstyle g}  \cr
+ {\bar{\cal W}{\cal G} \otimes_\tau  {\cal G}} \cr
+}
+$$
+there is an induced contraction 
+$$\chi_{\otimes t}:  {\bar{\cal W}{\cal G} \otimes_\tau  {\cal G}} \longrightarrow 
+                     {\bar{\cal W}{\cal G} \otimes_\tau  {\cal G}}, $$
+defined by $\chi_{\otimes t}= f \circ \chi_{\times\tau} \circ g$.
+This implies that the twisted tensor product is also contractible over ${\Z}$.
+\par
+The two functions of {\tt Kenzo} for this construction are:
+\vskip 0.35cm
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt smgr-crts-contraction} {\em smgr} \hfill {\em [Function]} \par}
+{\leftskip=15mm 
+Return the homotopy morphism corresponding to the contraction
+$\chi_{\times\tau}$. The lisp definition is:
+{\footnotesize\begin{verbatim}
+                     (defun SMGR-CRTS-CONTRACTION (smgr)
+                         (the morphism
+                           (build-mrph
+                            :sorc (fibration-total (smgr-fibration smgr))
+                            :trgt (fibration-total (smgr-fibration smgr))
+                            :degr +1
+                            :intr (smgr-crts-contraction-intr (bspn smgr))
+                            :strt :gnrt
+                            :orgn `(smgr-crts-contraction ,smgr))))
+\end{verbatim}}
+At execution time, the work is essentialy done by the function put in the
+slot {\tt :intr}. This function is itself built by the internal function {\tt smgr-crts-contraction-intr}
+requiring as argument the base point of the  simplicial group. \par}
+{\leftskip=5mm 
+{\tt smgr-tnpr-contraction} {\em smgr} \hfill {\em [Function]} \par}
+{\leftskip=15mm 
+Return the induced morphism $\chi_{\otimes t}= f \circ \chi_{\times\tau} \circ g$,
+where $f$ and $g$ are built by the Brown reduction.
+The lisp definition is:
+{\footnotesize\begin{verbatim}
+                     (defun SMGR-TNPR-CONTRACTION (smgr 
+                         &aux (fibration (smgr-fibration smgr))
+                              (brown (brown-reduction fibration))
+                              (f (f brown))
+                              (g (g brown))
+                              (chi (smgr-crts-contraction smgr)))
+
+                           (the morphism
+                              (i-cmps f chi g)))
+\end{verbatim}} \par} 
+}
+
+\subsection* {Examples}
+
+It is an instructive exercise to build and check the reduction over ${\Z}$ of the space
+${\cal WG}=\bar{\cal W}{\cal G} \times_\tau  {\cal G}$ as we did in the
+loop spaces fibrations chapter. 
+$$
+\diagram{
+\bar{\cal W}{\cal G} \times_\tau  {\cal G} & \stackrel{\chi_{\times t}}{\longrightarrow} &
+{}^s\bar{\cal W}{\cal G} \times_\tau  {\cal G} \cr
+ {\scriptstyle aug} \downarrow \uparrow {\scriptstyle coaug}  \cr
+ {{\cal C}_*({\Z})} \cr
+}
+$$
+In this case, the two homomorphisms
+$f$ and $g$ of the reduction, are respectively the {\em augmentation} and {\em coaugmentation}
+morphisms. 
+We define both morphisms according to our previous example based on $K({\Z},1)$.
+The unit chain complex corresponding to ${\Z}$ is built by the function
+{\tt z-chcm}; its unique generator in degree $0$ is {\tt :z-gnrt}. 
+{\footnotesize\begin{verbatim}
+(setf k1 (k-z-1))  ==>
+
+[K1 Abelian-Simplicial-Group]
+
+(setf tw (smgr-fibration k1))  ==>
+
+[K25 Fibration]
+
+(setf tt (fibration-total tw))  ==>
+
+[K31 Kan-Simplicial-Set]
+\end{verbatim}}
+The base point of the total space, needed for the coaugmentation, may be obtained
+by either of the following statements:
+{\footnotesize\begin{verbatim}
+(bspn tt)  ==>
+
+<CrPr - <<GBar>> - NIL>
+
+(crpr 0 +null-gbar+ 0 nil)  ==>
+
+<CrPr - <<GBar>> - NIL>
+
+(setf aug (build-mrph
+              :sorc (fibration-total(smgr-fibration(k-z-1))) 
+              :trgt (z-chcm) 
+              :degr 0
+              :intr #'(lambda (degr gnrt)
+                       (if (zerop degr)
+                           (term-cmbn 0 1 :z-gnrt)
+                           (zero-cmbn degr)))
+              :strt :gnrt 
+              :orgn '(aug-fibr-tot-smgr-fibr-k-z-1)  ))  ==>
+
+[K38 Cohomology-Class (degree 0)]
+
+(setf coaug (build-mrph
+              :sorc (z-chcm) 
+              :trgt (fibration-total(smgr-fibration(k-z-1))) 
+              :degr 0
+              :intr #'(lambda (degr gnrt)
+                         (if (zerop degr)
+                             (term-cmbn 0 1 (crpr 0 +null-gbar+ 0 '()))
+                             (zero-cmbn degr)))
+              :strt :gnrt
+              :orgn '(coaug-fibr-tot-smgr-fibr-k-z-1) ))  ==>
+
+[K39 Morphism (degree 0)]
+
+(? aug 0 (bspn tt))  ==>
+
+----------------------------------------------------------------------{CMBN 0}
+<1 * Z-GNRT>
+------------------------------------------------------------------------------
+
+(? coaug 0 :z-gnrt)  ==>
+
+----------------------------------------------------------------------{CMBN 0}
+<1 * <CrPr - <<GBar>> - NIL>>
+------------------------------------------------------------------------------
+
+(setf chi-x-tau (smgr-crts-contraction (k-z-1)))  ==>
+
+[K40 Morphism (degree 1)]
+\end{verbatim}}
+Let us apply the contraction morphism upon some simplices:
+{\footnotesize\begin{verbatim}
+(setf *tc* (cmbn 0 1 (crpr 0 +null-gbar+ 0 '())))  ==>
+
+----------------------------------------------------------------------{CMBN 0}
+<1 * <CrPr - <<GBar>> - NIL>>
+------------------------------------------------------------------------------
+
+(? chi-x-tau *)  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+------------------------------------------------------------------------------
+
+(setf *tc* (cmbn 4 1 (crpr 0 (gbar 4 0 '(10 11 12) 0 '(20 21) 0 '(30) 0 '())
+                           0 '(2 4 6 8))))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * <CrPr - <<GBar<- (10 11 12)><- (20 21)><- (30)><- NIL>>> - (2 4 6 8)>>
+------------------------------------------------------------------------------
+
+(? chi-x-tau *)  ==>
+
+----------------------------------------------------------------------{CMBN 5}
+<-1 * <CrPr - <<GBar<- (2 4 6 8)><- (10 11 12)><- (20 21)><- (30)><- NIL>>> 
+              4-3-2-1-0 NIL>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+\newpage
+{\footnotesize\begin{verbatim}
+(setf *tc* (cmbn 3 1 (crpr 0 (gbar 3 0 '(10 11) 0 '(20) 0 '())
+                           0 '(2 4 6))))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * <CrPr - <<GBar<- (10 11)><- (20)><- NIL>>> - (2 4 6)>>
+------------------------------------------------------------------------------
+
+(? chi-x-tau *)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * <CrPr - <<GBar<- (2 4 6)><- (10 11)><- (20)><- NIL>>> 3-2-1-0 NIL>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+We may build now the reduction over ${\Z}$ and test it upon the various simplices
+above:
+{\footnotesize\begin{verbatim}
+(setf rdct (build-rdct :f aug 
+                       :g coaug 
+                       :h chi-x-tau 
+                       :orgn '(reduction-tt-z)))   ==>
+
+[K41 Reduction]
+
+(pre-check-rdct rdct)  ==>
+
+---done---
+
+(setf *tc* (cmbn 0 1 (crpr 0 +null-gbar+ 0 '())))  ==>
+
+----------------------------------------------------------------------{CMBN 0}
+<1 * <CrPr - <<GBar>> - NIL>>
+------------------------------------------------------------------------------
+
+(setf *bc* (cmbn 0 1 :z-gnrt))  ==>
+
+----------------------------------------------------------------------{CMBN 0}
+<1 * Z-GNRT>
+------------------------------------------------------------------------------
+
+(check-rdct)  ==>
+
+*TC* => 
+----------------------------------------------------------------------{CMBN 0}
+<1 * <CrPr - <<GBar>> - NIL>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+\newpage
+{\footnotesize\begin{verbatim}
+*BC* => 
+----------------------------------------------------------------------{CMBN 0}
+<1 * Z-GNRT>
+------------------------------------------------------------------------------
+
+              .......  All results null ........
+
+---done---
+
+(setf *tc* (cmbn 4 1 (crpr 0 (gbar 4 0 '(10 11 12) 0 '(20 21) 0 '(30) 0 '())
+                           0 '(2 4 6 8))))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * <CrPr - <<GBar<- (10 11 12)><- (20 21)><- (30)><- NIL>>> - (2 4 6 8)>>
+------------------------------------------------------------------------------
+
+(check-rdct)  ==>
+
+              .......  All results null ........
+
+---done---
+
+(setf *tc* (cmbn 3 1 (crpr 0 (gbar 3 0 '(10 11) 0 '(20) 0 '())
+                             0 '(2 4 6))))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * <CrPr - <<GBar<- (10 11)><- (20)><- NIL>>> - (2 4 6)>>
+------------------------------------------------------------------------------
+
+(check-rdct)  ==>
+
+              .......  All results null ........
+
+---done---
+\end{verbatim}}
+\vskip 0.30cm
+We build now the reduction over ${\Z}$ of the twisted tensor product. The contraction
+is obtained by a call to the function {\tt smgr-tnpr-contraction}. 
+$$
+\diagram{
+\bar{\cal W}{\cal G} \otimes_\tau  {\cal G} & \stackrel{\chi_{\otimes t}}{\longrightarrow} &
+{}^s\bar{\cal W}{\cal G} \otimes_\tau  {\cal G} \cr
+ {\scriptstyle aug} \downarrow \uparrow {\scriptstyle coaug}  \cr
+ {{\cal C}_*({\Z})} \cr
+}
+$$
+Of course, we have to define 
+the augmentation and coaugmentation morphisms adapted to this new example. The user will note
+that the twisted tensor product chain complex may be obtained from the slot {\tt :sorc} of the contration
+$\chi_{\otimes t}$.
+{\footnotesize\begin{verbatim}
+(setf chi-t-tau (smgr-tnpr-contraction (k-z-1)))  ==>
+
+[K100 Morphism (degree 1)]
+
+(setf aug-t (build-mrph
+              :sorc (sorc chi-t-tau)
+              :trgt (z-chcm) 
+              :degr 0
+              :intr #'(lambda (degr gnrt)
+                       (if (zerop degr)
+                           (term-cmbn 0 1 :z-gnrt)
+                           (zero-cmbn degr)))
+              :strt :gnrt 
+              :orgn '(aug-t-fibr-tot-smgr-fibr-k-z-1)  ))   ==>
+
+[K209 Cohomology-Class (degree 0)]
+
+(setf coaug-t (build-mrph
+                :sorc (z-chcm) 
+                :trgt (sorc chi-t-tau)
+                :degr 0
+                :intr #'(lambda (degr gnrt)
+                         (if (zerop degr)
+                             (term-cmbn 0 1 (tnpr 0 +null-gbar+ 0 '()))
+                             (zero-cmbn degr)))
+                :strt :gnrt
+                :orgn '(coaug-t-fibr-tot-smgr-fibr-k-z-1) ))  ==>
+
+[K210 Morphism (degree 0)]
+
+(setf rdct-t (build-rdct :f aug-t 
+                         :g coaug-t 
+                         :h chi-t-tau
+                         :orgn '(reduction-t-tt-z)))   ==>
+
+[K211 Reduction]
+
+(pre-check-rdct rdct-t)
+
+---done---
+
+(setf *tc* (cmbn 0 1 (tnpr 0 +null-gbar+ 0 '())))  ==>
+
+----------------------------------------------------------------------{CMBN 0}
+<1 * <TnPr <<GBar>> NIL>>
+------------------------------------------------------------------------------
+
+(setf *bc* (cmbn 0 1 :z-gnrt))  ==>
+
+----------------------------------------------------------------------{CMBN 0}
+<1 * Z-GNRT>
+------------------------------------------------------------------------------
+
+(check-rdct)  ==>
+
+.......  All results null .....
+
+---done---
+\end{verbatim}}
+The check is validated also for the following simplices. We see also that,
+if we apply the contraction $\chi_{\otimes t}$ upon various simplices outside the base fiber, the
+result is in general non--null. The nullity of this contraction  outside
+the base fiber, which we have verified experimentally in many cases in  loop spaces fibration 
+is not verified in  simplicial group fibrations.
+{\footnotesize\begin{verbatim}
+
+(setf *tc* (cmbn 3 1 (tnpr 0 +null-gbar+ 3 '(1 10 100))))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * <TnPr <<GBar>> (1 10 100)>>
+------------------------------------------------------------------------------
+
+(? chi-t-tau *tc*)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * <TnPr <<GBar<- (1 10 100)><1-0 NIL><0 NIL><- NIL>>> NIL>>
+------------------------------------------------------------------------------
+
+(setf *tc* (cmbn 3 1 (tnpr 2 (gbar 2 0 '(1) 0 '()) 1 '(10))))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * <TnPr <<GBar<- (1)><- NIL>>> (10)>>
+------------------------------------------------------------------------------
+
+(? chi-t-tau *tc*)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * <TnPr <<GBar<1-0 (10)><1-0 NIL><- (1)><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<2-0 (10)><1 (1)><0 NIL><- NIL>>> NIL>>
+<1 * <TnPr <<GBar<2-1 (10)><0 (1)><0 NIL><- NIL>>> NIL>>
+------------------------------------------------------------------------------
+
+(setf *tc* (cmbn 3 1 (tnpr 3 (gbar 3 0 '(1 10) 0 '(100) 0 '()) 0 '())))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * <TnPr <<GBar<- (1 10)><- (100)><- NIL>>> NIL>>
+------------------------------------------------------------------------------
+
+(? chi-t-tau *tc*)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * <TnPr <<GBar<2 (1 10)><1 (100)><0 NIL><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<2-1 (11)><0 (100)><0 NIL><- NIL>>> NIL>>
+------------------------------------------------------------------------------
+
+(setf *tc* (cmbn 4 1 (tnpr 0 +null-gbar+ 4 '(1 10 100 1000))))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * <TnPr <<GBar>> (1 10 100 1000)>>
+------------------------------------------------------------------------------
+
+(? chi-t-tau *tc*)  ==>
+
+----------------------------------------------------------------------{CMBN 5}
+<-1 * <TnPr <<GBar<- (1 10 100 1000)><2-1-0 NIL><1-0 NIL><0 NIL><- NIL>>> NIL>>
+------------------------------------------------------------------------------
+
+(setf *tc* (cmbn 4 1 (tnpr 2 (gbar 2 0 '(1) 0 '()) 2 '(10 100))))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * <TnPr <<GBar<- (1)><- NIL>>> (10 100)>>
+------------------------------------------------------------------------------
+
+(? chi-t-tau *tc*)  ==>
+
+----------------------------------------------------------------------{CMBN 5}
+<-1 * <TnPr <<GBar<1-0 (10 100)><2-1-0 NIL><1-0 NIL><- (1)><- NIL>>> NIL>>
+<1 * <TnPr <<GBar<2-0 (10 100)><2-1-0 NIL><1 (1)><0 NIL><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<2-1 (10 100)><2-1-0 NIL><0 (1)><0 NIL><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<3-0 (10 100)><2-1 (1)><1-0 NIL><0 NIL><- NIL>>> NIL>>
+<1 * <TnPr <<GBar<3-1 (10 100)><2-0 (1)><1-0 NIL><0 NIL><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<3-2 (10 100)><1-0 (1)><1-0 NIL><0 NIL><- NIL>>> NIL>>
+------------------------------------------------------------------------------
+
+(setf *tc* (cmbn 4 1 (tnpr 3 (gbar 3 0 '(1 10) 0 '(100) 0 '())
+                           1 '(1000))))   ==>
+\end{verbatim}}
+\newpage
+{\footnotesize\begin{verbatim}
+----------------------------------------------------------------------{CMBN 4}
+<1 * <TnPr <<GBar<- (1 10)><- (100)><- NIL>>> (1000)>>
+------------------------------------------------------------------------------
+
+(? chi-t-tau *tc*)  ==>
+
+----------------------------------------------------------------------{CMBN 5}
+<-1 * <TnPr <<GBar<2 (1 10 1000)><2-1-0 NIL><1 (100)><0 NIL><- NIL>>> NIL>>
+<1 * <TnPr <<GBar<2-1 (11 1000)><2-1-0 NIL><0 (100)><0 NIL><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<2-1-0 (1000)><2-1-0 NIL><- (1 10)><- (100)><- NIL>>> NIL>>
+<1 * <TnPr <<GBar<3 (1 10 1000)><2-1 (100)><1-0 NIL><0 NIL><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<3 (1 1000 10)><2-1 (100)><1-0 NIL><0 NIL><- NIL>>> NIL>>
+<1 * <TnPr <<GBar<3 (1000 1 10)><2-0 (100)><1-0 NIL><0 NIL><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<3-1 (11 1000)><2-0 (100)><1-0 NIL><0 NIL><- NIL>>> NIL>>
+<1 * <TnPr <<GBar<3-1-0 (1000)><2 (1 10)><1-0 NIL><- (100)><- NIL>>> NIL>>
+<1 * <TnPr <<GBar<3-2 (11 1000)><1-0 (100)><1-0 NIL><0 NIL><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<3-2 (1000 11)><1-0 (100)><1-0 NIL><0 NIL><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<3-2-0 (1000)><1 (1 10)><1 (100)><0 NIL><- NIL>>> NIL>>
+<1 * <TnPr <<GBar<3-2-1 (1000)><0 (1 10)><0 (100)><0 NIL><- NIL>>> NIL>>
+------------------------------------------------------------------------------
+
+(setf *tc* (cmbn 4 1 (tnpr 4 (gbar 4 0 '(1 10 100)
+                                     0 '(1000 10000)
+                                     0 '(100000)
+                                     0 '())
+                              0 '())))     ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * <TnPr <<GBar<- (1 10 100)><- (1000 10000)><- (100000)><- NIL>>> NIL>>
+------------------------------------------------------------------------------
+
+(? chi-t-tau *tc*)  ==>
+
+----------------------------------------------------------------------{CMBN 5}
+<1 * <TnPr <<GBar<2 (1001 10010 100)><2-1-0 NIL><1 (100000)><0 NIL><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<2-1 (11011 100)><2-1-0 NIL><0 (100000)><0 NIL><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<3 (1 10 100)><2 (1000 10000)><1-0 NIL><- (100000)><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<3 (111 1000 10000)><2-0 (100000)><1-0 NIL><0 NIL><- NIL>>> NIL>>
+<1 * <TnPr <<GBar<3 (1001 110 10000)><2-1 (100000)><1-0 NIL><0 NIL><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<3 (1001 10010 100)><2-1 (100000)><1-0 NIL><0 NIL><- NIL>>> NIL>>
+<1 * <TnPr <<GBar<3-1 (11011 100)><2-0 (100000)><1-0 NIL><0 NIL><- NIL>>> NIL>>
+<1 * <TnPr <<GBar<3-2 (1 110)><1 (1000 10000)><1 (100000)><0 NIL><- NIL>>> NIL>>
+<1 * <TnPr <<GBar<3-2 (111 11000)><1-0 (100000)><1-0 NIL><0 NIL><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<3-2 (11011 100)><1-0 (100000)><1-0 NIL><0 NIL><- NIL>>> NIL>>
+<-1 * <TnPr <<GBar<3-2-1 (111)><0 (1000 10000)><0 (100000)><0 NIL><- NIL>>> NIL>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+\newpage
+Let us verify once again the unproved conjecture signaled in the loop spaces fibrations
+chapter. In fact, if the conjecture is true, it is sufficient to prove
+it with $\bar{\Delta}$. But the following is also a good test of verifying all the
+involved machinery. If we take ${\cal G}= K({\Z},1)$, the space 
+${\cal WG}=\bar{\cal W}{\cal G} \times_\tau  {\cal G}$ is $0$--reduced. Let us consider
+its loop space and the induced contraction $\chi_{\otimes t}$ over
+${\cal WG} \otimes_\tau \Omega{\cal WG}$. ${\cal WG}$ and the contraction $\chi_{\otimes t}$
+are  built by the two following statements:
+{\footnotesize\begin{verbatim}
+(setf wgkz1 (fibration-total (smgr-fibration(k-z-1))))  ==>
+
+[K31 Kan-Simplicial-Set]
+
+(setf chi-t-tau (tnpr-contraction wgkz1))  ==>
+
+[K84 Morphism (degree 1)]
+\end{verbatim}}
+Let us apply successively the contraction upon  a simplex belonging to
+the base fiber ({\tt gnrt0}) and a simplex out of the base fiber ({\tt gnrt1}).
+We see that in the second case we obtain a null result. We verify also that
+$\chi_{\otimes t}\circ \chi_{\otimes t}=0$.
+{\footnotesize\begin{verbatim}
+(setf gnrt0 (tnpr 0 (crpr 0 +null-gbar+  0 nil)
+                  0 (loop3 0 (crpr 0 (gbar 2 0 '(1) 0 '(0) ) 0 '(1)) -3)))  ==>
+
+<TnPr <CrPr - <<GBar>> - NIL> <<Loop[<CrPr - <<GBar<- (1)><- (0)>>> - (1)>\-3]>>>
+
+(? chi-t-tau 0 gnrt0)  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<1 * <TnPr <CrPr - <<GBar<- (1)><- (0)>>> - (1)> 
+           <<Loop[<CrPr - <<GBar<- (1)><- (0)>>> - (1)>\-3]>>>>
+<1 * <TnPr <CrPr - <<GBar<- (1)><- (0)>>> - (1)> 
+           <<Loop[<CrPr - <<GBar<- (1)><- (0)>>> - (1)>\-2]>>>>
+<1 * <TnPr <CrPr - <<GBar<- (1)><- (0)>>> - (1)> 
+           <<Loop[<CrPr - <<GBar<- (1)><- (0)>>> - (1)>\-1]>>>>
+------------------------------------------------------------------------------
+
+(? chi-t-tau *)  ==>
+
+----------------------------------------------------------------------{CMBN 2}
+------------------------------------------------------------------------------
+
+(setf gnrt1 (tnpr 4 (crpr 0 (gbar 4 0 '(10 11 12) 0 '(20 21) 0 '(30) 0 '())
+                          0 '(2 4 6 8))
+                  0 (loop3 0 (crpr 0 (gbar 2 0 '(1) 0 '(0) ) 0 '(1)) 2)))  ==>
+
+<TnPr <CrPr - <<GBar<- (10 11 12)><- (20 21)><- (30)><- NIL>>> - (2 4 6 8)> 
+      <<Loop[<CrPr - <<GBar<- (1)><- (0)>>> - (1)>\2]>>>
+\end{verbatim}}
+\newpage
+{\footnotesize\begin{verbatim}
+(? chi-t-tau 4 gnrt1)  ==>
+
+----------------------------------------------------------------------{CMBN 5}
+------------------------------------------------------------------------------
+\end{verbatim}}
+At last we verify that the total space of the fibration of $K({\Z},1)$ is
+contractible.
+{\footnotesize\begin{verbatim}
+(homology (fibration-total(smgr-fibration (k-z-1))) 0 10)  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+Homology in dimension 2 :
+
+Homology in dimension 3 :
+
+Homology in dimension 4 :
+
+Homology in dimension 5 :
+
+Homology in dimension 6 :
+
+Homology in dimension 7 :
+
+Homology in dimension 8 :
+
+Homology in dimension 9 :
+
+---done---
+\end{verbatim}}
+Another example is the following:
+we build the canonical fibration of $\bar{\cal W}^2K({\Z_2}, 1)$ and verify 
+that its fibration total  space is contractible:
+{\footnotesize\begin{verbatim}
+(setf k22 (classifying-space(classifying-space(k-z2-1))))  ==>
+
+[K306 Abelian-Simplicial-Group]
+
+(setf fb (smgr-fibration k22))  ==>
+
+[K836 Fibration]
+
+(setf tt2 (fibration-total fb))  ==>
+
+[K837 Kan-Simplicial-Set]
+
+(homology tt2 0 10)  ==>
+
+Homology in dimension 0 :
+
+Component Z
+
+Homology in dimension 1 :
+
+Homology in dimension 2 :
+
+Homology in dimension 3 :
+
+Homology in dimension 4 :
+
+Homology in dimension 5 :
+
+Homology in dimension 6 :
+
+Homology in dimension 7 :
+
+Homology in dimension 8 :
+
+Homology in dimension 9 :
+
+--done--
+\end{verbatim}}
+
+\subsection* {Lisp file concerned in this chapter}
+
+{\tt cs-twisted-products.lisp}.
+
+

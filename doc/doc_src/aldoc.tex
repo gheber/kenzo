@@ -1,0 +1,550 @@
+\chapter{Algebras and Bars}
+
+\section{Algebra}
+
+An algebra  is a pair $(A, \varpi)$ where
+\begin{enumerate}
+\item $A$ is a chain complex.
+\item $\varpi$ (the {\em product}) is a chain complex morphism 
+$$\varpi:  A \otimes A  \rightarrow A.$$
+\end{enumerate}
+
+These components must satisfy the usual structural properties of the algebras.
+
+\subsection {Implementation of an algebra}
+
+An algebra  is represented as an instance\index{class!{\tt ALGEBRA}} 
+of the CLOS class {\tt ALGEBRA}, subclass
+of the {\tt CHAIN COMPLEX} class. The definition of this new class is simply:
+{\footnotesize\begin{verbatim}
+(DEFCLASS ALGEBRA (chain-complex)
+    ((aprd :type morphism :initarg :aprd :reader aprd1)))   ;; product
+\end{verbatim}}
+
+So, this new class inherits the slots of the {\tt CHAIN COMPLEX} class and has a slot
+of its own, namely {\tt aprd}, an  object of type {\tt MORPHISM} representing the product. Like in a coalgebra, 
+the user will note the important following fact that, {\bf once an algebra has been defined, one may use on it any
+function or method applicable to a chain complex}. 
+
+\subsection {The function build-algb}
+
+To\index{function!{\tt build-algb}} facilitate the construction of instances of the {\tt ALGEBRA} class,
+the software {\bf Kenzo} provides the function {\tt build-algb}:
+
+\vskip 0.40cm
+{\tt build-algb :cmpr} {\em cmpr} {\tt :basis} {\em basis} {\tt :bsgn} {\em bsgn} {\tt :intr-dffr} {\em intr-dffr}\par
+\hspace*{22.5mm}{\tt :dffr-strt} {\em dffr-strt} {\tt :intr-aprd} {\em intr-aprd} \par
+\hspace*{22.5mm}{\tt :aprd-strt} {\em aprd-strt} {\tt :orgn} {\em orgn}
+\vskip 0.40cm
+defined with keyword parameters. The returned value is an instance of type {\tt ALGEBRA}. 
+The keyword arguments are:
+\begin{itemize}
+\item[--] {\em cmpr}, a comparison function for generators.
+\item[--] {\em basis}, the basis function for the underlying chain complex.
+\item[--] {\em bsgn}, the  base point, a generator of any type.
+\item[--] {\em intr-dffr}, the differential lisp function for the chain complex.
+\item[--] {\em dffr-strt}, the strategy ({\tt :gnrt} or {\tt :cmbn}) for the differential.
+\item[--] {\em intr-aprd}, the lisp function for the product of the algebra.
+\item[--] {\em aprd-strt}, the strategy ({\tt :gnrt} or {\tt :cmbn}) for the coproduct.
+\item[--] {\em orgn}, an adequate comment list.
+\end{itemize}
+The function {\tt build-algb} calls  the function {\tt build-chcm} and with the help of the function
+{\tt build-mrph} builds the product morphism of degree $0$ to settle the
+slot {\tt aprd} of the instance. According to
+the definition, the source slot of the product morphism 
+is the tensor product of this chain complex with itself 
+and the target slot is the underlying chain complex.
+An identification number $n$ (slot {\tt idnm}) is assigned to this Kenzo object 
+and the {\tt ALGEBRA} instance is  pushed  onto the list {\tt *algb-list*}. 
+The  associated printing method prints a string like 
+{\tt [K{\em n} Algebra]}.
+
+\newpage
+
+\subsection {Miscellaneous functions and macros for algebras}
+
+{\parindent=0mm
+{\leftskip=5mm
+{\tt cat-init} \hfill {\em [Function]} \par}
+{\leftskip=15mm
+Clear among others, the list {\tt *algb-list*}, list of user created algebras  and reset
+the global counter to $1$. \par}
+{\leftskip=5mm
+{\tt algb} {\em n}\hfill {\em [Function]} \par}
+{\leftskip=15mm
+Retrieve in the list {\tt *algb-list*} the algebra  instance whose identification is $n$.
+If it does not exist, return {\tt NIL}. \par}
+{\leftskip=5mm
+{\tt aprd} {\em algb} {\tt \&rest} \hfill {\em [Macro]} \par}
+{\leftskip=15mm
+Versatile macro relative to the product of an algebra. The first argument is an {\tt ALGEBRA}
+instance. With only one argument, this macro returns the product morphism of the algebra.
+With more arguments, it applies the product morphism on a combination ({\tt (aprd {\em algb cmbn})})
+or on a pair {\em degree, tensor-product} ({\tt (aprd {\em algb degr tensor-product})}). \par}
+{\leftskip=5mm
+{\tt change-chcm-to-algb} {\em chcm} {\tt :intr-aprd} {\em intr-aprd} {\tt :aprd-strt} {\em aprd-strt} \par
+\hspace* {10mm}{\tt :orgn} {\em orgn}\hfill {\em [Function]} \par}
+{\leftskip=15mm
+Build an algebra instance from the already created chain complex {\em chcm}. The user must give via key
+parameters a lisp function for the product, its strategy and a comment list. \par}
+}
+
+\section {Hopf Algebra}
+
+In {\bf Kenzo}, a Hopf Algebra is an instance\index{class!{\tt HOPF-ALGEBRA}} 
+of the class {\tt HOPF-ALGEBRA}, the definition of which being simply:
+{\footnotesize\begin{verbatim}
+(DEFCLASS HOPF-ALGEBRA (coalgebra algebra)
+  ())
+\end{verbatim}}
+So, this class (multi--) inherits the slots of the {\tt COALGEBRA} and {\tt ALGEBRA} classes.
+\par
+The  associated printing method prints a string like 
+{\tt [K{\em n} Hopf-Algebra]},  and the function {\tt hopf} may be used to retrieve the
+Hopf instance, in the list {\tt *hopf-list*}.
+
+\subsection {Example of algebra}
+
+We shall see later important examples of algebras. Let us content ourself for the moment
+to define the trivial algebra on a given chain complex {\em having only one generator in degree $0$}. 
+If  this chain complex {\em chcm} already exists, we
+use simply the function {\tt change-chcm-to-algb} and we have to provide for the keyword {\tt :intr-aprd},
+a lisp function for the product morphism. We recall that the argument of the product in the algebra is a tensor product.
+This function must obey the rule of the multiplication by the unit
+and otherwise will return a null combination of degree the sum of the two degrees in the tensor product. 
+{\footnotesize\begin{verbatim}
+(defun trivial-algebra (chcm)
+   (change-chcm-to-algb  
+      chcm
+      :intr-aprd #'(lambda (degr tnpr)
+                      (with-tnpr (degr1 gnrt1 degr2 gnrt2) tnpr
+                          (if (zerop degr1) 
+                              (cmbn degr2 1 gnrt2)
+                              (if (zerop degr2)
+                                  (cmbn degr1 1 gnrt1)
+                                  (zero-cmbn (+ degr1 degr2))))))
+      :aprd-strt :gnrt
+      :orgn `(trivial-algebra ,chcm)))
+\end{verbatim}}
+A good example of  a chain complex to be given as argument to the previous function,
+is the simplicial set {\tt smp-deltab2} that we used as
+simple example in the coalgebra chapter:
+{\footnotesize\begin{verbatim}
+(setf smp-deltab2
+   (build-smst
+        :cmpr #'(lambda(gsm1 gsm2)
+                       (if(rest gsm1) (l-cmpr gsm1 gsm2) :equal))
+        :basis :locally-effective
+        :bspn '(0)
+        :face #'(lambda (i dmn gsm)
+                        (case dmn
+                         (0 (error "No face in dimension 0"))
+                         (1 (error "No non-degenerate simplex in dimension 1"))
+                         (2 (absm 1 '(0)))
+                         (otherwise (absm 0 (append (subseq gsm 0 i)
+                                                    (subseq gsm (1+ i))))) ))
+        :orgn '(simple-deltab2)))
+
+[K1 Simplicial-Set]
+
+(trivial-algebra smp-deltab2)  ==>
+
+[K1 Algebra]
+\end{verbatim}}
+Note that now {\tt smp-deltab2}  is of type {\tt ALGEBRA} and has kept
+its Kenzo numbering.
+{\footnotesize\begin{verbatim}
+smp-deltab2  ==>
+
+[K1 Algebra]
+
+(inspect smp-deltab2)  ==>
+
+ALGEBRA @ #x3065ea = [K1 Algebra]
+   0 Class --------> #<STANDARD-CLASS ALGEBRA>
+   1 ORGN ---------> (SIMPLE-DELTAB2), a proper list with 1 element
+   2 IDNM ---------> fixnum 1 [#x00000004]
+   3 EFHM ---------> The symbol :--UNBOUND--
+   4 GRMD ---------> [K1 Algebra]
+   5 DFFR ---------> [K2 Morphism (degree -1)]
+   6 BSGN ---------> (0), a proper list with 1 element
+   7 BASIS --------> The symbol :LOCALLY-EFFECTIVE
+   8 CMPR ---------> #<Interpreted Function (unnamed) @ #x306652>
+   9 APRD ---------> [K6 Morphism (degree 0)]
+\end{verbatim}}
+Let us test now the product in this trivial algebra:
+{\footnotesize\begin{verbatim}
+(aprd smp-deltab2 3 (tnpr 0 '(0) 3 '(1 2 3 4)))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * (1 2 3 4)>
+------------------------------------------------------------------------------
+
+(aprd smp-deltab2 3 (tnpr  3 '(1 2 3 4) 0 '(0)))
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * (1 2 3 4)>
+------------------------------------------------------------------------------
+
+(aprd smp-deltab2 5 (tnpr 2 '(0 1 2) 3 '(6 7 8 9)))  ==>
+
+----------------------------------------------------------------------{CMBN 5}
+------------------------------------------------------------------------------
+\end{verbatim}}
+
+\section {The Bar construction}
+
+Let $\cal A$ be an associative algebra, assumed connected and  ${\cal A}_0 \simeq {\Z}$. 
+Furthermore let us suppose that ${\cal A}$ is a free ${\Z}$--module. Then it is possible 
+to define a chain complex, $Bar^{\cal A}(\Z, \Z)$ -- simply denoted here by $Bar({\cal A})$ -- 
+whose $n$-th component is the free ${\Z}$--module generated by the ``bars'':
+$$ [Bar({\cal A})]_n = \{ [g_1 \mid g_2 \mid \ldots \mid g_k] \}, \quad \sum_{j=1}^{k} [deg(g_j)+1] =n. $$
+The object\index{bar object} noted $[g_1 \mid g_2 \mid \ldots \mid g_k]$ 
+with $\sum_{j=1}^{k} [deg(g_j)+1] =n$, is tra\-di\-ti\-o\-nal\-ly 
+called a {\em bar} and is in fact,  an element of the $n$--th iterated suspension of
+${\cal A}^{\otimes n}$. The integer $n$ is the {\em total degree}. The structure of
+the bar of the algebra ${\cal A}$ is recalled in the following figure, where $\bar{\cal A}$
+is ${\cal A}$ without its component of degree $0$. In the vertical sense, we have the {\em tensorial degree},
+whereas in the horizontal one, we have the {\em simplicial degree}. The {\em total degree} $n$ is the
+sum of both degrees.
+
+$$\begin{array}{|ccccc}
+              \vdots & \vdots & \vdots &\vdots & \vdots \\
+              0 & \bar{\cal A}_3 & (\bar{\cal A} \otimes \bar{\cal A})_3 & 
+             (\bar{\cal A}\otimes \bar{\cal A}\otimes\bar{\cal A})_3 & \cdots \\
+              0 & \bar{\cal A}_2 & (\bar{\cal A}\otimes\bar{\cal A})_2 & 0 & \cdots \\
+              0 & \bar{\cal A}_1 & 0 & 0 & \cdots \\
+              {\Z} & 0 & 0 & 0 & \cdots \\ \hline
+                   &   &   &   &    \\
+             \bar{\cal A}^{\otimes 0} & \bar{\cal A}^{\otimes 1} & \bar{\cal A}^{\otimes 2} &
+             \bar{\cal A}^{\otimes 3} & \cdots 
+\end{array} $$
+
+\subsection {Representation of a bar object}
+
+An elementary bar object\index{bar object!representation} 
+-- not to be confused with the chain complex $Bar({\cal A})$ --
+is represented in {\tt Kenzo} by a lisp object of the form:
+
+\begin{center} {\tt (:ABAR  ($i_1\, . \, a_1$) \ldots ($i_k\, . \, a_k$))} \end{center}
+where the $i_j$ are the degrees {\bf in the bar chain complex} of the generators $a_j$.
+In the original algebra $\cal A$, the generators $a_j$ had the degree $i_j-1$.
+The corresponding type is {\tt ABAR}.
+The function  building such an object is also called {\tt abar}
+\vskip 0.35cm
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt abar} {\em  degr1 gnr1 degr2 gnr2 ... degrk gnrk}\hfill {\em [Function]} \par}
+{\leftskip=15mm 
+Construct an elementary bar object, i.e. a ``suspended tensorial product'' of degree $\sum degr_i$. The sequence of pairs
+$\lbrace degr_i,\,  gnr_i \rbrace$ has an undefinite length and  may be void. In this case,  the bar
+is the null bar object, also located in the system through the constant {\tt +null-abar+}. The function
+{\tt abar} accepts also as unique argument a list of the form
+{\em  {\tt (}degr1 gnr1 degr2 gnr2 ... degrk gnrk{\tt )}}.   \par}
+{\leftskip=5mm 
+{\tt abar-p} {\em object}\hfill {\em [Function]} \par}
+{\leftskip=15mm 
+Test if {\em object} is an elementary bar object. \par}
+}
+\vskip 0.35cm
+The associated printing  method prints the object under the form:
+\begin{center} 
+{\tt <<Abar [$i_1\quad a_1$] ... [$i_k\quad a_k$] >>}
+\end{center}
+
+\subsection* {Examples}
+
+These simple commands show the two different ways to create bar objects
+from elements of an algebra (or a chain complex).
+{\footnotesize\begin{verbatim}
+(abar 2 'a 3 'b 5 'c)  ==>
+
+<<Abar[2 A][3 B][5 C]>>
+
+(abar '(2 a 3 b 5 c))  ==>
+
+<<Abar[2 A][3 B][5 C]>>
+
+(abar)  ==>
+
+<<Abar>>
+\end{verbatim}}
+
+\subsection {Definition of the chain complex Bar}
+
+The\index{chain complex!bar} definition of the differential\index{bar!differential} in the bar chain complex, 
+will be done in three steps. This is better understood,
+if we consider the following diagram. 
+$$\diagram{
+%       &             & \vdots      &  & \vdots  \cr
+       &             & \downarrow  &  & \downarrow \cr
+\cdots & \leftarrow & ({\bar{\cal A}}_*^{\otimes p})_q & \buildrel {d_h} \over \longleftarrow 
+                     & ({\bar{\cal A}}_*^{\otimes {p+1}})_q  & \leftarrow & \cdots \cr
+%       &             & \vfl {\displaystyle {d_v}}{} 
+%       &             & \vfl {\displaystyle {d_v}}{} \cr
+       &             &  \downarrow {\scriptstyle d}_v  &  &  \downarrow {\scriptstyle d}_v \cr
+\cdots & \leftarrow &({\bar{\cal A}}_*^{\otimes p})_{q-1} & \buildrel {d_h} \over \longleftarrow 
+                     & ({\bar{\cal A}}_*^{\otimes {p+1}})_{q-1}  & \leftarrow & \cdots \cr 
+       &             & \downarrow  &  & \downarrow \cr
+%       &             & \vdots      &  & \vdots  \cr
+          }$$
+\begin{itemize}
+\item A chain complex called {\tt vertical-bar} is defined with the {\em vertical differential} $d_v$.
+In this case, only the  underlying chain complex structure is used.
+\item A horizontal differential $d_h$ is defined. This uses  the product structure.
+\item The final chain complex {\tt bar} is created with differential $d_v+d_h$.
+\end{itemize}
+
+\subsubsection {Definition of the vertical bar}
+
+To\index{bar!vertical} define the vertical bar chain complex from the chain complex ${\cal A}$, the
+following functions are provided:
+\vskip 0.45cm
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt bar-cmpr} {\em cmpr}\hfill {\em [Function]} \par}
+{\leftskip=15mm 
+From the comparison function {\em cmpr}, build a comparison function for objects
+of  type {\tt abar}. \par}
+{\leftskip=5mm 
+{\tt bar-basis} {\em basis}\hfill {\em [Function]} \par}
+{\leftskip=15mm 
+From the function {\em basis} of a  chain complex ${\cal A}$, build a basis
+function for the vertical bar chain complex defined on ${\cal A}$. In dimension $0$, there
+is only one basis element, namely the null abar object. If ${\cal A}$ is locally effective,
+this function returns the symbol {\tt :locally-effective}. \par}
+{\leftskip=5mm 
+{\tt bar-intr-vrtc-dffr} {\em dffr}\hfill {\em [Function]} \par}
+{\leftskip=15mm 
+From the {\tt lisp} function {\em dffr} of a chain complex  ${\cal A}$, build a 
+lisp function for the differential of the vertical bar chain complex, according to the formula:
+$$d_v [a_1 \mid \cdots \mid a_n]=
+-\sum_{i=1}^n{(-1)^{\sum_{j=1}^{i-1}{\mid a_j \mid}}}
+ {[a_1 \mid \cdots \mid a_{i-1} \mid {\bf da_i} \mid a_{i+1} \mid \cdots \mid a_n]},$$
+where $da_i$ is the differential of the generator $a_i$ in the original chain complex (function {\em dffr})
+and $\mid a_i \mid$ is the degree of the generator $a_i$ {\em in the bar chain complex}.
+In general, the differential $da_i$ is a sum of  objects.
+So, applying the distributive law, the right member is a sum of bar objects, represented by a combination. \par}
+{\leftskip=5mm 
+{\tt vrtc-bar} {\em chcm}\hfill {\em [Method]} \par}
+{\leftskip=15mm 
+Build the vertical bar chain complex from the underlying chain complex {\em chcm}. This is simply done by the 
+call to {\tt build-chcm}:
+{\footnotesize\begin{verbatim}
+         (build-chcm
+            :cmpr  (bar-cmpr cmpr)
+            :basis (bar-basis basis)
+            :bsgn +null-abar+
+            :intr-dffr (bar-intr-vrtc-dffr dffr)
+            :strt :gnrt
+            :orgn `(vrtc-bar ,chcm))
+\end{verbatim}}
+where, {\em cmpr}, {\em basis} and {\em dffr} are extracted from the chain complex {\em chcm}. Note that
+the base generator is the null bar object. \par}
+}
+
+\subsection* {Examples}
+
+First, let us test the functions {\tt bar-cmpr} and {\tt bar-basis}. With the first one, applied
+to the elementary comparison function {\tt s-cmpr}, we create a comparison function suitable
+for algebras where the generators are symbols.
+
+{\footnotesize\begin{verbatim}
+(setf cmpr-for-bar (bar-cmpr #'s-cmpr))  
+
+(funcall cmpr-for-bar (abar)(abar))  ==>
+
+:EQUAL
+
+(funcall cmpr-for-bar (abar 3 'a 7 'q) (abar))  ==>
+
+:GREATER
+
+(funcall cmpr-for-bar (abar '(1 x 2 y 3 z) )(abar 1 'x 2 'y 3 'z))  ==>
+
+:EQUAL
+\end{verbatim}}
+Let us suppose now that the function {\tt simple-basis} is the basis function for a certain
+algebra (chain complex): in degree $i$, the basis is only the list $(a_i)$.
+{\footnotesize\begin{verbatim}
+ (setf simple-basis #'(lambda(degr) 
+    (list (intern(format nil "A~D" degr)))))
+
+(funcall simple-basis 5)  ==>
+
+(A5)
+\end{verbatim}}
+The function {\tt bar-basis} creates the function for the basis of the cor\-res\-pon\-ding bar chain complex. Note
+that when this new  function is applied, it returns a priori the null abar in dimension $0$ 
+and a null basis in dimension $1$. Note also that the basis elements 
+of the underlying algebra (the $a_i$'s) are suspended.
+{\footnotesize\begin{verbatim}
+(setf basis-for-bar (bar-basis simple-basis))
+
+(dotimes (i 7)
+   (format t "~%~D ~A" i (funcall basis-for-bar i)))  ==>
+
+0 (<<Abar>>)
+1 NIL
+2 (<<Abar[2 A1]>>)
+3 (<<Abar[3 A2]>>)
+4 (<<Abar[4 A3]>> <<Abar[2 A1][2 A1]>>)
+5 (<<Abar[5 A4]>> <<Abar[2 A1][3 A2]>> <<Abar[3 A2][2 A1]>>)
+6 (<<Abar[6 A5]>> <<Abar[2 A1][4 A3]>> <<Abar[3 A2][3 A2]>> 
+   <<Abar[4 A3][2 A1]>> <<Abar[2 A1][2 A1][2 A1]>>)
+\end{verbatim}}
+To test the vertical differential, let us take the simplicial set  {\tt smp-deltab2} which is also a chain complex.
+We may use it for testing the function {\tt vrtc-bar} which defines a chain complex
+independently of the product of the algebra. We recall that, in dimension $n$, the elements
+of the chain complex {\tt smp-deltab2} are represented by lists of increasing $n+1$  integers. So, in the abar objects,
+the degree of such elements are $n+1$.
+{\footnotesize\begin{verbatim}
+(setf vrt-bar (vrtc-bar smp-deltab2))  ==>
+
+[K6 Chain-Complex]
+
+(? vrt-bar 9 (abar 4 '(0 1 2 3) 5 '(4 5 6 7 8)))  ==>
+
+----------------------------------------------------------------------{CMBN 8}
+<-1 * <<Abar[3 (0 1 2)][5 (4 5 6 7 8)]>>>
+<1 * <<Abar[3 (0 1 3)][5 (4 5 6 7 8)]>>>
+<-1 * <<Abar[3 (0 2 3)][5 (4 5 6 7 8)]>>>
+<1 * <<Abar[3 (1 2 3)][5 (4 5 6 7 8)]>>>
+<-1 * <<Abar[4 (0 1 2 3)][4 (4 5 6 7)]>>>
+<1 * <<Abar[4 (0 1 2 3)][4 (4 5 6 8)]>>>
+<-1 * <<Abar[4 (0 1 2 3)][4 (4 5 7 8)]>>>
+<1 * <<Abar[4 (0 1 2 3)][4 (4 6 7 8)]>>>
+<-1 * <<Abar[4 (0 1 2 3)][4 (5 6 7 8)]>>>
+------------------------------------------------------------------------------
+
+(? vrt-bar *)  ==>
+
+----------------------------------------------------------------------{CMBN 7}
+------------------------------------------------------------------------------
+\end{verbatim}}
+
+\subsubsection {Definition of the horizontal differential}
+
+So\index{differential!horizontal in bar} far, the algebra structure has not been used 
+but now it will be the main ingredient.
+The canonical ``horizontal''  differential $d_h$ is defined as follows:
+$$d_h:({\bar{\cal A}}_*^{\otimes p})_q \longrightarrow ({\bar{\cal A}}_*^{\otimes {p-1}})_q,$$
+$$d_h [a_1 \mid \cdots \mid a_k] = \sum_{i=2}^n{(-1)^{\sum_{j=1}^{i-1}{\mid a_j \mid}}}
+      [a_1 \mid \cdots \mid a_{i-2} \mid {\bf a_{i-1}a_i} \mid a_{i+1} \mid \cdots \mid a_k]$$
+where the product in the algebra is noted simply by the concatenation and $\mid a_i \mid$
+is the degree of $a_i$ in $Bar({\cal A})$.
+In {\tt Kenzo}, two functions are designed for building the horizontal differential:
+\vskip 0.45cm
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt bar-intr-hrzn-dffr} {\em aprd}\hfill {\em [Function]} \par}
+{\leftskip=15mm 
+From the product morphism {\em aprd}, build the lisp function with 2 arguments:
+a degree and an {\tt abar} object (i.e. a generator) realizing the algorithm for $d_h$. \par}
+{\leftskip=5mm 
+{\tt bar-hrzn-dffr} {\em algb}\hfill {\em [Function]} \par}
+{\leftskip=15mm 
+Build the horizontal differential morphism, using the slot pro\-duct {\em aprd} of
+the algebra {\em algb} and the previous function. 
+Note that when called, this function creates, if not already created,
+the vertical bar chain complex on {\em algb}:
+{\footnotesize\begin{verbatim}
+           (build-mrph
+             :sorc (vrtc-bar algb) 
+             :trgt (vrtc-bar algb) 
+             :degr -1
+             :intr (bar-intr-hrzn-dffr aprd) 
+             :strt :gnrt
+             :orgn `(bar-hrzn-dffr ,algb))
+\end{verbatim}}
+\par}}
+
+
+\subsubsection {Final definition of the bar of an algebra}
+
+To define completely the bar chain complex\index{bar!of an algebra}, we have to provide the lisp function
+for the differential $d_v + d_h$ and, once created the vertical bar chain complex,
+we have to call the building function {\tt build-chcm} with adequate arguments.
+\vskip 0.45cm
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt bar-intr-dffr} {\em vrtc-dffr hrzn-dffr}\hfill {\em [Function]} \par}
+{\leftskip=15mm 
+Define the lisp function for the differential $d_v+d_h$ from the two morphisms
+{\em vrtc-dffr} and {\em hrzn-dffr}. For efficiency reasons, the implementor
+has chosen to define this new function rather than to use simply
+the addition of two morphisms.\par}
+{\leftskip=5mm 
+{\tt bar} {\em algebra}\hfill {\em [Method]} \par}
+{\leftskip=15mm 
+Build first the vertical bar chain complex on the algebra. Then return a chain complex
+with the same slots as the vertical bar chain complex but with new {\tt :intr-dffr}
+and {\tt :orgn} slots, as shown in the following definition: \par}
+}
+
+{\footnotesize\begin{verbatim}
+             (defmethod BAR ((algebra algebra))
+                (let ((vrtc-bar (vrtc-bar algebra))
+                      (bar-hrzn-dffr (bar-hrzn-dffr algebra)))
+                (declare (type chain-complex vrtc-abr hrzn-bar))
+                (the chain-complex
+                    (build-chcm
+                       :cmpr (cmpr vrtc-bar)
+                       :basis (basis vrtc-bar)
+                       :bsgn +null-abar+
+                       :intr-dffr (bar-intr-dffr (dffr vrtc-bar) 
+                                                   bar-hrzn-dffr)
+                       :strt :gnrt
+                       :orgn `(add ,vrtc-bar ,bar-hrzn-dffr)))))
+\end{verbatim}}
+We postpone the examples for the bar of an algebra, up to the chapter on
+simplicial groups where we shall  build interesting examples of algebras.
+
+
+\newpage
+
+\section {Other functions for the bar construction} 
+
+The\index{functor!vertical bar} vertical bar construction is {\em natural} 
+and therefore defines a functor. 
+Consequently, the {\tt Kenzo} program contains the following methods.
+\vskip 0.45cm
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt vrtc-bar} {\em mrph}\hfill {\em [Method]} \par}
+{\leftskip=15mm 
+From the morphism {\em mrph}, build a new morphism between the vertical-bar of the source
+of {\em mrph} and the vertical bar of the target of {\em mrph}, the morphism itself being
+induced in a natural way by the underlying morphism. \par}
+{\leftskip=5mm 
+{\tt vrtc-bar} {\em rdct}\hfill {\em [Method]} \par}
+{\leftskip=15mm 
+From the reduction {\em rdct}, build a new reduction, by applying the vertical bar
+method to the functions $f$ and $g$. The new homotopy cannot be obtained so simply, being
+a function of the $f$, $g$ and $h$ of {\em rdct}. Nevertheless, the source and target
+of the new homotopy are the vertical bar of the underlying homotopy. \par}
+{\leftskip=5mm 
+{\tt vrtc-bar} {\em hmeq}\hfill {\em [Method]} \par}
+{\leftskip=15mm 
+Build a homotopy equivalence by applying the vertical bar cons\-truc\-ti\-on
+to the left and right reductions of the homotopy equivalence {\em hmeq}. \par}
+{\leftskip=5mm 
+{\tt bar} {\em hmeq}\hfill {\em [Method]} \par}
+{\leftskip=15mm 
+Build a  homotopy equivalence where the bar construction is applied to the
+underlying homotopy equivalence in the following way. First this construction is limited to the 
+case where the left bottom chain complex of {\em hmeq} is an {\bf algebra}. Then the vertical bar
+construction is applied to {\em hmeq} and the horizontal differential of the left bottom chain complex
+is propagated upon the new homotopy equivalence with the help of the method {\tt add}. In other words,
+starting from the left bottom chain complex, firstly the easy pertubation lemma is applied to
+obtain a new differential on the top chain complex; then the basic perturbation lemma
+is applied to the right reduction.
+If {\em hmeq} is a trivial homotopy equivalence, this function returns a trivial one,
+built on the bar of the left bottom chain complex of {\em hmeq}. \par}
+}
+
+\subsection* {Lisp files concerned in this chapter}
+
+{\tt algebras.lisp}, {\tt bar.lisp}.
+\par
+[{\tt classes.lisp}, {\tt macros.lisp}, {\tt various.lisp}].

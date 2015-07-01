@@ -1,0 +1,1405 @@
+\chapter {Loop spaces fibrations} 
+
+\section{The canonical loop space fibration}
+
+Let $X$ be a  simplicial set. The software {\tt Kenzo} implements the
+{\bf canonical} twisted cartesian product\index{twisted cartesian product} of $X$ by its loop space $GX$, 
+denoted $X \times_\tau GX$, giving the Kan\footnote {{\bf Daniel M. Kan}. {\em A combinatorial definition of
+homotopy groups}, Ann. of Math., 1958, vol. 67, pp 282--312.} model of the contractible
+path space of $X$.
+The {\em canonical fibration}
+$$ GX\quad \hookrightarrow\quad X \times_\tau GX  \hskip 1.2em \longrightarrow \hskip -1.2em \longrightarrow  
+   \quad X,$$
+is defined by the trivial application $\tau$, where $\tau(x)$ is the  {\em letter} $x$ in $GX$.
+This twisted cartesian product has the same simplices as the non-twisted one.
+So both associated chain complexes
+are equal as graded modules. The essential difference  resides in the differential morphism.
+More precisely, the face operator $\partial_n$ behaves differently in the twisted cartesian product. 
+Let $(x,g) \in X \times_\tau GX$, the rule for the face operators are:
+\begin{eqnarray*}
+\partial_i(x,g) & =  & (\partial_i x, \partial_i g), \qquad i<n, \\
+\partial_n(x,g) & =  & (\partial_n x, \tau(x).\partial_n g), \qquad i=n,
+\end{eqnarray*}
+where $\tau(x)$ is the {\em letter} $x$ in $GX$ and '{\bf .}' is the group product in $GX$. Let us recall
+that, from the mathematical definition of $GX$, if $x$ is $n$--degenerate, for instance $x=\eta_n x'$,
+the $\tau(x)$ is the null element of $GX_n$.
+The behaviour of $\partial_n$ induces a change in the differential morphism of the chain complex
+associated to the twisted cartesian product.
+
+\section{The associated tensor twisted product}
+
+We\index{tensor twisted product} recall that around the cartesian product $X \times GX$, 
+the Eilenberg--Zilber theorem allows to build the reduction (see the function {\tt ez}):
+$$
+\diagram{
+{{\cal C}_*(X \times GX)} & \stackrel{h}{\longrightarrow} & {}^s{{\cal C}_*(X \times GX)} \cr
+ {\scriptstyle f} \downarrow \uparrow {\scriptstyle g}  \cr
+ {{\cal C}_*(X) \otimes {\cal C}_*(GX)} \cr
+}
+$$
+On the other hand, 
+the differential morphism $d_\tau$ of the chain complex
+${\cal C}_*(X \times_\tau GX)$ may be considered as a perturbed
+differential morphism $d$ of the chain complex ${\cal C}_*(X \times GX)$,
+the perturbation $\delta$ being: $\delta= d_\tau - d$. Using the
+basic perturbation lemma, we may construct a new reduction:
+$$
+\diagram{
+{{\cal C}_*(X \times_\tau GX)} & \stackrel{h}{\longrightarrow} & {}^s{{\cal C}_*(X \times_\tau GX)} \cr
+ {\scriptstyle f} \downarrow \uparrow {\scriptstyle g}  \cr
+ {{\cal C}_*(X) \otimes_t {\cal C}_*(GX)} \cr
+}
+$$
+In fact, the interesting object produced by this machinery is the bottom
+chain complex  ${\cal C}_*(X) \otimes_t {\cal C}_*(GX)$ which is nothing but
+the {\em twisted tensor product}\footnote{{\bf Edgar H. Brown Jr.} {\em Twisted tensor products, I},
+Ann. of Math., 1959, vol. 69, pp. 223-246.}.
+
+
+\section{Main functions for the twisted products}
+
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt twisted-crts-prdc} {\em space} \hfill {\em [Function]} \par}
+{\leftskip=15mm 
+From the simplicial set $X$, here the argument {\em space},  return  the 
+twisted cartesian product $X \times_\tau GX$ (a simplicial set). This function calls internally the functions
+{\tt loop-space} and {\tt crts-prdc} described in preceding chapters. The slot {\tt grmd} of the
+resulting instance is set with the ordinary cartesian product $X \times GX$. \par}
+{\leftskip=5mm 
+{\tt dtau-d} {\em space} \hfill {\em [Function]} \par}
+{\leftskip=15mm 
+From the simplicial set $X$, here the argument {\em space}, build the morphism perturbation (degree $-1$)
+$$d_\tau-d: X \times GX \longrightarrow X \times GX.$$
+The work is essentialy done by the  lisp function {\tt dtau-d-intr} which computes the difference
+between  the differential morphisms taking in account the discrepancy between 
+the last face operator ($\partial_n$)
+in both chain complexes, $X \times_\tau GX$ and $X \times GX$. \par}
+{\leftskip=5mm 
+{\tt szczarba} {\em space} \hfill {\em [Function]} \par}
+{\leftskip=15mm 
+Starting from the simplicial set $X$, (the argument {\em space}), return two values: \par}
+{\leftskip=20mm
+1- The reduction
+$$
+\diagram{
+{{\cal C}_*(X \times_\tau GX)} & \stackrel{h}{\longrightarrow} & {}^s{{\cal C}_*(X \times_\tau GX)} \cr
+ {\scriptstyle f} \downarrow \uparrow {\scriptstyle g}  \cr
+ {{\cal C}_*(X) \otimes_t {\cal C}_*(GX)} \cr
+}
+$$
+obtained by perturbing by $d_\tau-d$ the top chain complex of the reduction 
+$$
+\diagram{
+{{\cal C}_*(X \times GX)} & \stackrel{h}{\longrightarrow} & {}^s{{\cal C}_*(X \times GX)} \cr
+ {\scriptstyle f} \downarrow \uparrow {\scriptstyle g}  \cr
+ {{\cal C}_*(X) \otimes {\cal C}_*(GX)} \cr
+}.
+$$
+\par}
+{\leftskip=20mm
+2- The morphism corresponding to the perturbation of the bottom chain complex
+induced by the perturbation $d_\tau-d$ upon the top chain complex of the above reduction. \par}
+{\leftskip=15mm
+This algorithm implements in particular  in a very efficient way the formulas of
+Szczarba\footnote{{\bf R.H. Szczarba.} {\em The homology of twisted cartesian products.} 
+Transactions of the American Math. Society, 1961, vol. 100, pp. 197-216}. \par}
+{\leftskip=5mm 
+{\tt twisted-tnsr-prdc} {\em space} \hfill {\em [Function]} \par}
+{\leftskip=15mm 
+Return the twisted tensor product (a chain complex)  $X \otimes_t GX$.
+This is done simply by extraction of the bottom chain complex from
+the reduction  {\tt (szczarba {\em space})}. \par}
+}
+%\newpage
+
+\subsection* {Examples}
+
+For testing the functions above, we shall use a ``soft'' version of $\bar{\Delta}$ analogous
+to {\tt soft-delta} or {\tt soft-delta-infinity}. The input of the simplices will be done
+in clear with the help of the macro {\tt code}. As this version does not exists in {\tt Kenzo},
+we have modified some functions of {\tt soft-delta}, as indicated.
+{\footnotesize\begin{verbatim}
+
+(DEFUN SOFT-DELTAB-CMPR (gmsm1 gmsm2)
+    (if (= 1 (logcount (cdr gmsm1))) 
+        :EQUAL
+        (f-cmpr (cdr gmsm1)(cdr gmsm2)) ))
+
+(DEFUN SOFT-DELTAB-BNDR (dmns gmsm)
+   (declare
+      (fixnum dmns)
+      (type soft-dlop gmsm))
+   (the cmbn
+      (if (< dmns 2)
+         (zero-cmbn (1- dmns))
+         (make-cmbn
+         :degr (1- dmns)
+         :list (mapcar #'(lambda (term)
+                         (with-term (cffc gmsm) term
+                            (term cffc (d gmsm))))
+               (cmbn-list (delta-bndr dmns (cdr gmsm))))))))
+
+(DEFUN SOFT-DELTAB ()
+   (the simplicial-set
+      (build-smst
+         :cmpr #'soft-deltab-cmpr
+         :basis :locally-effective
+         :bspn (d 1)
+         :face #'soft-delta-face
+;;;      :intr-dgnl #'soft-delta-dgnl :dgnl-strt :gnrt
+         :intr-bndr #'soft-deltab-bndr :bndr-strt :gnrt
+         :orgn `(soft-deltab))))
+
+
+(defmacro code (arg) `(d (dlop-ext-int ,arg)))
+\end{verbatim}}
+\newpage
+{\footnotesize\begin{verbatim}
+(setf db (soft-deltab))  ==>
+
+[K1 Simplicial-Set]
+
+(setf gdb (loop-space db))  ==>
+
+[K6 Simplicial-Group]
+\end{verbatim}}
+Let us compare the faces of a cartesian product in $\bar{\Delta} \times \Omega(\bar{\Delta})$
+and the faces of the same object in $\bar{\Delta} \times_\tau \Omega(\bar{\Delta})$:
+{\footnotesize\begin{verbatim}
+(setf crts-pr (crts-prdc db gdb))  ==>
+
+[K18 Simplicial-Set]
+
+(setf tw-crts-pr (twisted-crts-prdc db))  ==>
+
+[K23 Simplicial-Set]
+
+(setf smpx (crpr 0 (code '(0 1 2 3 4)) 
+                 0 (loop3 0 (code '(0 1 2 3 4 5)) 1)))  ==>
+
+<CrPr - 0-1-2-3-4 - <<Loop[0-1-2-3-4-5]>>>
+
+(dotimes (j 5)
+         (print (face crts-pr j 4 smpx)))  ==>
+
+<AbSm - <CrPr - 1-2-3-4 - <<Loop[1-2-3-4-5]>>>> 
+<AbSm - <CrPr - 0-2-3-4 - <<Loop[0-2-3-4-5]>>>> 
+<AbSm - <CrPr - 0-1-3-4 - <<Loop[0-1-3-4-5]>>>> 
+<AbSm - <CrPr - 0-1-2-4 - <<Loop[0-1-2-4-5]>>>> 
+<AbSm - <CrPr - 0-1-2-3 - <<Loop[0-1-2-3-4\-1][0-1-2-3-5]>>>> 
+
+(dotimes (j 5)
+         (print (face tw-crts-pr j 4 smpx)))  ==>
+
+<AbSm - <CrPr - 1-2-3-4 - <<Loop[1-2-3-4-5]>>>> 
+<AbSm - <CrPr - 0-2-3-4 - <<Loop[0-2-3-4-5]>>>> 
+<AbSm - <CrPr - 0-1-3-4 - <<Loop[0-1-3-4-5]>>>> 
+<AbSm - <CrPr - 0-1-2-4 - <<Loop[0-1-2-4-5]>>>> 
+<AbSm - <CrPr - 0-1-2-3 - <<Loop[0-1-2-3-5]>>>> 
+\end{verbatim}}
+\newpage
+{\footnotesize\begin{verbatim}
+(setf smpx2 (crpr 0 (code '(1 2 3 4 5)) 
+                  0 (loop3 0 (code '(5 6 7 8 9 10)) 1)))  ==>
+
+<CrPr - 1-2-3-4-5 - <<Loop[5-6-7-8-9-10]>>>
+
+(dotimes (j 5)
+         (print (face crts-pr j 4 smpx2)))  ==>
+
+<AbSm - <CrPr - 2-3-4-5 - <<Loop[6-7-8-9-10]>>>> 
+<AbSm - <CrPr - 1-3-4-5 - <<Loop[5-7-8-9-10]>>>> 
+<AbSm - <CrPr - 1-2-4-5 - <<Loop[5-6-8-9-10]>>>> 
+<AbSm - <CrPr - 1-2-3-5 - <<Loop[5-6-7-9-10]>>>> 
+<AbSm - <CrPr - 1-2-3-4 - <<Loop[5-6-7-8-9\-1][5-6-7-8-10]>>>> 
+
+(dotimes (j 5)
+         (print (face tw-crts-pr j 4 smpx2)))  ==>
+
+<AbSm - <CrPr - 2-3-4-5 - <<Loop[6-7-8-9-10]>>>> 
+<AbSm - <CrPr - 1-3-4-5 - <<Loop[5-7-8-9-10]>>>> 
+<AbSm - <CrPr - 1-2-4-5 - <<Loop[5-6-8-9-10]>>>> 
+<AbSm - <CrPr - 1-2-3-5 - <<Loop[5-6-7-9-10]>>>> 
+<AbSm - <CrPr - 1-2-3-4 - <<Loop[1-2-3-4-5][5-6-7-8-9\-1][5-6-7-8-10]>>>> 
+\end{verbatim}}
+The user will have noted that we may obtain the same twisted cartesian product
+by the fibration theory. 
+Let us define a general function {\tt loop-fbr} with  a reduced simplicial set,
+{\em space}, as argument. This function uses the function {\tt fibration-total} 
+that we have seen in the  chapter about fibrations.
+Here, we see that the lisp function for the simplicial morphism, (keyword {\tt :sintr}),
+implements straightforwardly the canonical twisting operator which applies a simplex of $X$ 
+to the corresponding $1$--letter word of $GX$. Note that the execution time by 
+the fibration function is a little longer than for the direct twisted cartesian product 
+and it requires more memory.
+{\footnotesize\begin{verbatim}
+(defun loop-fbr (space)
+             (fibration-total
+                (build-smmr
+                  :sorc space 
+                  :trgt (loop-space space) 
+                  :degr -1
+                  :sintr #'(lambda (dmns gmsm)
+                               (absm 0 (loop3 0 gmsm 1)))
+                  :orgn `(total-fibration ,space))))
+
+
+(setf fb-tt-db (loop-fbr db))  ==>
+
+[K46 Simplicial-Set]
+
+(dotimes (j 5)
+         (print(face fb-tt-db j 4 smpx2)))
+
+<AbSm - <CrPr - 2-3-4-5 - <<Loop[6-7-8-9-10]>>>> 
+<AbSm - <CrPr - 1-3-4-5 - <<Loop[5-7-8-9-10]>>>> 
+<AbSm - <CrPr - 1-2-4-5 - <<Loop[5-6-8-9-10]>>>> 
+<AbSm - <CrPr - 1-2-3-5 - <<Loop[5-6-7-9-10]>>>> 
+<AbSm - <CrPr - 1-2-3-4 - <<Loop[1-2-3-4-5][5-6-7-8-9\-1][5-6-7-8-10]>>>> 
+
+(time (dotimes (j 1000) (face tw-crts-pr 4 4 smpx2)))  ==>
+
+; cpu time (non-gc) 143,480 msec (00:02:23.480) user, 40 msec system
+; cpu time (gc)     2,140 msec user, 40 msec system
+; cpu time (total)  145,620 msec (00:02:25.620) user, 80 msec system
+; real time  146,899 msec (00:02:26.899)
+; space allocation:
+;  16,122,082 cons cells, 11,000 symbols, 6,226,992 other bytes
+
+(time (dotimes (j 1000) (face fb-tt-db 4 4 smpx2)))  ==>
+
+; cpu time (non-gc) 215,190 msec (00:03:35.190) user, 40 msec system
+; cpu time (gc)     3,630 msec user, 50 msec system
+; cpu time (total)  218,820 msec (00:03:38.820) user, 90 msec system
+; real time  221,946 msec (00:03:41.946)
+; space allocation:
+;  23,859,004 cons cells, 17,000 symbols, 10,536,128 other bytes
+\end{verbatim}}
+The four following statements show the relationship
+between the differentials:
+{\footnotesize\begin{verbatim}
+(setf perturb (dtau-d db))  ==>
+
+[K51 Morphism (degree -1)]
+
+(? perturb 4 smpx2)  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * <CrPr - 1-2-3-4 - <<Loop[1-2-3-4-5][5-6-7-8-9\-1][5-6-7-8-10]>>>>
+<-1 * <CrPr - 1-2-3-4 - <<Loop[5-6-7-8-9\-1][5-6-7-8-10]>>>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+\newpage
+{\footnotesize\begin{verbatim}
+(? crts-pr 4 smpx2)  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * <CrPr - 1-2-3-4 - <<Loop[5-6-7-8-9\-1][5-6-7-8-10]>>>>
+<-1 * <CrPr - 1-2-3-5 - <<Loop[5-6-7-9-10]>>>>
+<1 * <CrPr - 1-2-4-5 - <<Loop[5-6-8-9-10]>>>>
+<-1 * <CrPr - 1-3-4-5 - <<Loop[5-7-8-9-10]>>>>
+<1 * <CrPr - 2-3-4-5 - <<Loop[6-7-8-9-10]>>>>
+------------------------------------------------------------------------------
+
+(? tw-crts-pr 4 smpx2)  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * <CrPr - 1-2-3-4 - <<Loop[1-2-3-4-5][5-6-7-8-9\-1][5-6-7-8-10]>>>>
+<-1 * <CrPr - 1-2-3-5 - <<Loop[5-6-7-9-10]>>>>
+<1 * <CrPr - 1-2-4-5 - <<Loop[5-6-8-9-10]>>>>
+<-1 * <CrPr - 1-3-4-5 - <<Loop[5-7-8-9-10]>>>>
+<1 * <CrPr - 2-3-4-5 - <<Loop[6-7-8-9-10]>>>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+The same type of tests may be done with another reduced simplicial set, namely $P^3{\R}$.
+{\footnotesize\begin{verbatim}
+(setf pri3 (R-proj-space 3))  ==>
+
+[K52 Simplicial-Set]
+
+(setf tw-pri3 (twisted-crts-prdc pri3))  ==>
+
+[K74 Simplicial-Set]
+
+(basis tw-pri3)  ==>
+
+:LOCALLY-EFFECTIVE
+
+(setf crt-pri3 (crts-prdc pri3 (loop-space pri3)))  ==>
+
+[K69 Simplicial-Set]
+
+(setf s (crpr 0 4 0 (loop3 0 5 1)))  ==>
+
+<CrPr - 4 - <<Loop[5]>>>
+\end{verbatim}}
+\newpage
+{\footnotesize\begin{verbatim}
+(dotimes (i 5) (print (face crt-pri3 i 4 s)))  ==>
+
+<AbSm - <CrPr - 3 - <<Loop[4]>>>> 
+<AbSm 0 <CrPr 1-0 0 - <<Loop[3]>>>> 
+<AbSm 1 <CrPr 1-0 0 - <<Loop[3]>>>> 
+<AbSm 2 <CrPr 1-0 0 - <<Loop[3]>>>> 
+<AbSm - <CrPr - 3 - <<Loop[4\-1]>>>> 
+
+(dotimes (i 5) (print (face tw-pri3 i 4 s)))  ==>
+
+<AbSm - <CrPr - 3 - <<Loop[4]>>>> 
+<AbSm 0 <CrPr 1-0 0 - <<Loop[3]>>>> 
+<AbSm 1 <CrPr 1-0 0 - <<Loop[3]>>>> 
+<AbSm 2 <CrPr 1-0 0 - <<Loop[3]>>>> 
+<AbSm - <CrPr - 3 2-1-0 <<Loop>>>> 
+
+(setf fb-tt-pri3 (loop-fbr pri3))  ==>
+
+[K80 Simplicial-Set]
+
+(dotimes (j 5) (print (face fb-tt-pri3 j 4 s)))
+
+<AbSm - <CrPr - 3 - <<Loop[4]>>>> 
+<AbSm 0 <CrPr 1-0 0 - <<Loop[3]>>>> 
+<AbSm 1 <CrPr 1-0 0 - <<Loop[3]>>>> 
+<AbSm 2 <CrPr 1-0 0 - <<Loop[3]>>>> 
+<AbSm - <CrPr - 3 2-1-0 <<Loop>>>> 
+\end{verbatim}}
+Let us check now the Szczarba reduction, with the simplicial set $\bar{\Delta}$.
+{\footnotesize\begin{verbatim}
+(setf szc-reduc (szczarba db))  ==>
+
+[K107 Reduction]
+
+(pre-check-rdct szc-reduc)  ==>
+
+---done---
+
+(setf *tc* (cmbn 2 1 (crpr 0 (code '(0 1 2)) 
+                           0 (loop3 0 (code '(5 6 7 8)) 1))))
+
+----------------------------------------------------------------------{CMBN 2}
+<1 * <CrPr - 0-1-2 - <<Loop[5-6-7-8]>>>>
+------------------------------------------------------------------------------
+
+(setf *bc* (cmbn 2 1 (tnpr 0 (code '(0)) 2 (loop3 0 (code '(5 6 7 8)) 1))
+                  10 (tnpr 1 (code '(10 11)) 1 (loop3 0 (code '(0 1 2)) 1))
+                 100 (tnpr 2 (code '(0 1 2)) 0 (loop3 0 (code '(10 11)) 1))))
+
+----------------------------------------------------------------------{CMBN 2}
+<1 * <TnPr 0 <<Loop[5-6-7-8]>>>>
+<10 * <TnPr 10-11 <<Loop[0-1-2]>>>>
+<100 * <TnPr 0-1-2 <<Loop[10-11]>>>>
+------------------------------------------------------------------------------
+
+(pre-check-rdct szc-reduc)  ==>
+
+---done---
+
+(check-rdct)  ==>
+
+*TC* => 
+----------------------------------------------------------------------{CMBN 2}
+<1 * <CrPr - 0-1-2 - <<Loop[5-6-7-8]>>>>
+------------------------------------------------------------------------------
+
+*BC* => 
+----------------------------------------------------------------------{CMBN 2}
+<1 * <TnPr 0 <<Loop[5-6-7-8]>>>>
+<10 * <TnPr 10-11 <<Loop[0-1-2]>>>>
+<100 * <TnPr 0-1-2 <<Loop[10-11]>>>>
+------------------------------------------------------------------------------
+
+Checking *TDD* = 0
+Result: 
+----------------------------------------------------------------------{CMBN 0}
+------------------------------------------------------------------------------
+ 
+              ....... All results null ......
+
+Checking *HG* = 0
+Result: 
+----------------------------------------------------------------------{CMBN 3}
+------------------------------------------------------------------------------
+
+---done---
+\end{verbatim}}
+
+\newpage
+
+\section{Exercice with the twisting cochain.}
+
+Let $B$ be a reduced simplicial set and its loop space $GB$ (a simplicial group).
+In the following examples, we shall use the efficient {\tt Kenzo}
+version of the simplicial set $\bar{\Delta}$, i.e. the simplices are input
+and printed under their binary form coding.
+
+\subsection {The twisting cochain.}
+
+The\index{twisting cochain} twisting cochain $t$ is the morphism
+$$t: aug \circ d_{\otimes t} \circ coaug$$
+where,
+\begin{enumerate}
+\item $coaug$ is the morphism 
+$$ coaug: B \rightarrow B \otimes GB,$$
+$$ coaug(b) = b \otimes 1_{GB}. $$
+\item $d_{\otimes t}$ is the differential morphism of the twisted tensor product
+$B \otimes_t GB$.
+\item $aug$ is the morphism
+$$aug: B \otimes GB  \longrightarrow GB ,  $$
+\begin{eqnarray*}
+aug(b_i \otimes g_j)&  = & g_j, \qquad b_i \in B_0, \\
+aug(b_i \otimes g_j)&  = & 0, \qquad b_i \in B_k,\, k\not=0.
+\end{eqnarray*}
+\end{enumerate}
+We recall that, as graded modules, $B\otimes GB$ and $B \otimes_t GB$ are
+identical.
+\par
+First, we create $\bar{\Delta}$ and $G\bar{\Delta}$. The function {\tt twisted-tnsr-prdc}
+extracts the twisted tensor product $\bar{\Delta} \otimes_t G\bar{\Delta}$ from
+the reduction obtained by a call to the function {\tt szczarba}.
+{\footnotesize\begin{verbatim}
+
+(setf d (deltab)) ==>
+
+[K1 Simplicial-Set]
+
+(setf gd (loop-space d))  ==>
+
+[K6 Simplicial-Group]
+
+(setf d-twtp-gd (twisted-tnsr-prdc d))  ==>
+
+[K49 Chain-Complex]
+\end{verbatim}}
+Let us define the  coaugmentation and augmentation morphisms. As usual, it is sufficient
+to define the algorithm on a generator. 
+{\footnotesize\begin{verbatim}
+(setf coaug (build-mrph 
+               :sorc d 
+               :trgt d-twtp-gd 
+               :degr 0
+               :intr #'(lambda (degr gnrt)
+                         (term-cmbn degr 1 (tnpr degr gnrt 0 +null-loop+)))
+               :strt :gnrt 
+               :orgn '(coaug. d --> d-twtp-gd)))  ==>
+
+[K52 Morphism (degree 0)]
+
+(? coaug 3 15)  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * <TnPr 15 <<Loop>>>>
+------------------------------------------------------------------------------
+
+(? coaug (cmbn 4 1 31 1 62 1 124))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * <TnPr 31 <<Loop>>>>
+<1 * <TnPr 62 <<Loop>>>>
+<1 * <TnPr 124 <<Loop>>>>
+------------------------------------------------------------------------------
+
+(setf aug (build-mrph
+             :sorc d-twtp-gd
+             :trgt gd
+             :degr 0
+             :intr #'(lambda (degr tnpr)
+                        (with-tnpr (degr1 gmsm1 degr2 loop2) tnpr
+                            (if (zerop degr1)
+                                (term-cmbn degr 1 loop2)
+                                (zero-cmbn degr))))
+             :strt :gnrt
+             :orgn '(aug. of d-twtp-gd)))  ==>
+
+[K53 Morphism (degree 0)]
+
+(? aug (cmbn 2 9 (tnpr 0 1 2 (loop3 0 15 1))
+               3 (tnpr 1 3 1 (loop3 0 7 1))))  ==>
+
+----------------------------------------------------------------------{CMBN 2}
+<9 * <<Loop[15]>>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+The morphism {\tt cochain} is simply a composition of morphisms.
+We apply it upon the simplices {\tt (0)},
+{\tt (0 1 2)}, {\tt (0 1 2 3)}, ..., 
+coded as the integers $1,7,15,\ldots$.
+{\footnotesize\begin{verbatim}
+(setf cochain (i-cmps aug (dffr d-twtp-gd) coaug))  ==>
+
+[K55 Morphism (degree -1)]
+
+(? cochain 0 1)  ==>
+
+----------------------------------------------------------------------{CMBN -1}
+------------------------------------------------------------------------------
+
+(? cochain 2 7)  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<1 * <<Loop[0 3][7]>>>
+------------------------------------------------------------------------------
+
+(? cochain 3 15)  ==>
+
+----------------------------------------------------------------------{CMBN 2}
+<1 * <<Loop[1-0 3][0 7][1 13]>>>
+<-1 * <<Loop[1-0 3][1 7][15]>>>
+------------------------------------------------------------------------------
+
+(? cochain 4 31)  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<-1 * <<Loop[2-1-0 3][1-0 7][2-0 13][2-1 25]>>>
+<1 * <<Loop[2-1-0 3][1-0 7][2-1 13][2 29]>>>
+<1 * <<Loop[2-1-0 3][2-0 7][0 15][2-1 25]>>>
+<-1 * <<Loop[2-1-0 3][2-0 7][2-1 13][1 29]>>>
+<-1 * <<Loop[2-1-0 3][2-1 7][1 15][2 27]>>>
+<1 * <<Loop[2-1-0 3][2-1 7][2 15][31]>>>
+------------------------------------------------------------------------------
+
+(? cochain 5 63)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<-1 * <<Loop[3-2-1-0 3][2-1-0 7][3-1-0 13][3-2-0 25][3-2-1 49]>>>
+<1 * <<Loop[3-2-1-0 3][2-1-0 7][3-1-0 13][3-2-1 25][3-2 57]>>>
+<1 * <<Loop[3-2-1-0 3][2-1-0 7][3-2-0 13][3-0 29][3-2-1 49]>>>
+<-1 * <<Loop[3-2-1-0 3][2-1-0 7][3-2-0 13][3-2-1 25][3-1 57]>>>
+<-1 * <<Loop[3-2-1-0 3][2-1-0 7][3-2-1 13][3-1 29][3-2 53]>>>
+<1 * <<Loop[3-2-1-0 3][2-1-0 7][3-2-1 13][3-2 29][3 61]>>>
+<1 * <<Loop[3-2-1-0 3][3-1-0 7][1-0 15][3-2-0 25][3-2-1 49]>>>
+<-1 * <<Loop[3-2-1-0 3][3-1-0 7][1-0 15][3-2-1 25][3-2 57]>>>
+<-1 * <<Loop[3-2-1-0 3][3-1-0 7][3-2-0 13][2-0 29][3-2-1 49]>>>
+<1 * <<Loop[3-2-1-0 3][3-1-0 7][3-2-0 13][3-2-1 25][2-1 57]>>>
+<1 * <<Loop[3-2-1-0 3][3-1-0 7][3-2-1 13][2-1 29][3-2 53]>>>
+<-1 * <<Loop[3-2-1-0 3][3-1-0 7][3-2-1 13][3-2 29][2 61]>>>
+<-1 * <<Loop[3-2-1-0 3][3-2-0 7][2-0 15][3-0 27][3-2-1 49]>>>
+<1 * <<Loop[3-2-1-0 3][3-2-0 7][2-0 15][3-2-1 25][3-1 57]>>>
+<1 * <<Loop[3-2-1-0 3][3-2-0 7][3-0 15][0 31][3-2-1 49]>>>
+<-1 * <<Loop[3-2-1-0 3][3-2-0 7][3-0 15][3-2-1 25][2-1 57]>>>
+<-1 * <<Loop[3-2-1-0 3][3-2-0 7][3-2-1 13][2-1 29][3-1 53]>>>
+<1 * <<Loop[3-2-1-0 3][3-2-0 7][3-2-1 13][3-1 29][1 61]>>>
+<1 * <<Loop[3-2-1-0 3][3-2-1 7][2-1 15][3-1 27][3-2 51]>>>
+<-1 * <<Loop[3-2-1-0 3][3-2-1 7][2-1 15][3-2 27][3 59]>>>
+<-1 * <<Loop[3-2-1-0 3][3-2-1 7][3-1 15][1 31][3-2 51]>>>
+<1 * <<Loop[3-2-1-0 3][3-2-1 7][3-1 15][3-2 27][2 59]>>>
+<1 * <<Loop[3-2-1-0 3][3-2-1 7][3-2 15][2 31][3 55]>>>
+<-1 * <<Loop[3-2-1-0 3][3-2-1 7][3-2 15][3 31][63]>>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+We verify, that for a simplex in dimension $n$, the length of the resulting
+combination is $(n-1)!$.
+{\footnotesize\begin{verbatim}
+(length(cmbn-list *))  ==>
+
+24
+
+(? cochain 6 127)  ==>
+
+----------------------------------------------------------------------{CMBN 5}
+<1 * <<Loop[4-3-2-1-0 3][3-2-1-0 7][4-2-1-0 13][4-3-1-0 25][4-3-2-0 49][4-3-2-1 97]>>>
+<-1 * <<Loop[4-3-2-1-0 3][3-2-1-0 7][4-2-1-0 13][4-3-1-0 25][4-3-2-1 49][4-3-2 113]>>>
+<-1 * <<Loop[4-3-2-1-0 3][3-2-1-0 7][4-2-1-0 13][4-3-2-0 25][4-3-0 57][4-3-2-1 97]>>>
+<1 * <<Loop[4-3-2-1-0 3][3-2-1-0 7][4-2-1-0 13][4-3-2-0 25][4-3-2-1 49][4-3-1 113]>>>
+<1 * <<Loop[4-3-2-1-0 3][3-2-1-0 7][4-2-1-0 13][4-3-2-1 25][4-3-1 57][4-3-2 105]>>>
+<-1 * <<Loop[4-3-2-1-0 3][3-2-1-0 7][4-2-1-0 13][4-3-2-1 25][4-3-2 57][4-3 121]>>>
+<-1 * <<Loop[4-3-2-1-0 3][3-2-1-0 7][4-3-1-0 13][4-1-0 29][4-3-2-0 49][4-3-2-1 97]>>>
+<1 * <<Loop[4-3-2-1-0 3][3-2-1-0 7][4-3-1-0 13][4-1-0 29][4-3-2-1 49][4-3-2 113]>>>
+<1 * <<Loop[4-3-2-1-0 3][3-2-1-0 7][4-3-1-0 13][4-3-2-0 25][4-2-0 57][4-3-2-1 97]>>>
+<-1 * <<Loop[4-3-2-1-0 3][3-2-1-0 7][4-3-1-0 13][4-3-2-0 25][4-3-2-1 49][4-2-1 113]>>>
+<-1 * <<Loop[4-3-2-1-0 3][3-2-1-0 7][4-3-1-0 13][4-3-2-1 25][4-2-1 57][4-3-2 105]>>>
+<1 * <<Loop[4-3-2-1-0 3][3-2-1-0 7][4-3-1-0 13][4-3-2-1 25][4-3-2 57][4-2 121]>>>
+... ...
+------------------------------------------------------------------------------
+
+(length(cmbn-list *))  ==>
+
+120
+\end{verbatim}}
+
+\subsection {Expression of the differential $d_{\otimes t}$}
+
+The differential $d_{\otimes t}$ of the twisted tensor product $B \otimes_t GB$ may be expressed as the sum
+of the differential of the simple tensor product $B \otimes GB$ and the following morphism of degree $-1$,
+$$\nabla: B \otimes GB \longrightarrow B \otimes GB,$$
+where $\nabla$ is the composition of the morphisms of the following sequence:
+$$B\otimes GB \buildrel {\Delta\otimes 1_{GB}} \over \longrightarrow  (B\otimes B) \otimes GB
+              \buildrel {assoc} \over \longrightarrow  B \otimes (B \otimes GB)
+              \buildrel {1_B \otimes (t \otimes 1_{GB})} \over \longrightarrow  B \otimes (GB \otimes GB)
+              \buildrel {1_B \otimes \varpi} \over \longrightarrow B \otimes GB.$$
+In the previous formula, $\Delta$ is the coproduct in the coalgebra $B$, $\varpi$ is the
+product in the algebra $GB$, $1_B$ is the identity morphism in $B$ and $1_{GB}$ the identity morphism
+in $GB$. We need also, as in a previous example, an ``assoc'' morphism for
+the compound tensor product. The user will note the easiness for coding in {\tt Kenzo} such
+a long composition of morphisms.
+{\footnotesize\begin{verbatim}
+
+(setf 3-left (tnsr-prdc (tnsr-prdc d d) gd))  ==>
+
+[K56 Chain-Complex]
+
+(setf 3-right (tnsr-prdc d (tnsr-prdc d gd)))  ==>
+
+[K58 Chain-Complex]
+
+(setf assoc (build-mrph
+               :sorc 3-left
+               :trgt 3-right
+               :degr 0
+               :intr #'(lambda (degr a2-a) 
+                         (with-tnpr (degra2 gnrta2 degra gnrta) a2-a
+                            (with-tnpr (degr1 gnrt1 degr2 gnrt2) gnrta2
+                               (cmbn (+ degr1 degr2 degra) 
+                                     1 (tnpr degr1 
+                                             gnrt1 
+                                             (+ degr2 degra) 
+                                             (tnpr degr2 gnrt2 degra gnrta))))))
+               :strt :gnrt
+               :orgn '(assoc-double-tensor-product)))   ==>
+
+[K60 Morphism (degree 0)]
+
+(setf id-d (idnt-mrph d))  ==>
+
+[K61 Morphism (degree 0)]
+
+(setf id-gd (idnt-mrph gd))  ==>
+
+[K62 Morphism (degree 0)]
+
+(setf nabla 
+ (add (dffr (tnsr-prdc d gd))
+      (i-cmps (tnsr-prdc id-d (aprd gd))
+              (tnsr-prdc id-d (tnsr-prdc cochain id-gd))
+              assoc
+              (tnsr-prdc (cprd d) id-gd))))  ==>
+
+[K74 Morphism (degree -1)]
+\end{verbatim}}
+We verify that the morphism {\tt nabla} and the differential of the 
+twisted tensor product (accessible
+through the symbol {\tt d-twtp-gd}) return the same results: 
+{\footnotesize\begin{verbatim}
+(? (dffr d-twtp-gd) 2 (tnpr 1 3 1 (loop3 0 7 1)))  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<1 * <TnPr 1 <<Loop[7]>>>>
+<-1 * <TnPr 1 <<Loop[0 3][7]>>>>
+<1 * <TnPr 3 <<Loop[3\-1][5]>>>>
+<-1 * <TnPr 3 <<Loop[6]>>>>
+------------------------------------------------------------------------------
+
+(? nabla 2 (tnpr 1 3 1 (loop3 0 7 1)))  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<1 * <TnPr 1 <<Loop[7]>>>>
+<-1 * <TnPr 1 <<Loop[0 3][7]>>>>
+<1 * <TnPr 3 <<Loop[3\-1][5]>>>>
+<-1 * <TnPr 3 <<Loop[6]>>>>
+------------------------------------------------------------------------------
+
+(setf zero (sbtr nabla (dffr d-twtp-gd)))  ==>
+
+[K75 Morphism (degree -1)]
+
+(? zero 2 (tnpr 1 3 1 (loop3 0 7 1)))  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+------------------------------------------------------------------------------
+
+(? zero 5 (tnpr  3 15 2 (loop3 0 15 1)))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+------------------------------------------------------------------------------
+\end{verbatim}}
+
+\newpage
+
+\subsection {The cup product of the twisting cochain}
+
+The cup product\index{twisting cochain!cup product} $t \sqcup t$ of the twisting cochain $t$,
+$$t\sqcup t: B \longrightarrow GB$$
+is defined by the following composition of morphisms:
+$$B \buildrel {\Delta} \over \longrightarrow B \otimes B
+    \buildrel {t \otimes t} \over \longrightarrow GB \otimes GB 
+    \buildrel {\varpi} \over \longrightarrow GB.$$
+We may now verify the formula
+$$ d_{GB} \circ t + t \circ d_B + t\sqcup t =0,$$
+where $d_B$ and $d_{GB}$ are  the respective differential morphisms in $B$ and $GB$.
+{\footnotesize\begin{verbatim}
+
+(setf t-cup-t (i-cmps (aprd gd) (tnsr-prdc cochain cochain) (cprd d)))  ==>
+
+[K78 Morphism (degree -2)]
+
+(setf dt (cmps (dffr gd) cochain))  ==>
+
+[K79 Morphism (degree -2)]
+ 
+(setf td (cmps cochain (dffr d)))  ==>
+
+[K80 Morphism (degree -2)]
+
+(setf zero-2 (i-add dt td t-cup-t))  ==>
+
+[K82 Morphism (degree -2)]
+
+(? zero-2 3 15)  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+------------------------------------------------------------------------------
+
+(? zero-2 4 31)  ==>
+
+----------------------------------------------------------------------{CMBN 2}
+------------------------------------------------------------------------------
+
+(? zero-2 5 63)  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+------------------------------------------------------------------------------
+
+(? zero-2 6 127)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+------------------------------------------------------------------------------
+\end{verbatim}}
+
+So the user has easily verified the {\em cochain condition} for the twisting
+cochain $t$.
+\newpage
+
+\section {The essential contraction}
+
+It is known that if $B$ is a reduced simplicial set, the space $B \times_\tau GB$ is
+contractible. So it is possible to build a reduction of this space over ${\Z}$.
+This reduction depends of the important contraction
+$$\chi_{\times\tau}:  {{\cal C}_*(B) \times_\tau {\cal C}_*(GB)} \longrightarrow 
+                      {{\cal C}_*(B) \times_\tau {\cal C}_*(GB)}, $$
+which is a homotopy operator (degree: $+1$) satisfying the relation
+$$d \circ \chi_{\times\tau} + \chi_{\times\tau} \circ d =1.$$
+Now, from the reduction
+$$
+\diagram{
+{{\cal C}_*(X \times_\tau GX)} & \stackrel{h}{\longrightarrow} & {}^s{{\cal C}_*(X \times_\tau GX)} \cr
+ {\scriptstyle f} \downarrow \uparrow {\scriptstyle g}  \cr
+ {{\cal C}_*(X) \otimes_t {\cal C}_*(GX)} \cr
+}
+$$
+there is also  an induced contraction 
+$$\chi_{\otimes t}:  {{\cal C}_*(B) \otimes_t {\cal C}_*(GB)} \longrightarrow 
+                      {{\cal C}_*(B) \otimes_t {\cal C}_*(GB)}, $$
+defined by $\chi_{\otimes t}= f \circ \chi_{\times\tau} \circ g$.
+This implies that the twisted tensor product is also contractible over ${\Z}$.
+\par
+The two functions of {\tt Kenzo} for this construction are:
+\vskip 0.35cm
+{\parindent=0mm
+{\leftskip=5mm 
+{\tt crts-contraction} {\em space} \hfill {\em [Function]} \par}
+{\leftskip=15mm 
+Return the homotopy morphism corresponding to the contraction
+$\chi_{\times\tau}$. The lisp definition is:
+{\footnotesize\begin{verbatim}
+          (defun CRTS-CONTRACTION 
+             (space
+                &aux (twisted-crts-prdc (twisted-crts-prdc space)))
+             (the morphism
+                (build-mrph
+                   :sorc twisted-crts-prdc 
+                   :trgt twisted-crts-prdc 
+                   :degr +1
+                   :intr (crts-contraction-intr 
+                               (cmpr space)
+                               (bspn space) 
+                               (face space) 
+                               (cmpr twisted-crts-prdc))
+                   :strt :gnrt
+                   :orgn `(crts-contraction ,space))))
+\end{verbatim}}
+At execution time, the work is essentialy done by the function put in the
+slot {\tt :intr}. \par}
+{\leftskip=5mm 
+{\tt tnpr-contraction} {\em space} \hfill {\em [Function]} \par}
+{\leftskip=15mm 
+Return the induced morphism $\chi_{\otimes t}= f \circ \chi_{\times\tau} \circ g$,
+as shown by the lisp definition:
+{\footnotesize\begin{verbatim}
+          (defun TNPR-CONTRACTION 
+             (space
+                &aux (szczarba (szczarba space))
+                     (f (f szczarba))
+                     (g (g szczarba))
+                     (crts-contraction (crts-contraction space)))
+
+             (the morphism
+                (i-cmps f crts-contraction g)))
+\end{verbatim}} \par} 
+}
+
+\subsection* {Examples}
+
+Let us use again our familiar simplicial set $\bar\Delta$. First we apply  the
+homotopy operator $\chi_{\times t}$   upon various generators. 
+Note that the binary coding of the simplices
+allows normal arithmetic operators to generate them.
+{\footnotesize\begin{verbatim}
+(setf delta (deltab))  ==>
+
+[K1 Simplicial-Set]
+
+(setf chi-x (crts-contraction delta))  ==>
+
+[K28 Morphism (degree 1): K23 -> K23]
+
+(? chi-x 0 (crpr 0 1 0 +null-loop+))  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+------------------------------------------------------------------------------
+
+(? chi-x 0 (crpr 0 1 0 (loop3 0 96 1)))  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<-1 * <CrPr - 96 0 <<Loop>>>>
+------------------------------------------------------------------------------
+
+(? chi-x 0 (crpr 0 1 0 (loop3 0 96 1 0 (+ 256 128) 1)))  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<-1 * <CrPr - 96 0 <<Loop[384]>>>>
+<-1 * <CrPr - 384 0 <<Loop>>>>
+------------------------------------------------------------------------------
+
+(? chi-x 0 (crpr 0 1 0 (loop3 0 96 1 0 (+ 256 128) 1 0 (+ 512 1024) 1)))  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<-1 * <CrPr - 96 0 <<Loop[384][1536]>>>>
+<-1 * <CrPr - 384 0 <<Loop[1536]>>>>
+<-1 * <CrPr - 1536 0 <<Loop>>>>
+------------------------------------------------------------------------------
+
+(? chi-x 0 (crpr 0 1 0 (loop3 0 96 2)))  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<-1 * <CrPr - 96 0 <<Loop>>>>
+<-1 * <CrPr - 96 0 <<Loop[96]>>>>
+------------------------------------------------------------------------------
+
+(? chi-x 1 (crpr 0 3 0 (loop3 0 (+ 32 64 128) 1)))  ==>
+
+----------------------------------------------------------------------{CMBN 2}
+<1 * <CrPr - 224 1-0 <<Loop>>>>
+<-1 * <CrPr 1 3 0 <<Loop[224]>>>>
+<1 * <CrPr 1 96 0 <<Loop[224]>>>>
+------------------------------------------------------------------------------
+
+(? chi-x 2 (crpr 0 7 0 (loop3 0 (+ 32 64 128 256) 1)))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<-1 * <CrPr - 480 2-1-0 <<Loop>>>>
+<1 * <CrPr 2 7 1 <<Loop[480]>>>>
+<-1 * <CrPr 2 224 1 <<Loop[480]>>>>
+<-1 * <CrPr 2-1 5 0 <<Loop[480]>>>>
+<1 * <CrPr 2-1 160 0 <<Loop[480]>>>>
+------------------------------------------------------------------------------
+
+(? chi-x 3 (crpr 2 7 1 (loop3 2 (+ 32 64 128) 2 4 (+ 32 64 128) -2)))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<-1 * <CrPr 3-1 7 2-0 <<Loop[1 224\2][2 224\-2]>>>>
+<1 * <CrPr 3-2 7 1-0 <<Loop[1 224\2][2 224\-2]>>>>
+------------------------------------------------------------------------------
+
+(? chi-x 3 (crpr 2 7 4 (loop3 2 (+ 32 64 128) 2 1 (+ 32 64 128) -2)))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+------------------------------------------------------------------------------
+
+(? chi-x 3 (crpr 2 7 1 (loop3 2 (+ 32 64 128) -2 4 (+ 32 64 128) 2)))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<-1 * <CrPr 3-1 7 2-0 <<Loop[1 224\-2][2 224\2]>>>>
+<1 * <CrPr 3-2 7 1-0 <<Loop[1 224\-2][2 224\2]>>>>
+------------------------------------------------------------------------------
+
+(? chi-x 3 (crpr 2 7 4 (loop3 2 (+ 32 64 128) -2 1 (+ 32 64 128) 2)))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+------------------------------------------------------------------------------
+
+(? chi-x 3 (crpr 1 7 2 (loop3 2 (+ 32 64 128) 2 4 (+ 32 64 128) -2)))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<-1 * <CrPr 3-0 7 2-1 <<Loop[1 224\2][2 224\-2]>>>>
+------------------------------------------------------------------------------
+
+(? chi-x 3 (crpr 4 7 2 (loop3 2 (+ 32 64 128) 2 1 (+ 32 64 128) -2)))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+------------------------------------------------------------------------------
+
+(? chi-x 3 (crpr 1 7 2 (loop3 2 (+ 32 64 128) -2 4 (+ 32 64 128) 2)))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<-1 * <CrPr 3-0 7 2-1 <<Loop[1 224\-2][2 224\2]>>>>
+------------------------------------------------------------------------------
+
+(? chi-x 3 (crpr 4 7 2 (loop3 2 (+ 32 64 128) -2 1 (+ 32 64 128) 2)))  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+------------------------------------------------------------------------------
+\end{verbatim}}
+Then, for testing  $\chi_{\otimes t}$
+we use the image of all those generators by the function {\tt f} of the Brown reduction.
+$$
+\diagram{
+{{\cal C}_*(X \times_\tau GX)} & \stackrel{h}{\longrightarrow} & {}^s{{\cal C}_*(X \times_\tau GX)} \cr
+ {\scriptstyle f} \downarrow \uparrow {\scriptstyle g}  \cr
+ {{\cal C}_*(X) \otimes_t {\cal C}_*(GX)} \cr
+}
+$$
+{\footnotesize\begin{verbatim}
+(setf *tnpr-with-degrees* t)  ==>
+
+T
+
+(setf chi-t (tnpr-contraction delta))  ==>
+
+[K54 Morphism (degree 1): K50 -> K50]
+
+(setf reduc (szczarba delta))  ==>
+
+[K52 Reduction]
+
+(setf f (f reduc))  ==>
+
+[K42 Morphism (degree 0): K23 -> K50]
+
+(? f 0 (crpr 0 1 0 +null-loop+))  ==>
+
+----------------------------------------------------------------------{CMBN 0}
+<1 * <TnPr 0 1 0 <<Loop>>>>
+------------------------------------------------------------------------------
+
+(? chi-t *)  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+------------------------------------------------------------------------------
+
+(? f 0 (crpr 0 1 0 (loop3 0 96 1))) ==>
+
+----------------------------------------------------------------------{CMBN 0}
+<1 * <TnPr 0 1 0 <<Loop[96]>>>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+\newpage
+{\footnotesize\begin{verbatim}
+(? chi-t *)  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<-1 * <TnPr 1 96 0 <<Loop>>>>
+------------------------------------------------------------------------------
+
+(? f 0 (crpr 0 1 0 (loop3 0 96 1 0 (+ 256 128) 1)))  ==>
+
+----------------------------------------------------------------------{CMBN 0}
+<1 * <TnPr 0 1 0 <<Loop[96][384]>>>>
+------------------------------------------------------------------------------
+
+(? chi-t *)  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<-1 * <TnPr 1 96 0 <<Loop[384]>>>>
+<-1 * <TnPr 1 384 0 <<Loop>>>>
+------------------------------------------------------------------------------
+
+(? f 0 (crpr 0 1 0 (loop3 0 96 1 0 (+ 256 128) 1 0 (+ 512 1024) 1)))  ==>
+
+----------------------------------------------------------------------{CMBN 0}
+<1 * <TnPr 0 1 0 <<Loop[96][384][1536]>>>>
+------------------------------------------------------------------------------
+
+(? chi-t *)  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<-1 * <TnPr 1 96 0 <<Loop[384][1536]>>>>
+<-1 * <TnPr 1 384 0 <<Loop[1536]>>>>
+<-1 * <TnPr 1 1536 0 <<Loop>>>>
+------------------------------------------------------------------------------
+
+(? f 0 (crpr 0 1 0 (loop3 0 96 2)))  ==>
+
+----------------------------------------------------------------------{CMBN 0}
+<1 * <TnPr 0 1 0 <<Loop[96\2]>>>>
+------------------------------------------------------------------------------
+
+(? chi-t *)  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<-1 * <TnPr 1 96 0 <<Loop>>>>
+<-1 * <TnPr 1 96 0 <<Loop[96]>>>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+\newpage
+{\footnotesize\begin{verbatim}
+(? f 1 (crpr 0 3 0 (loop3 0 (+ 32 64 128) 1)))  ==>
+
+----------------------------------------------------------------------{CMBN 1}
+<1 * <TnPr 0 1 1 <<Loop[0 3][224]>>>>
+<1 * <TnPr 1 3 0 <<Loop[192]>>>>
+------------------------------------------------------------------------------
+
+(? chi-t *)  ==>
+
+----------------------------------------------------------------------{CMBN 2}
+<-1 * <TnPr 1 3 1 <<Loop[224]>>>>
+<1 * <TnPr 1 96 1 <<Loop[224]>>>>
+<1 * <TnPr 2 224 0 <<Loop>>>>
+------------------------------------------------------------------------------
+
+(? f 2 (crpr 0 7 0 (loop3 0 (+ 32 64 128 256) 1)))  ==>
+
+----------------------------------------------------------------------{CMBN 2}
+<-1 * <TnPr 0 1 2 <<Loop[1-0 3][0 7][1 416]>>>>
+<1 * <TnPr 0 1 2 <<Loop[1-0 3][1 7][480]>>>>
+<1 * <TnPr 1 3 1 <<Loop[0 6][448]>>>>
+<1 * <TnPr 2 7 0 <<Loop[384]>>>>
+------------------------------------------------------------------------------
+
+(? chi-t *)  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * <TnPr 0 1 3 <<Loop[2-1-0 3][1-0 7][2 480]>>>>
+<-1 * <TnPr 0 1 3 <<Loop[2-1-0 3][2-0 7][1 480]>>>>
+<-1 * <TnPr 0 32 3 <<Loop[2-1-0 96][1-0 224][2 480]>>>>
+<1 * <TnPr 0 32 3 <<Loop[2-1-0 96][2-0 224][1 480]>>>>
+<-1 * <TnPr 1 5 2 <<Loop[480]>>>>
+<1 * <TnPr 1 160 2 <<Loop[480]>>>>
+<1 * <TnPr 2 7 1 <<Loop[448]>>>>
+<-1 * <TnPr 2 224 1 <<Loop[448]>>>>
+<-1 * <TnPr 3 480 0 <<Loop>>>>
+------------------------------------------------------------------------------
+
+(? f 3 (crpr 2 7 1 (loop3 2 (+ 32 64 128) 2 4 (+ 32 64 128) -2)))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * <TnPr 0 1 3 <<Loop[2-1-0 3][2-1 7][2-0 224\2][3-0 224\-2]>>>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+\newpage
+{\footnotesize\begin{verbatim}
+(? chi-t *)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * <TnPr 2 7 2 <<Loop[1 224\2][2 224\-2]>>>>
+------------------------------------------------------------------------------
+
+(? f 3 (crpr 2 7 4 (loop3 2 (+ 32 64 128) 2 1 (+ 32 64 128) -2)))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+------------------------------------------------------------------------------
+
+(? chi-t *)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+------------------------------------------------------------------------------
+
+(? f 3 (crpr 2 7 1 (loop3 2 (+ 32 64 128) -2 4 (+ 32 64 128) 2)))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * <TnPr 0 1 3 <<Loop[2-1-0 3][2-1 7][2-0 224\-2][3-0 224\2]>>>>
+------------------------------------------------------------------------------
+
+(? chi-t *)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * <TnPr 2 7 2 <<Loop[1 224\-2][2 224\2]>>>>
+------------------------------------------------------------------------------
+
+(? f 3 (crpr 2 7 4 (loop3 2 (+ 32 64 128) -2 1 (+ 32 64 128) 2)))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+------------------------------------------------------------------------------
+
+(? chi-t *)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+------------------------------------------------------------------------------
+
+(? f 3 (crpr 1 7 2 (loop3 2 (+ 32 64 128) 2 4 (+ 32 64 128) -2)))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<-1 * <TnPr 0 1 3 <<Loop[2-1-0 3][1-0 7][2-1 224\2][3-2 224\-2]>>>>
+<1 * <TnPr 0 1 3 <<Loop[2-1-0 3][2-0 7][2-1 224\2][3-1 224\-2]>>>>
+------------------------------------------------------------------------------
+
+(? chi-t *)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+------------------------------------------------------------------------------
+
+(? f 3 (crpr 4 7 2 (loop3 2 (+ 32 64 128) 2 1 (+ 32 64 128) -2)))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * <TnPr 0 1 3 <<Loop[2-1-0 3][1-0 7][2-1 224\2][2-0 224\-2]>>>>
+<-1 * <TnPr 0 1 3 <<Loop[2-1-0 3][2-0 7][2-1 224\2][1-0 224\-2]>>>>
+<1 * <TnPr 2 7 1 <<Loop[0 192\2][224\-2]>>>>
+------------------------------------------------------------------------------
+
+(? chi-t *)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+------------------------------------------------------------------------------
+
+(? f 3 (crpr 1 7 2 (loop3 2 (+ 32 64 128) -2 4 (+ 32 64 128) 2)))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<-1 * <TnPr 0 1 3 <<Loop[2-1-0 3][1-0 7][2-1 224\-2][3-2 224\2]>>>>
+<1 * <TnPr 0 1 3 <<Loop[2-1-0 3][2-0 7][2-1 224\-2][3-1 224\2]>>>>
+------------------------------------------------------------------------------
+
+(? chi-t *)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+------------------------------------------------------------------------------
+
+(? f 3 (crpr 4 7 2 (loop3 2 (+ 32 64 128) -2 1 (+ 32 64 128) 2)))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * <TnPr 0 1 3 <<Loop[2-1-0 3][1-0 7][2-1 224\-2][2-0 224\2]>>>>
+<-1 * <TnPr 0 1 3 <<Loop[2-1-0 3][2-0 7][2-1 224\-2][1-0 224\2]>>>>
+<1 * <TnPr 2 7 1 <<Loop[0 192\-2][224\2]>>>>
+------------------------------------------------------------------------------
+
+(? chi-t *)  ==>
+
+----------------------------------------------------------------------{CMBN 4}
+------------------------------------------------------------------------------
+\end{verbatim}}
+We verify now
+the required property of the homotopy operator $\chi_{\times\tau}$. As usual, we build
+by composition a morphism {\tt zero}. 
+{\footnotesize\begin{verbatim}
+(setf dfr (bndr (twisted-crts-prdc delta)))   ==>
+
+[K24 Morphism (degree -1)]
+
+(setf zero (i-sbtr (idnt-mrph (sorc dfr)) (cmps dfr chi-x) 
+                   (cmps chi-x dfr)))   ==>
+
+[K33 Morphism (degree 0)]
+
+(setf simplx (crpr 4 7 2 (loop3 2 (+ 32 64 128) -2 1 (+ 32 64 128) 2)))  ==>
+
+<CrPr 2 7 1 <<Loop[1 224\-2][0 224\2]>>>
+
+(? zero 3 simplx)
+
+----------------------------------------------------------------------{CMBN 3}
+------------------------------------------------------------------------------
+\end{verbatim}}
+Then, we do the same test for the homotopy operator $\chi_{\otimes t}$. 
+{\footnotesize\begin{verbatim}
+(setf tw (twisted-tnsr-prdc d))  ==>
+
+[K55 Chain-Complex]
+
+(setf zero-2  (i-sbtr (idnt-mrph tw) (cmps tw chi-t) (cmps chi-t tw)))  ==>
+
+[K64 Morphism (degree 0)]
+
+(setf simpx2 (tnpr 0 1 3 (loop3 0 (mask 5) 2 0 (* 32 (mask 5)) -1)))  ==>
+
+<TnPr 1 <<Loop[31\2][992\-1]>>>
+
+(time (? zero-2 3 simpx2))  ==>
+
+; cpu time (non-gc) 6,050 msec user, 260 msec system
+; cpu time (gc)     450 msec user, 0 msec system
+; cpu time (total)  6,500 msec user, 260 msec system
+; real time  6,903 msec
+; space allocation:
+;  947,980 cons cells, 0 symbols, 71,344 other bytes
+
+----------------------------------------------------------------------{CMBN 3}
+------------------------------------------------------------------------------
+\end{verbatim}}
+Note nevertheless that the relation is not satisfied for the base generator
+$*\otimes *$, namely the tensor product of both base generators.
+This is due to the fact that both contractions,  $\chi_{\times t}$ and  $\chi_{\otimes t}$,
+correspond to  reductions over  ${\Z}$ and not on $0$.
+{\footnotesize\begin{verbatim}
+(setf gnrt-0 (tnpr 0 1 0 +null-loop+))  ==>
+
+<TnPr 1 <<Loop>>>
+
+(? zero-2 0 gnrt-0)  ==>
+
+----------------------------------------------------------------------{CMBN 0}
+<1 * <TnPr 1 <<Loop>>>>
+------------------------------------------------------------------------------
+\end{verbatim}}
+Let us build, for instance, the reduction of the twisted tensor product over ${\Z}$ and check it. 
+In that case, the two homomorphisms
+$f$ and $g$ are respectively the {\em augmentation} and {\em coaugmentation}
+morphisms.
+$$
+\diagram{
+{{\cal C}_*(B) \otimes_t {\cal C}_*(GB)} & \stackrel{\chi_{\otimes t}}{\longrightarrow} &
+  {}^s{{\cal C}_*(B) \otimes_t {\cal C}_*(GB)} \cr
+ {\scriptstyle aug} \downarrow \uparrow {\scriptstyle coaug}  \cr
+ {{\cal C}_*({\Z})} \cr
+}
+$$
+We recall that, the unit chain complex corresponding to ${\Z}$ is built by the function
+{\tt z-chcm}. The unique generator in degree $0$ is {\tt :z-gnrt}. 
+{\footnotesize\begin{verbatim}
+(setf aug (build-mrph
+            :sorc tw 
+            :trgt (z-chcm) 
+            :degr 0
+            :intr #'(lambda (degr gnrt)
+                       (if (zerop degr)
+                           (term-cmbn 0 1 :z-gnrt)
+                           (zero-cmbn degr)))
+            :strt :gnrt 
+            :orgn '(aug tw)))  ==>
+
+[K67 Cohomology-Class (degree 0)]
+
+(setf coaug (build-mrph
+              :sorc (z-chcm) 
+              :trgt tw 
+              :degr 0
+              :intr #'(lambda (degr gnrt)
+                         (if (zerop degr)
+                             (term-cmbn 0 1 (tnpr 0 1 0 +null-loop+))
+                             (zero-cmbn degr)))
+              :strt :gnrt
+              :orgn '(coaug tw)))  ==>
+
+[K68 Morphism (degree 0)]
+
+(setf rdct (build-rdct :f aug 
+                       :g coaug 
+                       :h Chi-t 
+                       :orgn '(reduction-tw-Z)))   ==>
+
+[K69 Reduction]
+
+(pre-check-rdct rdct)  ==>
+
+---done---
+
+(setf *tc* (cmbn 3 1 (tnpr 1 3 2 (loop3 0 15 2))))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * <TnPr 3 <<Loop[15\2]>>>>
+------------------------------------------------------------------------------
+
+(setf *bc* (cmbn 0 1 :z-gnrt))  ==>
+
+----------------------------------------------------------------------{CMBN 0}
+<1 * Z-GNRT>
+------------------------------------------------------------------------------
+
+(check-rdct)  ==>
+
+*TC* => 
+----------------------------------------------------------------------{CMBN 3}
+<1 * <TnPr 3 <<Loop[15\2]>>>>
+------------------------------------------------------------------------------
+
+*BC* => 
+----------------------------------------------------------------------{CMBN 0}
+<1 * Z-GNRT>
+------------------------------------------------------------------------------
+
+Checking *TDD* = 0
+Result: 
+----------------------------------------------------------------------{CMBN 1}
+------------------------------------------------------------------------------
+
+              ....... All results null ......
+
+Checking *HG* = 0
+Result: 
+----------------------------------------------------------------------{CMBN 1}
+------------------------------------------------------------------------------
+\end{verbatim}}
+
+\newpage
+
+\section {An unproved property of the algebraic Kan contraction}
+
+Since the early version of the software (1990), and through a host of examples, 
+an amazing algebraic property of the Kan contraction $\chi_{\otimes t}$ has
+been experimentally discovered. Many computations have been done of 
+$\chi_{\otimes t}(b \otimes g)$, for various choices of $b \otimes g$
+and in all these cases,  as soon as $degree(b) > 0$, then the result is null.
+In other words,
+$\chi_{\otimes t}$ {\em is null outside the base fiber.}
+Up to now, no actual proof of this result has yet  been given. \par
+We show that, using the ``soft'' version of $\bar{\Delta}$.
+
+{\footnotesize\begin{verbatim}
+(setf db (soft-deltab))  ==>
+
+[K1 Simplicial-Set]
+ 
+(setf tt (tnpr-contraction db))  ==>
+
+[K54 Morphism (degree 1)]
+
+(setf gnrt1 (tnpr 3 (code '(0 1 2 3 4)) 
+                 4 (loop3 0 (code '(0 1 2 3 4 5)) 2)))  ==>
+
+<TnPr 3 0-1-2-3-4 4 <<Loop[0-1-2-3-4-5\2]>>>
+
+(? tt 7 gnrt1)  ==>
+
+----------------------------------------------------------------------{CMBN 8}
+------------------------------------------------------------------------------
+
+(setf gnrt2 (tnpr 4 (code '(2 4 6 8 10 12))  
+                  5 (loop3 0 (code '(1 3 5 7 9 11 13)) 5)))  ==>
+
+<TnPr 4 2-4-6-8-10-12  5 <<Loop[1-3-5-7-9-11-13\5]>>>
+
+(? tt 9 gnrt2)  ==>
+
+----------------------------------------------------------------------{CMBN 10}
+------------------------------------------------------------------------------
+\end{verbatim}}
+\newpage
+But if $degree(b) = 0$, then the result is non--null in general.
+{\footnotesize\begin{verbatim}
+(? tt 2 (tnpr 0 (code '(0)) 2 (loop3 0 (code '(0 1 2 3)) 1)))  ==>
+
+----------------------------------------------------------------------{CMBN 3}
+<-1 * <TnPr 0 <<Loop[2-1-0 0-1][1-0 0-1-2][2 0-1-2-3]>>>>
+<1 * <TnPr 0 <<Loop[2-1-0 0-1][2-0 0-1-2][1 0-1-2-3]>>>>
+<1 * <TnPr 0-2 <<Loop[0-1-2-3]>>>>
+<-1 * <TnPr 0-1-2 <<Loop[1-2-3]>>>>
+<-1 * <TnPr 0-1-2-3 <<Loop>>>>
+------------------------------------------------------------------------------
+
+(? tt 4 (tnpr 0 (code '(0)) 4 (loop3 0 (code '(1 2 3 4 5 6)) 3)))  ==>
+
+----------------------------------------------------------------------{CMBN 5}
+<1 * <TnPr 1 <<Loop[4-3-2-1-0 1-2][3-2-1-0 1-2-3][4-2-1-0 1-3-4][4-3-1-0 1-4-5]
+                   [4-3-2 1-4-5-6]>>>>
+<1 * <TnPr 1 <<Loop[4-3-2-1-0 1-2][3-2-1-0 1-2-3][4-2-1-0 1-3-4][4-3-1-0 1-4-5]
+                   [4-3-2 1-4-5-6\2]>>>>
+... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... 
+------------------------------------------------------------------------------
+
+(length *)  ==>
+
+537
+\end{verbatim}}
+
+\subsection* {Lisp file concerned in this chapter}
+
+{\tt ls-twisted-products.lisp}.
+
