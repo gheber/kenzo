@@ -1,3 +1,10 @@
 *.FASL
 *.fasl
 *.lisp-temp
+*.log
+*.dvi
+*.aux
+*.idx
+*.toc
+*.ilg
+*.ind
