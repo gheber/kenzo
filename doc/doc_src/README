@@ -1,0 +1,7 @@
+To build docs, run
+
+(xe)latex kendoc
+makeindex kendoc
+(xe)latex kendoc
+
+Tested with texlive 2014

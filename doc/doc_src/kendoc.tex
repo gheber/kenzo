@@ -1,4 +1,7 @@
-\documentstyle[psfig,11pt]{report}
+\documentclass[11pt]{report}
+\usepackage{makeidx}
+\usepackage{graphics}
+\usepackage{amssymb}
 \pagestyle{headings}
 \makeindex
 \parindent=0mm
@@ -8,8 +11,6 @@
 %\evensidemargin=-.35in
 %\topmargin=-.50in
 
-\input amssym.def
-\input amssym.tex
 \newtheorem{thr}{Theorem}
 %\font\bb=msym10
 \def\N{{\Bbb N}}
@@ -149,7 +150,8 @@ The present documentation is a joint work between the second and third authors.
 \input {cstwdoc.tex}
 \input {emspdoc2.tex}
 \input {whithdoc.tex}
-\begin{theindex}
-\input kendoc.ind
-\end{theindex}
+%\begin{theindex}
+%\input kendoc.ind
+%\end{theindex}
+\printindex
 \end{document}
