@@ -47,6 +47,8 @@
       (dotimes (i (integer-length most-positive-fixnum) rslt)
 	(setf (aref rslt i) (the fixnum (1- (expt 2 i)))))))
 
+;; globals from combinations.lisp
+
 ;; globals from chain-complexes.lisp
 
 (DEFVAR *LIST-LIST* +EMPTY-LIST+)

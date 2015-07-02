@@ -12,11 +12,12 @@
 
 (DEFTYPE ANY () t)
 
-;;; 
+;;;
 ;;;  COMBINATIONS
 ;;;
 
 (DEFSTRUCT (CMBN (:print-function cmbn-print))
+  "Internal representation of combinations."
   (degr -1 :type fixnum)
   (list () :type list))
 
