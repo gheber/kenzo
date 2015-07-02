@@ -219,7 +219,7 @@
 					       :adjustable t
 					       :fill-pointer 0))
                                (make-list +maximal-dimension+)))
-		   (:cmbn nil)))
+		   (:cmbn (make-array 0))))
 	   (push mrph *mrph-list*)
 	   mrph))))
 
