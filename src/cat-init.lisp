@@ -61,16 +61,15 @@
 
 (DEFCONSTANT +SOURCE-EXTENSION+
   #+(or allegro clisp lispworks) "cl"
-  #+(or sbcl) "lisp"
-  #-(or allegro clisp lispworks sbcl)
-    (error "Not an Allegro or CLisp or LispWorks or SBCL environment."))
+  #+(or ccl sbcl) "lisp"
+  #-(or allegro ccl clisp lispworks sbcl)
+    (error "Not an Allegro or CCL or CLisp or LispWorks or SBCL environment."))
 
 (DEFCONSTANT +COMPILED-EXTENSION+ 
-    #+allegro "fasl"
+    #+(or allegro sbcl) "fasl"
+    #+ccl "lafsl"
     #+clisp "fas"
-    #+lispworks "ofasl"
-    #+sbcl "fasl"
-    )
+    #+lispworks "ofasl")
 
 (DEFUN LOAD-SFILES ()
    (mapc #'(lambda (file-name)

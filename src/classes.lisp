@@ -21,6 +21,11 @@
   (degr -1 :type fixnum)
   (list () :type list))
 
+#+ccl
+(DEFMETHOD make-load-form ((c cmbn) &optional env)
+  (declare (ignore env))
+  (make-load-form-saving-slots c))
+
 ;; CFFC = CoeFFiCient
 (DEFUN CFFC-P (object)
   (declare (type any object))
@@ -94,12 +99,6 @@
   (setf redefinition-warnings-saved
 	excl::*redefinition-warnings*
 	*redefinition-warnings* nil))
-
-(DEFCLASS CHAIN-COMPLEX () ())  ;; will be redefined later.
-
-(DEFCLASS MORPHISM () ())  ;; will be redefined later.
-
-(DEFCLASS HOMOTOPY-EQUIVALENCE () ())  ;;  will be redefined later
 
 ;;  IDNM = IDentification NuMber
 (DEFVAR *IDNM-COUNTER*)
@@ -275,6 +274,11 @@
 (DEFSTRUCT (ALLP (:print-function allp-print))
   (list #+allegro :type #+allegro iallp))
 
+#+ccl
+(DEFMETHOD make-load-form ((a allp) &optional env)
+  (declare (ignore env))
+  (make-load-form-saving-slots a))
+
 ;;;
 ;;;  ALGEBRAS
 ;;;
@@ -326,6 +330,11 @@
 (DEFSTRUCT (ABAR (:print-function abar-print))
   (list #+allegro :type #+allegro list))
 
+#+ccl
+(DEFMETHOD make-load-form ((a abar) &optional env)
+  (declare (ignore env))
+  (make-load-form-saving-slots a))
+
 ;;;
 ;;;  SIMPLICIAL SETS
 ;;;
@@ -353,7 +362,6 @@
   (dgop #+allegro :type #+allegro dgop)
   (gmsm #+allegro :type #+allegro gmsm))
 
-
 #|
 ()
 (absm-p 1)
@@ -363,7 +371,6 @@
 (absm-p '(:absm -5 . a)) ;; printer-error
 |#
 
-
 (DEFTYPE FACE () 'function)
 ;;   (function (indx dmns gmsm) absm)
 
@@ -372,7 +379,6 @@
 
 (DEFCLASS SIMPLICIAL-SET (coalgebra)
   ((face :type face :initarg :face :reader face1)))
-
 
 ;;;
 ;;;  SIMPLICIAL-MRPHS
@@ -502,6 +508,10 @@
 #+sbcl(eval-when (:compile-toplevel :load-toplevel :execute)
 	(sb-ext:lock-package :common-lisp))
 
+#+ccl
+(DEFMETHOD make-load-form ((l loop) &optional env)
+  (declare (ignore env))
+  (make-load-form-saving-slots l))
 
 ;;;
 ;;;  CLASSIFYING-SPACES
@@ -513,3 +523,8 @@
 (DEFSTRUCT (GBAR (:print-function gbar-print))
   (dmns -1 :type fixnum)
   (list () :type list))
+
+#+ccl
+(DEFMETHOD make-load-form ((g gbar) &optional env)
+  (declare (ignore env))
+  (make-load-form-saving-slots g))
