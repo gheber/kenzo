@@ -1,8 +1,10 @@
 
 (defsystem :kenzo-test
-  :description "Test suite for kenzo"
+  :description "A simple test suite for Kenzo"
   :serial t
-  :version "0.1"
+  :version "0.1.0"
+  :author "Francis Sergeraert <Francis.Sergeraert@ujf-grenoble.fr>"
+  :license "GPLv3"
   :depends-on (:kenzo :fiveam)
   :pathname #P"test/"
   :components ((:file "package")
