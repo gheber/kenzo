@@ -297,7 +297,7 @@
 			(= degr -1))
 	     (error "In (METHOD ADD CHAIN-COMPLEX MORPHISM), the data are not coherent."))
 	   (let ((new-dffr (add dffr perturbation strt)))
-	     (declare (type intr-mrph new-dffr))
+	     (declare (type morphism new-dffr))
 	     (let ((new-chcm (build-chcm
 			      :cmpr cmpr
 			      :basis basis
