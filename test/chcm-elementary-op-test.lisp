@@ -109,6 +109,7 @@
 ;;	       (f3 (cat:z-whitehead s3 2ch3))
 ;;	       (x (cat:fibration-total f3))
 	       (k (cat:k-z 3)))
+	  (declare (ignore k 2ch3))
 ;;	  (cat:homology x 0 10)
 ;;	  (setf ch3 (cat:chml-clss k 3))
 ;;	  (setf 2ch3 (cat:n-mrph 2 ch3))

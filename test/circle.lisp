@@ -6,7 +6,9 @@
 (defun circle ()
   (the cat:chain-complex
        (cat:build-chcm
-	:cmpr #'(lambda (gnrt1 gnrt2) (the cat:cmpr :equal))
+	:cmpr #'(lambda (gnrt1 gnrt2)
+		  (declare (ignore gnrt1 gnrt2))
+		  (the cat:cmpr :equal))
 	:basis #'(lambda (dmns)
 		   (the list
 			(case dmns (0 '(*)) (1 '(s1))
