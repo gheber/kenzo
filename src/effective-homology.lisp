@@ -131,6 +131,7 @@ Return NIL if it doesn't exist."
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :clos) t))
 
+(DEFGENERIC HMEQ (integer))
 
 (DEFMETHOD HMEQ ((n integer))
   (declare (fixnum n))
@@ -164,7 +165,6 @@ Return NIL if it doesn't exist."
    :orgn `(trivial-hmeq ,chcm)))
 
 ;; Functions.
-
 
 (DEFUN PRE-CHECK-RDCT (rdct)
   (declare (type reduction rdct))

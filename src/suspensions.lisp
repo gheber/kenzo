@@ -72,6 +72,9 @@
       obj
     (suspension-1 (suspension obj (1- n)))))    
 
+
+(DEFGENERIC SUSPENSION-1 (x))
+
 (DEFMETHOD SUSPENSION-1 ((chcm chain-complex))
   (the chain-complex
     (with-slots (cmpr basis dffr) chcm
@@ -244,7 +247,7 @@
   (funcall sd (cmbn 2 4 3))
   (funcall sd (cmbn 3 4 7))
 |#
-	 
+
 (DEFMETHOD SUSPENSION-1 ((mrph morphism))
   (the morphism
     (let ((orgn (orgn mrph)))

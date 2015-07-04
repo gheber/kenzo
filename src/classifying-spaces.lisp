@@ -290,6 +290,8 @@
     (print (funcall face i 4 gbar)))
 |#
 
+(DEFGENERIC CLASSIFYING-SPACE (smgr))
+
 (DEFMETHOD CLASSIFYING-SPACE ((smgr simplicial-group))
   (the simplicial-set
      (build-smst :cmpr (classifying-space-cmpr (cmpr smgr))
@@ -363,6 +365,7 @@
   (setf grin (classifying-space-grin-sintr (sintr (grin (k-z-1)))))
   (funcall grin 3 (gbar 3 0 '(1 2) 1 '() 0 '()))
 |#
+
 
 (DEFMETHOD CLASSIFYING-SPACE ((smgr ab-simplicial-group))
   (the ab-simplicial-group

@@ -9,6 +9,8 @@
 (DEFUN ECHCM (chcm)
    (rbcc (efhm chcm)))
 
+(DEFGENERIC HOMOLOGY (chcm degr1 &optional degr2))
+
 (DEFMETHOD HOMOLOGY ((chcm chain-complex) degr1 &optional (degr2 (1+ degr1)))
    (declare (fixnum degr1 degr2))
    (do ((degr degr1 (1+ degr)))

@@ -117,6 +117,7 @@ identifier IDNUM or NIL, if it doesn't exist."
 	  (result-clnm result) (result-rntm result))
   result)
 
+(DEFGENERIC ?2 (chcm-or-mrph cmbn))
 
 (DEFMETHOD ?2 ((mrph morphism) cmbn)
   (declare (type cmbn cmbn))
@@ -128,6 +129,8 @@ identifier IDNUM or NIL, if it doesn't exist."
    (type cmbn cmbn))
   (the cmbn
        (cmbn-? (dffr1 chcm) cmbn)))
+
+(DEFGENERIC ?3 (chcm-or-mrph degr gnrt))
 
 (DEFMETHOD ?3 ((mrph morphism) degr gnrt)
   (declare

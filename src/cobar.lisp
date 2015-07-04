@@ -86,7 +86,7 @@
 			    #'(lambda (item)
 				(declare (type gnrt item))
 				(list (cbgn degr item)))
-			    (funcall basis (1+ degr)))))                                         
+			    (funcall basis (1+ degr)))))
 	(mapcan
 	 #'(lambda (degr1)
 	     (declare (fixnum degr1))
@@ -265,6 +265,8 @@
 (funcall r 5 (allp 2 (d (mask 4)) 3 (d (mask 5)))))
 |#
 
+(DEFGENERIC VRTC-COBAR (chcm-or-hmeq-or-rdct))
+
 (DEFMETHOD VRTC-COBAR ((chcm chain-complex))
    (the chain-complex
       (with-slots (cmpr basis dffr) chcm
@@ -406,6 +408,8 @@
                          (cmbn-list (gnrt-? vrtc-dffr degr allp))
                          (cmbn-list (gnrt-? hrzn-dffr degr allp))))))
       (the intr-mrph #'rslt)))
+
+(DEFGENERIC COBAR (clgbr-or-hmeq))
 
 (DEFMETHOD COBAR ((coalgebra coalgebra))
    (let ((vrtc-cobar (vrtc-cobar coalgebra))

@@ -59,6 +59,7 @@
 	  :strt :cmbn
 	  :orgn `(opps ,mrph)))))
 
+(DEFGENERIC CMPS (chain-complex chcm-or-mrph &optional strt))
 
 (DEFMETHOD CMPS ((chcm1 chain-complex) (chcm2 chain-complex) &optional strt)
   (declare (type (or strt null) strt))
@@ -146,6 +147,7 @@
 	  :intr (n-mrph-intr n mrph) :strt :cmbn
 	  :orgn `(n-mrph ,n ,mrph)))))
 
+(DEFGENERIC ADD (chcm-or-mrph morphism &optional strt))
 
 (DEFMETHOD ADD ((mrph1 morphism) (mrph2 morphism) &optional strt)
   (declare (type (or null strt) strt))
@@ -199,6 +201,7 @@
 		       :strt :cmbn
 		       :orgn `(2mrph-add ,mrph1 ,mrph2 ,strt)))))))))
 
+(DEFGENERIC SBTR (chcm-or-mrph morphism &optional strt))
 
 (DEFMETHOD SBTR ((mrph1 morphism) (mrph2 morphism) &optional strt)
   (declare (type (or null strt) strt))
@@ -253,7 +256,6 @@
 		       :strt :cmbn
 		       :orgn `(2mrph-sbtr ,mrph1 ,mrph2 ,strt)))))))))
 
-
 (DEFUN CHANGE-SORC-TRGT (mrph &key new-sorc new-trgt)
   (declare
    (type morphism mrph)
@@ -274,7 +276,7 @@
    (type (or null chain-complex) new-sorc new-trgt))
   (the morphism
        (with-slots (sorc trgt) mrph
-         (when new-sorc 
+         (when new-sorc
 	   (setf sorc new-sorc))
          (when new-trgt
 	   (setf trgt new-trgt))

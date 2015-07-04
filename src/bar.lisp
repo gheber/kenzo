@@ -248,6 +248,8 @@
   (funcall r 5 (abar 2 (d 3) 3 (d 7))))
 |#
 
+(DEFGENERIC VRTC-BAR (chcm-hmeq-mrph))
+
 (DEFMETHOD VRTC-BAR ((chcm chain-complex))
    (the chain-complex
       (with-slots (cmpr basis dffr) chcm
@@ -396,6 +398,8 @@
                          (cmbn-list (gnrt-? hrzn-dffr degr abar))
                          (cmbn-list (gnrt-? vrtc-dffr degr abar))))))
       (the intr-mrph #'rslt)))
+
+(DEFGENERIC BAR (algebra-or-hmeq))
 
 (DEFMETHOD BAR ((algebra algebra))
    (let ((vrtc-bar (vrtc-bar algebra))

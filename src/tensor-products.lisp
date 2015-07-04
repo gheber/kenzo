@@ -194,6 +194,8 @@
   (funcall rslt 6 (tnpr 3 'a 3 'b)))
 |#
 
+(DEFGENERIC TNSR-PRDC (chcm-hmeq-mrph-rdct1 chcm-hmeq-mrph-rdct2))
+
 (DEFMETHOD TNSR-PRDC ((chcm1 chain-complex) (chcm2 chain-complex))
    (the chain-complex
       (with-slots ((cmpr1 cmpr) (basis1 basis) (dffr1 dffr)) chcm1
@@ -277,6 +279,8 @@
   (funcall rslt 6 (tnpr 2 'a 4 'b))
   (funcall rslt 5 (tnpr 3 'a 2 'b)))
 |#
+
+
 
 (DEFMETHOD TNSR-PRDC ((mrph1 morphism) (mrph2 morphism))
   (the morphism
