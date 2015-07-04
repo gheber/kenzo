@@ -7,6 +7,7 @@
 (PROVIDE "chcm-elementary-op")
 
 (DEFUN Z-CHCM ()
+  "Build the unit chain complex."
   (the chain-complex
        (build-chcm
 	:cmpr #'(lambda (gnrt1 gnrt2)
