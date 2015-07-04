@@ -8,6 +8,8 @@
 
 (DEFUN CAT-INIT ()
   (declare (special *idnm-counter* *results-n* *results-cmlt-tm*))
+  "Clear the list of user created chain complexes *CHCM-LIST* and reset the
+global counter to 0."
   (setf *idnm-counter* 0 *results-n* 0 *results-cmlt-tm* 0.0)
   (map nil #'(lambda (listname)
                (declare (symbol listname))
@@ -16,6 +18,7 @@
   (done))
 
 (DEFUN HOW-MANY-OBJECTS ()
+  "Return the number of user created objects by object type."
   (mapc #'(lambda (symbol)
 	    (declare (type (or string symbol) symbol))
 	    (let ((length (length (eval symbol))))
@@ -27,6 +30,7 @@
   (done))
 
 (DEFUN ALL-OBJECTS ()
+  "Return a string representation of a user created objects."
   (let ((object-list
 	 (sort (delete-duplicates
 		(mapcan #'(lambda (symbol)
@@ -41,6 +45,8 @@
 
 (DEFUN KD (idnm)
   (declare (fixnum idnm))
+  "Return the type of Kenzo object number IDNM and print the comment list
+(SLOT :ORGN) of the object."
   (dolist (list *list-list*)
     (let ((found (find idnm (eval list) :key #'idnm)))
       (when found
@@ -50,6 +56,7 @@
 
 (DEFUN K (idnm)
   (declare (fixnum idnm))
+  "Get the IDNM-th Kenzo object."
   (dolist (list *list-list*)
     (let ((found (find idnm (eval list) :key #'idnm)))
       (when found
@@ -57,6 +64,10 @@
 
 (DEFUN KD2 (idnm)
   (declare (fixnum idnm))
+  "Return the type of Kenzo object number IDNM, print the comment list
+(SLOT :ORGN) of the object and, recursively, return the same information
+for all Kenzo objects of the same type in relation with this object. Return
+the list of object numbers."
   (let ((k-list (k idnm)))
     (declare (list k-list))
     (unless k-list
@@ -88,6 +99,8 @@
 
 (DEFUN CHCM (idnm)
   (declare (fixnum idnm))
+  "Return from the list *CHCM-LIST* the chain complex instance with Kenzo
+identifier IDNUM or NIL, if it doesn't exist."
   (the (or chain-complex null)
        (find idnm *chcm-list* :key #'idnm)))
 
@@ -146,6 +159,8 @@
 
 (DEFUN MRPH (n)
   (declare (fixnum n))
+  "Return from the list *MRPH-LIST* the morphism instance with Kenzo identifier
+IDNUM or NIL, if it doesn't exist."
   (the (or morphism null)
        (find n *mrph-list* :key #'idnm)))
 
@@ -157,6 +172,8 @@
    (type intr-mrph intr-dffr)
    (type strt strt)
    (type list orgn))
+  "Returns an instance of CHAIN-COMPLEX. Use this function instead of creating
+instances via the standard constructor MAKE-INSTANCE."
   (the chain-complex
        (progn
          (let ((already (find orgn *chcm-list* :test #'equal :key #'orgn)))
@@ -198,6 +215,8 @@
    (type intr-mrph intr)
    (type strt strt)
    (list orgn))
+  "Returns an instance of MORPHISM. Use this function instead of creating
+instances via the standard constructor MAKE-INSTANCE."
   (the morphism
        (progn
          (let ((already (find orgn *mrph-list* :test #'equal :key #'orgn)))
@@ -379,18 +398,19 @@
   (declare
    (type cmprf cmpr)
    (type cmbn cmbn))
-  (let ((list (cmbn-list cmbn)))
-    (declare (list list))
-    (do ((mark1 (rest list) (cdr mark1))
-	 (mark2 list mark1))
-	((endp mark1))
-      (declare (list mark1 mark2))
-      (unless (eq :less (funcall cmpr (-gnrt mark2) (-gnrt mark1)))
-	(setf *wrong-cmbn* cmbn)
-	(error "In the combination located by *WRONG-CMBN*, the generators:~@
+  (when *cmbn-control*
+    (let ((list (cmbn-list cmbn)))
+      (declare (list list))
+      (do ((mark1 (rest list) (cdr mark1))
+	   (mark2 list mark1))
+	  ((endp mark1))
+	(declare (list mark1 mark2))
+	(unless (eq :less (funcall cmpr (-gnrt mark2) (-gnrt mark1)))
+	  (setf *wrong-cmbn* cmbn)
+	  (error "In the combination located by *WRONG-CMBN*, the generators:~@
                     ~A and ~A are in a wrong order." (cdar mark2)
-		    (cdar mark1)))))
-  cmbn)
+		    (cdar mark1))))))
+   cmbn)
 
 #|
 (DEFVAR *PROFILER-STACK*)
