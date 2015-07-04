@@ -3,8 +3,22 @@
 (defpackage #:cat
   (:use #:cl)
   (:export KENZO-VERSION
+
+	   ;; kenzo.lisp
+
+	   *BC*
+	   *BDD*
 	   *CMBN-CONTROL*
+	   *DF-FD*
+	   *DG-GD*
+	   *FH*
+	   *HG*
+	   *HH*
+	   *ID-FG*
+	   *ID-GF-DH-HD*
            *LIST-LIST*
+	   *TC*
+	   *TDD*
 
 	   ;; chain-complexes.lisp
 
@@ -24,7 +38,6 @@
 	   KD
 	   KD2
 	   MRPH
-
 
 	   ;; chcm-elementary-op.lisp
 
@@ -49,10 +62,14 @@
 	   F
 	   G
 	   H
+	   HOMOTOPY-EQUIVALENCE
 	   IABSM
+	   LRDCT
 	   MAKE-CMBN
 	   MAKE-RESULT
 	   MORPHISM
+	   ORGN
+	   REDUCTION
 	   TCC
 
 	   ;; combinations.lisp
@@ -78,6 +95,11 @@
 	   ;; effective-homology.lisp
 
 	   BUILD-RDCT
+	   CHECK-RDCT
+	   CMPS
+	   PRE-CHECK-RDCT
+	   TRIVIAL-HMEQ
+	   TRIVIAL-RDCT
 
 	   ;; fibrations.lisp
 
@@ -92,6 +114,7 @@
 	   -1-EXPT-N
 	   ?
 	   BASIS
+	   BCC
 	   BINOMIAL-P-Q
 	   CFFC
 	   CMBN-NON-ZERO-P
@@ -100,8 +123,10 @@
 	   DFFR
 	   GNRT
 	   I-SBTR
+	   RBCC
 	   TERM
 	   TERM-CMBN
+	   TCC
 
 	   ;; searching-homology.lisp
 
