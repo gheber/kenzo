@@ -55,9 +55,12 @@
 	     (:file "cl-space-efhm")
 	     (:file "whitehead")
 	     (:file "smith")
+	     #|
 	     (:module "anromero"
 		      :components
 		      ((:file "bicomplexes")
 		       (:file "filtered-complexes")
-		       (:file "spectral-sequences")))))))
+		       (:file "spectral-sequences")))
+	     |#
+	     ))))
 
