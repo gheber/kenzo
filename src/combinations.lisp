@@ -451,11 +451,11 @@ the terms of the result combination."
   (declare
    (type cmprf cmpr)
    (list n-cmbn-list))
-  "Create a linear combination of combinations. The first argument, CMPR, must be
-a function or macro, which is used to compare the generators of the combinations
-involved and to order the terms of the result combination. The second argument,
-N-CMBN-LIST, is a list dotted pairs (CONSes), where the first element is a
-non-zero integer and the second element is a combination."
+  "Create a linear combination of combinations. The first argument, CMPR, must
+be a function or macro, which is used to compare the generators of the
+combinations involved and to order the terms of the result combination.
+The second argument, N-CMBN-LIST, is a list dotted pairs (CONSes), where the
+first element is a non-zero integer and the second element is a combination."
   (unless (rest n-cmbn-list)
     (return-from cmbn-cmbn
       (n-cmbn (caar n-cmbn-list) (cdar n-cmbn-list))))
