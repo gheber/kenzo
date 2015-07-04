@@ -11,12 +11,20 @@
 	   ?2
 	   ?3
 	   +TOO-MUCH-TIME+
+	   ALL-OBJECTS
 	   BUILD-CHCM
 	   BUILD-MRPH
 	   CAT-INIT
+	   CHCM
 	   CMBN-?
 	   DO-CONTROL
 	   GNRT-?
+	   HOW-MANY-OBJECTS
+	   K
+	   KD
+	   KD2
+	   MRPH
+
 
 	   ;; chcm-elementary-op.lisp
 
@@ -52,7 +60,9 @@
 	   2CMBN-ADD
 	   2CMBN-SBTR
 	   2N-2CMBN
+	   CHECK-CMBN
 	   CMBN
+	   CMBN-CMBN
 	   CMBN-OPPS
 	   DSTR-ADD-TERM-TO-CMBN
 	   F-CMPR
