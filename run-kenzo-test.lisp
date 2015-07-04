@@ -1,8 +1,7 @@
-#+sbcl(require 'asdf)
+(require 'asdf)
 
-(asdf:operate 'asdf:load-op 'kenzo)
 (asdf:operate 'asdf:load-op 'kenzo-test)
-(in-package :kenzo-test)
-(run!)
+(fiveam:run!)
 
+#+ccl(quit)
 #+sbcl(sb-ext:exit)
