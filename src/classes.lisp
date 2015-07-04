@@ -100,10 +100,6 @@
 	excl::*redefinition-warnings*
 	*redefinition-warnings* nil))
 
-;;  IDNM = IDentification NuMber
-(DEFVAR *IDNM-COUNTER*)
-(SETF *IDNM-COUNTER* 0)
-
 (DEFCLASS CHAIN-COMPLEX ()
   ((cmpr :type cmprf :initarg :cmpr :reader cmpr1)
    (basis :type basis :initarg :basis :reader basis1)
