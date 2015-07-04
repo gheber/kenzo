@@ -17,7 +17,9 @@
 
 ;; globals from cat-init.lisp
 
-(DEFVAR *CMBN-CONTROL*)
+(DEFVAR *CMBN-CONTROL*
+  "The variable *CMBN-CONTROL* can be used to enable (default) or disable the
+validation of combinations.")
 (SETF *CMBN-CONTROL* T)
 
 ;; globals from various.lisp
@@ -51,15 +53,21 @@
 
 ;; globals from chain-complexes.lisp
 
-(DEFVAR *LIST-LIST* +EMPTY-LIST+)
+(DEFVAR *LIST-LIST* +EMPTY-LIST+
+  "The variable *LIST-LIST* is bound to a list of variable names, which are
+bound to lists of user created objects such as chain complexes, morphisms,
+etc.")
 
-(DEFVAR *CHCM-LIST*)
+(DEFVAR *CHCM-LIST*
+  "The variable *CHCM-LIST* is bound to a list of user created chain
+complexes.")
 (SETF *CHCM-LIST* +EMPTY-LIST+)
 (PUSHNEW '*CHCM-LIST* *LIST-LIST*)
 
 (DEFPARAMETER +MAXIMAL-DIMENSION+ 15)
 
-(DEFVAR *MRPH-LIST*)
+(DEFVAR *MRPH-LIST*
+  "This variable is bound to a list of user created morphisms.")
 (SETF *MRPH-LIST* +EMPTY-LIST+)
 (PUSHNEW '*MRPH-LIST* *LIST-LIST*)
 
@@ -78,6 +86,14 @@
 (DEFVAR *FUTURE-DISPLAY* nil)
 
 (DEFVAR *TIME-INTERVAL* 60000)
+
+;; globals from classes.lisp
+
+;;  IDNM = IDentification NuMber
+(DEFVAR *IDNM-COUNTER*
+  "The variable *IDNM-COUNTER* is bound to a counter for Kenzo object numbers.")
+(SETF *IDNM-COUNTER* 0)
+
 
 ;; globals from effective homology.lisp
 
@@ -98,6 +114,7 @@
 (DEFVAR *HG*)
 (DEFVAR *DF-FD*)
 (DEFVAR *DG-GD*)
+
 
 (DEFVAR *TC*)
 (DEFVAR *BC*)
