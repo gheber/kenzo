@@ -39,7 +39,9 @@
 (DEFTYPE GNRT () 'any)
 
 ;; CMPR = CoMPaRison
-(DEFTYPE CMPR () '(member :less :equal :greater))
+(DEFTYPE CMPR ()
+  "CMPR repesents the result of comparison operations."
+  '(member :less :equal :greater))
 
 ;; CMPRF = CoMPaRison Function
 (DEFTYPE CMPRF () 'function)

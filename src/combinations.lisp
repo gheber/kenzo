@@ -14,8 +14,8 @@
   (declare
    (type cmbn cmbn) (stream stream)
    (ignore depth))
-  "Print combination CMBN to the stream STREAM. Currently, the third
-argument, DEPTH, is ignored."
+  "(CMBN-PRINT CMBN STREAM DEPTH) prints the combination CMBN to the stream
+STREAM. The third argument, DEPTH, is ignored."
   (the cmbn
        (with-cmbn (degr list) cmbn
 		  (format stream "~%~70@{-~}{CMBN ~D}" degr)
@@ -32,13 +32,14 @@ argument, DEPTH, is ignored."
 		  (format stream "~%~78@{-~}~%" t)
 		  cmbn)))
 
+
 (DEFUN MAPLEXICO (cmpr list1 list2)
   (declare
    (type cmprf cmpr)
    (list list1 list2))
-  "Return :LESS, :EQUAL, :GREATER, according to the lexicographical ordering
-by comparison operator CMPR of the two lists LIST1 and LIST2 representing
-legal generators in this implementation."
+  "(MAPLEXICO CMPR LIST1 LIST2) compares lists LIST1 and LIST2 according to
+lexicographical order, where list elements are compared via CMPR, and returns
+:EQUAL, :GREATER or :LESS."
   (the boolean
        (do ((mark1 list1 (cdr mark1))
 	    (mark2 list2 (cdr mark2)))
@@ -53,11 +54,11 @@ legal generators in this implementation."
 	   (:less (return-from maplexico :less))
 	   (:greater (return-from maplexico :greater))))))
 
+
 (DEFUN S-CMPR (symbol1 symbol2)
   (declare (symbol symbol1 symbol2))
-  "Return :LESS, :EQUAL, :GREATER according to the result of the Lisp
-comparison function on the strings (SYMBOL-NAME SYMBOL1) and
-(SYMBOL-NAME SYMBOL2)."
+  "(S-CMPR SYMBOL1 SYMBOl2) string compares (SYMBOL-NAME SYMBOL1) and
+(SYMBOL-NAME SYMBOL2), and returns :EQUAL, :GREATER or :LESS."
   (the cmpr
        (if (#+aclpc acl:whole-string<
 		    #-aclpc string< symbol1 symbol2)
@@ -67,10 +68,11 @@ comparison function on the strings (SYMBOL-NAME SYMBOL1) and
 	       :equal
 	       :greater))))
 
+
 (DEFUN F-CMPR (n1 n2)
   (declare (fixnum n1 n2))
-  "Return :LESS, :EQUAL, :GREATER, according to the result of the canonical
-comparison of both integers N1 and N2."
+  "(F-CMPR N1 N2) compares integers N1 and N2, and returns :EQUAL, :GREATER
+or :LESS."
   (the cmpr
        (if (< n1 n2)
 	   :less
@@ -78,11 +80,11 @@ comparison of both integers N1 and N2."
 	       :equal
 	       :greater))))
 
+
 (DEFUN L-CMPR (list1 list2)
   (declare (list list1 list2))
-  "Return :LESS, :EQUAL, :GREATER, according to the lexicographical ordering
-of the two lists LIST1 and LIST2 representing legal generators in this
-implementation."
+  "(L-CMPR LIST1 LIST2) compares the generator lists LIST1 and LIST2 according
+to lexicographical order and returns :EQUAL, :GREATER or :LESS."
   (unless list1
     (return-from l-cmpr (if list2 :less :equal)))
   (unless list2
@@ -116,10 +118,11 @@ implementation."
 
 (DEFUN CMBN (degr &rest rest)
   (declare (fixnum degr))
-  "CMBN DEGR CF1 GNR1 CF2 GNR2 ... CFN GNRN
-Construct a combination of degree DEGR, sum of the terms CFi*GNRi.
-The sequence of pairs {CFi GNRi} can have arbitrary length and may be
-empty. In this case, the combination is a null combination of degree DEGR."
+  "(CMBN DEGR &REST REST) constructs a combination of degree DEGR from a sum of
+terms provided as a sequence CF1 GNRT1 CF2 GNRT2 ... CFn GNRTn of coefficient /
+generator pairs in REST. REST can be of arbitrary even length and can be empty,
+in which case the combination is an instance of the null combination of
+degree DEGR."
   (the cmbn
        (make-cmbn :degr degr
 		  :list (do ((rslt +empty-list+
@@ -136,7 +139,8 @@ empty. In this case, the combination is a null combination of degree DEGR."
   (declare
    (type chain-complex chcm)
    (type cmbn cmbn))
-  "Check if combination CMBN is a valid combination of chain complex CHCM."
+  "(CHECK-CMBN CHCM CMBN) checks if the combination CMBN is a valid combination
+of chain complex CHCM."
   (the boolean
        (do ((cmpr (cmpr chcm))
 	    (mark2 (cmbn-list cmbn) mark1)
@@ -152,27 +156,32 @@ empty. In this case, the combination is a null combination of degree DEGR."
                 ~A."
 		  (-gnrt mark2) (-gnrt mark1))))))
 
+
 (DEFUN ZERO-CMBN (degr)
   (declare (fixnum degr))
-  "Create an instance of the null combination of degree DEGR."
+  "(ZERO-CMBN DEGR) returns an instance of the null combination of degree DEGR."
   (the cmbn
        (make-cmbn
 	:degr degr
 	:list +empty-list+)))
 
+
 (DEFINE-CONSTANT +ZERO-NEGATIVE-CMBN+
     (make-cmbn :degr -1 :list +empty-list+)
-  "An instance of the null combination of degree -1.")
+  "+ZERO-NEGATIVE-CMBN+ is bound to an instance of the null combination of
+degree -1.")
+
 
 (DEFUN ZERO-INTR-DFFR (cmbn)
   (declare (type cmbn cmbn))
-  "Returns an instance of the null combination of degree p-1 for any
-combination CMBN of degree p."
+  "(ZERO-INTR-DFFR CMBN) returns an instance of the null combination of
+degree p-1 for any combination CMBN of degree p."
   (the cmbn (zero-cmbn (1- (cmbn-degr cmbn)))))
+
 
 (DEFUN CMBN-OPPS (cmbn)
   (declare (type cmbn cmbn))
-  "Create a combination opposite to CMBN."
+  "(CMBN-OPPS CMBN) returns the combination opposite to CMBN."
   (the cmbn
        (with-cmbn (degr list) cmbn
 		  (make-cmbn
@@ -184,12 +193,13 @@ combination CMBN of degree p."
 					 (term (- cffc) gnrt)))
 				 list)))))
 
+
 (DEFUN N-CMBN (n cmbn)
   ;; n is assumed non-zero
   (declare
    (fixnum n)
    (type cmbn cmbn))
-  "Create a combination multiple of CMBN by the non-zero(!) factor N."
+  "(N-CMBN N CMBN) returns N times the combination CMBN. N must be non-zero."
   (the cmbn
        (if (= n 1)
 	   cmbn
@@ -203,14 +213,15 @@ combination CMBN of degree p."
 					     (term (* n cffc) gnrt)))
 				     list))))))
 
+
 (DEFUN 2CMBN-ADD (cmpr cmbn1 cmbn2)
   (declare
    (type cmprf cmpr)
    (type cmbn cmbn1 cmbn2))
-  "Create a combination, which is the sum of CMBN1 and CMBN2.
-The first argument, CMPR, must be a function or macro, which is used to
-compare the generators of the combinations involved and to order the terms
-of the result combination."
+  "(2CMBN-ADD CMPR CMBN1 CMBN2) returns a combination, which is the sum of
+CMBN1 and CMBN2. The first argument, CMPR, must be a function or macro,
+which is used to compare the generators of the combinations involved and
+to order the terms of the result combination."
   (the cmbn
        (with-cmbn
 	   (degr1 list1) cmbn1
@@ -270,14 +281,15 @@ of the result combination."
 			  :exit))
 		     (make-cmbn :degr degr1 :list pre-rslt)))))))
 
+
 (DEFUN 2CMBN-SBTR (cmpr cmbn1 cmbn2)
   (declare
    (type cmprf cmpr)
    (type cmbn cmbn1 cmbn2))
-  "Create a combination, which is the difference of CMBN1 and CMBN2.
-The first argument, CMPR, must be a function or macro, which is used to
-compare the generators of the combinations involved and to order the terms
-of the result combination."
+  "(2CMBN-SBTR CMPR CMBN1 CMBN2) returns a combination, which is the difference
+of CMBN1 and CMBN2. The first argument, CMPR, must be a function or macro,
+which is used to compare the generators of the input combinations and to order
+the terms of the result combination."
   (the cmbn
        (with-cmbn
 	   (degr1 list1) cmbn1
@@ -356,10 +368,10 @@ of the result combination."
    (type cmprf cmpr)
    (fixnum n1 n2)
    (type cmbn cmbn1 cmbn2))
-  "Build the combination N1*CMBN1+N2*CMBN2. Both integers N1 and N2 must be
-non-zero. The first argument, CMPR, must be a function or macro, which is
-used to compare the generators of the combinations involved and to order
-the terms of the result combination."
+  "(2N-2CMBN CMPR N1 CMBN1 N2 CMBN2) returns the combination N1*CMBN1+N2*CMBN2.
+Both integers N1 and N2 must be non-zero. The first argument, CMPR, must be a
+function or macro, which is used to compare the generators of the input
+combinations and to order the terms of the result combination."
   (the cmbn
        (with-cmbn
 	   (degr1 list1) cmbn1
@@ -451,11 +463,12 @@ the terms of the result combination."
   (declare
    (type cmprf cmpr)
    (list n-cmbn-list))
-  "Create a linear combination of combinations. The first argument, CMPR, must
-be a function or macro, which is used to compare the generators of the
-combinations involved and to order the terms of the result combination.
-The second argument, N-CMBN-LIST, is a list dotted pairs (CONSes), where the
-first element is a non-zero integer and the second element is a combination."
+  "(CMBN-CMBN CMPR N-CMBN-LIST) returns the linear combination of a list of
+integer/combination pairs. The first argument, CMPR, must be a function or
+macro, which is used to compare the generators of the input combinations
+and to order the terms of the result combination. The second argument,
+N-CMBN-LIST, is a list dotted pairs (CONSes), where the first element
+is a non-zero integer and the second element is a combination."
   (unless (rest n-cmbn-list)
     (return-from cmbn-cmbn
       (n-cmbn (caar n-cmbn-list) (cdar n-cmbn-list))))
@@ -495,17 +508,18 @@ first element is a non-zero integer and the second element is a combination."
 		(push (2cmbn-add cmpr (car mark2) (car mark1))
 		      new-rslt)))))))
 
+
 (DEFUN NTERM-ADD (cmpr degr &rest rest)
   (declare
    (type cmprf cmpr)
    (fixnum degr)
    (list rest))
   ;; (list term)
-  "Create a linear combination of terms and return a combination of degree DEGR.
-The first argument, CMPR, must be a function or macro, which is used to compare
-the generators of the combinations involved and to order the terms of the
-result combination. The second argument, DEGR, is the degree of the combination
-returned. The third argument is a list of terms, which might be empty."
+  "(NTERM-ADD CMPR DEGR &REST REST) returns a combination of degree DEGR
+which is the sum of terms supplied in REST. The first argument, CMPR, must be
+a function or macro, which is used to compare the generators of the input terms
+and to order the terms of the result combination. If REST is NIL, an instance of
+the null combination of degree DEGR is returned."
   (unless rest
     (return-from nterm-add (zero-cmbn degr)))
   (the cmbn
@@ -531,14 +545,14 @@ returned. The third argument is a list of terms, which might be empty."
 	  :degr degr
 	  :list (delete 0 rslt :key #'car)))))
 
+
 (DEFUN NCMBN-ADD (cmpr cmbn &rest rest)
   (declare
    (type cmprf cmpr)
    (type cmbn cmbn))
-  "NCMBN-ADD CMPR CMBN1 CMBN2 ... CMBNK
-Create a combination, which is the sum of an arbitrary number of combinations
-CMBNi. The first argument, CMPR, must be a function or macro, which is used to
-compare the generators of the combinations involved and to order the terms
+  "(NCMBN-ADD CMPR CMBN &REST REST) returns the sum of an arbitrary number of
+combinations. The first argument, CMPR, must be a function or macro, which is
+used to compare the generators of the input combinations and to order the terms
 of the result combination."
   (the cmbn
        (cmbn-cmbn cmpr (mapcar #'(lambda (cmbn)
@@ -546,15 +560,17 @@ of the result combination."
                                    (cons 1 cmbn))
 			       (cons cmbn rest)))))
 
+
 (DEFUN DSTR-ADD-TERM-TO-CMBN (cmpr cffc gnrt cmbn)
   (declare
    (type cmprf cmpr)
    (fixnum cffc)  ;; non-zero
    (type gnrt gnrt)
    (type cmbn cmbn))
-  "Add a term CFFC*GNRT to a combination CMBN. The first argument, CMPR, must be
-a function or macro, which is used to compare the generators of the combinations
-involved and to order the terms of the result combination."
+  "(DSTR-ADD-TERM-TO-CMBN CMPR CFFC GNRT CMBN) returns a combination, which is
+the result of adding the term CFFC*GNRT to the combination CMBN. The first
+argument, CMPR, must be a function or macro, which is used to compare the
+generators of the inputs and to order the terms of the result combination."
   (the cmbn
        (let ((list (cmbn-list cmbn)))
          (declare (list list))
