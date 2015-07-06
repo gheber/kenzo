@@ -45,20 +45,7 @@
 	  (is (equal (cat:cmbn-list comb) (cons (cons 1 n) nil))))))))
 
 
-(defparameter *n* 10)
-(defun ff (degr i)
-  (do ((2*n* (ash *n* 1))
-       (rslt cat:+empty-list+
-             (cons (cons (let ((cffc (- (random 2*n*) *n*)))
-                           (if (minusp cffc) cffc (1+ cffc)))
-                         (decf gnrt (1+ (random *n*))))
-                   rslt))
-       (gnrt i)
-       (k 0 (1+ k)))
-      ((= k *n*)
-       (cat:make-cmbn
-        :degr degr
-        :list rslt))))
+(setf *n* 10)
 
 (test cmbn-?
   (progn

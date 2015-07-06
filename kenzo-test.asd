@@ -8,6 +8,7 @@
   :depends-on (:kenzo :fiveam)
   :pathname #P"test/"
   :components ((:file "package")
+	       (:file "common")
 	       (:file "combinations-test")
 	       (:file "various-test")
 	       (:file "chain-complexes-test")
@@ -15,4 +16,5 @@
 	       (:file "diabolo")
 	       (:file "circle")
                (:file "ccn")
-	       (:file "effective-homology-test")))
+	       (:file "effective-homology-test")
+	       (:file "bicones-test")))

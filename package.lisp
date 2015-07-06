@@ -20,6 +20,17 @@
 	   *TC*
 	   *TDD*
 
+	   ;; bicones.lisp
+
+	   BICN-CMBN-CMBNB
+	   BICN-CMBN-CMBNC
+	   BICN-CMBN-CMBND
+	   BICONE
+	   BICONE-BASIS
+	   BICONE-CMPR
+	   DISPATCH-BICN-CMBN
+	   MAKE-BICN-CMBN
+
 	   ;; chain-complexes.lisp
 
 	   ?2
@@ -70,6 +81,7 @@
 	   MORPHISM
 	   ORGN
 	   REDUCTION
+	   RRDCT
 	   TCC
 
 	   ;; combinations.lisp
@@ -91,6 +103,10 @@
 	   S-CMPR
 	   ZERO-CMBN
 	   ZERO-INTR-DFFR
+
+	   ;; delta.lisp
+
+	   DELTA-N-BASIS
 
 	   ;; effective-homology.lisp
 
@@ -115,6 +131,9 @@
 	   ?
 	   BASIS
 	   BCC
+	   BCNB
+	   BCNC
+	   BCND
 	   BINOMIAL-P-Q
 	   CFFC
 	   CMBN-NON-ZERO-P
@@ -131,6 +150,10 @@
 	   ;; searching-homology.lisp
 
 	   HOMOLOGY
+
+	   ;; simplicial-sets.lisp
+
+	   DLOP-INT-EXT
 
 	   ;; smith.lisp
 

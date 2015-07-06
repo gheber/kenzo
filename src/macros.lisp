@@ -352,12 +352,18 @@
          ,@body))))
 
 (DEFMACRO BCNB (gnrt)
+  "(BCNB GNRT) returns the representation of the generator GNRT belonging to the
+chain complex B."
   `(make-bicn :bcnx :bcnb :ibicn ,gnrt))
 
 (DEFMACRO BCNC (gnrt)
+  "(BCNC GNRT) returns the representation of the generator GNRT belonging to the
+chain complex C."
   `(make-bicn :bcnx :bcnc :ibicn ,gnrt))
 
 (DEFMACRO BCND (gnrt)
+  "(BCND GNRT) returns the representation of the generator GNRT belonging to the
+chain complex D."
   `(make-bicn :bcnx :bcnd :ibicn ,gnrt))
 
 (DEFMACRO WITH-BICN ((bcnx ibicn) bicn . body)
