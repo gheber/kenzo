@@ -56,6 +56,7 @@
 		      (push (term sign (logxor gmsm pmark)) rslt)
 		      (setf sign (- sign))))))))
 
+
 (DEFUN SOFT-DELTA-BNDR (dmns gmsm)
   (declare
    (fixnum dmns)
@@ -66,16 +67,6 @@
 		     (with-term (cffc gmsm) term
 				(term cffc (d gmsm))))
 		 (cmbn-list (delta-bndr dmns (cdr gmsm))))))
-
-#|
-()
-(delta-bndr 0 4)
-(delta-bndr 1 3)
-(delta-bndr 1 5)
-(delta-bndr 1 10)
-(delta-bndr 5 63)
-(soft-delta-bndr 5 (d (mask 6)))
-|#
 
 
 (DEFUN DELTA-DGNL (dmns gmsm)
@@ -98,6 +89,7 @@
 		  (when (minusp (decf ldegr))
 		    (return rslt)))))))
 
+
 (DEFUN SOFT-DELTA-DGNL (dmns gmsm)
   (declare
    (fixnum dmns)
@@ -112,14 +104,7 @@
 							  degr2 (d gmsm2))))))
 		    (cmbn-list (delta-dgnl dmns (cdr gmsm))))))
 
-#|
-()
-(delta-dgnl 3 15)
-(delta-dgnl 3 170)
-(soft-delta-dgnl 3 (d (dlop-ext-int '(1 3 5 7))))
-(delta-dgnl 0 64)
-|#
-                                        
+
 (DEFUN DELTA-INFINITY ()
   (the simplicial-set
        (build-smst
@@ -133,17 +118,6 @@
 	:bndr-strt :gnrt
 	:orgn '(delta-infinity))))
 
-#|
-()
-(cmpr (delta-infinity) 2 4)
-(cmpr (delta-infinity) 4 4)
-(cmpr (delta-infinity) 8 4)
-(basis (delta-infinity) 1)   ;;; => error
-(face (delta-infinity) 1 2 21)
-(cprd (delta-infinity) 3 15)
-(dgnl (delta-infinity) 3 15)
-(? (delta-infinity) 2 21)
-|#
 
 (DEFUN SOFT-DELTA-INFINITY ()
   (the simplicial-set
@@ -156,15 +130,6 @@
 	:intr-bndr #'soft-delta-bndr :bndr-strt :gnrt
 	:orgn '(soft-delta-infinity))))
 
-#|
-()
-(cat-init)
-(cmpr (soft-delta-infinity) (d 2) (d 4))
-(face (soft-delta-infinity) 1 2 (d (dlop-ext-int '(1 3 5))))
-(cprd (soft-delta-infinity) 3 (d 15))
-(dgnl (soft-delta-infinity) 3 (d 15))
-(? (soft-delta-infinity) 2 (d (dlop-ext-int '(0 2 4))))
-|#
 
 (DEFUN DELTA-N-BASIS (n)
   (declare (fixnum n))
@@ -182,6 +147,7 @@
 	       (decf count)))))
     (the basis #'rslt)))
 
+
 (DEFUN SOFT-DELTA-N-BASIS (n)
   (declare (fixnum n))
   (flet ((rslt (dmns)
@@ -198,16 +164,6 @@
     (the basis #'rslt)))
 
 
-#|
-()
-(setf basis (delta-n-basis 3))
-(setf soft-basis (soft-delta-n-basis 3))
-(dotimes (i 5)
-  (print (funcall basis i)))
-(dotimes (i 5)
-  (print (funcall soft-basis i)))
-|#   
-
 (DEFUN DELTA (dmns)
   (declare (fixnum dmns))
   (the simplicial-set
@@ -222,21 +178,6 @@
 	:bndr-strt :gnrt
 	:orgn `(delta ,dmns))))
 
-#|
-()
-(cat-init)
-(setf d3 (delta 3))
-(cmpr d3 2 4)
-(cmpr d3 4 4)
-(cmpr d3 8 4)
-(basis d3 1)
-(dgnl d3 3 15)
-(face d3 1 2 21)
-(? d3 2 13)
-(setf d (delta-infinity))
-(basis d)
-(setf d (delta-infinity)))
-|#
 
 (DEFUN SOFT-DELTA (dmns)
   (declare (fixnum dmns))
@@ -250,47 +191,13 @@
 	:intr-bndr #'soft-delta-bndr :bndr-strt :gnrt
 	:orgn `(soft-delta ,dmns))))
 
-#|
-()
-(cat-init)
-(setf d3 (soft-delta 3))
-(cmpr d3 (d 2) (d 4))
-(basis d3 1)
-(dgnl d3 3 (d 15))
-(face d3 1 2 (d 21))
-(? d3 2 (d 13))
-|#
-
-#| For comparison with EAT.
-In 
-(setf delta (delta-infinity))
-(setf d (bndr delta))
-(setf s14 (mask 15))
-(cmbn-? d (gnrt-? d 14 s14))
-(defun t1 (n)
-  (time (dotimes (i n) (cmbn-? d (gnrt-? d 14 s14)))))
-(compile 't1)
-(t1 500)
-(setf +too-much-time+ -1)
-(t1 500)
-|#
-#|
-In EAT:
-(setf delta *delta*)
-(setf d (cc-d (ss-cc delta)))
-(setf s14 (<a-b> 0 14))
-(??? d (? d 14 s14))
-(defun t1 (n)
-  (time (dotimes (i n) (??? d (? d 14 s14)))))
-(compile 't1)
-(t1 500)
-|#
 
 (DEFUN DELTAB-CMPR (gmsm1 gmsm2)
   (declare (fixnum gmsm1 gmsm2))
   (if (= 1 (logcount gmsm1))
       :equal
       (f-cmpr gmsm1 gmsm2)))
+
 
 (DEFUN DELTAB-BNDR (dmns gmsm)
   (declare (fixnum dmns gmsm))
@@ -311,6 +218,7 @@ In EAT:
 		      (push (term sign (logxor gmsm pmark)) rslt)
 		      (setf sign (- sign))))))))
 
+
 (DEFUN DELTAB2-FACE (indx dmns gmsm)
   (declare
    (fixnum indx dmns gmsm))
@@ -326,6 +234,7 @@ In EAT:
 	   (when (oddp gmsm2)
 	     (when (minusp (decf bmark))
 	       (return-from deltab2-face (absm 0 (logxor gmsm pmark)))))))))
+
 
 (DEFUN DELTAB2-DGNL (dmns gmsm)
   (declare (fixnum dmns gmsm))
@@ -352,12 +261,6 @@ In EAT:
 				    1))
 			(return (delete 1 rslt :key #'cadddr)))))))))
 
-#|
-()
-(dotimes (i 7)
-  (print (deltab2-dgnl i (mask (1+ i)))))
-|#
-
 
 (DEFUN DELTAB2-BNDR (dmns gmsm)
   (declare (fixnum dmns gmsm))
@@ -378,10 +281,6 @@ In EAT:
 		      (push (term sign (logxor gmsm pmark)) rslt)
 		      (setf sign (- sign))))))))
 
-#|
-(deltab-bndr 1 5)
-(deltab-bndr 3 15)
-|#
 
 (DEFUN DELTAB ()
   (the simplicial-set
@@ -393,6 +292,7 @@ In EAT:
 	:intr-dgnl #'delta-dgnl
 	:dgnl-strt :gnrt
 	:orgn '(deltab))))
+
 
 (DEFUN DELTAB2 ()
   (the simplicial-set

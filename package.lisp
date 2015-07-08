@@ -71,6 +71,7 @@
 	   DEGR
 	   DFFR1
 	   F
+	   FACE
 	   G
 	   GMSM
 	   H
@@ -108,10 +109,20 @@
 	   ;; delta.lisp
 
 	   DELTA
+	   DELTA-BNDR
+	   DELTA-DGNL
 	   DELTA-FACE
+	   DELTA-INFINITY
 	   DELTA-N-BASIS
+	   DELTAB2-BNDR
+	   DELTAB2-DGNL
+	   SOFT-DELTA
+	   SOFT-DELTA-BNDR
 	   SOFT-DELTA-CMPR
+	   SOFT-DELTA-DGNL
 	   SOFT-DELTA-FACE
+	   SOFT-DELTA-INFINITY
+	   SOFT-DELTA-N-BASIS
 
 	   ;; effective-homology.lisp
 
@@ -146,12 +157,15 @@
 	   BCNC
 	   BCND
 	   BINOMIAL-P-Q
+	   BNDR
 	   CFFC
 	   CMBN-NON-ZERO-P
 	   CMBN-ZERO-P
 	   CMPR
+	   CPRD
 	   D
 	   DFFR
+	   DGNL
 	   GNRT
 	   I-SBTR
 	   MASK
