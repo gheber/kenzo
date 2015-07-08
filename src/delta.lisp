@@ -29,23 +29,13 @@
 	   (when (minusp (decf bmark))
 	     (return-from delta-face (absm 0 (logxor gmsm pmark))))))))
 
+
 (DEFUN SOFT-DELTA-FACE (indx dmns gmsm)
   (declare
    (fixnum indx dmns)
    (type soft-dlop gmsm))
-  (absm 0 (d (gmsm (delta-face indx dmns (cdr gmsm))))))
+  (absm 0 (d (gmsm (delta-face indx dmns (cadr gmsm))))))
 
-#|
-()
-(dotimes (i 4)
-  (print (dlop-int-ext (gmsm (delta-face i 3 (dlop-ext-int '(0 1 2 3)))))))
-(dotimes (i 4)
-  (print (dlop-int-ext (gmsm (delta-face i 3 (dlop-ext-int '(0 2 4 6))))))))
-(dotimes (i 4)
-  (print (soft-delta-face i 3 (d (mask 4)))))
-(dotimes (i 4)
-  (print (soft-delta-face i 3 (d (dlop-ext-int '(0 2 4 6))))))
-|#
 
 (DEFUN DELTA-BNDR (dmns gmsm)
   (declare (fixnum dmns gmsm))

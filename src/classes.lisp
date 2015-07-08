@@ -399,7 +399,7 @@
   (the boolean
        (and (consp object)
 	    (eq :delt (car object))
-	    (typep (cdr object) 'dgop))))
+	    (typep (cadr object) 'dgop))))
 
 (DEFTYPE SOFT-DLOP () '(satisfies soft-dlop-p))
 
