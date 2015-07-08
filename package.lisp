@@ -150,6 +150,7 @@
 	   CMBN-NON-ZERO-P
 	   CMBN-ZERO-P
 	   CMPR
+	   D
 	   DFFR
 	   GNRT
 	   I-SBTR

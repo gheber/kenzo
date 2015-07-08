@@ -4,7 +4,7 @@
 (in-suite :kenzo)
 
 (test soft-delta-cmpr
-      (is (equal :less (cat:soft-delta-cmpr '(d 12) '(d 23)))))
+      (is (equal :less (cat:soft-delta-cmpr (cat:d 12) (cat:d 23)))))
 
 (defun faces (i lst)
   (cat:dlop-int-ext
@@ -22,11 +22,11 @@
       (is (equal '(0 2 4) (faces 3 '(0 2 4 6))))
 
       (dotimes (i 4)
-	(print (cat:soft-delta-face i 3 `(:delt ,(cat:mask 4)))))
-      
+	(print (cat:soft-delta-face i 3 (cat:d (cat:mask 4)))))
+
       (dotimes (i 4)
-	(print (cat:soft-delta-face i 3 `(:delt
-					  ,(cat:dlop-ext-int '(0 2 4 6)))))))
+	(print (cat:soft-delta-face i 3 (cat:d
+					  (cat:dlop-ext-int '(0 2 4 6)))))))
 
 #|
 (test homology

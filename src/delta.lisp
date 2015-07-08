@@ -12,7 +12,7 @@
 
 
 (DEFUN SOFT-DELTA-CMPR (gmsm1 gmsm2)
-  (f-cmpr (cadr gmsm1) (cadr gmsm2)))
+  (f-cmpr (cdr gmsm1) (cdr gmsm2)))
 
 
 (DEFUN DELTA-FACE (indx dmns gmsm)
@@ -34,7 +34,7 @@
   (declare
    (fixnum indx dmns)
    (type soft-dlop gmsm))
-  (absm 0 (d (gmsm (delta-face indx dmns (cadr gmsm))))))
+  (absm 0 (d (gmsm (delta-face indx dmns (cdr gmsm))))))
 
 
 (DEFUN DELTA-BNDR (dmns gmsm)
