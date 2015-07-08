@@ -72,6 +72,7 @@
 	   DFFR1
 	   F
 	   G
+	   GMSM
 	   H
 	   HOMOTOPY-EQUIVALENCE
 	   IABSM
@@ -107,7 +108,10 @@
 	   ;; delta.lisp
 
 	   DELTA
+	   DELTA-FACE
 	   DELTA-N-BASIS
+	   SOFT-DELTA-CMPR
+	   SOFT-DELTA-FACE
 
 	   ;; effective-homology.lisp
 
@@ -149,6 +153,7 @@
 	   DFFR
 	   GNRT
 	   I-SBTR
+	   MASK
 	   RBCC
 	   TERM
 	   TERM-CMBN
@@ -160,6 +165,7 @@
 
 	   ;; simplicial-sets.lisp
 
+	   DLOP-EXT-INT
 	   DLOP-INT-EXT
 
 	   ;; smith.lisp

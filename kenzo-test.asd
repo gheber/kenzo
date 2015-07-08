@@ -19,4 +19,5 @@
 	       (:file "effective-homology-test")
 	       (:file "bicones-test")
 	       (:file "homology-groups-test")
-	       (:file "searching-homology-test")))
+	       (:file "searching-homology-test")
+	       (:file "delta-test")))
