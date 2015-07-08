@@ -12,7 +12,7 @@
 
 
 (DEFUN SOFT-DELTA-CMPR (gmsm1 gmsm2)
-  (l-cmpr (cdr gmsm1) (cdr gmsm2)))
+  (f-cmpr (cadr gmsm1) (cadr gmsm2)))
 
 
 (DEFUN DELTA-FACE (indx dmns gmsm)
