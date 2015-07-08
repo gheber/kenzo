@@ -106,6 +106,7 @@
 
 	   ;; delta.lisp
 
+	   DELTA
 	   DELTA-N-BASIS
 
 	   ;; effective-homology.lisp
@@ -120,6 +121,12 @@
 	   ;; fibrations.lisp
 
 	   FIBRATION-TOTAL
+
+	   ;; homology-groups
+
+	   CHCM-HOMOLOGY
+	   CHCM-HOMOLOGY-GEN
+	   CHCM-MAT
 
 	   ;; k-pi-n.lisp
 
