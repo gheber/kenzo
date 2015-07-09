@@ -4,6 +4,10 @@
   (:use #:cl)
   (:export KENZO-VERSION
 
+	   ;; UFO
+
+	   EFHM
+
 	   ;; kenzo.lisp
 
 	   *BC*
@@ -23,11 +27,16 @@
 	   ;; bar.lisp
 
 	   ABAR
+	   BAR
 	   BAR-BASIS-LENGTH
 	   BAR-BASIS
 	   BAR-CMPR
+	   BAR-HRZN-DFFR
 	   BAR-INTR-HRZN-DFFR
 	   BAR-INTR-VRTC-DFFR
+	   HMTP-VRTC-BAR-INTR
+	   MRPH-VRTC-BAR-INTR
+	   NCMBN-BAR
 	   VRTC-BAR
 
 	   ;; bicones.lisp
@@ -145,6 +154,11 @@
 	   TRIVIAL-HMEQ
 	   TRIVIAL-RDCT
 
+	   ;; eilenberg-zilber.lisp
+
+	   AW
+	   EZ
+
 	   ;; fibrations.lisp
 
 	   FIBRATION-TOTAL
@@ -178,7 +192,9 @@
 	   CMBN-ZERO-P
 	   CMPR
 	   CPRD
+	   CRPR
 	   D
+	   F
 	   DFFR
 	   DGNL
 	   GNRT

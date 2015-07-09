@@ -299,33 +299,6 @@
 	  :intr (bar-intr-hrzn-dffr aprd) :strt :gnrt
 	  :orgn `(bar-hrzn-dffr ,algb)))))
 
-#|
-(cat-init)
-(setf h (bar-hrzn-dffr (k-z-1)))
-(defun random-abar (tot-degr~ max-degr)
-  (do ((rslt nil)
-       (cum-degr 0 (+ cum-degr degr 1))
-       (degr))
-      ((>= cum-degr tot-degr~) (make-abar :list rslt))
-    (setf degr (1+ (random max-degr)))
-    (push (brgn (1+ degr)
-		(let ((list (make-list degr)))
-		  (mapl
-		   #'(lambda (sublist)
-		       (setf (car sublist) (- (random 21) 10)))
-		   list)
-		  list))
-	  rslt)))
-(dotimes (i 10) (print (random-abar 10 5)))
-(setf abar (random-abar 10 5))
-(? h (apply #'+ (mapcar #'car (abar-list abar))) abar)
-(? h (? h (apply #'+ (mapcar #'car (abar-list abar))) abar))
-(dotimes (i 10)
-  (let ((abar (random-abar 10 3)))
-    (print abar)
-    (print (? h (apply #'+ (mapcar #'car (abar-list abar))) abar))
-    (print (? h (? h (apply #'+ (mapcar #'car (abar-list abar))) abar)))))
-|#
 
 (DEFUN BAR-INTR-DFFR (vrtc-dffr hrzn-dffr)
   (declare (type morphism vrtc-dffr hrzn-dffr))
@@ -340,7 +313,9 @@
 			     (cmbn-list (gnrt-? vrtc-dffr degr abar))))))
     (the intr-mrph #'rslt)))
 
+
 (DEFGENERIC BAR (algebra-or-hmeq))
+
 
 (DEFMETHOD BAR ((algebra algebra))
   (let ((vrtc-bar (vrtc-bar algebra))
@@ -359,32 +334,6 @@
 	   (setf (slot-value rslt 'grmd) (grmd vrtc-bar))
 	   rslt))))
 
-#|
-(cat-init)
-(setf b (bar (k-z-1)))   
-(defun random-abar (tot-degr~ max-degr)
-  (do ((rslt nil)
-       (cum-degr 0 (+ cum-degr degr 1))
-       (degr))
-      ((>= cum-degr tot-degr~) (make-abar :list rslt))
-    (setf degr (1+ (random max-degr)))
-    (push (brgn (1+ degr)
-		(let ((list (make-list degr)))
-		  (mapl
-		   #'(lambda (sublist)
-		       (setf (car sublist) (- (random 21) 10)))
-		   list)
-		  list))
-	  rslt)))
-(setf abar (random-abar 10 3))
-(? b (apply #'+ (mapcar #'car (abar-list abar))) abar)
-(? b (? b (apply #'+ (mapcar #'car (abar-list abar))) abar))
-(dotimes (i 10)
-  (let ((abar (random-abar 10 3)))
-    (print abar)
-    (print (? b (apply #'+ (mapcar #'car (abar-list abar))) abar))
-    (print (? b (? b (apply #'+ (mapcar #'car (abar-list abar))) abar)))))
-|#
 
 (DEFUN CMBN-ABAR-CMBN-TNPR (cmbn abar-cmbn)
   (declare (type cmbn cmbn abar-cmbn))
@@ -403,13 +352,20 @@
 						(declare (type brgn brgn1))
 						(mapcar
 						 #'(lambda (termr)
-						     (declare (type term termr))
-						     (with-term (cffcr abarr) termr
-								(term (* cffc1 cffcr)
-								      (make-abar
-								       :list (cons brgn1 (abar-list abarr))))))
+						     (declare (type term
+								    termr))
+						     (with-term (cffcr abarr)
+						       termr
+						       (term
+							(* cffc1 cffcr)
+							(make-abar
+							 :list (cons
+								brgn1
+								(abar-list
+								 abarr))))))
 						 listr))))
 			       list1))))))
+
 
 (DEFUN NCMBN-BAR (cmbn-list)
   (declare (list cmbn-list))
@@ -420,12 +376,7 @@
          (cmbn-abar-cmbn-tnpr
 	  (first cmbn-list)
 	  (ncmbn-bar (rest cmbn-list))))))
-#|
-(ncmbn-bar nil)
-(ncmbn-bar (list (cmbn 3 2 'a 3 'b)))
-(ncmbn-bar (list (cmbn 1 2 'a 3 'b) (cmbn 2 4 'c 5 'd)))
-(ncmbn-bar (list (cmbn 1 2 'a 3 'b) (cmbn 1 4 'c 5 'd) (cmbn 1 6 'e 7 'f))))
-|#
+
 
 (DEFUN MRPH-VRTC-BAR-INTR (mrph)
   (declare (type morphism mrph))
@@ -442,14 +393,6 @@
 			 (abar-list abar))))))
     (the intr-mrph #'rslt)))
 
-#|
-(setf cc (build-chcm :cmpr #'f-cmpr :strt :cmbn))
-(setf m (build-mrph :sorc cc :trgt cc :degr 0 :intr
-		    #'(lambda (degr gnrt) (cmbn degr 2 gnrt 3 (1+ gnrt)))
-		    :strt :gnrt :orgn '(test)))
-(setf r (mrph-vrtc-bar-intr m))
-(funcall r 4 (abar 2 3 2 4))
-|#
 
 (DEFMETHOD VRTC-BAR ((mrph morphism))
   (the morphism
@@ -463,12 +406,6 @@
             :strt :gnrt
             :orgn `(vrtc-bar ,mrph)))))
 
-#|
-(cat-init)
-(setf f (aw (soft-delta-infinity) (soft-delta-infinity)))
-(setf cf (vrtc-bar f))
-(? cf 6 (abar 3 (crpr 0 (d 7) 0 (d 7)) 3 (crpr 0 (d 56) 0 (d 56))))
-|#
 
 (DEFUN HMTP-VRTC-BAR-INTR (h gf)
   (declare (type morphism h gf))
@@ -484,11 +421,13 @@
 		(type brgn brgn1)
 		(list rest2))
 	       (with-brgn (degr1 gnrt1) brgn1
-			  (let ((h-gnrt1 (cmbn-list (gnrt-? h (1- degr1) gnrt1)))
+			  (let ((h-gnrt1 (cmbn-list (gnrt-? h (1- degr1)
+							    gnrt1)))
 				(h-rest2 (rslt (- degr degr1) rest2))
 				(degr1+1 (1+ degr1))
 				(rest-sign (-1-expt-n degr1))
-				(gf-gnrt1 (cmbn-list (gnrt-? gf (1- degr1) gnrt1))))
+				(gf-gnrt1 (cmbn-list (gnrt-? gf (1- degr1)
+							     gnrt1))))
 			    (declare
 			     (fixnum degr1+1 rest-sign)
 			     (type icmbn h-gnrt1 h-rest2 gf-gnrt1))
@@ -500,9 +439,13 @@
 					     (mapcar
 					      #'(lambda (term2)
 						  (declare (type term term2))
-						  (with-term (cffc2 iabar2) term2
-							     (term (* rest-sign cffc1 cffc2)
-								   (cons (brgn degr1 gnrt11) iabar2))))
+						  (with-term (cffc2 iabar2)
+						    term2
+						    (term (* rest-sign cffc1
+							     cffc2)
+							  (cons
+							   (brgn degr1 gnrt11)
+							   iabar2))))
 					      h-rest2)))
 			      gf-gnrt1)
 			     (mapcar
@@ -510,7 +453,9 @@
 				  (declare (type term term1))
 				  (with-term (cffc1 gnrt11) term1
 					     (term (- cffc1)
-						   (cons (brgn degr1+1 gnrt11) rest2))))
+						   (cons
+						    (brgn degr1+1 gnrt11)
+						    rest2))))
 			      h-gnrt1)))))))
     (the intr-mrph
 	 #'(lambda (degr abar)
@@ -529,14 +474,6 @@
 				    (term cffc (make-abar :list iabar))))
 		     (rslt degr (abar-list abar))))))))
 
-#|
-(cat-init)
-(setf ez (ez (delta-infinity) (delta-infinity)))
-(setf h (h ez) gf (cmps (g ez) (f ez)))
-(setf r (hmtp-vrtc-bar-intr h gf))
-(funcall r 3 (abar 3 (crpr 0 7 0 7)))
-(funcall r 9 (abar 3 (crpr 0 7 0 7) 3 (crpr 0 14 0 14) 3 (crpr 0 14 0 14)))
-|#
 
 (DEFUN HMTP-VRTC-BAR (h gf)
   (declare (type morphism h gf))
@@ -567,72 +504,6 @@
 	      :h (hmtp-vrtc-bar h (cmps g f))
 	      :orgn `(vrtc-bar ,rdct))))))
 
-#|
-(cat-init)
-(setf tcc (build-chcm
-	   :cmpr #'s-cmpr
-	   :basis #'(lambda (degr) '(a b c d))
-	   :bsgn 'd
-	   :intr-dffr #'(lambda (degr gnrt)
-			  (ecase gnrt
-			    (a (cmbn (1- degr) 1 'b 1 'd))
-			    ((b d) (cmbn (1- degr)))
-			    (c (cmbn (1- degr) 1 'd))))
-	   :strt :gnrt
-	   :orgn '(tcc)))
-(setf bcc (build-chcm
-	   :cmpr #'s-cmpr
-	   :basis #'(lambda (degr) '(c d))
-	   :bsgn 'd
-	   :intr-dffr #'(lambda (degr gnrt)
-			  (ecase gnrt
-			    (d (cmbn (1- degr)))
-			    (c (cmbn (1- degr) 1 'd))))
-	   :strt :gnrt
-	   :orgn '(bcc)))
-(setf f (build-mrph :sorc tcc :trgt bcc :degr 0
-		    :intr #'(lambda (degr gnrt)
-			      (ecase gnrt
-				(a (cmbn degr 1 'c 1 'd))
-				(b (cmbn degr))
-				((c d) (cmbn degr 1 gnrt))))
-		    :strt :gnrt :orgn '(f)))
-(setf g (build-mrph :sorc bcc :trgt tcc :degr 0
-		    :intr #'identity :strt :cmbn :orgn '(g)))
-(setf h (build-mrph :sorc tcc :trgt tcc :degr +1
-		    :intr #'(lambda (degr gnrt)
-			      (ecase gnrt
-				((a b) (cmbn (1+ degr) 1 'a -1 'b -1 'c -1 'd))
-				((c d) (cmbn (1+ degr)))))
-		    :strt :gnrt :orgn '(h)))
-(setf rdct (build-rdct :f f :g g :h h :orgn '(rdct)))
-(tcc rdct 3 'a)
-(g rdct (f rdct 3 'a))
-(h rdct 3 'a)
-(setf bar (vrtc-bar rdct))
-(pre-check-rdct bar)
-(defun aleat-tc ()
-  (do ((tdegr 0 (+ tdegr degr))
-       (degr (+ 2 (random 3)) (+ 2 (random 3)))
-       (gnrt (intern (coerce (vector (code-char (+ 65 (random 4)))) 'string))
-	     (intern (coerce (vector (code-char (+ 65 (random 4)))) 'string)))
-       (rslt nil (cons (brgn degr gnrt) rslt)))
-      ((> tdegr 10) (setf *tc* (cmbn tdegr 1 (make-abar :list rslt))))))
-(aleat-tc)
-(defun aleat-bc ()
-  (do ((tdegr 0 (+ tdegr degr))
-       (degr (+ 2 (random 3)) (+ 2 (random 3)))
-       (gnrt (intern (coerce (vector (code-char (+ 67 (random 2)))) 'string))
-	     (intern (coerce (vector (code-char (+ 67 (random 2)))) 'string)))
-       (rslt nil (cons (brgn degr gnrt) rslt)))
-      ((> tdegr 10) (setf *bc* (cmbn tdegr 1 (make-abar :list rslt))))))
-(aleat-bc)
-(defun c ()
-  (aleat-tc)
-  (aleat-bc)
-  (check-rdct))
-(loop (c))  ;; degrees >= 15 is possible => error.
-|#
 
 (DEFMETHOD VRTC-BAR ((hmeq homotopy-equivalence))
   (the homotopy-equivalence
