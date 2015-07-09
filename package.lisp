@@ -20,6 +20,16 @@
 	   *TC*
 	   *TDD*
 
+	   ;; bar.lisp
+
+	   ABAR
+	   BAR-BASIS-LENGTH
+	   BAR-BASIS
+	   BAR-CMPR
+	   BAR-INTR-HRZN-DFFR
+	   BAR-INTR-VRTC-DFFR
+	   VRTC-BAR
+
 	   ;; bicones.lisp
 
 	   BICN-CMBN-CMBNB
@@ -64,6 +74,7 @@
 	   ;; classes.lisp
 
 	   BCC
+	   BRGN
 	   CHAIN-COMPLEX
 	   CMBN-CMBN
 	   CMBN-DEGR
@@ -78,6 +89,7 @@
 	   HOMOTOPY-EQUIVALENCE
 	   IABSM
 	   LRDCT
+	   MAKE-ABAR
 	   MAKE-CMBN
 	   MAKE-RESULT
 	   MORPHISM
@@ -146,11 +158,14 @@
 	   ;; k-pi-n.lisp
 
 	   K-Z
+	   K-Z-1
 
 	   ;; macros.lisp
 
 	   -1-EXPT-N
 	   ?
+	   ABAR-LIST
+	   APRD
 	   BASIS
 	   BCC
 	   BCNB

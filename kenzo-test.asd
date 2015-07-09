@@ -20,4 +20,5 @@
 	       (:file "bicones-test")
 	       (:file "homology-groups-test")
 	       (:file "searching-homology-test")
-	       (:file "delta-test")))
+	       (:file "delta-test")
+	       (:file "bar-test")))
