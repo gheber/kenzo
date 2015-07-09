@@ -4,10 +4,6 @@
   (:use #:cl)
   (:export KENZO-VERSION
 
-	   ;; UFO
-
-	   EFHM
-
 	   ;; kenzo.lisp
 
 	   *BC*
@@ -50,6 +46,16 @@
 	   DISPATCH-BICN-CMBN
 	   MAKE-BICN-CMBN
 
+	   ;; cartesian-products.lisp
+
+	   2ABSM-ACRPR
+	   CRTS-PRDC
+	   CRTS-PRDC-BASIS
+	   CRTS-PRDC-CMPR
+	   CRTS-PRDC-FACE
+	   CRTS-PRDC-FACE*
+	   EXTRACT-COMMON-DGOP
+
 	   ;; chain-complexes.lisp
 
 	   ?2
@@ -82,6 +88,7 @@
 
 	   ;; classes.lisp
 
+	   ABSM
 	   BCC
 	   BRGN
 	   CHAIN-COMPLEX
@@ -90,6 +97,7 @@
 	   CMBN-LIST
 	   DEGR
 	   DFFR1
+	   EFHM
 	   F
 	   FACE
 	   G
@@ -211,6 +219,7 @@
 
 	   ;; simplicial-sets.lisp
 
+	   DGOP*DGOP
 	   DLOP-EXT-INT
 	   DLOP-INT-EXT
 
