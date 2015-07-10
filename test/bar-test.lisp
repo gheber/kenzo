@@ -56,7 +56,7 @@
 	(funcall r 5 (cat:abar 2 (cat:d 3) 3 (cat:d 7)))))
 
 
-(defun random-abar (length)
+(defun random-abar1 (length)
   (let ((rslt nil))
     (dotimes (i length)
       (let* ((gmsm (random (cat:mask 7)))
@@ -71,31 +71,15 @@
 	(cat:cat-init)
 	(let ((v (cat:vrtc-bar (cat:soft-delta-infinity))))
 	  (dotimes (i 10)
-	    (print (random-abar 5)))
+	    (print (random-abar1 5)))
 	  (dotimes (i 10)
-	    (let ((abar (random-abar 3)))
+	    (let ((abar (random-abar1 3)))
 	      (print abar)
 	      (print (cat:? v (apply #'+ (mapcar #'car (cat:abar-list abar)))
 			    abar))
 	      (print (cat:? v (cat:? v (apply #'+ (mapcar #'car
 							  (cat:abar-list abar)))
 				     abar))))))))
-
-
-(defun random-abar1 (tot-degr~ max-degr)
-  (do ((rslt nil)
-       (cum-degr 0 (+ cum-degr degr 1))
-       (degr))
-      ((>= cum-degr tot-degr~) (cat:make-abar :list rslt))
-    (setf degr (1+ (random max-degr)))
-    (push (cat:brgn (1+ degr)
-		(let ((list (make-list degr)))
-		  (mapl
-		   #'(lambda (sublist)
-		       (setf (car sublist) (- (random 21) 10)))
-		   list)
-		  list))
-	  rslt)))
 
 
 #|

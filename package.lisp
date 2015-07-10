@@ -86,6 +86,10 @@
 	   Z-CHCM
 	   ZERO-MRPH
 
+	   ;; cl-space-efhm.lisp
+
+	   CS-HAT-U-T
+
 	   ;; classes.lisp
 
 	   ABSM
@@ -101,6 +105,7 @@
 	   F
 	   FACE
 	   G
+	   GBAR
 	   GMSM
 	   H
 	   HOMOTOPY-EQUIVALENCE
@@ -114,6 +119,7 @@
 	   REDUCTION
 	   RRDCT
 	   TCC
+	   TNPR
 
 	   ;; combinations.lisp
 

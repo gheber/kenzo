@@ -23,4 +23,5 @@
 	       (:file "delta-test")
 	       (:file "bar-test")
 	       (:file "cartesian-products-test")
-	       (:file "cones-test")))
+	       (:file "cones-test")
+	       (:file "cl-space-efhm-test")))

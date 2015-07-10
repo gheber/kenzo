@@ -168,3 +168,19 @@
 				       cat:*dg-gd* cat:*hg*))
 			 cat:*bc*
 			 cat:*tc*))))))
+
+
+(defun random-abar (tot-degr~ max-degr)
+  (do ((rslt nil)
+       (cum-degr 0 (+ cum-degr degr 1))
+       (degr))
+      ((>= cum-degr tot-degr~) (cat:make-abar :list rslt))
+    (setf degr (1+ (random max-degr)))
+    (push (cat:brgn (1+ degr)
+		(let ((list (make-list degr)))
+		  (mapl
+		   #'(lambda (sublist)
+		       (setf (car sublist) (- (random 21) 10)))
+		   list)
+		  list))
+	  rslt)))
