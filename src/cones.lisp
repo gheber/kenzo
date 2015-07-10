@@ -23,16 +23,6 @@
 			       (setf mark icon)))
 		  cone)))
 
-#|
-()
-(con0 'a)
-(con1 'a)
-(con0 (con0 'a))
-(con0 (con1 'a))
-(con1 (con0 'a))
-(con1 (con1 'a))
-(con0 (con1 (con0 (con1 'a))))
-|#
 
 (DEFUN CONE-CMPR (cmpr0 cmpr1)
   (declare (type cmprf cmpr0 cmpr1))
@@ -57,18 +47,6 @@
 	 (declare (ftype (function (cone cone) cmpr) rslt))
 	 #'rslt)))
 
-#|
-()
-(setf cmpr (cone-cmpr #'s-cmpr #'f-cmpr))
-(funcall cmpr (con0 'a) (con0 'b))
-(funcall cmpr (con0 'b) (con0 'b))
-(funcall cmpr (con0 'b) (con0 'a))
-(funcall cmpr (con0 'b) (con1 '2))
-(funcall cmpr (con1 '2) (con0 'b))
-(funcall cmpr (con1 '1) (con1 '2))
-(funcall cmpr (con1 '2) (con1 '2))
-(funcall cmpr (con1 '2) (con1 '1))
-|#
 
 (DEFUN CONE-BASIS (basis0 basis1)
   (declare (type basis basis0 basis1))
@@ -88,35 +66,26 @@
 	   (declare (ftype (function (fixnum) list) rslt))
 	   #'rslt))))
 
-#|
-()
-(setf basis (cone-basis
-             #'(lambda (n) (list n))
-             #'(lambda (n) (list n))))
-(funcall basis 4)
-|#
 
 (DEFUN TERM-CON0 (term)
   (declare (type term term))
   (the term
        (term (cffc term)
 	     (con0 (gnrt term)))))
+
+
 (DEFUN TERM-CON1 (term)
   (declare (type term term))
   (the term
        (term (cffc term)
 	     (con1 (gnrt term)))))
+
+
 (DEFUN TERM-UNCON (term)
   (declare (type term term))
   (the term
        (term (cffc term) (icon (gnrt term)))))
 
-#|
-()
-(term-con0 (term 2 'a))
-(term-con1 (term 2 'a))
-(term-uncon (term 2 (con0 'a)))
-|#
 
 (DEFUN CMBN-CON0 (cmbn)
   (declare (type cmbn cmbn))
@@ -125,6 +94,7 @@
 	:degr (cmbn-degr cmbn)
 	:list (mapcar #'term-con0 (cmbn-list cmbn)))))
 
+
 (DEFUN CMBN-CON1 (cmbn)
   (declare (type cmbn cmbn))
   (the cmbn
@@ -132,11 +102,6 @@
 	:degr (cmbn-degr cmbn)
 	:list (mapcar #'term-con1 (cmbn-list cmbn)))))
 
-#|
-()
-(cmbn-con0 (cmbn 3 1 'a 2 'b))
-(cmbn-con1 (cmbn 3 1 'a 2 'b))
-|#
 
 (DEFUN CONE-CMBN-SPLIT (cmbn)
   (declare (type cmbn cmbn))
@@ -158,13 +123,6 @@
 		    (values (make-cmbn :degr degr :list list0)
 			    (make-cmbn :degr (1- degr) :list list1))))))
 
-#|
-()
-(cone-cmbn-split
- (cmbn 3 4 (con0 'a) 5 (con1 'b)))
-(cone-cmbn-split (cmbn 3 4 (con0 'a)))
-(cone-cmbn-split (cmbn 3 4 (con1 'a)))
-|#
 
 (DEFUN CONE-2CMBN-APPEND (cmbn0 cmbn1)
   (declare (type cmbn cmbn0 cmbn1))
@@ -174,11 +132,7 @@
 	:list (append (mapcar #'term-con0 (cmbn-list cmbn0))
 		      (mapcar #'term-con1 (cmbn-list cmbn1))))))
 
-#|
-()
-(cone-2cmbn-append (cmbn 3 4 'a) (cmbn 2 5 'b))
-|#
- 
+
 (DEFUN CONE-2MRPH-DIAG-IMPL (mrph0 mrph1)
   (declare (type morphism mrph0 mrph1))
   (the intr-mrph
@@ -192,13 +146,7 @@
 					  (? mrph1 cmbn1))))))
 	 #'rslt)))
 
-#|
-()
-(setf mrph (dffr (delta 4)))
-(setf rslt (cone-2mrph-diag-impl mrph mrph))
-(funcall rslt (cmbn 3 4 (con0 15) 5 (con1 7)))
-|#
- 
+
 (DEFUN CONE-3MRPH-TRIANGLE-IMPL (cmpr0 mrph0 mrph1 phi)
   (declare (ignore cmpr0) (type morphism mrph0 mrph1 phi))
   (the intr-mrph
@@ -215,17 +163,6 @@
 			   (? mrph1 (1- degr) gnrt))))))))
 	 #'rslt)))
 
-#|
-()
-(setf rslt (cone-3mrph-triangle-impl #'f-cmpr
-                                     (dffr (delta 4))
-                                     (dffr (delta 4))
-                                     (idnt-mrph (delta 4))))
-(funcall rslt 4 (con0 '31))
-(funcall rslt 5 (con1 '31))
-(funcall rslt 4 (con1 '15))
-; (funcall rslt (cmbn 4 1 (con0 '31) 1 (con1 '15))) ;
-|#
 
 (DEFUN CONE (mrph)
   (declare (type morphism mrph))
@@ -244,25 +181,6 @@
 	  :strt :gnrt
 	  :orgn `(cone ,mrph)))))
 
-#|
-()
-(cat-init)
-(setf k (k-z 1))
-(setf u (idnt-mrph k))
-(setf c (cone u))
-(setf *tc* (cmbn 4 1 (con0 '(1 2 3 4))))
-(? c 4 (con0 '(1 2 3 4)))
-(? c *tc*)
-|#
-
-
-#|
-()
-(setf cone (cone (idnt-mrph (delta 4))))
-(? cone (cmbn 4 1 (con0 '31) -1 (con1 '15)))
-(? cone *)
-|#
-
 
 (DEFUN CONE-2MRPH-DIAG (sorc-cone trgt-cone mrph0 mrph1)
   (declare
@@ -280,13 +198,6 @@
 	  :strt :cmbn
 	  :orgn `(cone-2mrph-diag ,sorc-cone ,trgt-cone ,mrph0 ,mrph1)))))
 
-#|
-()
-(setf idnt (idnt-mrph (delta 4)))
-(setf cone (cone idnt))
-(setf ff (cone-2mrph-diag cone cone idnt idnt))
-(? ff (cmbn 4 1 (con0 '31) 10 (con1 '15)))
-|#
 
 (DEFUN CONE-3MRPH-TRIANGLE (sorc-cone trgt-cone mrph0 mrph1 phi)
   (declare
@@ -308,23 +219,6 @@
 	  :strt :gnrt
 	  :orgn `(cone-3mrph-triangle ,sorc-cone ,trgt-cone
 				      ,mrph0 ,mrph1 ,phi)))))
-
-#|
-()
-(cat-init)
-(setf d (delta 4))
-(setf df (dffr (delta 4)))
-(setf n (idnt-mrph d))
-(setf c (cone n))
-(setf z (sbtr (dffr c)
-              (cone-3mrph-triangle c c df (n-mrph -1 df) n)))
-(? z 0 (con0 '1))
-(? z 1 (con1 '1))
-(? z 1 (con0 '3))
-(? z 2 (con1 '3))
-(? z 4 (con0 '31))
-(? z 5 (con1 '31))
-|#
 
 
 (DEFUN CONE-EFHM (cone)

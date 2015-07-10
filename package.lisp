@@ -135,6 +135,24 @@
 	   ZERO-CMBN
 	   ZERO-INTR-DFFR
 
+	   ;; cones.lisp
+
+	   CMBN-CON0
+	   CMBN-CON1
+	   CONE
+	   CONE-2CMBN-APPEND
+	   CONE-2MRPH-DIAG
+	   CONE-2MRPH-DIAG-IMPL
+	   CONE-3MRPH-TRIANGLE
+	   CONE-3MRPH-TRIANGLE-IMPL
+	   CONE-BASIS
+	   CONE-CMBN-SPLIT
+	   CONE-CMPR
+	   TERM-CON0
+	   TERM-CON1
+	   TERM-UNCON
+
+
 	   ;; delta.lisp
 
 	   DELTA
@@ -199,6 +217,8 @@
 	   CMBN-NON-ZERO-P
 	   CMBN-ZERO-P
 	   CMPR
+	   CON0
+	   CON1
 	   CPRD
 	   CRPR
 	   D
