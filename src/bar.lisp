@@ -515,6 +515,7 @@
 	      :rrdct (vrtc-bar rrdct)
 	      :orgn `(vrtc-bar ,hmeq))))))
 
+
 (DEFMETHOD BAR ((hmeq homotopy-equivalence))
   (unless (typep (lbcc hmeq) 'algebra)
     (error "In (BAR HMEQ), the LBCC should be a algebra."))
@@ -522,14 +523,3 @@
        (if (eq (first (orgn hmeq)) 'trivial-hmeq)
 	   (trivial-hmeq (bar (lbcc hmeq)))
 	   (add (vrtc-bar hmeq) (bar-hrzn-dffr (lbcc hmeq))))))
-
-#|
-(cat-init)
-(setf h (efhm (k-z-1)))
-(setf b (bar h))
-(inspect b)
-(homology (rbcc b) 0 11)
-|#
-
-  
-
