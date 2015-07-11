@@ -160,6 +160,7 @@
 	  (cat:? cf 6 (cat:abar 3 (cat:crpr 0 (cat:d 7) 0 (cat:d 7)) 3
 				(cat:crpr 0 (cat:d 56) 0 (cat:d 56)))))))
 
+
 (test hmtp-vrtc-bar-intr
       (progn
 	(cat:cat-init)
@@ -197,7 +198,7 @@
   (aleat-bc)
   (check-rdct))
 
-#|
+
 (test vrtc-bar
       (progn
 	(cat:cat-init)
@@ -249,8 +250,9 @@
 	  (cat:pre-check-rdct bar)
 	  (aleat-tc)
 	  (aleat-bc)
-	  (loop (c))))) ;; degrees >= 15 is possible => error.
-|#
+	  ;;(loop (c))
+	  (dotimes (i 10) (c))))) ;; degrees >= 15 is possible => error.
+
 
 (test homology
       (progn
