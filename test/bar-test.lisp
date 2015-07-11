@@ -82,7 +82,6 @@
 				     abar))))))))
 
 
-#|
 (test bar-intr-hrzn-dffr
       (let* ((k (cat:k-z-1))
 	     (r (cat:bar-intr-hrzn-dffr (cat:aprd k))))
@@ -99,13 +98,13 @@
 	(let ((h (cat:bar-hrzn-dffr (cat:k-z-1)))
 	      (abar))
 	  (dotimes (i 10)
-	    (print (random-abar1 10 5)))
-	  (setf abar (random-abar1 10 5))
+	    (print (random-abar 10 5)))
+	  (setf abar (random-abar 10 5))
 	  (cat:? h (apply #'+ (mapcar #'car (cat:abar-list abar))) abar)
 	  (cat:? h (cat:? h (apply #'+ (mapcar #'car
 					       (cat:abar-list abar))) abar))
 	  (dotimes (i 10)
-	    (setf abar (random-abar1 10 3))
+	    (setf abar (random-abar 10 3))
 	    (print abar)
 	    (print (cat:? h (apply #'+ (mapcar #'car (cat:abar-list abar)))
 			  abar))
@@ -118,12 +117,12 @@
       (progn
 	(cat:cat-init)
 	(let ((b (cat:bar (cat:k-z-1)))
-	      (abar (random-abar1 10 3)))
+	      (abar (random-abar 10 3)))
 	  (cat:? b (apply #'+ (mapcar #'car (cat:abar-list abar))) abar)
 	  (cat:? b (cat:? b (apply #'+ (mapcar #'car (cat:abar-list abar)))
 			  abar))
 	  (dotimes (i 10)
-	    (let ((abar (random-abar1 10 3)))
+	    (let ((abar (random-abar 10 3)))
 	      (print abar)
 	      (print (cat:? b (apply #'+ (mapcar #'car (cat:abar-list abar)))
 			    abar))
@@ -133,7 +132,6 @@
 						      (cat:abar-list abar)))
 				   abar))))))))
 
-|#
 
 (test ncmbn-bar
       (cat:ncmbn-bar nil)
@@ -200,7 +198,6 @@
   (check-rdct))
 
 #|
-
 (test vrtc-bar
       (progn
 	(cat:cat-init)
@@ -253,12 +250,11 @@
 	  (aleat-tc)
 	  (aleat-bc)
 	  (loop (c))))) ;; degrees >= 15 is possible => error.
+|#
 
-(test bar
+(test homology
       (progn
 	(cat:cat-init)
 	(let* ((h (cat:efhm (cat:k-z-1)))
 	       (b (cat:bar h)))
-	  ;;(inspect b)
 	  (cat:homology (cat:rbcc b) 0 11))))
-|#
