@@ -14,7 +14,6 @@
 					   2 '(4 5))
 			       abar-degr abar)))
 	  (dotimes (i 5) (print (random-abar 8 4)))
-	  #|
 	  (cat:? c (+ 5 abar-degr) gnrt)
 	  (cat:? c (cat:? c (+ 5 abar-degr) gnrt))
 	  (dotimes (i 10)
@@ -51,6 +50,4 @@
 				   abar-degr abar))
 	      (unless (>= abar-degr 11)
 		(print (cat:? c (+ 4 abar-degr) gnrt))
-		(print (cat:? c (cat:? c (+ 4 abar-degr) gnrt))))))
-	  |#
-	  )))
+		(print (cat:? c (cat:? c (+ 4 abar-degr) gnrt)))))))))
