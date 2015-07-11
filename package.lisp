@@ -19,6 +19,7 @@
            *LIST-LIST*
 	   *TC*
 	   *TDD*
+	   *TNPR-WITH-DEGREES*
 
 	   ;; bar.lisp
 
@@ -88,6 +89,7 @@
 
 	   ;; cl-space-efhm.lisp
 
+	   CS-HAT-T-U
 	   CS-HAT-U-T
 
 	   ;; classes.lisp
@@ -118,6 +120,7 @@
 	   ORGN
 	   REDUCTION
 	   RRDCT
+	   SORC
 	   TCC
 	   TNPR
 
@@ -257,6 +260,16 @@
 
 	   SPHERE
 	   BUILD-FINITE-SS
+
+	   ;; tensor-products.lisp
+
+	   2CMBN-TNPR
+	   TNSR-PRDC
+	   TNSR-PRDC-BASIS
+	   TNSR-PRDC-CMPR
+	   TNSR-PRDC-INTR
+	   TNSR-PRDC-INTR-DFFR
+	   TNPR-PRINT
 
 	   ;; various.lisp
 
