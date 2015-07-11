@@ -6,6 +6,10 @@
 
 (PROVIDE "delta")
 
+
+(DEFGENERIC PRINT-KEYCONS (car cdr stream))
+
+
 (DEFMETHOD PRINT-KEYCONS ((car (eql :delt)) cdr stream)
   (format stream "~A" (hyphenize-list (dlop-int-ext cdr)))
   (cons car cdr))
