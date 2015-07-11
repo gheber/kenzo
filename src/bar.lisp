@@ -245,8 +245,8 @@
 							       (- degr degr1)
 							       rest1)))
 					      (declare
-					       (type icmbn aprd-brgn1-brgn2
-						     aprd-rest1))
+					       (type cmbn aprd-brgn1-brgn2)
+					       (type icmbn aprd-rest1))
 					      (with-cmbn (degr12 icmbn12)
 						aprd-brgn1-brgn2
 						(incf degr12)
@@ -307,8 +307,8 @@
 	    (fixnum degr)
 	    (type abar abar))
 	   (make-cmbn :degr (1- degr)
-		      :list (append       ;;; and not nconc, otherwise a terrible bug, when the
-                                    ;;;   first result is stored in memory...
+		      :list (append ;;; and not nconc, otherwise a terrible bug,
+			            ;;; when the first result is stored in memory
 			     (cmbn-list (gnrt-? hrzn-dffr degr abar))
 			     (cmbn-list (gnrt-? vrtc-dffr degr abar))))))
     (the intr-mrph #'rslt)))
