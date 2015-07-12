@@ -59,6 +59,7 @@
       :IALLP "Internal-ALgebraic LooP"
       :ICMBN "Internal-CoMBiNation"
       :IDNM  "IDentification NuMber"
+      :IDNT  "IDeNTity"
       :ILOOP "Internal LOOP"
       :INTR  "INTeRnal-"
 
@@ -110,9 +111,10 @@
 
 (DEFUN what-is (kwd)
   (declare (type (or keyword string symbol) kwd))
-  "WHAT-IS returns the full word or term for an abbreviation provided as a keyword
-string, or symbol. It returns NIL for unknown abbreviations."
-  (getf +ABBREVIATIONS+
+  "WHAT-IS returns the full word or term for an abbreviation provided as a
+keyword, string, or symbol. It returns NIL for unknown abbreviations."
+  (unless (null kwd)
+      (getf +ABBREVIATIONS+
 	(cond ((keywordp kwd) kwd)
 	      ((stringp kwd) (intern (string-upcase kwd) 'keyword))
-	      ((symbolp kwd) (intern (symbol-name kwd) 'keyword)))))
+	      ((symbolp kwd) (intern (symbol-name kwd) 'keyword))))))
