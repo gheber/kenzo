@@ -140,16 +140,19 @@
       (cat:ncmbn-bar (list (cat:cmbn 1 2 'a 3 'b) (cat:cmbn 1 4 'c 5 'd)
 			   (cat:cmbn 1 6 'e 7 'f))))
 
-#|
+
 (test mrph-vrtc-bar-intr
-      (let* ((cc (cat:build-chcm :cmpr #'cat:f-cmpr :strt :cmbn))
+      (let* ((cc (cat:build-chcm :cmpr #'cat:f-cmpr
+				 :basis :locally-effective
+				 :intr-dffr #'cat:zero-mrph
+				 :strt :cmbn))
 	     (m (cat:build-mrph :sorc cc :trgt cc :degr 0 :intr
 				#'(lambda (degr gnrt)
 				    (cat:cmbn degr 2 gnrt 3 (1+ gnrt)))
 				:strt :gnrt :orgn '(test)))
 	     (r (cat:mrph-vrtc-bar-intr m)))
 	(funcall r 4 (cat:abar 2 3 2 4))))
-|#
+
 
 (test vrtc-bar
       (progn
