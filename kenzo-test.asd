@@ -25,4 +25,6 @@
 	       (:file "cartesian-products-test")
 	       (:file "cones-test")
 	       ;;(:file "cl-space-efhm-test")
-	       (:file "tensor-products-test")))
+	       (:file "tensor-products-test")
+	       (:file "k-pi-n-test")
+	       ))

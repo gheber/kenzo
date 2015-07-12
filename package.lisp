@@ -206,8 +206,26 @@
 
 	   ;; k-pi-n.lisp
 
+	   CIRCLE
+	   INTERESTING-FACES
+	   GMSM-COCYCLE
 	   K-Z
 	   K-Z-1
+	   K-Z-1-CMPR
+	   K-Z-1-FACE
+	   K-Z-1-GRIN
+	   K-Z-1-GRML
+	   K-Z2
+	   K-Z2-1
+	   KZ1-RDCT
+	   KZ1-RDCT-F-INTR
+	   KZ1-RDCT-H-INTR
+	   Z-ABSM-BAR
+	   Z-BAR-ABSM
+	   Z-FUNDAMENTAL-GMSM
+	   Z2-ABSM-BAR
+	   Z2-BAR-ABSM
+	   Z-COCYCLE-GBAR
 
 	   ;; macros.lisp
 
@@ -235,6 +253,7 @@
 	   DFFR
 	   DGNL
 	   GNRT
+	   GRIN
 	   I-SBTR
 	   MASK
 	   RBCC
