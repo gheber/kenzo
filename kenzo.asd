@@ -18,6 +18,7 @@
    (:module "src"
 	    :components
 	    ((:file "kenzo")
+	     (:file "abbreviations")
 	     (:file "macros")
 	     (:file "various")
 	     (:file "classes")

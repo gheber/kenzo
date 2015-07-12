@@ -21,6 +21,11 @@
 	   *TDD*
 	   *TNPR-WITH-DEGREES*
 
+	   ;; abbreviations.lisp
+
+	   +ABBREVIATIONS+
+	   WHAT-IS
+
 	   ;; bar.lisp
 
 	   ABAR
