@@ -233,6 +233,16 @@
 	   Z2-BAR-ABSM
 	   Z-COCYCLE-GBAR
 
+	   ;; kan.lisp
+
+	   CHECK-HAT
+	   SMST-KAN
+
+	   ;; loop-spaces.lisp
+
+	   GDELTAB
+	   LOOP3
+
 	   ;; macros.lisp
 
 	   -1-EXPT-N
@@ -261,11 +271,13 @@
 	   GNRT
 	   GRIN
 	   I-SBTR
+	   KFLL
 	   MASK
 	   RBCC
 	   TERM
 	   TERM-CMBN
 	   TCC
+	   WITH-ABSM
 
 	   ;; searching-homology.lisp
 
