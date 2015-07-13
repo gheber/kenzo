@@ -9,7 +9,6 @@
   :pathname #P"test/"
   :components ((:file "package")
 	       (:file "common")
-	       #|
 	       (:file "combinations-test")
 	       (:file "various-test")
 	       (:file "chain-complexes-test")
@@ -28,6 +27,5 @@
 	       ;;(:file "cl-space-efhm-test")
 	       (:file "tensor-products-test")
 	       (:file "k-pi-n-test")
-	       |#
 	       (:file "simplicial-sets-test")
 	       ))
