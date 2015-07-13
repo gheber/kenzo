@@ -17,6 +17,7 @@
       :BNDR  "BouNDaRy"
       :BRGN  "BaR-GeNerator"
       :BSGN  "BaSe GeNerator"
+      :BSPN  "BaSe-PoiNt"
 
       ;; C
       :CBGN  "CoBar-GeNerator"

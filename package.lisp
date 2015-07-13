@@ -107,6 +107,7 @@
 	   CMBN-DEGR
 	   CMBN-LIST
 	   DEGR
+	   DGOP
 	   DFFR1
 	   EFHM
 	   F
@@ -272,9 +273,27 @@
 
 	   ;; simplicial-sets.lisp
 
+	   1DGNR
+	   1DGOP*DGOP
+	   1DLOP-DGOP
+	   A-CMPR3
+	   A-FACE4
+	   BSPN-P
+	   CHECK-FACES
+	   CHECK-SMST
 	   DGOP*DGOP
+	   DGOP/DGOP
+	   DGOP-EXT-INT
+	   DGOP-INT-EXT
 	   DLOP-EXT-INT
 	   DLOP-INT-EXT
+	   FACE-BNDR
+	   FACE*-BNDR
+	   HYPHENIZE-LIST
+	   INTR-DIAGONAL
+	   NDGNR
+	   NFACE
+	   REMOVE-BIT
 
 	   ;; smith.lisp
 
@@ -282,8 +301,11 @@
 
 	   ;; special-smsts.lisp
 
-	   SPHERE
 	   BUILD-FINITE-SS
+	   MOORE
+	   R-PROJ-SPACE
+	   SPHERE
+	   SPHERE-FACE
 
 	   ;; tensor-products.lisp
 
