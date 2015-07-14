@@ -12,19 +12,18 @@ at http://www-fourier.ujf-grenoble.fr/~sergerar/Kenzo/ .
 This version aims to update its infrastructure by providing the following:
 
 1. A simple regression test suite based on [FiveAM](http://common-lisp.net/project/fiveam/)
-2. Support for [SBCL](http://www.sbcl.org/)
+2. Support for the great freely available Lisp compilers out there, including [CCL](http://ccl.clozure.com/), [ECL] (https://common-lisp.net/project/ecl/), [SBCL](http://www.sbcl.org/), etc.
 3. Installation via the [Quicklisp](http://www.quicklisp.org/beta/) library
    manager
 
-Items 1 and 2 are well underway. Item 3 is on hold, because there's apparently no license
-attached to Kenzo. I have made several attempts to contact the author(s), but never gotten
-a response.
+Items 1 and 2 are well underway. Item 3 is pending after Francis Sergeraert kindly
+agreed to license the software under [GPLv3](http://www.gnu.org/licenses/gpl-3.0.en.html).
 
 *!!! WARNING !!!*
 
-This is work in progress. The entire code now compiles fine w/ SBCL, but that's
-just the first step. There are plenty of examples in
-[publications](http://www-fourier.ujf-grenoble.fr/~sergerar/Papers/) and scattered
+This is work in progress and there are several [issues](https://github.com/gheber/kenzo/issues).
+The entire code now compiles fine w/ CCL, ECL, SBCL, but that's just the first step. There are plenty
+of examples in [publications](http://www-fourier.ujf-grenoble.fr/~sergerar/Papers/) and scattered
 throughout the source. Many work (most?), some don't. *Let's get to work! ...*
 
 ## Getting up and running
@@ -38,7 +37,7 @@ the source, e.g. by creating a link to this directory at
 
       ~/.local/share/common-lisp/source/
 
-Then in your Lisp (e.g. in ECL) type
+Then in your Lisp (e.g., in ECL) type
 ```lisp
 (require :asdf)
 (require :kenzo)
@@ -57,7 +56,7 @@ Making Kenzo `quickload`-able is a piece of cake:
   kenzo\kenzo.asd
   kenzo\kenzo-test.asd
 ```
-Verify that you're good to go by loading and running the Kenzo test suite. For example, in an `sbcl` prompt (I've tested this with SBCL 1.2.12 on Debian and Windows) you should see something like this:
+Verify that you're good to go by loading and running the Kenzo test suite. For example, in an `sbcl` prompt (I've tested this with SBCL 1.2.13 on Debian and Windows) you should see something like this:
 ```
 * (ql:quickload :kenzo-test)
 To load "kenzo-test":
@@ -66,10 +65,7 @@ To load "kenzo-test":
 ; Loading "kenzo-test"
 .
 (:KENZO-TEST)
-* (in-package :fiveam)
-
-#<PACKAGE "IT.BESE.FIVEAM">
-* (run!)
+* (fiveam:run!)
 
 Running test suite KENZO
  Running test F-CMPR ..........
@@ -78,8 +74,8 @@ Running test suite KENZO
  ...
  Running test CDELTA
 ---done---
- Did 329 checks.
-    Pass: 329 (100%)
+ Did 642 checks.
+    Pass: 642 (100%)
     Skip: 0 ( 0%)
     Fail: 0 ( 0%)
 ```
