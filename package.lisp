@@ -283,6 +283,10 @@
 
 	   HOMOLOGY
 
+	   ;; simplicial-mrphs.lisp
+
+	   BUILD-SMMR
+
 	   ;; simplicial-sets.lisp
 
 	   1DGNR
