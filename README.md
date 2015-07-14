@@ -1,5 +1,7 @@
 # Welcome to Kenzo
 
+![GPLv3 Logo](http://www.gnu.org/graphics/gplv3-127x51.png)
+
 According to the title of its
 [handbook](http://www-fourier.ujf-grenoble.fr/~sergerar/Kenzo/Kenzo-doc.pdf),
 Kenzo is a "Symbolic Software for Effective Homology Computation" and
@@ -81,3 +83,6 @@ Running test suite KENZO
 ```
 
 Similarly, you'd load Kenzo via `(ql:quickload :kenzo)`.
+
+
+![GPLv3 Logo](http://www.gnu.org/graphics/gplv3-127x51.png)
