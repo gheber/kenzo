@@ -236,6 +236,7 @@
 	   ;; kan.lisp
 
 	   CHECK-HAT
+	   CHECK-KAN
 	   SMST-KAN
 
 	   ;; loop-spaces.lisp

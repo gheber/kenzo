@@ -27,6 +27,7 @@
 	       (:file "k-pi-n-test")
 	       (:file "kan-test")
 	       (:file "searching-homology-test")
+	       (:file "simplicial-groups-test")
 	       (:file "simplicial-mrphs-test")
 	       (:file "simplicial-sets-test")
 	       (:file "tensor-products-test")
