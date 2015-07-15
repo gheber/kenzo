@@ -85,7 +85,7 @@
 ;; (function (degr) (list gnrt))
 
 ;; INTR-MRPH = INTeRnal-MoRPHism
-(DEFTYPE INTR-MRPH () '(or function morphism +ccl null))
+(DEFTYPE INTR-MRPH () '(or function morphism #+ccl null))
 ;; (or (function (degr gnrt) cmbn)  ;; if :gnrt strategy
 ;;     (function (cmbn) (cmbn))     ;; if :cmbn strategy
 
