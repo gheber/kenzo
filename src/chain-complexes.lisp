@@ -215,7 +215,7 @@ instances via the standard constructor MAKE-INSTANCE."
   (declare
    (type chain-complex sorc trgt)
    (fixnum degr)
-   (type intr-mrph intr)
+   (type (or intr-mrph null) intr)
    (type strt strt)
    (list orgn))
   "Returns an instance of MORPHISM. Use this function instead of creating
