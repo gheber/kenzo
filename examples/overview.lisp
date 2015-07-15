@@ -47,10 +47,8 @@
 (defvar k-z2-2 (cat:k-z2 2))
 (print k-z2-2)
 
-#|
 (format t "~%~%Calculating the homology group of dimension 4:~%")
 (cat:homology k-z2-2 4)
-|#
 
 (format t "~%Creating sphere S^3:")
 (defvar s3 (cat:sphere 3))
@@ -60,34 +58,34 @@
 (defvar o2s3 (cat:loop-space s3 2))
 (print o2s3)
 
-#|
 (format t "~%~%Calculating the homology groups of dimensions 4 to 6:~%")
 (cat:homology o2s3 4 6)
-|#
 
 (format t "~%Creating loop space Omega^1S^3:")
 (defvar os3 (cat:loop-space s3))
 (print os3)
 
-(format t "~%Retrieving the canonical generator of pi_2(Omega^1S^3):")
+(format t "~%~%Retrieving the canonical generator of pi_2(Omega^1S^3):")
 (defvar L1 (cat:loop3 0 's3 1))
 (print L1)
 
 (defvar null-simp (cat:absm 3 cat:+null-loop+))
 (print null-simp)
 
-#|
+(format t "~%~%Pasting a 3-simplex named D3 to Omega^1S^3:")
 (defvar dos3 (cat:disk-pasting os3 3 '<D3>
 			       (list L1 null-simp L1 null-simp)))
 (print dos3)
 
+(format t "~%~%Calculating the homology groups of dimensions 2 to 4:~%")
 (cat:homology dos3 2 4)
 
+(format t "~%~%Creating loop space of disk pasting space:")
 (defvar odos3 (cat:loop-space dos3))
 (print odos3)
 
+(format t "~%~%Calculating the homology group of dimensions 5:~%")
 (cat:homology odos3 5)
-|#
 
 
 #+ccl (quit)
