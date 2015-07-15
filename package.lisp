@@ -186,6 +186,10 @@
 	   SOFT-DELTA-INFINITY
 	   SOFT-DELTA-N-BASIS
 
+	   ;; disk-pasting.lisp
+
+	   DISK-PASTING
+
 	   ;; effective-homology.lisp
 
 	   BUILD-RDCT
@@ -241,8 +245,10 @@
 
 	   ;; loop-spaces.lisp
 
+	   +NULL-LOOP+
 	   GDELTAB
 	   LOOP3
+	   LOOP-SPACE
 
 	   ;; macros.lisp
 
