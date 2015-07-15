@@ -373,7 +373,8 @@
        (with-absm (dgop gmsm) absm
 		  (multiple-value-bind (dgop2 1dlop) (1dlop-dgop indx dgop)
 		    (declare (fixnum dgop2)
-			     #-lispworks (type (or fixnum nil) 1dlop))
+			     #-(or ccl lispworks sbcl)
+			     (type (or fixnum nil) 1dlop))
 		    ;; Bug LispWorks if this or-type defined
 		    (unless 1dlop
 		      (return-from a-face4 (absm dgop2 gmsm)))
