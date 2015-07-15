@@ -17,6 +17,7 @@
   (the chain-complex
        (tnsr-prdc clsp-tnsr-smgr bar)))
 
+
 (DEFUN CS-HAT-RIGHT-PERTURBATION-INTR (smgr)
   (declare (type simplicial-group smgr))
   (let ((aprd (aprd smgr)))
@@ -24,56 +25,44 @@
 	     (declare
 	      (fixnum degr)
 	      (type tnpr tnpr))
-	     (with-tnpr (degr1 tnpr1 degr2 abar2) tnpr
-			(when (zerop degr2)
-			  (return-from rslt (zero-cmbn (1- degr))))
-			(with-tnpr (degr11 gbar11 degr12 gmsm12) tnpr1
-				   (let ((sign (-1-expt-n degr1))
-					 (brgn21 (first (abar-list abar2)))
-					 (bar22 (make-abar
-						 :list (rest (abar-list
-							      abar2)))))
-				     (declare
-				      (fixnum sign)
-				      (type brgn brgn21)
-				      (type abar bar22))
-				     (with-brgn (degr21 gmsm21) brgn21
-						(let ((degr22 (- degr2 degr21)))
-						  (declare (fixnum degr22))
-						  (decf degr21) ;; = dmns(gmsm21)
-						  (let ((aprd
-							 (gnrt-? aprd
-								 (+ degr12
-								    degr21)
-								 (tnpr degr12
-								       gmsm12
-								       degr21
-								       gmsm21))))
-						    (declare (type cmbn aprd))
-						    (with-cmbn (degr12+21 list)
-						      aprd
-						      (make-cmbn
-						       :degr (1- degr)
-						       :list
-						       (mapcar
-							#'(lambda (term)
-							    (declare
-							     (type term term))
-							    (with-term
-								(cffc gmsm) term
-								(term (* sign
-									 cffc)
-								      (tnpr
-								       (+ degr1
-									  degr21)
-								       (tnpr
-									degr11
-									gbar11
-									degr12+21
-									gmsm)
-								       degr22
-								       bar22))))
-							list)))))))))))
+	     (with-tnpr
+		 (degr1 tnpr1 degr2 abar2) tnpr
+		 (when (zerop degr2)
+		   (return-from rslt (zero-cmbn (1- degr))))
+		 (with-tnpr
+		     (degr11 gbar11 degr12 gmsm12) tnpr1
+		     (let ((sign (-1-expt-n degr1))
+			   (brgn21 (first (abar-list abar2)))
+			   (bar22 (make-abar :list (rest (abar-list abar2)))))
+		       (declare
+			(fixnum sign)
+			(type brgn brgn21)
+			(type abar bar22))
+		       (with-brgn
+			   (degr21 gmsm21) brgn21
+			   (let ((degr22 (- degr2 degr21)))
+			     (declare (fixnum degr22))
+			     (decf degr21) ;; = dmns(gmsm21)
+			     (let ((aprd (gnrt-? aprd (+ degr12 degr21)
+						 (tnpr degr12 gmsm12
+						       degr21 gmsm21))))
+			       (declare (type cmbn aprd))
+			       (with-cmbn
+				   (degr12+21 list) aprd
+				   (make-cmbn
+				    :degr (1- degr)
+				    :list
+				    (mapcar
+				     #'(lambda (term)
+					 (declare (type term term))
+					 (with-term
+					     (cffc gmsm) term
+					     (term (* sign cffc)
+						   (tnpr (+ degr1 degr21)
+							 (tnpr degr11 gbar11
+							       degr12+21 gmsm)
+							 degr22 bar22))))
+				     list)))))))))))
       (the intr-mrph #'rslt))))
 
 
