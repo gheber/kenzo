@@ -3,7 +3,6 @@
 
 (in-suite :kenzo)
 
-#|
 (test check-kan
       (cat:cat-init)
       (let* ((k (cat:k-z-1))
@@ -12,4 +11,3 @@
 			  (cat:<a-b> 0 3))))
 	(dotimes (i 4)
 	  (cat:check-kan k i 3 (remove (nth i hat) hat :test #'equal)))))
-|#

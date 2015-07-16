@@ -130,7 +130,7 @@
 	(cat:? ddd 5 (cat:tnpr 2 7 3 15))
 	(cat:? ddd 5 (cat:tnpr 3 15 2 7))))
 
-#|
+
 (test tnsr-prdc1
       (cat:cat-init)
       (let* ((r (cat:ez (cat:delta-infinity) (cat:delta-infinity)))
@@ -142,9 +142,9 @@
 	(cat:pre-check-rdct r2)
 	(check-rdct)))
 
+
 (test tnsr-prdc2
       (cat:cat-init)
       (let* ((k (cat:k-z 2))
 	     (k2 (cat:tnsr-prdc k k)))
 	(cat:homology k2 0 10)))
-|#

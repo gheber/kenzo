@@ -124,11 +124,11 @@
       (let ((k (cat:k-z2-1)))
 	(cat:homology k 0 4)))
 
-#|
+
 (test k-z2-homology
       (let ((k3 (cat:k-z2 3)))
 	(cat:homology k3 7)))
-|#
+
 
 (test z2-bar-absm
       (dotimes (i 8)    ;;; not really legal
@@ -169,7 +169,6 @@
 					:orgn '(essai-2)))
 	(cat:gmsm-cocycle (cat:face d) 1 4 31 chml-clss)))
 
-#|
 (test z-cocycle-gbar
       (cat:cat-init)
       (let* ((d (cat:delta 10))
@@ -211,4 +210,3 @@
 			      :orgn '(essai-33)))
 	(cat:gmsm-cocycle (cat:face d) 3 4 31 chml-clss)
 	(cat:z-cocycle-gbar 3 4 *)))
-|#
