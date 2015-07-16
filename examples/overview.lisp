@@ -7,6 +7,8 @@
 (cat:cat-init)
 (cat:kenzo-version)
 
+(setf cat:*results-verbose* nil)
+
 (format t "~%Creating simplicial set Moore(Z/2Z,3):")
 (defvar m23 (cat:moore 2 3))
 (print m23)

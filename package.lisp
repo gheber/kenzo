@@ -17,6 +17,7 @@
 	   *ID-FG*
 	   *ID-GF-DH-HD*
            *LIST-LIST*
+	   *RESULTS-VERBOSE*
 	   *TC*
 	   *TDD*
 	   *TNPR-WITH-DEGREES*

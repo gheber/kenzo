@@ -19,7 +19,7 @@
 	       (:file "circle")
 	       (:file "combinations-test")
 	       (:file "cones-test")
-	       ;;(:file "cl-space-efhm-test")
+	       (:file "cl-space-efhm-test")
 	       (:file "delta-test")
 	       (:file "diabolo")
 	       (:file "effective-homology-test")
