@@ -67,7 +67,7 @@
 (defvar os3 (cat:loop-space s3))
 (print os3)
 
-(format t "~%~%Retrieving the canonical generator of pi_2(Omega^1S^3):")
+(format t "~%~%Creating the canonical generator of pi_2(Omega^1S^3):")
 (defvar L1 (cat:loop3 0 's3 1))
 (print L1)
 
@@ -89,6 +89,76 @@
 (format t "~%~%Calculating the homology group of dimensions 5:~%")
 (cat:homology odos3 5)
 
+(format t "~%~%Is S^3 of type Kan? ~A~%" (typep s3 'cat:kan))
+
+(format t "~%~%Is Omega^1S^3 a simplicial group? ~A~%"
+	(typep os3 'cat:simplicial-group))
+
+(format t "~%~%Is Omega^1S^3 an abelian simplicial group? ~A~%"
+	(typep os3 'cat:simplicial-group))
+
+(format t "~%~%Creating L2 = (S3)^2 in Omega^1S^3):")
+(defvar L2 (cat:loop3 0 's3 2))
+(print L2)
+
+(format t "~%~%Applying the product of the underlying algebra to L2#L2:")
+(defvar square (cat:aprd os3 4 (cat:tnpr 2 L2 2 L2)))
+(print square)
+
+(format t "~%~%Select the generator part of the second element:")
+(defvar L4 (cat:gnrt (second (cat:cmbn-list square))))
+(print L4)
+
+(format t "~%~%Create the \"Kan hat\", the list of the faces 1, 2, 3, 4 of L4:")
+(defvar hat (mapcar #'(lambda (i) (cat:face os3 i 4 L4)) '(1 2 3 4)))
+(print hat)
+
+(format t "~%~%Try to find a filling of this \"Kan hat\":")
+(defvar kan-simplex (cat:kfll os3 0 4 hat))
+(print kan-simplex)
+
+(format t "~%~%Face two of the previous simplex is the same as face 2 of L4:")
+(print (cat:face os3 2 4 kan-simplex))
+(print (second hat))
+
+(format t "~%~%Creating the classifying space of Omega^1S^3):")
+(defvar cls-os3 (cat:classifying-space os3))
+(print cls-os3)
+
+(format t "~%~%Is it a simplicial group? ~A~%"
+	(typep cls-os3 'cat:simplicial-group))
+
+(format t "~%~%Verifying that its 4th homology is null:~%")
+(cat:homology cls-os3 4)
+
+(format t "~%~%Constructing the fundamental cohomology class of Moore(Z/2Z,3):")
+(defvar ch3 (cat:chml-clss m23 3))
+(print ch3)
+
+(format t "~%~%Build a fibration over Moore(Z/Z2,3) associated w/ this class:")
+(defvar f3 (cat:z2-whitehead m23 ch3))
+(print f3)
+
+(format t "~%~%Build the fibration's total space:")
+(defvar x4 (cat:fibration-total f3))
+(print x4)
+
+(format t "~%~%The H_4 of this total space is the pi_4 of Moore(Z/2Z):~%")
+(cat:homology x4 3 5)
+
+(format t "~%~%We iterate the process to compute pi_5 of Moore(Z/2Z):~%")
+(defvar ch4 (cat:chml-clss x4 4))
+(print ch4)
+
+(defvar f4 (cat:z2-whitehead x4 ch4))
+(print f4)
+
+(defvar x5 (cat:fibration-total f4))
+(print x5)
+
+(cat:homology x5 4 6)
+
+(format t "~%~%Hence, pi_5(Moore(Z/2Z)) is Z/4Z. QED~%")
 
 #+ccl (quit)
 #+sbcl (sb-ext:exit)

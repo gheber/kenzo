@@ -23,6 +23,7 @@
       :CBGN  "CoBar-GeNerator"
       :CFFC  "CoeFFiCient"
       :CHCM  "CHain-CoMplex"
+      :CHML  "CoHoMoLogy"
       :CLNM  "CaL NuMber"
       :CMBN  "CoMBiNation"
       :CMPR  "CoMPaRison"
@@ -63,6 +64,9 @@
       :IDNT  "IDeNTity"
       :ILOOP "Internal LOOP"
       :INTR  "INTeRnal-"
+
+      ;; K
+      :KFLL  "\"Kan hat\" FiLLing"
 
       ;; L
       :LF    "Left F"

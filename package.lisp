@@ -101,6 +101,7 @@
 	   ;; classes.lisp
 
 	   ABSM
+	   AB-SIMPLICIAL-GROUP
 	   BCC
 	   BRGN
 	   CHAIN-COMPLEX
@@ -119,6 +120,7 @@
 	   H
 	   HOMOTOPY-EQUIVALENCE
 	   IABSM
+	   KAN
 	   LRDCT
 	   MAKE-ABAR
 	   MAKE-CMBN
@@ -127,9 +129,14 @@
 	   ORGN
 	   REDUCTION
 	   RRDCT
+	   SIMPLICIAL-GROUP
 	   SORC
 	   TCC
 	   TNPR
+
+	   ;; classifying-space.lisp
+
+	   CLASSIFYING-SPACE
 
 	   ;; combinations.lisp
 
@@ -357,6 +364,7 @@
 	   ;; whitehead.lisp
 
 	   Z-WHITEHEAD
+	   Z2-WHITEHEAD
 
 	   ))
 
