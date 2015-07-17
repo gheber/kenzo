@@ -160,5 +160,5 @@
 
 (format t "~%~%Hence, pi_5(Moore(Z/2Z)) is Z/4Z. QED~%")
 
-#+ccl (quit)
+#+(or ccl ecl) (quit)
 #+sbcl (sb-ext:exit)
