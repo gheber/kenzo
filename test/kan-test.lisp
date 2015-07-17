@@ -114,4 +114,6 @@
 	(delete (nth 1 faces) faces)
 	(cat:check-hat od 1 3 faces)
 	(setf (nth 2 faces) (nth 1 faces))
-	(signals simple-error (cat:check-hat od 1 3 faces))))
+	(signals #-ecl simple-error
+		 #+ecl simple-type-error
+		 (cat:check-hat od 1 3 faces))))
