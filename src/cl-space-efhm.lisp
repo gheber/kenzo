@@ -135,63 +135,6 @@
 	 (setf (slot-value rslt 'grmd) hat-u-u)
 	 rslt)))
 
-#|
-(cat-init)
-(setf c (cs-hat-t-u (k-z-1)))
-(defun random-abar (tot-degr~ max-degr)
-  (do ((rslt nil)
-       (cum-degr 0 (+ cum-degr degr 1))
-       (degr))
-      ((>= cum-degr tot-degr~) (make-abar :list rslt))
-    (setf degr (1+ (random max-degr)))
-    (push (brgn (1+ degr)
-		(let ((list (make-list degr)))
-		  (mapl
-		   #'(lambda (sublist)
-		       (setf (car sublist) (- (random 21) 10)))
-		   list)
-		  list))
-	  rslt)))
-(dotimes (i 5) (print (random-abar 8 4)))
-(setf abar (random-abar 8 4))
-(setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-(setf gnrt (tnpr 5 (tnpr 3 (gbar 3 0 '(1 2) 0 '(3) 0 '()) 2 '(4 5))
-		 abar-degr abar))
-(? c (+ 5 abar-degr) gnrt)
-(? c *)
-(dotimes (i 10)
-  (let ((abar (random-abar 8 4)))
-    (setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-    (setf gnrt (tnpr 5 (tnpr 3 (gbar 3 0 '(1 2) 0 '(3) 0 '()) 2 '(4 5))
-		     abar-degr abar))
-    (unless (>= abar-degr 10)
-      (print (? c (+ 5 abar-degr) gnrt))
-      (print (? c (? c (+ 5 abar-degr) gnrt))))))
-(dotimes (i 10)
-  (let ((abar (random-abar 8 4)))
-    (setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-    (setf gnrt (tnpr 6 (tnpr 3 (gbar 3 0 '(1 2) 0 '(3) 0 '()) 3 '(4 5 6))
-		     abar-degr abar))
-    (unless (>= abar-degr 9)
-      (print (? c (+ 6 abar-degr) gnrt))
-      (print (? c (? c (+ 6 abar-degr) gnrt))))))
-(dotimes (i 10)
-  (let ((abar (random-abar 8 4)))
-    (setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-    (setf gnrt (tnpr 5 (tnpr 2 (gbar 2 0 '(3) 0 '()) 3 '(4 5 6))
-	   	     abar-degr abar))
-    (unless (>= abar-degr 10)
-      (print (? c (+ 5 abar-degr) gnrt))
-      (print (? c (? c (+ 5 abar-degr) gnrt))))))
-(dotimes (i 10)
-  (let ((abar (random-abar 8 4)))
-    (setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-    (setf gnrt (tnpr 4 (tnpr 2 (gbar 2 0 '(3) 0 '()) 2 '(4 5))
-		     abar-degr abar))
-    (unless (>= abar-degr 11)
-      (print (? c (+ 4 abar-degr) gnrt))
-      (print (? c (? c (+ 4 abar-degr) gnrt))))))
-|#
 
 (DEFUN CS-LEFT-HMEQ-HAT (smgr
 			 &aux (hat-t-u (cs-hat-t-u smgr))
@@ -204,85 +147,32 @@
   (the chain-complex
        (add hat-t-u hat-right-perturbation)))
 
-#|
-(cat-init)
-(setf c (cs-left-hmeq-hat (k-z-1)))
-(defun random-abar (tot-degr~ max-degr)
-  (do ((rslt nil)
-       (cum-degr 0 (+ cum-degr degr 1))
-       (degr))
-      ((>= cum-degr tot-degr~) (make-abar :list rslt))
-    (setf degr (1+ (random max-degr)))
-    (push (brgn (1+ degr)
-		(let ((list (make-list degr)))
-		  (mapl
-		   #'(lambda (sublist)
-		       (setf (car sublist) (- (random 21) 10)))
-		   list)
-		  list))
-	  rslt)))
-(dotimes (i 10)
-  (let ((abar (random-abar 8 4)))
-    (setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-    (setf gnrt (tnpr 5 (tnpr 3 (gbar 3 0 '(1 2) 0 '(3) 0 '()) 2 '(4 5))
-		     abar-degr abar))
-    (unless (>= abar-degr 10)
-      (print (? c (+ 5 abar-degr) gnrt))
-      (print (? c (? c (+ 5 abar-degr) gnrt))))))
-(dotimes (i 10)
-  (let ((abar (random-abar 8 4)))
-    (setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-    (setf gnrt (tnpr 6 (tnpr 3 (gbar 3 0 '(1 2) 0 '(3) 0 '()) 3 '(4 5 6))
-		     abar-degr abar))
-    (unless (>= abar-degr 9)
-      (print (? c (+ 6 abar-degr) gnrt))
-      (print (? c (? c (+ 6 abar-degr) gnrt))))))
-(dotimes (i 10)
-  (let ((abar (random-abar 8 4)))
-    (setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-    (setf gnrt (tnpr 5 (tnpr 2 (gbar 2 0 '(3) 0 '()) 3 '(4 5 6))
-	   	     abar-degr abar))
-    (unless (>= abar-degr 10)
-      (print (? c (+ 5 abar-degr) gnrt))
-      (print (? c (? c (+ 5 abar-degr) gnrt))))))
-(dotimes (i 10)
-  (let ((abar (random-abar 8 4)))
-    (setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-    (setf gnrt (tnpr 4 (tnpr 2 (gbar 2 0 '(3) 0 '()) 2 '(4 5))
-		     abar-degr abar))
-    (unless (>= abar-degr 11)
-      (print (? c (+ 4 abar-degr) gnrt))
-      (print (? c (? c (+ 4 abar-degr) gnrt))))))
-|#
 
 (DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-INTR-F (cmbn)
   (declare (type cmbn cmbn))
   (the cmbn
-       (with-cmbn (degr list) cmbn
-		  (make-cmbn
-		   :degr degr
-		   :list (mapcar
-			  #'(lambda (term)
-			      (declare (type term term))
-			      (with-term (cffc tnpr) term
-					 (term cffc (gnrt1 (gnrt1 tnpr)))))		    
-			  (member-if	       
-			   #'(lambda (term)
-			       (declare (type term term))
-			       (with-term (cffc tnpr) term
-					  (declare (ignore cffc))
-					  (with-tnpr (degr1 tnpr1 degr2 abar2) tnpr
-						     (declare (ignore degr1 abar2))
-						     (and (zerop degr2) (zerop (degr2 tnpr1))))))
-			   list))))))
+       (with-cmbn
+	   (degr list) cmbn
+	   (make-cmbn
+	    :degr degr
+	    :list (mapcar
+		   #'(lambda (term)
+		       (declare (type term term))
+		       (with-term
+			   (cffc tnpr) term
+			   (term cffc (gnrt1 (gnrt1 tnpr)))))
+		   (member-if
+		    #'(lambda (term)
+			(declare (type term term))
+			(with-term
+			    (cffc tnpr) term
+			    (declare (ignore cffc))
+			    (with-tnpr
+				(degr1 tnpr1 degr2 abar2) tnpr
+				(declare (ignore degr1 abar2))
+				(and (zerop degr2) (zerop (degr2 tnpr1))))))
+		    list))))))
 
-#|
-(cs-pre-left-hmeq-left-reduction-intr-f
- (cmbn 6 100 (tnpr 4 (tnpr 2 'a 2 'b) 2 'c)
-       10  (tnpr 6 (tnpr 2 'a 4 'b) 0 'c)
-       50  (tnpr 6 (tnpr 6 'a 0 'b) 0 'c)
-       1   (tnpr 6 (tnpr 6 'aa 0 'b) 0 'c)))
-|#
 
 (DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-F (smgr
 					  &aux (hat-u-t (cs-hat-u-t smgr))
@@ -305,28 +195,27 @@
   (flet ((rslt (cmbn)
 	   (declare (type cmbn cmbn))
 	   (the cmbn
-		(with-cmbn (degr list) cmbn
-			   (make-cmbn
-			    :degr degr
-			    :list (mapcar
-				   #'(lambda (term)
-				       (declare (type term term))
-				       (with-term (cffc gbar) term
-						  (term cffc
-							(tnpr degr
-							      (tnpr degr gbar 0 idnt)
-							      0 +null-abar+))))
-				   list))))))
+		(with-cmbn
+		    (degr list) cmbn
+		    (make-cmbn
+		     :degr degr
+		     :list (mapcar
+			    #'(lambda (term)
+				(declare (type term term))
+				(with-term
+				    (cffc gbar) term
+				    (term cffc
+					  (tnpr degr
+						(tnpr degr gbar 0 idnt)
+						0 +null-abar+))))
+			    list))))))
     (the intr-mrph #'rslt)))
 
-#|
-(setf g (cs-pre-left-hmeq-left-reduction-intr-g '()))
-(funcall g (cmbn 3 14 (gbar 3 0 'a 1 'b 0 '())))
-|#
 
 (DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-G (smgr
 					  &aux (hat-u-t (cs-hat-u-t smgr))
-					    (classifying-space (classifying-space smgr)))
+					    (classifying-space
+					     (classifying-space smgr)))
   (declare
    (type simplicial-group smgr)
    (type chain-complex hat-u-t)
@@ -340,38 +229,44 @@
 	:strt :cmbn
 	:orgn `(cs-pre-left-hmeq-left-reduction-g ,smgr))))
 
+
 (DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-INTR-H (cmpr idnt)
   (declare (type gmsm idnt))
   (flet ((rslt (cmbn)
 	   (declare (type cmbn cmbn))
 	   (the cmbn
-		(with-cmbn (degr list) cmbn
-			   (do ((rslt (zero-cmbn (1+ degr)))
-				(mark list (cdr mark)))
-			       ((endp mark) rslt)
-			     (declare
-			      (type cmbn rslt)
-			      (list mark))
-			     (let ((term (car mark)))
-			       (declare (type term term))
-			       (with-term (cffc tnpr) term
-					  (with-tnpr (degr1 tnpr1 degr2 abar2) tnpr
-						     (declare (ignore degr1))
-						     (with-tnpr (degr11 gbar11 degr12 gmsm12) tnpr1
-								(unless (zerop degr12)
-								  (dstr-add-term-to-cmbn
-								   cmpr
-								   (if (evenp degr11) cffc (- cffc))
-								   (tnpr degr11
-									 (tnpr degr11 gbar11 0 idnt)
-									 (+ 1 degr12 degr2)
-									 (make-abar
-									  :list
-									  (cons (brgn (1+ degr12)
-										      gmsm12)
-										(abar-list abar2))))
-								   rslt)))))))))))
+		(with-cmbn
+		    (degr list) cmbn
+		    (do ((rslt (zero-cmbn (1+ degr)))
+			 (mark list (cdr mark)))
+			((endp mark) rslt)
+		      (declare
+		       (type cmbn rslt)
+		       (list mark))
+		      (let ((term (car mark)))
+			(declare (type term term))
+			(with-term
+			    (cffc tnpr) term
+			    (with-tnpr
+				(degr1 tnpr1 degr2 abar2) tnpr
+				(declare (ignore degr1))
+				(with-tnpr
+				    (degr11 gbar11 degr12 gmsm12) tnpr1
+				    (unless (zerop degr12)
+				      (dstr-add-term-to-cmbn
+				       cmpr
+				       (if (evenp degr11) cffc (- cffc))
+				       (tnpr degr11
+					     (tnpr degr11 gbar11 0 idnt)
+					     (+ 1 degr12 degr2)
+					     (make-abar
+					      :list
+					      (cons (brgn (1+ degr12)
+							  gmsm12)
+						    (abar-list abar2))))
+				       rslt)))))))))))
     (the intr-mrph #'rslt)))
+
 
 (DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-H (smgr
 					  &aux (hat-u-t (cs-hat-u-t smgr)))
@@ -383,10 +278,10 @@
 	:sorc hat-u-t
 	:trgt hat-u-t
 	:degr +1
-	:intr (cs-pre-left-hmeq-left-reduction-intr-h (cmpr hat-u-t) (bspn smgr))
+	:intr (cs-pre-left-hmeq-left-reduction-intr-h (cmpr hat-u-t)
+						      (bspn smgr))
 	:strt :cmbn
 	:orgn `(cs-pre-left-hmeq-left-reduction-h ,smgr))))
-
 
 
 (DEFUN CS-PRE-LEFT-HMEQ-LEFT-REDUCTION (smgr)
@@ -398,74 +293,11 @@
 	:h (cs-pre-left-hmeq-left-reduction-h smgr)
 	:orgn `(cs-pre-left-hmeq-left-reduction ,smgr))))
 
-#|
-(cat-init)
-(defun random-abar (tot-degr~ max-degr)
-  (do ((rslt nil)
-       (cum-degr 0 (+ cum-degr degr 1))
-       (degr))
-      ((>= cum-degr tot-degr~) (make-abar :list rslt))
-    (setf degr (1+ (random max-degr)))
-    (push (brgn (1+ degr)
-		(let ((list (make-list degr)))
-		  (mapl
-		   #'(lambda (sublist)
-		       (setf (car sublist) (- (random 21) 10)))
-		   list)
-		  list))
-	  rslt)))
-(setf rdct (cs-pre-left-hmeq-left-reduction (k-z-1)))
-(pre-check-rdct rdct)
-(setf *tc* (cmbn 0 1 (tnpr 0 (tnpr 0 +null-gbar+ 0 '()) 0 +null-abar+))
-      *bc* (cmbn 0 1 +null-gbar+))
-(check-rdct)
-(setf *tc* (cmbn 1 1 (tnpr 1 (tnpr 0 +null-gbar+ 1 '(13)) 0 +null-abar+)))
-(check-rdct)
-(dotimes (i 10)
-  (let ((abar (random-abar 8 4)))
-    (setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-    (setf gnrt (tnpr 5 (tnpr 3 (gbar 3 0 '(1 2) 0 '(3) 0 '()) 2 '(4 5))
-		     abar-degr abar))
-    (setf gbar (gbar 2 0 '(1) 0 '()))
-    (unless (>= abar-degr 9)
-      (setf *tc* (cmbn (+ 5 abar-degr) 1 gnrt)
-	    *bc* (cmbn 2 1 gbar))
-      (check-rdct))))
-(dotimes (i 10)
-  (let ((abar (random-abar 6 4)))
-    (setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-    (setf gnrt (tnpr 6 (tnpr 3 (gbar 3 0 '(1 2) 0 '(3) 0 '()) 3 '(4 5 6))
-		     abar-degr abar))
-    (setf gbar (gbar 3 0 '(1 2) 1 '() 0 '()))
-    (unless (>= abar-degr 8)
-      (setf *tc* (cmbn (+ 6 abar-degr) 1 gnrt)
-	    *bc* (cmbn 3 1 gbar))
-      (check-rdct))))
-(dotimes (i 10)
-  (let ((abar (random-abar 6 4)))
-    (setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-    (setf gnrt (tnpr 5 (tnpr 2 (gbar 2 0 '(3) 0 '()) 3 '(4 5 6))
-	   	     abar-degr abar))
-    (setf gbar (gbar 4 0 '(1 2 3) 0 '(4 5) 0 '(6) 0 '()))
-    (unless (>= abar-degr 9)
-      (setf *tc* (cmbn (+ 5 abar-degr) 1 gnrt))
-      (setf *bc* (cmbn 4 1 gbar))
-      (check-rdct))))
-(dotimes (i 10)
-  (let ((abar (random-abar 6 4)))
-    (setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-    (setf gnrt (tnpr 4 (tnpr 2 (gbar 2 0 '(3) 0 '()) 2 '(4 5))
-		     abar-degr abar))
-    (setf gbar (gbar 5 8 '(1 2 3) 0 '(4 5 6) 0 '(7 8) 0 '(9) 0 '()))
-    (unless (>= abar-degr 10)
-      (setf *tc* (cmbn (+ 4 abar-degr) 1 gnrt))
-      (setf *bc* (cmbn 5 1 gbar))
-      (check-rdct))))
-|#
 
 (DEFUN CS-LEFT-HMEQ-LEFT-REDUCTION (smgr
 				    &aux (pre-left-hmeq-left-reduction
-					  (cs-pre-left-hmeq-left-reduction smgr))
+					  (cs-pre-left-hmeq-left-reduction
+					   smgr))
 				      (hat-left-perturbation
 				       (cs-hat-left-perturbation smgr)))
   (declare
@@ -489,71 +321,6 @@
 	   rslt))))
 
 
-#|
-(cat-init)
-(defun random-abar (tot-degr~ max-degr)
-  (do ((rslt nil)
-       (cum-degr 0 (+ cum-degr degr 1))
-       (degr))
-      ((>= cum-degr tot-degr~) (make-abar :list rslt))
-    (setf degr (1+ (random max-degr)))
-    (push (brgn (1+ degr)
-		(let ((list (make-list degr)))
-		  (mapl
-		   #'(lambda (sublist)
-		       (setf (car sublist) (- (random 21) 10)))
-		   list)
-		  list))
-	  rslt)))
-(setf rdct (cs-left-hmeq-left-reduction (k-z-1)))
-(pre-check-rdct rdct)
-(setf *tc* (cmbn 0 1 (tnpr 0 (tnpr 0 +null-gbar+ 0 '()) 0 +null-abar+))
-      *bc* (cmbn 0 1 +null-gbar+))
-(check-rdct)
-(setf *tc* (cmbn 1 1 (tnpr 1 (tnpr 0 +null-gbar+ 1 '(13)) 0 +null-abar+)))
-(check-rdct)
-(dotimes (i 10)
-  (let ((abar (random-abar 8 4)))
-    (setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-    (setf gnrt (tnpr 5 (tnpr 3 (gbar 3 0 '(1 2) 0 '(3) 0 '()) 2 '(4 5))
-		     abar-degr abar))
-    (setf gbar (gbar 2 0 '(1) 0 '()))
-    (unless (>= abar-degr 9)
-      (setf *tc* (cmbn (+ 5 abar-degr) 1 gnrt)
-	    *bc* (cmbn 2 1 gbar))
-      (check-rdct))))
-(dotimes (i 10)
-  (let ((abar (random-abar 6 4)))
-    (setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-    (setf gnrt (tnpr 6 (tnpr 3 (gbar 3 0 '(1 2) 0 '(3) 0 '()) 3 '(4 5 6))
-		     abar-degr abar))
-    (setf gbar (gbar 3 0 '(1 2) 1 '() 0 '()))
-    (unless (>= abar-degr 8)
-      (setf *tc* (cmbn (+ 6 abar-degr) 1 gnrt)
-	    *bc* (cmbn 3 1 gbar))
-      (check-rdct))))
-(dotimes (i 10)
-  (let ((abar (random-abar 6 4)))
-    (setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-    (setf gnrt (tnpr 5 (tnpr 2 (gbar 2 0 '(3) 0 '()) 3 '(4 5 6))
-	   	     abar-degr abar))
-    (setf gbar (gbar 4 0 '(1 2 3) 0 '(4 5) 0 '(6) 0 '()))
-    (unless (>= abar-degr 9)
-      (setf *tc* (cmbn (+ 5 abar-degr) 1 gnrt))
-      (setf *bc* (cmbn 4 1 gbar))
-      (check-rdct))))
-(dotimes (i 10)
-  (let ((abar (random-abar 6 4)))
-    (setf abar-degr (apply #'+ (mapcar #'car (abar-list abar))))
-    (setf gnrt (tnpr 4 (tnpr 2 (gbar 2 0 '(3) 0 '()) 2 '(4 5))
-		     abar-degr abar))
-    (setf gbar (gbar 5 8 '(1 2 3) 0 '(4 5 6) 0 '(7 8) 0 '(9) 0 '()))
-    (unless (>= abar-degr 10)
-      (setf *tc* (cmbn (+ 4 abar-degr) 1 gnrt))
-      (setf *bc* (cmbn 5 1 gbar))
-      (check-rdct))))
-|#
-
 (DEFUN CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-INTR-F (cmbn)
   (declare (type cmbn cmbn))
   (the cmbn
@@ -571,15 +338,6 @@
 		    (make-cmbn :degr degr
 			       :list (nreverse rslt))))))
 
-#|
-(cs-pre-left-hmeq-right-reduction-intr-f
- (cmbn 4 2 (tnpr 0 (tnpr 0 +null-gbar+ 0 'i)
-		 4 (abar 2 'a 2 'b))
-       3 (tnpr 0 (tnpr 0 +null-gbar+ 0 'i)
-	       4 (abar 2 'a 2 'c))
-       5 (tnpr 1 (tnpr 0 +null-gbar+ 1 'a)
-	       3 (abar 1 'a 2 'b))))
-|#
 
 (DEFUN CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-F (smgr
 					   &aux (hat-t-u (cs-hat-t-u smgr))
@@ -594,29 +352,28 @@
 	:strt :cmbn
 	:orgn `(cs-pre-left-hmeq-right-reduction-f ,smgr))))
 
+
 (DEFUN CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-INTR-G (idnt)
   (declare (type gmsm idnt))
   (flet ((rslt (cmbn)
 	   (declare (type cmbn cmbn))
 	   (the cmbn
-		(with-cmbn (degr list) cmbn
-			   (let ((bsgn (tnpr 0 +null-gbar+ 0 idnt)))
-			     (declare (type tnpr bsgn))
-			     (make-cmbn :degr degr
-					:list (mapcar
-					       #'(lambda (term)
-						   (declare (type term term))
-						   (with-term (cffc abar) term
-							      (term cffc
-								    (tnpr 0 bsgn
-									  degr abar))))
-					       list)))))))
+		(with-cmbn
+		    (degr list) cmbn
+		    (let ((bsgn (tnpr 0 +null-gbar+ 0 idnt)))
+		      (declare (type tnpr bsgn))
+		      (make-cmbn :degr degr
+				 :list (mapcar
+					#'(lambda (term)
+					    (declare (type term term))
+					    (with-term
+						(cffc abar) term
+						(term cffc
+						      (tnpr 0 bsgn
+							    degr abar))))
+					list)))))))
     (the intr-mrph #'rslt)))
 
-#|
-(setf g (cs-pre-left-hmeq-right-reduction-intr-g 'i))
-(funcall g (cmbn 3 2 (abar 1 'a 2 'b)))
-|#
 
 (DEFUN CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-G (smgr
 					   &aux (hat-t-u (cs-hat-t-u smgr))

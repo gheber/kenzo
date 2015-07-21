@@ -29,6 +29,7 @@
 
 	   ;; bar.lisp
 
+	   +NULL-ABAR+
 	   ABAR
 	   BAR
 	   BAR-BASIS-LENGTH
@@ -97,6 +98,13 @@
 
 	   CS-HAT-T-U
 	   CS-HAT-U-T
+	   CS-LEFT-HMEQ-HAT
+	   CS-LEFT-HMEQ-LEFT-REDUCTION
+	   CS-PRE-LEFT-HMEQ-LEFT-REDUCTION
+	   CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-INTR-F
+	   CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-INTR-G
+	   CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-INTR-F
+	   CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-INTR-G
 
 	   ;; classes.lisp
 
@@ -136,6 +144,7 @@
 
 	   ;; classifying-space.lisp
 
+	   +NULL-GBAR+
 	   CLASSIFYING-SPACE
 
 	   ;; combinations.lisp

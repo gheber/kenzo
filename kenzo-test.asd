@@ -1,6 +1,6 @@
 
 (defsystem :kenzo-test
-  :description "A simple test suite for Kenzo"
+  :description "A simple regression test suite for Kenzo"
   :serial t
   :version "0.1.0"
   :author "Francis Sergeraert <Francis.Sergeraert@ujf-grenoble.fr>"
@@ -17,9 +17,9 @@
 	       (:file "chain-complexes-test")
 	       (:file "chcm-elementary-op-test")
 	       (:file "circle")
+	       (:file "cl-space-efhm-test")
 	       (:file "combinations-test")
 	       (:file "cones-test")
-	       (:file "cl-space-efhm-test")
 	       (:file "delta-test")
 	       (:file "diabolo")
 	       (:file "effective-homology-test")
