@@ -17,7 +17,7 @@
 	       (:file "chain-complexes-test")
 	       (:file "chcm-elementary-op-test")
 	       (:file "circle")
-	       (:file "cl-space-efhm-test")
+ 	       (:file "cl-space-efhm-test")
 	       (:file "combinations-test")
 	       (:file "cones-test")
 	       (:file "delta-test")

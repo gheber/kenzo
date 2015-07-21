@@ -3,6 +3,7 @@
 
 (in-suite :kenzo)
 
+
 (test cs-hat-u-t
       (cat:cat-init)
       (let* ((c (cat:cs-hat-u-t (cat:k-z-1)))
@@ -308,3 +309,141 @@
 (test cs-pre-left-hmeq-right-reduction-g
       (let ((g (cat:cs-pre-left-hmeq-right-reduction-intr-g 'i)))
 	(funcall g (cat:cmbn 3 2 (cat:abar 1 'a 2 'b)))))
+
+
+(test cs-pre-left-hmeq-right-reduction
+      (cat:cat-init)
+      (let ((rdct (cat:cs-pre-left-hmeq-right-reduction (cat:k-z-1)))
+	    abar-degr
+	    gnrt)
+	(cat:pre-check-rdct rdct)
+	(setf cat:*tc* (cat:cmbn 0 1 (cat:tnpr 0
+					       (cat:tnpr 0 cat:+null-gbar+
+							 0 '())
+					       0 cat:+null-abar+))
+	      cat:*bc* (cat:cmbn 0 1 cat:+null-abar+))
+	(check-rdct)
+	(setf cat:*tc* (cat:cmbn 1 1 (cat:tnpr 1
+					       (cat:tnpr 0 cat:+null-gbar+
+							 1 '(13))
+					       0 cat:+null-abar+)))
+	(check-rdct)
+	(dotimes (i 10)
+	  (let ((abar (random-abar 8 4)))
+	    (setf abar-degr (apply #'+ (mapcar #'car (cat:abar-list abar))))
+	    (setf gnrt (cat:tnpr 5 (cat:tnpr 3 (cat:gbar 3 0 '(1 2) 0 '(3)
+							 0 '()) 2 '(4 5))
+				 abar-degr abar))
+	    (unless (>= abar-degr 9)
+	      (setf cat:*tc* (cat:cmbn (+ 5 abar-degr) 1 gnrt)
+		    cat:*bc* (cat:cmbn abar-degr 1 abar))
+	      (check-rdct))))
+	(dotimes (i 10)
+	  (let ((abar (random-abar 6 4)))
+	    (setf abar-degr (apply #'+ (mapcar #'car (cat:abar-list abar))))
+	    (setf gnrt (cat:tnpr 6 (cat:tnpr 3 (cat:gbar 3 0 '(1 2) 0 '(3)
+							 0 '()) 3 '(4 5 6))
+				 abar-degr abar))
+	    (unless (>= abar-degr 8)
+	      (setf cat:*tc* (cat:cmbn (+ 6 abar-degr) 1 gnrt)
+		    cat:*bc* (cat:cmbn abar-degr 1 abar))
+	      (check-rdct))))
+	(dotimes (i 10)
+	  (let ((abar (random-abar 6 4)))
+	    (setf abar-degr (apply #'+ (mapcar #'car (cat:abar-list abar))))
+	    (setf gnrt (cat:tnpr 5 (cat:tnpr 2 (cat:gbar 2 0 '(3) 0 '())
+					     3 '(4 5 6))
+				 abar-degr abar))
+	    (unless (>= abar-degr 9)
+	      (setf cat:*tc* (cat:cmbn (+ 5 abar-degr) 1 gnrt))
+	      (setf cat:*bc* (cat:cmbn abar-degr 1 abar))
+	      (check-rdct))))
+	(dotimes (i 10)
+	  (let ((abar (random-abar 6 4)))
+	    (setf abar-degr (apply #'+ (mapcar #'car (cat:abar-list abar))))
+	    (setf gnrt (cat:tnpr 4 (cat:tnpr 2 (cat:gbar 2 0 '(3) 0 '())
+					     2 '(4 5))
+				 abar-degr abar))
+	    (unless (>= abar-degr 10)
+	      (setf cat:*tc* (cat:cmbn (+ 4 abar-degr) 1 gnrt))
+	      (setf cat:*bc* (cat:cmbn abar-degr 1 abar))
+	      (check-rdct))))))
+
+
+(test cs-left-hmeq-right-reduction
+      (cat:cat-init)
+      (let ((rdct (cat:cs-left-hmeq-right-reduction (cat:k-z-1)))
+	    abar-degr
+	    gnrt)
+	(cat:pre-check-rdct rdct)
+	(setf cat:*tc* (cat:cmbn 0 1
+				 (cat:tnpr 0 (cat:tnpr 0 cat:+null-gbar+
+						       0 '())
+					   0 cat:+null-abar+))
+	      cat:*bc* (cat:cmbn 0 1 cat:+null-abar+))
+	(check-rdct)
+	(setf cat:*tc* (cat:cmbn 1 1
+				 (cat:tnpr 1 (cat:tnpr 0 cat:+null-gbar+
+						       1 '(13))
+					   0 cat:+null-abar+)))
+	(check-rdct)
+	(dotimes (i 10)
+	  (let ((abar (random-abar 4 2)))
+	    (setf abar-degr (apply #'+ (mapcar #'car (cat:abar-list abar))))
+	    (setf gnrt (cat:tnpr 3 (cat:tnpr 2 (cat:gbar 2 0 '(3) 0 '())
+					     1 '(4))
+				 abar-degr abar))
+	    (unless (>= abar-degr 9)
+	      (setf cat:*tc* (cat:cmbn (+ 3 abar-degr) 1 gnrt)
+		    cat:*bc* (cat:cmbn abar-degr 1 abar))
+	      (check-rdct))))
+	(dotimes (i 10)
+	  (let ((abar (random-abar 3 1)))
+	    (setf abar-degr (apply #'+ (mapcar #'car (cat:abar-list abar))))
+	    (setf gnrt (cat:tnpr 4 (cat:tnpr 2 (cat:gbar 2 0 '(3) 0 '())
+					     2 '(5 6))
+				 abar-degr abar))
+	    (unless (>= abar-degr 8)
+	      (setf cat:*tc* (cat:cmbn (+ 4 abar-degr) 1 gnrt)
+		    cat:*bc* (cat:cmbn abar-degr 1 abar))
+	      (check-rdct))))
+	(dotimes (i 10)
+	  (let ((abar (random-abar 3 1)))
+	    (setf abar-degr (apply #'+ (mapcar #'car (cat:abar-list abar))))
+	    (setf gnrt (cat:tnpr 5 (cat:tnpr 3 (cat:gbar 3 0 '(1 2) 1 '()
+							 0 '()) 2 '(5 6))
+				 abar-degr abar))
+	    (unless (>= abar-degr 9)
+	      (setf cat:*tc* (cat:cmbn (+ 5 abar-degr) 1 gnrt))
+	      (setf cat:*bc* (cat:cmbn abar-degr 1 abar))
+	      (check-rdct))))
+	(dotimes (i 10)
+	  (let ((abar (random-abar 6 4)))
+	    (setf abar-degr (apply #'+ (mapcar #'car (cat:abar-list abar))))
+	    (setf gnrt (cat:tnpr 4 (cat:tnpr 2 (cat:gbar 2 0 '(3) 0 '())
+					     2 '(4 5))
+				 abar-degr abar))
+	    (unless (>= abar-degr 10)
+	      (setf cat:*tc* (cat:cmbn (+ 4 abar-degr) 1 gnrt))
+	      (setf cat:*bc* (cat:cmbn abar-degr 1 abar))
+	      (check-rdct))))))
+
+
+(test cs-left-hmeq
+      (cat:cat-init)
+      (let* ((h (cat:cs-left-hmeq (cat:k-z-1)))
+	     (abar (cat:abar 2 '(2) 3 '(3 4))))
+	(cat:rf h
+	    (cat:lg h
+		(cat:lf h
+		    (cat:rg h 5 abar))))))
+
+
+(test classifying-space
+      (cat:cat-init)
+      (let* ((k (cat:k-z-1))
+	     (bk (cat:classifying-space k))
+	     (obk (cat:loop-space bk)))
+	(cat:homology k 0 10)
+	(cat:homology bk 0 10)
+	(cat:homology obk 0 6)))
