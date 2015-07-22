@@ -67,13 +67,12 @@
 
 (test gbar
       (cat:gbar 0)
-      (signals #-ecl simple-error
-	       #+ecl simple-type-error (cat:gbar 1))
+      (signals simple-error (cat:gbar 1))
       (cat:gbar 2 1 'a 2 'b))
 
 
 (test classifying-space-cmpr
-      (let ((cmpr (cat:classifying-space-cmpr 'cat:s-cmpr)))
+      (let ((cmpr (cat:classifying-space-cmpr #'cat:s-cmpr)))
 	(is (equal :less (funcall cmpr
 				  (cat:gbar 2 0 'a 0 'a)
 				  (cat:gbar 2 1 'a 0 'a))))
@@ -92,12 +91,57 @@
 	(funcall b 0)
 	(funcall b 1)
 	(dotimes (i 5) (print (funcall b i)))))
-#|
-()
-(cat-init)
-(setf k (k-z2-1))
-(setf b (classifying-space-basis (basis k)))
-(funcall b 0)
-(funcall b 1)
-(dotimes (i 5) (print (funcall b i)))
-|#
+
+(test classifying-space-face
+      (let* ((om (cat:loop-space (cat:moore 2 2)))
+	     (face (cat:classifying-space-face (cat:face om)
+					       (cat:sintr (cat:grml om))))
+	     (gbar (cat:gbar 4 0 (cat:loop3 3 'm2 1 4 'n3 1)
+			     0 (cat:loop3 0 'n3 1)
+			     0 (cat:loop3 0 'm2 1)
+			     0 cat:+null-loop+)))
+	(dotimes (i 5)
+	  (print (funcall face i 4 gbar)))))
+
+
+(test classifying-space
+      (cat:cat-init)
+      (let ((c (cat:classifying-space (cat:k-z2-1))))
+	(cat:orgn c)
+	(first (cat:basis c 4))
+	(cat:? c 4 (first (cat:basis c 4)))
+	(cat:? c (cat:? c 4 (first (cat:basis c 4))))
+	(cat:cprd c 4 (first (cat:basis c 4)))
+	(dotimes (i 5)
+	  (print (cat:face c i 4 (first (cat:basis c 4)))))))
+
+
+(test classifying-space-grml-sintr
+      (let ((grml (cat:classifying-space-grml-sintr
+		   '() (cat:sintr (cat:grml (cat:k-z-1))))))
+	(funcall grml 3 (cat:crpr 0 (cat:gbar 3 0 '(1 2) 0 '(3) 0 '())
+				  0 (cat:gbar 3 0 '(-1 -2) 0 '(-3) 0 '())))
+	(funcall grml 3 (cat:crpr 0 (cat:gbar 3 0 '(1 2) 0 '(3) 0 '())
+				  4 (cat:gbar 2 0 '(-3) 0 '())))
+	(funcall grml 3 (cat:crpr 0 (cat:gbar 3 0 '(1 2) 0 '(3) 0 '())
+				  1 (cat:gbar 2 0 '(-3) 0 '())))))
+
+
+(test classifying-space-grin-sintr
+      (let ((grin (cat:classifying-space-grin-sintr
+		   (cat:sintr (cat:grin (cat:k-z-1))))))
+	(funcall grin 3 (cat:gbar 3 0 '(1 2) 1 '() 0 '()))))
+
+
+(test classifying-space1
+      (cat:cat-init)
+      (let* ((k-z-1 (cat:k-z-1))
+	     (k-z-2 (cat:classifying-space k-z-1))
+	     (k-z-3 (cat:classifying-space k-z-2))
+	     (k-z2-1 (cat:k-z2-1))
+	     (k-z2-2 (cat:classifying-space k-z2-1))
+	     (k-z2-3 (cat:classifying-space k-z2-2))
+	     (k-z2-4 (cat:classifying-space k-z2-3))
+	     (k-z2-5 (cat:classifying-space k-z2-4)))
+	(cat:homology k-z-3 0 10)
+	(cat:homology k-z2-5 0 7)))

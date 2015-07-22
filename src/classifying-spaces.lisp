@@ -206,20 +206,11 @@
 			    rslt
 			    (cons (a-grml4 sintr-grml (1- indx)
 					   (second mark)
-					   (a-face4 face indx indx (first mark)))
+					   (a-face4 face indx indx
+						    (first mark)))
 				  (nthcdr 2 mark))))))))))
     (the face #'rslt)))
 
-#|
-(setf om (loop-space (moore 2 2)))
-(setf face (classifying-space-face (face om) (sintr (grml om))))
-(setf gbar (gbar 4 0 (loop3 3 'm2 1 4 'n3 1)
-		 0 (loop3 0 'n3 1)
-		 0 (loop3 0 'm2 1)
-		 0 +null-loop+))
-(dotimes (i 5)
-  (print (funcall face i 4 gbar)))
-|#
 
 (DEFGENERIC CLASSIFYING-SPACE (smgr))
 
@@ -231,17 +222,6 @@
 		   :face (classifying-space-face (face smgr) (sintr (grml smgr)))
 		   :orgn `(classifying-space ,smgr))))
 
-#|
-(cat-init)
-(setf c (classifying-space (k-z2-1)))
-(orgn c)
-(first (basis c 4))
-(? c 4 (first (basis c 4)))
-(? c *)
-(cprd c 4 ***)
-(dotimes (i 5)
-  (print (face c i 4 (first (basis c 4)))))
-|#
 
 (DEFUN CLASSIFYING-SPACE-GRML-SINTR (idnt sintr-grml)
   (declare
@@ -265,16 +245,6 @@
 				absm-list-1 absm-list-2)))))))
     (the sintr #'rslt)))
 
-#|
-(setf grml (classifying-space-grml-sintr '() (sintr (grml (k-z-1)))))
-(funcall grml 3 (crpr 0 (gbar 3 0 '(1 2) 0 '(3) 0 '())
-		      0 (gbar 3 0 '(-1 -2) 0 '(-3) 0 '())))
-(funcall grml 3 (crpr 0 (gbar 3 0 '(1 2) 0 '(3) 0 '())
-		      4 (gbar 2 0 '(-3) 0 '())))
-(funcall grml 3 (crpr 0 (gbar 3 0 '(1 2) 0 '(3) 0 '())
-		      1 (gbar 2 0 '(-3) 0 '())))
-|#
-
 
 (DEFUN CLASSIFYING-SPACE-GRIN-SINTR (sintr-grin)
   (declare (type sintr sintr-grin))
@@ -292,19 +262,15 @@
 			 (gbar-list gbar))))))
     (the sintr #'rslt)))
 
-#|
-(setf grin (classifying-space-grin-sintr (sintr (grin (k-z-1)))))
-(funcall grin 3 (gbar 3 0 '(1 2) 1 '() 0 '()))
-|#
-
 
 (DEFMETHOD CLASSIFYING-SPACE ((smgr ab-simplicial-group))
   (the ab-simplicial-group
-       (change-class 
+       (change-class
 	(build-smgr :cmpr (classifying-space-cmpr (cmpr smgr))
 		    :basis (classifying-space-basis (basis smgr))
 		    :bspn +null-gbar+
-		    :face (classifying-space-face (face smgr) (sintr (grml smgr)))
+		    :face (classifying-space-face (face smgr)
+						  (sintr (grml smgr)))
 		    :sintr-grml (classifying-space-grml-sintr
 				 (bspn smgr)
 				 (sintr (grml smgr)))
@@ -312,16 +278,3 @@
 				 (sintr (grin smgr)))
 		    :orgn `(classifying-space ,smgr))
 	'ab-simplicial-group)))
-
-#|
-(setf k-z-1 (k-z-1))
-(setf k-z-2 (classifying-space k-z-1))
-(setf k-z-3 (classifying-space k-z-2))
-(homology k-z-3 0 10)
-(setf k-z2-1 (k-z2-1))
-(setf k-z2-2 (classifying-space k-z2-1))
-(setf k-z2-3 (classifying-space k-z2-2))
-(setf k-z2-4 (classifying-space k-z2-3))
-(setf k-z2-5 (classifying-space k-z2-4))
-(homology k-z2-5 0 7)
-|#
