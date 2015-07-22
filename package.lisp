@@ -149,6 +149,11 @@
 
 	   +NULL-GBAR+
 	   CLASSIFYING-SPACE
+	   CLASSIFYING-SPACE-BASIS
+	   CLASSIFYING-SPACE-CMPR
+	   GBAR
+	   NORMALIZE-GBAR
+	   UNNORMALIZE-GBAR
 
 	   ;; combinations.lisp
 
@@ -302,6 +307,7 @@
 	   LF
 	   LG
 	   MASK
+	   MAKE-GBAR
 	   RBCC
 	   RF
 	   RG
