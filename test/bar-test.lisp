@@ -202,6 +202,7 @@
   (check-rdct))
 
 
+#|
 (test vrtc-bar1
       (progn
 	(cat:cat-init)
@@ -255,7 +256,7 @@
 	  (aleat-bc)
 	  ;;(loop (c))
 	  (dotimes (i 10) (c))))) ;; degrees >= 15 is possible => error.
-
+|#
 
 (test homology
       (progn
