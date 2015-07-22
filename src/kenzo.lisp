@@ -63,7 +63,7 @@ complexes.")
 (SETF *CHCM-LIST* +EMPTY-LIST+)
 (PUSHNEW '*CHCM-LIST* *LIST-LIST*)
 
-(DEFPARAMETER +MAXIMAL-DIMENSION+ 16)
+(DEFPARAMETER +MAXIMAL-DIMENSION+ 15)
 
 (DEFVAR *MRPH-LIST*
   "This variable is bound to a list of user created morphisms.")

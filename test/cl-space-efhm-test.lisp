@@ -3,7 +3,7 @@
 
 (in-suite :kenzo)
 
-
+#|
 (test cs-hat-u-t
       (cat:cat-init)
       (let* ((c (cat:cs-hat-u-t (cat:k-z-1)))
@@ -53,8 +53,9 @@
 	      (print (cat:? c (+ 4 abar-degr) gnrt))
 	      (is (cat:cmbn-zero-p (cat:? c (cat:? c (+ 4 abar-degr)
 						   gnrt)))))))))
+|#
 
-
+#|
 (test cs-hat-t-u
       (cat:cat-init)
       (dotimes (i 5) (print (random-abar 8 4)))
@@ -106,8 +107,9 @@
 	      (print (cat:? c (+ 4 abar-degr) gnrt))
 	      (is (cat:cmbn-zero-p (cat:? c (cat:? c (+ 4 abar-degr)
 						   gnrt)))))))))
+|#
 
-
+#|
 (test cs-left-hmeq-hat
       (cat:cat-init)
       (let ((c (cat:cs-left-hmeq-hat (cat:k-z-1)))
@@ -153,6 +155,7 @@
 	      (print (cat:? c (+ 4 abar-degr) gnrt))
 	      (is (cat:cmbn-zero-p (cat:? c (cat:? c (+ 4 abar-degr)
 						   gnrt)))))))))
+|#
 
 
 (test cs-pre-left-hmeq-left-reduction-intr-f
@@ -369,9 +372,10 @@
 	      (setf cat:*bc* (cat:cmbn abar-degr 1 abar))
 	      (check-rdct))))))
 
-
+#|
 (test cs-left-hmeq-right-reduction
       (cat:cat-init)
+
       (let ((rdct (cat:cs-left-hmeq-right-reduction (cat:k-z-1)))
 	    abar-degr
 	    gnrt)
@@ -427,7 +431,7 @@
 	      (setf cat:*tc* (cat:cmbn (+ 4 abar-degr) 1 gnrt))
 	      (setf cat:*bc* (cat:cmbn abar-degr 1 abar))
 	      (check-rdct))))))
-
+|#
 
 (test cs-left-hmeq
       (cat:cat-init)

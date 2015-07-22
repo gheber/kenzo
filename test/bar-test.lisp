@@ -202,7 +202,7 @@
   (check-rdct))
 
 
-(test vrtc-bar
+(test vrtc-bar1
       (progn
 	(cat:cat-init)
 
