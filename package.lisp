@@ -214,6 +214,11 @@
 	   TERM-CON1
 	   TERM-UNCON
 
+	   ;; cs-twisted-products.lisp
+
+	   SMGR-CRTS-CONTRACTION
+	   SMGR-FIBRATION
+	   SMGR-TNPR-CONTRACTION
 
 	   ;; delta.lisp
 
@@ -343,6 +348,10 @@
 	   ;; searching-homology.lisp
 
 	   HOMOLOGY
+
+	   ;; serre.lisp
+
+	   BROWN-REDUCTION
 
 	   ;; simplicial-mrphs.lisp
 
