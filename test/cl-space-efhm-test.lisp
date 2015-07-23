@@ -237,6 +237,7 @@
 	      (check-rdct))))))
 |#
 
+#|
 (test cs-left-hmeq-left-reduction
       (cat:cat-init)
       (let ((rdct (cat:cs-left-hmeq-left-reduction (cat:k-z-1)))
@@ -298,7 +299,7 @@
 	      (setf cat:*tc* (cat:cmbn (+ 4 abar-degr) 1 gnrt))
 	      (setf cat:*bc* (cat:cmbn 5 1 gbar))
 	      (check-rdct))))))
-
+|#
 
 (test cs-pre-left-hmeq-right-reduction-intr-f
       (cat:cs-pre-left-hmeq-right-reduction-intr-f

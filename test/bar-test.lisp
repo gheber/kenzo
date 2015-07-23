@@ -176,32 +176,6 @@
 				 3 (cat:crpr 0 14 0 14))))))
 
 
-(defun aleat-tc ()
-  (do ((tdegr 0 (+ tdegr degr))
-       (degr (+ 2 (random 3)) (+ 2 (random 3)))
-       (gnrt (intern (coerce (vector (code-char (+ 65 (random 4)))) 'string))
-	     (intern (coerce (vector (code-char (+ 65 (random 4)))) 'string)))
-       (rslt nil (cons (cat:brgn degr gnrt) rslt)))
-      ((> tdegr 10) (setf cat:*tc* (cat:cmbn tdegr 1 (cat:make-abar
-						  :list rslt))))))
-
-
-(defun aleat-bc ()
-  (do ((tdegr 0 (+ tdegr degr))
-       (degr (+ 2 (random 3)) (+ 2 (random 3)))
-       (gnrt (intern (coerce (vector (code-char (+ 67 (random 2)))) 'string))
-	     (intern (coerce (vector (code-char (+ 67 (random 2)))) 'string)))
-       (rslt nil (cons (cat:brgn degr gnrt) rslt)))
-      ((> tdegr 10) (setf cat:*bc* (cat:cmbn tdegr 1 (cat:make-abar
-						  :list rslt))))))
-
-
-(defun c ()
-  (aleat-tc)
-  (aleat-bc)
-  (check-rdct))
-
-
 #|
 (test vrtc-bar1
       (progn

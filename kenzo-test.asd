@@ -19,6 +19,7 @@
 	       (:file "circle")
  	       (:file "cl-space-efhm-test")
  	       (:file "classifying-spaces-test")
+	       (:file "cobar-test")
 	       (:file "combinations-test")
 	       (:file "cones-test")
 	       (:file "delta-test")
