@@ -170,9 +170,9 @@ IDNUM or NIL, if it doesn't exist."
 (DEFUN BUILD-CHCM (&key cmpr basis bsgn intr-dffr strt orgn)
   (declare
    (type cmprf cmpr)
-   (type basis basis)
+   (type (or basis null) basis)
    (type gnrt bsgn)
-   (type intr-mrph intr-dffr)
+   (type (or intr-mrph null) intr-dffr)
    (type strt strt)
    (type list orgn))
   "Returns an instance of CHAIN-COMPLEX. Use this function instead of creating

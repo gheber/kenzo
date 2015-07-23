@@ -81,11 +81,11 @@
 (DEFTYPE CMBN () '(satisfies cmbn-p))
 |#
 
-(DEFTYPE BASIS () '(or function (eql :locally-effective)))
+(DEFTYPE BASIS () '(or function (eql :locally-effective) #+ecl null))
 ;; (function (degr) (list gnrt))
 
 ;; INTR-MRPH = INTeRnal-MoRPHism
-(DEFTYPE INTR-MRPH () '(or function morphism #+ccl null))
+(DEFTYPE INTR-MRPH () '(or function morphism #+(or ccl ecl) null))
 ;; (or (function (degr gnrt) cmbn)  ;; if :gnrt strategy
 ;;     (function (cmbn) (cmbn))     ;; if :cmbn strategy
 
