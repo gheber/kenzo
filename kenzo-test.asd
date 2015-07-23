@@ -25,6 +25,7 @@
 	       (:file "cs-twisted-products-test")
 	       (:file "delta-test")
 	       (:file "diabolo")
+	       (:file "disk-pasting-test")
 	       (:file "effective-homology-test")
 	       (:file "homology-groups-test")
 	       (:file "k-pi-n-test")
