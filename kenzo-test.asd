@@ -10,7 +10,6 @@
   :components ((:file "package")
 	       (:file "common")
 	       ;; === test files ===
-	       #|
 	       (:file "bar-test")
 	       (:file "bicones-test")
 	       (:file "cartesian-products-test")
@@ -27,9 +26,7 @@
 	       (:file "delta-test")
 	       (:file "diabolo")
 	       (:file "disk-pasting-test")
-	       |#
 	       (:file "eilenberg-zilber-test")
-	       #|
 	       (:file "effective-homology-test")
 	       (:file "homology-groups-test")
 	       (:file "k-pi-n-test")
@@ -40,5 +37,4 @@
 	       (:file "simplicial-sets-test")
 	       (:file "tensor-products-test")
 	       (:file "various-test")
-	       |#
 	       ))
