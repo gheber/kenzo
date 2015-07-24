@@ -27,6 +27,10 @@
 	   +ABBREVIATIONS+
 	   WHAT-IS
 
+	   ;; algebras.lisp
+
+	   HOPF
+
 	   ;; bar.lisp
 
 	   +NULL-ABAR+

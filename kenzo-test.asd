@@ -28,6 +28,7 @@
 	       (:file "disk-pasting-test")
 	       (:file "eilenberg-zilber-test")
 	       (:file "effective-homology-test")
+	       (:file "fibrations-test")
 	       (:file "homology-groups-test")
 	       (:file "k-pi-n-test")
 	       (:file "kan-test")
