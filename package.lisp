@@ -264,7 +264,13 @@
 	   ;; eilenberg-zilber.lisp
 
 	   AW
+	   EML
 	   EZ
+	   INTR-AW
+	   INTR-EML
+	   INTR-PHI
+	   PHI
+	   SHUFFLE-SIGN
 
 	   ;; fibrations.lisp
 
