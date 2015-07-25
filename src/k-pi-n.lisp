@@ -602,55 +602,6 @@
 		 cocycle2)
 		(z-cocycle-gbar (1- n) (1- dmns) cocycle2))))))
 
-#|
-(cat-init)
-(setf d (delta 10))
-(setf chml-clss
-      (build-mrph :sorc d :trgt (z-chcm) :degr -1
-		  :intr #'(lambda (dmns gmsm)
-			    (term-cmbn 0 gmsm :gnrt-z))
-		  :strt :gnrt
-		  :orgn '(essai-1)))
-(gmsm-cocycle (face d) 1 4 31 chml-clss)
-(z-cocycle-gbar 1 4 *)
-(z-cocycle-gbar-head 1 4 **)
-(setf chml-clss
-      (build-mrph :sorc d :trgt (z-chcm) :degr -2
-		  :intr #'(lambda (dmns gmsm)
-			    (term-cmbn 0 gmsm :gnrt-z))
-		  :strt :gnrt
-		  :orgn '(essai-2)))
-(gmsm-cocycle (face d) 2 2 7 chml-clss)
-(z-cocycle-gbar 2 2 *)
-(z-cocycle-gbar-head 2 2 **)
-(gmsm-cocycle (face d) 2 2 0 chml-clss) ;; normally illegal
-(z-cocycle-gbar 2 2 *)
-(z-cocycle-gbar-head 2 2 **)
-(gmsm-cocycle (face d) 2 3 15 chml-clss)
-(z-cocycle-gbar 2 3 *)
-(z-cocycle-gbar-head 2 3 **)
-(gmsm-cocycle (face d) 2 4 31 chml-clss)
-(z-cocycle-gbar 2 4 *)
-(z-cocycle-gbar-head 2 4 **)
-(setf chml-clss
-      (build-mrph :sorc d :trgt (z-chcm) :degr -3
-		  :intr #'(lambda (dmns gmsm)
-			    (term-cmbn 0 gmsm :gnrt-z))
-		  :strt :gnrt
-		  :orgn '(essai-3)))
-(gmsm-cocycle (face d) 3 4 31 chml-clss)
-(z-cocycle-gbar 3 4 *)
-(z-cocycle-gbar-head 3 4 **)
-(setf chml-clss
-      (build-mrph :sorc d :trgt (z-chcm) :degr -3
-		  :intr #'(lambda (dmns gmsm)
-			    (zero-cmbn 0))
-		  :strt :gnrt
-		  :orgn '(essai-33)))
-(gmsm-cocycle (face d) 3 4 31 chml-clss)
-(z-cocycle-gbar 3 4 *)
-(z-cocycle-gbar-head 3 4 **)
-|#
 
 (DEFUN Z2-FUNDAMENTAL-GMSM (dmns pi-elm)  ;; pi-elm not "equal" to 0, therefore 1.
   (declare (fixnum dmns pi-elm))
@@ -660,19 +611,14 @@
 	   (let ((bspn (if (= 2 dmns) 0 +null-gbar+)))
 	     (declare (type gmsm bspn))
 	     (make-gbar :dmns dmns
-			:list (cons (absm 0 (Z2-fundamental-gmsm (1- dmns) pi-elm))
+			:list (cons (absm 0 (Z2-fundamental-gmsm (1- dmns)
+								 pi-elm))
 				    (mapcar
 				     #'(lambda (k)
 					 (declare (fixnum k))
 					 (absm (mask k) bspn))
 				     (nreverse (<a-b> 0 (- dmns 2))))))))))
 
-#|
-(Z2-fundamental-gmsm 1 1)
-(Z2-fundamental-gmsm 2 1)
-(Z2-fundamental-gmsm 3 1)
-(Z2-fundamental-gmsm 4 1)
-|#    
 
 (DEFUN Z2-COCYCLE-GBAR (n dmns cocycle)
   ;; cocycle \in Z^n(\Delta^{dmns}, \pi) with \pi = Z/2Z
@@ -723,43 +669,10 @@
 		    (normalize-gbar
 		     (cons dmns
 			   (cons head-absm
-				 (rest (unnormalize-gbar tail-absm
-							 (if (= n 2) 0 +null-gbar+)))))))))))))
+				 (rest (unnormalize-gbar
+					tail-absm
+					(if (= n 2) 0 +null-gbar+)))))))))))))
 
-#|
-(cat-init)
-(setf d (delta 10))
-(setf chml-clss
-      (build-mrph :sorc d :trgt (z-chcm) :degr -1
-		  :intr #'(lambda (dmns gmsm)
-			    (term-cmbn 0 (mod gmsm 2) :gnrt-z))
-		  :strt :gnrt
-		  :orgn '(essai-1)))
-(gmsm-cocycle (face d) 1 4 31 chml-clss)
-(z2-cocycle-gbar 1 4 *)
-(setf chml-clss
-      (build-mrph :sorc d :trgt (z-chcm) :degr -2
-		  :intr #'(lambda (dmns gmsm)
-			    (term-cmbn 0 (mod gmsm 2) :gnrt-z))
-		  :strt :gnrt
-		  :orgn '(essai-2)))
-(gmsm-cocycle (face d) 2 2 7 chml-clss)
-(z2-cocycle-gbar 2 2 *)
-(gmsm-cocycle (face d) 2 2 0 chml-clss) ;; normally illegal
-(z2-cocycle-gbar 2 2 *)
-(gmsm-cocycle (face d) 2 3 15 chml-clss)
-(z2-cocycle-gbar 2 3 *)
-(gmsm-cocycle (face d) 2 4 31 chml-clss)
-(z2-cocycle-gbar 2 4 *)
-(setf chml-clss
-      (build-mrph :sorc d :trgt (z-chcm) :degr -3
-		  :intr #'(lambda (dmns gmsm)
-			    (term-cmbn 0 (mod gmsm 2) :gnrt-z))
-		  :strt :gnrt
-		  :orgn '(essai-3)))
-(gmsm-cocycle (face d) 3 4 31 chml-clss)
-(z2-cocycle-gbar 3 4 *)
-|#
 
 (DEFUN Z2-COCYCLE-GBAR-HEAD (n dmns cocycle)
   ;; cocycle \in Z^n(\Delta^{dmns}, \pi) with \pi = Z/2Z
@@ -775,7 +688,7 @@
 	  cocycle)
 	 (cond ((= n 1)
 		(error "In Z2-COCYCLE-GBAR-HEAD, this point should not have been reached."))
-					; (z2-bar-absm (nreverse (mapcar #'cdr cocycle))))
+	       ;; (z2-bar-absm (nreverse (mapcar #'cdr cocycle))))
 	       ((= n dmns)
 		(let ((value (cdr (first cocycle))))
 		  (declare (fixnum value))
@@ -808,46 +721,6 @@
 		   cocycle2)
 		  (z2-cocycle-gbar (1- n) (1- dmns) cocycle2)))))))
 
-#|
-(cat-init)
-(setf d (delta 10))
-(setf chml-clss
-      (build-mrph :sorc d :trgt (z-chcm) :degr -1
-		  :intr #'(lambda (dmns gmsm)
-			    (term-cmbn 0 (mod gmsm 2) :gnrt-z))
-		  :strt :gnrt
-		  :orgn '(essai-1)))
-(gmsm-cocycle (face d) 1 4 31 chml-clss)
-(z2-cocycle-gbar 1 4 *)
-(z2-cocycle-gbar-head 1 4 **)
-(setf chml-clss
-      (build-mrph :sorc d :trgt (z-chcm) :degr -2
-		  :intr #'(lambda (dmns gmsm)
-			    (term-cmbn 0 (mod gmsm 2) :gnrt-z))
-		  :strt :gnrt
-		  :orgn '(essai-2)))
-(gmsm-cocycle (face d) 2 2 7 chml-clss)
-(z2-cocycle-gbar 2 2 *)
-(z2-cocycle-gbar-head 2 2 **)
-(gmsm-cocycle (face d) 2 2 0 chml-clss) ;; normally illegal
-(z2-cocycle-gbar 2 2 *)
-(z2-cocycle-gbar-head 2 2 **)
-(gmsm-cocycle (face d) 2 3 15 chml-clss)
-(z2-cocycle-gbar 2 3 *)
-(z2-cocycle-gbar-head 2 3 **)
-(gmsm-cocycle (face d) 2 4 31 chml-clss)
-(z2-cocycle-gbar 2 4 *)
-(z2-cocycle-gbar-head 2 4 **)
-(setf chml-clss
-      (build-mrph :sorc d :trgt (z-chcm) :degr -3
-		  :intr #'(lambda (dmns gmsm)
-			    (term-cmbn 0 (mod gmsm 2) :gnrt-z))
-		  :strt :gnrt
-		  :orgn '(essai-3)))
-(gmsm-cocycle (face d) 3 4 31 chml-clss)
-(z2-cocycle-gbar 3 4 *)
-(z2-cocycle-gbar-head 3 4 **)
-|#
 
 (DEFUN K-Z-FUNDAMENTAL-CLASS (n)
   (declare (fixnum n))
@@ -870,14 +743,6 @@
 	:strt :gnrt
 	:orgn `(k-z-fundamental-class ,n))))
 
-#|
-(cat-init)
-(setf c1 (k-z-fundamental-class 1))
-(? c1 1 '(34))
-(? c1 2 '(34 45))
-(setf c3 (k-z-fundamental-class 3))
-(? c3 3 (z-fundamental-gmsm 3 45))
-|#
 
 (DEFUN K-Z2-FUNDAMENTAL-CLASS (n)
   (declare (fixnum n))
