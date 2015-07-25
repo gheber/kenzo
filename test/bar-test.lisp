@@ -92,6 +92,7 @@
 	(funcall r 11 (cat:abar 3 '(2 3) 3 '(-2 -3) 2 '(-2) 3 '(-2 -3)))))
 
 
+#|
 (test bar-hrzn-dffr
       (progn
 	(cat:cat-init)
@@ -111,7 +112,7 @@
 	    (print (cat:? h (cat:? h (apply #'+ (mapcar #'car
 							(cat:abar-list abar)))
 				   abar)))))))
-
+|#
 
 (test bar
       (progn
