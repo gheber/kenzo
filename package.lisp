@@ -121,6 +121,7 @@
 	   APOWR
 	   BCC
 	   BRGN
+	   BSPN
 	   CBGN
 	   CHAIN-COMPLEX
 	   CMBN-CMBN
@@ -139,6 +140,7 @@
 	   HOMOTOPY-EQUIVALENCE
 	   IABSM
 	   KAN
+	   LOOP-LIST
 	   LRDCT
 	   MAKE-ABAR
 	   MAKE-ALLP
@@ -340,6 +342,17 @@
 	   NORMALIZE-LOOP
 	   UNNORMALIZE-LOOP
 
+	   ;; ls-twisted-products.lisp
+
+	   ABSM-LOOPABSM
+	   CRTS-CONTRACTION
+	   CRTS-CONTRACTION-INTR
+	   DTAU-D-INTR
+	   POP-FIRST-ABSM
+	   SZCZARBA
+	   TNPR-CONTRACTION
+	   TWISTED-CRTS-PRDC
+
 	   ;; macros.lisp
 
 	   -1-EXPT-N
@@ -366,6 +379,7 @@
 	   F
 	   DFFR
 	   DGNL
+	   GMSM1
 	   GNRT
 	   GRIN
 	   GRML

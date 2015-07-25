@@ -33,6 +33,7 @@
 	       (:file "k-pi-n-test")
 	       (:file "kan-test")
 	       (:file "loop-spaces-test")
+	       (:file "ls-twisted-products-test")
 	       (:file "searching-homology-test")
 	       (:file "simplicial-groups-test")
 	       (:file "simplicial-mrphs-test")

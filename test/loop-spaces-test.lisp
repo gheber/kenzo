@@ -179,33 +179,6 @@
 	    (cat:check-kan g i 4 (remove (nth i hat) hat))))))
 
 
-(defun random-apowr (dmns max-expn)
-  (loop
-     (let* ((dgop (random (cat:2-exp (1- dmns))))
-	    (gmsm (- dmns (logcount dgop))))
-       (unless (< 0 gmsm 3)
-	 (return-from random-apowr
-	   (cat:apowr dgop gmsm (cat:srandom max-expn)))))))
-
-
-(defun random-niloop (dmns max-expn length)
-  (mapcar #'(lambda (dummy)
-	      (random-apowr (1+ dmns) max-expn))
-	  (make-list length)))
-
-
-(defun random-loop-cmbn (cmpr degr max-cffc max-expn loop-length cmbn-length)
-  (do ((rslt cat:+empty-list+ (cons term rslt))
-       (i cmbn-length (1- i))
-       (term))
-      ((zerop i)
-       (apply #'cat:nterm-add cmpr degr rslt))
-    (setf term
-	  (cat:term (cat:srandom max-cffc)
-		    (cat:make-loop :list (random-niloop degr max-expn
-							loop-length))))))
-
-
 (test loop-space2
       (cat:cat-init)
       (let* ((p (cat:r-proj-space 3))

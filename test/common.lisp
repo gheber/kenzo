@@ -170,22 +170,6 @@
 			 cat:*tc*))))))
 
 
-(defun random-abar (tot-degr~ max-degr)
-  (do ((rslt nil)
-       (cum-degr 0 (+ cum-degr degr 1))
-       (degr))
-      ((>= cum-degr tot-degr~) (cat:make-abar :list rslt))
-    (setf degr (1+ (random max-degr)))
-    (push (cat:brgn (1+ degr)
-		(let ((list (make-list degr)))
-		  (mapl
-		   #'(lambda (sublist)
-		       (setf (car sublist) (- (random 21) 10)))
-		   list)
-		  list))
-	  rslt)))
-
-
 (defun aleat-tc ()
   (do ((tdegr 0 (+ tdegr degr))
        (degr (+ 2 (random 3)) (+ 2 (random 3)))
@@ -210,3 +194,66 @@
   (aleat-tc)
   (aleat-bc)
   (check-rdct))
+
+
+(defun random-abar (tot-degr~ max-degr)
+  (do ((rslt nil)
+       (cum-degr 0 (+ cum-degr degr 1))
+       (degr))
+      ((>= cum-degr tot-degr~) (cat:make-abar :list rslt))
+    (setf degr (1+ (random max-degr)))
+    (push (cat:brgn (1+ degr)
+		(let ((list (make-list degr)))
+		  (mapl
+		   #'(lambda (sublist)
+		       (setf (car sublist) (- (random 21) 10)))
+		   list)
+		  list))
+	  rslt)))
+
+
+(defun random-apowr (dmns max-expn)
+  (loop
+     (let* ((dgop (random (cat:2-exp (1- dmns))))
+	    (gmsm (- dmns (logcount dgop))))
+       (unless (< 0 gmsm 3)
+	 (return-from random-apowr
+	   (cat:apowr dgop gmsm (cat:srandom max-expn)))))))
+
+
+(defun random-cmbn (cmpr degr max-cffc max-expn loop-length cmbn-length)
+  (apply #'cat:nterm-add cmpr degr
+	 (mapcar #'(lambda (dummy)
+                     (cat:term (cat:srandom max-cffc)
+			       (random-crpr degr max-expn loop-length)))
+		 (make-list cmbn-length))))
+
+
+(defun random-crpr (dmns max-expn length)
+  (loop
+     (let ((loop (cat:normalize-loop dmns
+				     (random-niloop dmns max-expn length)))
+	   (dgop (random (cat:2-exp dmns))))
+       (let ((absm (cat:2absm-acrpr (cat:absm dgop (- dmns (logcount dgop)))
+				    loop)))
+	 (when (and (zerop (cat:dgop absm))
+		    (not (< (cat:gmsm1 (cat:gmsm absm)) 3)))
+	   (return (cat:gmsm absm)))))))
+
+
+(defun random-loop-cmbn (cmpr degr max-cffc max-expn loop-length cmbn-length)
+  (do ((rslt cat:+empty-list+ (cons term rslt))
+       (i cmbn-length (1- i))
+       (term))
+      ((zerop i)
+       (apply #'cat:nterm-add cmpr degr rslt))
+    (setf term
+	  (cat:term (cat:srandom max-cffc)
+		    (cat:make-loop :list (random-niloop degr max-expn
+							loop-length))))))
+
+
+(defun random-niloop (dmns max-expn length)
+  (mapcar #'(lambda (dummy)
+	      (random-apowr (1+ dmns) max-expn))
+	  (make-list length)))
