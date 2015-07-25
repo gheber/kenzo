@@ -758,13 +758,3 @@
 		      (zero-cmbn (- dmns n))))
 	:strt :gnrt
 	:orgn `(k-z2-fundamental-class ,n))))
-
-#|
-(cat-init)
-(setf c1 (k-z2-fundamental-class 1))
-(? c1 1 1)
-(? c1 2 2)
-(setf c3 (k-z2-fundamental-class 3))
-(? c3 3 (z2-fundamental-gmsm 3 1))
-|#
-

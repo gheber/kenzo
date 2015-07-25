@@ -118,6 +118,7 @@
 	   ABSM
 	   AB-SIMPLICIAL-GROUP
 	   ALLP-LIST
+	   APOWR
 	   BCC
 	   BRGN
 	   CBGN
@@ -142,6 +143,7 @@
 	   MAKE-ABAR
 	   MAKE-ALLP
 	   MAKE-CMBN
+	   MAKE-LOOP
 	   MAKE-RESULT
 	   MORPHISM
 	   ORGN
@@ -324,14 +326,25 @@
 	   ;; loop-spaces.lisp
 
 	   +NULL-LOOP+
+	   APOWR-FACE4
+	   APOWR-LASTFACE4
+	   APOWR-NILOOP
 	   GDELTAB
 	   LOOP3
+	   LOOP-PRINT
 	   LOOP-SPACE
+	   LOOP-SPACE-CMPR
+	   LOOP-SPACE-FACE
+	   LOOP-SPACE-GRIN-SINTR
+	   LOOP-SPACE-GRML-SINTR
+	   NORMALIZE-LOOP
+	   UNNORMALIZE-LOOP
 
 	   ;; macros.lisp
 
 	   -1-EXPT-N
 	   ?
+	   2-EXP
 	   ABAR-LIST
 	   APRD
 	   BASIS
@@ -372,6 +385,7 @@
 
 	   ;; searching-homology.lisp
 
+	   ECHCM
 	   HOMOLOGY
 
 	   ;; serre.lisp

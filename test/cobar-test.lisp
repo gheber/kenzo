@@ -84,6 +84,7 @@
 			       3 (cat:d (cat:mask 5))))))
 
 
+#|
 (test cobar-hrzn-dffr
       (cat:cat-init)
       (let ((h (cat:cobar-hrzn-dffr (cat:soft-delta-infinity)))
@@ -100,7 +101,7 @@
 	    (print (cat:? h (cat:? h (apply #'+ (mapcar #'car
 							(cat:allp-list allp)))
 				   allp)))))))
-
+|#
 
 (defun random-allp1 (length)
   (let ((rslt nil))
