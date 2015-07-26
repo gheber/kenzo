@@ -54,7 +54,7 @@
 	(cat:? scoal 3 7)
 	(cat:cprd scoal 3 7)))
 
-
+#|
 (test suspension-face
       (cat:cat-init)
       (let* ((ss (cat:deltab))
@@ -70,7 +70,7 @@
 	(dotimes (i 6) (print (funcall face i 5 'mm4)))
 	(cat:check-faces #'cat:s-cmpr face 4 'm3)
 	(cat:check-faces #'cat:s-cmpr face 5 'mm4)))
-
+|#
 
 (test suspension1
       (cat:cat-init)
