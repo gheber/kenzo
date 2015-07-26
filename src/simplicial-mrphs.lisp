@@ -89,21 +89,6 @@
 	   (push rslt *smmr-list*)
 	   rslt))))
 
-#|
-(setf d (delta 3))
-(setf m (build-smmr
-	 :sorc d :trgt d :degr 0
-	 :sintr #'(lambda (dmns gmsm)
-		    (absm 0 gmsm))
-	 :orgn '(identity delta-3)))
-(setf m2 (build-smmr
-	  :sorc d :trgt d :degr 0
-	  :sintr #'(lambda (dmns gmsm)
-		     (absm (mask dmns) 1))
-	  :orgn '(null delta-3)))
-(? m2 2 7)
-;;  (s? m2 2 7)
-|#
 
 #|  ????
 (DEFUN IA-SINTR3 (sintr dmns iabsm)
