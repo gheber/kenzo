@@ -224,6 +224,7 @@
 (defun random-cmbn (cmpr degr max-cffc max-expn loop-length cmbn-length)
   (apply #'cat:nterm-add cmpr degr
 	 (mapcar #'(lambda (dummy)
+		     (declare (ignore dummy))
                      (cat:term (cat:srandom max-cffc)
 			       (random-crpr degr max-expn loop-length)))
 		 (make-list cmbn-length))))
@@ -255,5 +256,6 @@
 
 (defun random-niloop (dmns max-expn length)
   (mapcar #'(lambda (dummy)
+	      (declare (ignore dummy))
 	      (random-apowr (1+ dmns) max-expn))
 	  (make-list length)))

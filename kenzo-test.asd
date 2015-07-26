@@ -38,6 +38,7 @@
 	       (:file "simplicial-groups-test")
 	       (:file "simplicial-mrphs-test")
 	       (:file "simplicial-sets-test")
+	       (:file "suspensions-test")
 	       (:file "tensor-products-test")
 	       (:file "various-test")
 	       ))

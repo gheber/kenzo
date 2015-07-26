@@ -121,6 +121,7 @@
 	   APOWR
 	   BCC
 	   BRGN
+	   BSGN
 	   BSPN
 	   CBGN
 	   CHAIN-COMPLEX
@@ -445,6 +446,16 @@
 	   R-PROJ-SPACE
 	   SPHERE
 	   SPHERE-FACE
+
+	   ;; suspensions.lisp
+
+	   SUSPENSION
+	   SUSPENSION-BASIS
+	   SUSPENSION-CMPR
+	   SUSPENSION-FACE
+	   SUSPENSION-INTR
+	   SUSPENSION-INTR-CPRD
+	   SUSPENSION-INTR-DFFR
 
 	   ;; tensor-products.lisp
 
