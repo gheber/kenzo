@@ -410,6 +410,7 @@
 	   ;; simplicial-mrphs.lisp
 
 	   BUILD-SMMR
+	   TW-A-SINTR3
 
 	   ;; simplicial-sets.lisp
 
@@ -483,7 +484,9 @@
 	   ;; whitehead.lisp
 
 	   Z-WHITEHEAD
+	   Z-WHITEHEAD-SINTR
 	   Z2-WHITEHEAD
+	   Z2-WHITEHEAD-SINTR
 
 	   ))
 
