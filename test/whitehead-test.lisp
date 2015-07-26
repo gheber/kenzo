@@ -91,6 +91,10 @@
 			    0 (cat:gbar 0)))))
 
 
+#|
+
+;; long running... -> should go into a performance test suite
+
 (test Z2-whitehead
       (cat:cat-init)
       (let* ((m (cat:moore 2 4))
@@ -106,3 +110,4 @@
 	     (mf (cat:z2-whitehead m chml-clss))
 	     (mt (cat:fibration-total mf)))
 	(cat:homology mt 0 10)))
+|#
