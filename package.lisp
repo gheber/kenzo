@@ -14,6 +14,7 @@
 	   *FH*
 	   *HG*
 	   *HH*
+	   *HOMOLOGY-VERBOSE*
 	   *ID-FG*
 	   *ID-GF-DH-HD*
            *LIST-LIST*
@@ -140,6 +141,7 @@
 	   H
 	   HOMOTOPY-EQUIVALENCE
 	   IABSM
+	   IDNM
 	   KAN
 	   LOOP-LIST
 	   LRDCT
@@ -442,6 +444,7 @@
 	   NDGNR
 	   NFACE
 	   REMOVE-BIT
+	   SMST
 
 	   ;; smith.lisp
 
@@ -476,10 +479,16 @@
 	   ;; special-smsts.lisp
 
 	   BUILD-FINITE-SS
+	   FINITE-SS-PRE-TABLE
+	   FINITE-SS-PRE-TABLE-TABLE
+	   FINITE-SS-TABLE
+	   GMSMS-SUBSMST
 	   MOORE
 	   R-PROJ-SPACE
+	   R-PROJ-SPACE-BASIS
 	   SPHERE
 	   SPHERE-FACE
+	   SPHERE-WEDGE
 
 	   ;; suspensions.lisp
 
