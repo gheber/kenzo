@@ -13,8 +13,8 @@
 	(signals simple-error (cat:finite-ss-pre-table '(0 v0 (v0 v0)
 							 (v1 v1))))
 	(signals simple-error (cat:finite-ss-pre-table '(0 (v0 v0) (v1 v1))))
-	(signals simple-error (cat:finite-ss-pre-table '(0 v0 (v0 v0)
-							 #(1 2))))))
+	(signals #-(or ecl sbcl) simple-error #+(or ecl sbcl) type-error
+		 (cat:finite-ss-pre-table '(0 v0 (v0 v0) #(1 2))))))
 
 
 (test finite-ss-pre-table-table
