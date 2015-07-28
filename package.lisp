@@ -415,6 +415,9 @@
 	   ;; serre.lisp
 
 	   BROWN-REDUCTION
+	   FIBRATION-DTAU-D
+	   FIBRATION-DTAU-D-INTR
+	   RIGHT-SERRE-EFHM
 
 	   ;; simplicial-mrphs.lisp
 
