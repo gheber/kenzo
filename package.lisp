@@ -117,6 +117,8 @@
 	   ;; classes.lisp
 
 	   ABSM
+	   ABSM1
+	   ABSM2
 	   AB-SIMPLICIAL-GROUP
 	   ALLP-LIST
 	   APOWR
@@ -131,6 +133,8 @@
 	   CMBN-LIST
 	   DEGR
 	   DGOP
+	   DGOP1
+	   DGOP2
 	   DFFR1
 	   EFHM
 	   F
@@ -138,6 +142,7 @@
 	   G
 	   GBAR
 	   GMSM
+	   GMSM2
 	   H
 	   HOMOTOPY-EQUIVALENCE
 	   IABSM
@@ -158,7 +163,6 @@
 	   SINTR
 	   SORC
 	   TCC
-	   TNPR
 
 	   ;; classifying-space.lisp
 
@@ -376,6 +380,8 @@
 	   ;; macros.lisp
 
 	   -1-EXPT-N
+	   -1-EXPT-N+1
+	   -1-EXPT-N-1
 	   ?
 	   2-EXP
 	   ABAR-LIST
@@ -407,8 +413,11 @@
 	   GNRT-NAME
 	   GRIN
 	   GRML
+	   I-ADD
+	   I-CMPS
 	   I-SBTR
 	   KFLL
+	   LEXICO
 	   LF
 	   LG
 	   LINE-MINUS-5
@@ -422,7 +431,13 @@
 	   TERM
 	   TERM-CMBN
 	   TCC
+	   TNPR
+	   WITH--TERM
 	   WITH-ABSM
+	   WITH-CMBN
+	   WITh-CRPR
+	   WITH-TERM
+	   WITh-TNPR
 
 	   ;; searching-homology.lisp
 
@@ -532,6 +547,8 @@
 
 	   ;; various.lisp
 
+	   *PRINT-LENGTH*
+	   *PRINT-LEVEL*
 	   +EMPTY-LIST+
 	   <A-B<
 	   <A-B>

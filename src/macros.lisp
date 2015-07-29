@@ -13,27 +13,22 @@
 (DEFMACRO -1-EXPT-N (n)
   `(the fixnum (if (evenp (the fixnum ,n)) 1 -1)))
 
+
 (DEFMACRO -1-EXPT-N+1 (n)
   `(the fixnum (if (evenp (the fixnum ,n)) -1 1)))
+
 
 (DEFMACRO -1-EXPT-N-1 (n)
   `(-1-expt-n+1 ,n))
 
-#|
-()
-(-1-expt-n 5)
-(-1-expt-n 6)
-(-1-expt-n+1 5)
-(-1-expt-n+1 6)
-(-1-expt-n-1 5)
-(-1-expt-n-1 6)
-|#
 
 (DEFMACRO 2-EXP (n)
   `(aref +2-exp+ ,n))
 
+
 (DEFMACRO MASK (n)
   `(aref +mask+ ,n))
+
 
 (DEFMACRO BINOMIAL-P-Q (p q)
   `(binomial-n-p (+ ,p ,q) ,p))
@@ -52,37 +47,30 @@
 	   (lexico ,@(rest rest))
 	   ,vrslt))))
 
-#|
-()
-(let ((*print-level* nil))
-  (declare (special
-            #+aclpc allegro:*top-print-level*
-            #-aclpc *print-level*))
-  (pprint (macroexpand-1
-           '(lexico
-             comparison1
-             comparison2
-             comparison3
-             comparison4))))
-|#
 
 (DEFMACRO TERM (cffc gnrt)
   `(cons ,cffc ,gnrt))
 
+
 (DEFMACRO -TERM (mark)
   `(car ,mark))
+
 
 (DEFMACRO CFFC (term)
   `(car ,term))
 
+
 (DEFMACRO -CFFC (mark)
   `(caar ,mark))
+
 
 (DEFMACRO GNRT (term)
   `(cdr ,term))
 
+
 (DEFMACRO -GNRT (mark)
   `(cdar ,mark))
+
 
 (DEFMACRO WITH-TERM ((cffc gnrt) term . body)
   `(let (,@(if cffc `((,cffc (cffc ,term))) nil)
@@ -92,14 +80,6 @@
       (type gnrt ,@(if gnrt `(,gnrt) nil)))
      ,@body))
 
-#|
-(macroexpand-1 '(with-term (cffc gnrt) term
-		 (statement-1)
-		 (statement-2)))
-(macroexpand-1 '(with-term (nil gnrt) term
-		 (statement-1)
-		 (statement-2)))
-|#
 
 (DEFMACRO WITH--TERM ((cffc gnrt) mark . body)
   `(let ((,cffc (-cffc ,mark))
@@ -108,12 +88,6 @@
       (fixnum ,cffc)
       (type gnrt ,gnrt))
      ,@body))
-
-#|
-(macroexpand-1 '(with--term (cffc gnrt) mark
-		 (statement-1)
-		 (statement-2)))
-|#
 
 
 (DEFMACRO WITH-CMBN ((degr list) cmbn . body)
@@ -124,12 +98,6 @@
       (list ,list))
      ,@body))
 
-#|
-(macroexpand-1 '(with-cmbn (degr list) cmbn
-		 (statement-1)
-		 (statement-2)))
-|#
-
 
 (DEFMACRO TERM-CMBN (degr cffc gnrt)
   `(make-cmbn :degr ,degr
@@ -139,18 +107,22 @@
 (DEFMACRO CMBN-NON-ZERO-P (cmbn)
   `(cmbn-list ,cmbn))
 
+
 (DEFMACRO CMBN-ZERO-P (cmbn)
   `(null (cmbn-list ,cmbn)))
+
 
 (DEFMACRO CONTROL (cmpr cmbn)
   (if *cmbn-control*
       `(do-control ,cmpr ,cmbn)
       cmbn))
 
+
 (DEFMACRO CONTROLN (cmpr cmbn)
   (if *cmbn-control*
       `(do-control ,cmpr ,cmbn)
       nil))
+
 
 (DEFVAR *WRONG-CMBN*)
 
@@ -164,13 +136,10 @@
     (1 `(cmpr1 ,@rest))
     (3 `(cmpr3 ,@rest))))
 
+
 (DEFMACRO CMPR3 (object item1 item2)
   `(funcall (cmpr1 ,object) ,item1 ,item2))
 
-#|
-(macroexpand '(cmpr chcm))
-(macroexpand '(cmpr chcm item1 item2))
-|#
 
 (DEFMACRO BASIS (&rest rest)
   (ecase (length rest)
@@ -178,20 +147,17 @@
     (2 `(basis2 ,@rest))
     (3 `(basis3 ,@rest))))
 
+
 (DEFMACRO BASIS3 (smst dmns keyword)
   (declare (ignore keyword))
   `(a-basis2 (basis ,smst) ,dmns))
+
 
 (DEFMACRO DFFR (&rest rest)
   (ecase (length rest)
     (1 `(dffr1 ,@rest))
     ((2 3) `(? (dffr1 ,(first rest)) ,@(rest rest)))))
 
-#|
-(macroexpand '(dffr chcm))
-(macroexpand '(dffr chcm cmbn))
-(macroexpand '(dffr chcm degr gnrt))
-|#
 
 (DEFMACRO ? (&rest rest)
   (ecase (length rest)
@@ -207,30 +173,16 @@
       `(cmps ,mrph1 (i-cmps ,@rest))
       mrph1))
 
-#|
-(macroexpand '(i-cmps m1))
-(macroexpand '(i-cmps m1 m2))
-(macroexpand '(i-cmps m1 m2 m3))
-|#
 
 (DEFMACRO I-ADD (mrph1 &rest rest)
   (if rest
       `(add ,mrph1 (i-add ,@rest))
       mrph1))
 
-#|
-(macroexpand '(i-add m1))
-(macroexpand '(i-add m1 m2))
-(macroexpand '(i-add m1 m2 m3))
-|#
 
 (DEFMACRO I-SBTR (mrph1 mrph2 &rest rest)
   `(sbtr ,mrph1 (i-add ,mrph2 ,@rest)))
 
-#|
-(macroexpand '(i-sbtr m1 m2))
-(macroexpand '(i-sbtr m1 m2 m3))
-|#
 
 ;;;
 ;;;  EFFECTIVE HOMOLOGY
@@ -242,11 +194,13 @@
     (otherwise
      `(? (bcc1 ,(first rest)) ,@(rest rest)))))
 
+
 (DEFMACRO TCC (&rest rest)
   (case (length rest)
     (1 `(tcc1 ,@rest))
     (otherwise
      `(? (tcc1 ,(first rest)) ,@(rest rest)))))
+
 
 (DEFMACRO F (&rest rest)
   (case (length rest)
@@ -254,11 +208,6 @@
     (otherwise
      `(? (f1 ,(first rest)) ,@(rest rest)))))
 
-#|
-(macroexpand '(f rdct))
-(macroexpand '(f rdct cmbn))
-(macroexpand '(f rdct degr gnrt))
-|#
 
 (DEFMACRO G (&rest rest)
   (case (length rest)
@@ -266,11 +215,13 @@
     (otherwise
      `(? (g1 ,(first rest)) ,@(rest rest)))))
 
+
 (DEFMACRO H (&rest rest)
   (case (length rest)
     (1 `(h1 ,@rest))
     (otherwise
      `(? (h1 ,(first rest)) ,@(rest rest)))))
+
 
 (DEFMACRO LBCC (&rest rest)
   (case (length rest)
@@ -278,11 +229,13 @@
     (otherwise
      `(? (lbcc1 ,(first rest)) ,@(rest rest)))))
 
+
 (DEFMACRO RBCC (&rest rest)
   (case (length rest)
     (1 `(rbcc1 ,@rest))
     (otherwise
      `(? (rbcc1 ,(first rest)) ,@(rest rest)))))
+
 
 (DEFMACRO LF (&rest rest)
   (case (length rest)
@@ -290,11 +243,13 @@
     (otherwise
      `(? (lf1 ,(first rest)) ,@(rest rest)))))
 
+
 (DEFMACRO LG (&rest rest)
   (case (length rest)
     (1 `(lg1 ,@rest))
     (otherwise
      `(? (lg1 ,(first rest)) ,@(rest rest)))))
+
 
 (DEFMACRO LH (&rest rest)
   (case (length rest)
@@ -302,11 +257,13 @@
     (otherwise
      `(? (lh1 ,(first rest)) ,@(rest rest)))))
 
+
 (DEFMACRO RF (&rest rest)
   (case (length rest)
     (1 `(rf1 ,@rest))
     (otherwise
      `(? (rf1 ,(first rest)) ,@(rest rest)))))
+
 
 (DEFMACRO RG (&rest rest)
   (case (length rest)
@@ -314,12 +271,12 @@
     (otherwise
      `(? (rg1 ,(first rest)) ,@(rest rest)))))
 
+
 (DEFMACRO RH (&rest rest)
   (case (length rest)
     (1 `(rh1 ,@rest))
     (otherwise
      `(? (rh1 ,(first rest)) ,@(rest rest)))))
-
 
 ;;;
 ;;;  HOMOLOGY-GROUPS
@@ -327,6 +284,7 @@
 
 (DEFMACRO BASELIG (mat n)
   `(aref (leftcol ,mat) ,n))
+
 
 (DEFMACRO BASECOL (mat n)
   `(aref (uplig ,mat) ,n))
@@ -338,8 +296,10 @@
 (DEFMACRO CON0 (gnrt)
   `(make-cone :conx 0 :icon ,gnrt))
 
+
 (DEFMACRO CON1 (gnrt)
   `(make-cone :conx 1 :icon ,gnrt))
+
 
 (DEFMACRO WITH-CONE ((conx icon) cone . body)
   (let ((scone (gensym)))
@@ -351,20 +311,24 @@
          (declare (type (member 0 1) ,conx) (type gnrt ,icon))
          ,@body))))
 
+
 (DEFMACRO BCNB (gnrt)
-  "(BCNB GNRT) returns the representation of the generator GNRT belonging to the
-chain complex B."
+  "(BCNB GNRT) returns the representation of the generator GNRT belonging to
+the chain complex B."
   `(make-bicn :bcnx :bcnb :ibicn ,gnrt))
 
+
 (DEFMACRO BCNC (gnrt)
-  "(BCNC GNRT) returns the representation of the generator GNRT belonging to the
-chain complex C."
+  "(BCNC GNRT) returns the representation of the generator GNRT belonging to
+the chain complex C."
   `(make-bicn :bcnx :bcnc :ibicn ,gnrt))
 
+
 (DEFMACRO BCND (gnrt)
-  "(BCND GNRT) returns the representation of the generator GNRT belonging to the
-chain complex D."
+  "(BCND GNRT) returns the representation of the generator GNRT belonging to
+the chain complex D."
   `(make-bicn :bcnx :bcnd :ibicn ,gnrt))
+
 
 (DEFMACRO WITH-BICN ((bcnx ibicn) bicn . body)
   `(let ((,bcnx (bcnx ,bicn))
@@ -373,7 +337,6 @@ chain complex D."
       (type (member :bcnb :bcnc :bcnd) ,bcnx)
       (type gnrt ,ibicn))
      ,@body))
-
 
 ;;;
 ;;;  TENSOR PRODUCTS
@@ -410,17 +373,6 @@ chain complex D."
       (type gnrt ,@(if gnrt1 `(,gnrt1) nil) ,@(if gnrt2 `(,gnrt2) nil)))
      ,@body))
 
-#|
-(macroexpand '(tnpr 1 a 2 b))
-1 (tnpr 2 'a 4 (tnpr 2 'b 2 'c))
-(macroexpand-1 '(with-tnpr (degr1 gnrt1 degr2 gnrt2) tnpr
-		 (statement-1)
-		 (statement-2)))
-(macroexpand-1 '(with-tnpr (nil gnrt1 degr2 gnrt2) tnpr
-		 (statement-1)
-		 (statement-2)))
-|#
-
 ;;;
 ;;;  COALGEBRAS
 ;;;
@@ -437,17 +389,22 @@ chain complex D."
 (DEFMACRO CBGN (degr gnrt)
   `(cons ,degr ,gnrt))
 
+
 (DEFMACRO CDEGR (cbgn)
   `(car ,cbgn))
+
 
 (DEFMACRO CGNRT (cbgn)
   `(cdr ,cbgn))
 
+
 (DEFMACRO -CDEGR (cbgn)
   `(caar ,cbgn))
 
+
 (DEFMACRO -CGNRT (cbgn)
   `(cdar ,cbgn))
+
 
 (DEFMACRO WITH-CBGN ((cdegr cgnrt) cbgn . body)
   `(let ((,cdegr (cdegr ,cbgn))
@@ -457,6 +414,7 @@ chain complex D."
       (type gnrt ,cgnrt))
      ,@body))
 
+
 (DEFMACRO WITH--CBGN ((cdegr cgnrt) cbgn . body)
   `(let ((,cdegr (-cdegr ,cbgn))
 	 (,cgnrt (-cgnrt ,cbgn)))
@@ -465,10 +423,12 @@ chain complex D."
       (type gnrt ,cgnrt))
      ,@body))
 
+
 (DEFMACRO WITH-ALLP ((list) allp . body)
   `(let ((,list (allp-list ,allp)))
      (declare (list ,list))
      ,@body))
+
 
 (DEFMACRO GNRT-ALLP-TNPR (degr gnrt allp)
   `(make-allp :list (cons (cbgn (1- ,degr) ,gnrt) ,allp)))
@@ -490,17 +450,22 @@ chain complex D."
 (DEFMACRO BRGN (degr gnrt)
   `(cons ,degr ,gnrt))
 
+
 (DEFMACRO BDEGR (brgn)
   `(car ,brgn))
+
 
 (DEFMACRO BGNRT (brgn)
   `(cdr ,brgn))
 
+
 (DEFMACRO -BDEGR (brgn)
   `(caar ,brgn))
 
+
 (DEFMACRO -BGNRT (brgn)
   `(cdar ,brgn))
+
 
 (DEFMACRO WITH-BRGN ((bdegr bgnrt) brgn . body)
   `(let ((,bdegr (bdegr ,brgn))
@@ -509,6 +474,7 @@ chain complex D."
       (fixnum ,bdegr)
       (type gnrt ,bgnrt))
      ,@body))
+
 
 (DEFMACRO WITH--BRGN ((bdegr bgnrt) brgn . body)
   `(let ((,bdegr (-bdegr ,brgn))
@@ -590,20 +556,26 @@ chain complex D."
           (type gmsm ,gmsm-var))
 	 ,@body))))
 
+
 (DEFMACRO DEGENERATE-P (absm)
   `(plusp (dgop ,absm)))
+
 
 (DEFMACRO NON-DEGENERATE-P (absm)
   `(zerop (dgop ,absm)))
 
+
 (DEFMACRO BSPN (smst)
   `(bsgn ,smst))
+
 
 (DEFMACRO BNDR (&rest rest)
   `(dffr ,@rest))
 
+
 (DEFMACRO DGNL (&rest rest)
   `(cprd ,@rest))
+
 
 (DEFMACRO FACE (&rest rest)
   (ecase (length rest)
@@ -627,14 +599,18 @@ chain complex D."
 (DEFMACRO MAKE-GMSM-FACES-INFO (&key gmsm faces bndr)
   `(cons ,gmsm (cons ,faces ,bndr)))
 
+
 (DEFMACRO INFO-GMSM (gmsm-faces-info)
   `(car ,gmsm-faces-info))
+
 
 (DEFMACRO INFO-FACES (gmsm-faces-info)
   `(cadr ,gmsm-faces-info))
 
+
 (DEFMACRO INFO-FACE-I (gmsm-faces-info i)
   `(svref (cadr ,gmsm-faces-info) ,i))
+
 
 (DEFMACRO INFO-BNDR (gmsm-faces-info)
   `(cddr ,gmsm-faces-info))
@@ -656,24 +632,15 @@ chain complex D."
     (2 `(crpr2 ,@rest))
     (4 `(crpr4 ,@rest))))
 
+
 (DEFMACRO CRPR2 (absm1 absm2)
   `(crpr4 (dgop ,absm1) (gmsm ,absm1) (dgop ,absm2) (gmsm ,absm2)))
+
 
 (DEFMACRO CRPR4 (dgop1 gmsm1 dgop2 gmsm2)
   `(make-crpr :dgop1 ,dgop1 :gmsm1 ,gmsm1
               :dgop2 ,dgop2 :gmsm2 ,gmsm2))
 
-#|
-()
-(crpr (absm 3 'a) (absm 4 'b))
-(crpr 3 'a 4 'b)
-|#
-
-#|
-()
-(macroexpand '(crpr absm1 absm2))
-(macroexpand '(crpr dgop1 gmsm1 dgop2 gmsm2))
-|#
 
 #|
 (DEFMACRO DGOP1 (crpr)
@@ -697,21 +664,10 @@ chain complex D."
 (DEFMACRO ABSM1 (crpr)
   `(absm (dgop1 ,crpr) (gmsm1 ,crpr)))
 
+
 (DEFMACRO ABSM2 (crpr)
   `(absm (dgop2 ,crpr) (gmsm2 ,crpr)))
 
-
-
-#|
-()
-(setf c (crpr 1 'a 2 'b))
-(dgop1 c)
-(gmsm1 c)
-(dgop2 c)
-(gmsm2 c)
-(absm1 c)
-(absm2 c)
-|#
 
 (DEFMACRO WITH-CRPR (&rest rest)
   (ecase (length (first rest))
@@ -733,10 +689,6 @@ chain complex D."
      (declare (type absm ,absm1 ,absm2))
      ,@body))
 
-#|
-()
-(with-crpr (absm1 absm2) (crpr 3 'a 4 'b) (list absm1 absm2))
-|#
 
 (DEFMACRO WITH-CRPR-4 ((dgop1 gmsm1 dgop2 gmsm2) crpr . body)
   `(let ((,dgop1 (dgop1 ,crpr))
@@ -747,18 +699,6 @@ chain complex D."
       (fixnum ,dgop1 ,dgop2)
       (type gmsm ,gmsm1 ,gmsm2))
      ,@body))
-
-#|
-()
-(macroexpand-1
- (macroexpand-1 '(with-crpr (dgop1 gmsm1 dgop2 gmsm2) crpr
-		  (statement-1)
-		  (statement-2))))
-(macroexpand-1
- (macroexpand-1 '(with-crpr (absm1 absm2) crpr
-		  (statement-1)
-		  (statement-2))))
-|#
 
 ;;;
 ;;;  EILENBERG-ZILBER
@@ -789,10 +729,12 @@ chain complex D."
     (0 `(grml1 ,smgr))
     ((1 2) `(? (grml1 ,smgr) ,@rest))))
 
+
 (DEFMACRO GRIN (smgr &rest rest)
   (case (length rest)
     (0 `(grin1 ,smgr))
     (otherwise `(? (grin1 ,smgr) ,@rest))))
+
 
 (DEFMACRO BUILD-AB-SMGR (&rest rest)
   `(change-class (build-smgr ,@rest) 'ab-simplicial-group))
@@ -804,11 +746,14 @@ chain complex D."
 (DEFMACRO POWR (gmsm expn)
   `(cons ,gmsm ,expn))
 
+
 (DEFMACRO PGMSM (powr)
   `(car ,powr))
 
+
 (DEFMACRO EXPN (powr)
   `(cdr ,powr))
+
 
 (DEFMACRO WITH-POWR ((gmsm expn) powr . body)
   `(let ((,gmsm (car ,powr))
@@ -817,6 +762,7 @@ chain complex D."
       (type gmsm ,gmsm)
       (fixnum expn))
      ,@body))
+
 
 (DEFMACRO WITH-APOWR ((dgop gmsm expn) apowr . body)
   `(let ((,dgop (apdgop ,apowr))
@@ -827,8 +773,10 @@ chain complex D."
       (type gmsm ,gmsm))
      ,@body))
 
+
 (DEFMACRO APOWR (dgop gmsm expn)
   `(cons ,dgop (cons ,gmsm ,expn)))
+
 
 (DEFMACRO APDGOP (apowr)
   `(car ,apowr))
@@ -836,6 +784,7 @@ chain complex D."
 
 (DEFMACRO APGMSM (apowr)
   `(cadr ,apowr))
+
 
 (DEFMACRO APEXPN (apowr)
   `(cddr ,apowr))
@@ -847,8 +796,10 @@ chain complex D."
 (DEFMACRO LINE-NUMBER (mtrx)
   `(first (array-dimensions ,mtrx)))
 
+
 (DEFMACRO COLUMN-NUMBER (mtrx)
   `(second (array-dimensions ,mtrx)))
+
 
 (DEFMACRO LINE-OP-5 (mtrx-list begin lambda line1 line2)
   (let ((slambda (gensym)))
@@ -857,6 +808,7 @@ chain complex D."
        (line-op (second ,mtrx-list) 0 ,slambda ,line1 ,line2)
        (line-op (third ,mtrx-list) ,begin ,slambda ,line1 ,line2))))
 
+
 (DEFMACRO COLUMN-OP-5 (mtrx-list begin lambda column1 column2)
   (let ((slambda (gensym)))
     `(let ((,slambda ,lambda))
@@ -864,11 +816,13 @@ chain complex D."
        (column-op (fourth ,mtrx-list) 0 ,slambda ,column1 ,column2)
        (line-op (fifth ,mtrx-list) 0 (- ,slambda) ,column2 ,column1))))
 
+
 (DEFMACRO LINE-SWAP-5 (mtrx-list begin line1 line2)
   `(progn
      (column-swap (first ,mtrx-list) 0 ,line1 ,line2)
      (line-swap (second ,mtrx-list) 0 ,line1 ,line2)
      (line-swap (third ,mtrx-list) ,begin ,line1 ,line2)))
+
 
 (DEFMACRO COLUMN-SWAP-5 (mtrx-list begin column1 column2)
   `(progn
@@ -876,17 +830,20 @@ chain complex D."
      (column-swap (fourth ,mtrx-list) 0 ,column1 ,column2)
      (line-swap (fifth ,mtrx-list) 0 ,column1 ,column2)))
 
+
 (DEFMACRO LINE-MINUS-5 (mtrx-list begin line)
   `(progn
      (column-minus (first ,mtrx-list) 0 ,line)
      (line-minus (second ,mtrx-list) 0 ,line)
      (line-minus (third ,mtrx-list) ,begin ,line)))
 
+
 (DEFMACRO COLUMN-MINUS-5 (mtrx-list begin column)
   `(progn
      (column-minus (third ,mtrx-list) ,begin ,column)
      (column-minus (fourth ,mtrx-list) 0 ,column)
      (line-minus (fifth ,mtrx-list) 0 ,column)))
+
 
 (DEFMACRO GNRT-NAME (i)
   `(intern (format nil "GN-~D" ,i) +gnrts-pckg+))
