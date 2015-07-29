@@ -80,6 +80,7 @@
 	      (print (cat:? c (cat:? c (+ 5 allp-degr) gnrt))))))))
 |#
 
+#|
 (test ls-left-hmeq-hat
       (cat:cat-init)
       (let ((c (cat:ls-left-hmeq-hat (cat:deltab)))
@@ -115,7 +116,7 @@
 	    (unless (>= allp-degr 10)
 	      (print (cat:? c (+ 5 allp-degr) gnrt))
 	      (print (cat:? c (cat:? c (+ 5 allp-degr) gnrt))))))))
-
+|#
 
 (test ls-pre-left-hmeq-left-reduction-intr-f
       (cat:ls-pre-left-hmeq-left-reduction-intr-f
@@ -148,7 +149,7 @@
 					  2 (cat:tnpr 0 '* 2 'cc))))
 	(setf cat:*tnpr-with-degrees* nil)))
 
-
+#|
 (test ls-pre-left-hmeq-left-reduction
       (cat:cat-init)
       (let* ((rdct (cat:ls-pre-left-hmeq-left-reduction (cat:deltab)))
@@ -167,7 +168,7 @@
 	(setf cat:*bc* (cat:cmbn 0 1 (cat:bspn (cat:bcc rdct))))
 	(setf cat:*tc* (cat:cmbn 0 1 (cat:bsgn (cat:tcc rdct))))
 	(check-rdct)))
-
+|#
 
 (defun a (d1 d2 d3)
   (setf cat:*tc* (cat:cmbn (+ d1 d2 d3)

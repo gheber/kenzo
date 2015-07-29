@@ -315,7 +315,7 @@
       (let ((g (cat:cs-pre-left-hmeq-right-reduction-intr-g 'i)))
 	(funcall g (cat:cmbn 3 2 (cat:abar 1 'a 2 'b)))))
 
-
+#|
 (test cs-pre-left-hmeq-right-reduction
       (cat:cat-init)
       (let ((rdct (cat:cs-pre-left-hmeq-right-reduction (cat:k-z-1)))
@@ -373,6 +373,7 @@
 	      (setf cat:*tc* (cat:cmbn (+ 4 abar-degr) 1 gnrt))
 	      (setf cat:*bc* (cat:cmbn abar-degr 1 abar))
 	      (check-rdct))))))
+|#
 
 #|
 (test cs-left-hmeq-right-reduction
