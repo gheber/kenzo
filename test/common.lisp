@@ -212,6 +212,16 @@
 	  rslt)))
 
 
+(defun random-allp (length)
+  (let ((rslt nil))
+    (dotimes (i length)
+      (let* ((gmsm (random (cat:mask 9)))
+	     (dmns (1- (logcount gmsm))))
+	(when (plusp dmns)
+	  (push (cat:cbgn (1- dmns) gmsm) rslt))))
+    (cat:make-allp :list rslt)))
+
+
 (defun random-apowr (dmns max-expn)
   (loop
      (let* ((dgop (random (cat:2-exp (1- dmns))))

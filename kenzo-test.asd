@@ -33,6 +33,7 @@
 	       (:file "k-pi-n-test")
 	       (:file "kan-test")
 	       (:file "loop-spaces-test")
+	       (:file "lp-space-efhm-test")
 	       (:file "ls-twisted-products-test")
 	       (:file "searching-homology-test")
 	       (:file "serre-test")
