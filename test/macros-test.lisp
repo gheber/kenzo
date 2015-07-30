@@ -18,19 +18,14 @@
       (is (equal 1 (cat:-1-expt-n+1 5)))
       (is (equal -1 (cat:-1-expt-n+1 6))))
 
-
 (test lexico
-      (let ((cat:*print-level* nil))
-	(declare (special
-		  #+aclpc allegro:*top-print-level*
-		  #-aclpc cat:*print-level*))
-	(pprint (macroexpand-1
-		 '(cat:lexico
-		   comparison1
-		   comparison2
-		   comparison3
-		   comparison4)))))
-
+      (setf cl:*print-level* nil)
+      (pprint (macroexpand-1
+	       '(cat:lexico
+		 comparison1
+		 comparison2
+		 comparison3
+		 comparison4))))
 
 (test with-term
       (macroexpand-1 '(cat:with-term (cffc gnrt) term

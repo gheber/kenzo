@@ -547,8 +547,6 @@
 
 	   ;; various.lisp
 
-	   *PRINT-LENGTH*
-	   *PRINT-LEVEL*
 	   +EMPTY-LIST+
 	   <A-B<
 	   <A-B>
