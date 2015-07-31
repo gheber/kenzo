@@ -170,7 +170,7 @@
 	(cat:mtrx-prdc q q-1)))
 
 
-(test minimal-term-top-left
+(test minimal-term-top-left1
       (let* ((p (cat:idnt-mtrx 4))
 	     (p-1 (cat:idnt-mtrx 4))
 	     (m (cat:random-matrix 4 5 10))
@@ -182,6 +182,7 @@
 	(is (equalp t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
 	(cat:mtrx-prdc p p-1)
 	(cat:mtrx-prdc q q-1)))
+
 
 (test list-smith
       (let* ((p (cat:idnt-mtrx 4))
