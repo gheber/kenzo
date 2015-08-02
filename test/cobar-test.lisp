@@ -50,16 +50,6 @@
 			       3 (cat:d (cat:mask 5))))))
 
 
-(defun random-allp (length)
-  (let ((rslt nil))
-    (dotimes (i length)
-      (let* ((gmsm (random (cat:mask 9)))
-	     (dmns (1- (logcount gmsm))))
-	(when (plusp dmns)
-	  (push (cat:cbgn (1- dmns) (cat:d gmsm)) rslt))))
-    (cat:make-allp :list rslt)))
-
-
 (test vrtc-cobar
       (cat:cat-init)
       (let ((v (cat:vrtc-cobar (cat:soft-delta-infinity))))
