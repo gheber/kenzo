@@ -259,11 +259,15 @@
 				     (logandc2 gmsm (mask indx))))
 			    rslt)
 		      (when (minusp (decf ldegr))
-			(setf rslt (delete 1 rslt :key #'caaddr))
+			(setf rslt (delete 1 rslt
+					   :key #'(lambda (x)
+						    (degr1 (cdr x)))))
 			(setf (gnrt1 (gnrt (first rslt)))
 			      (setf (gnrt2 (gnrt (car (last rslt))))
 				    1))
-			(return (delete 1 rslt :key #'cadddr)))))))))
+			(return (delete 1 rslt
+					:key #'(lambda (x)
+						 (gnrt1 (cdr x))))))))))))
 
 
 (DEFUN DELTAB2-BNDR (dmns gmsm)

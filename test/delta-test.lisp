@@ -113,16 +113,9 @@
 	(t1 500)))
 
 
-#|
-()
-(dotimes (i 7)
-  (print (deltab2-dgnl i (mask (1+ i)))))
-
 (test deltab2-dgnl
       (dotimes (i 7)
 	(print (cat:deltab2-dgnl i (cat:mask (1+ i))))))
-
-|#
 
 
 (test deltab2-bndr
