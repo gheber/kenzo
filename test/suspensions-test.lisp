@@ -54,7 +54,7 @@
 	(cat:? scoal 3 7)
 	(cat:cprd scoal 3 7)))
 
-#|
+
 (test suspension-face
       (cat:cat-init)
       (let* ((ss (cat:deltab))
@@ -62,15 +62,22 @@
 	     (m (cat:moore 2 3)))
 	(funcall face 4 4 15)
 	(funcall face 0 4 15)
-	(cat:check-faces #'cat:f-cmpr face 4 15)
-	(cat:check-faces #'cat:f-cmpr face 3 7)
-	(cat:check-faces #'cat:f-cmpr face 2 3)
+	#+(or ecl sbcl)
+	(signals type-error (cat:check-faces #'cat:f-cmpr face 4 15))
+	#+(or ecl sbcl)
+	(signals type-error (cat:check-faces #'cat:f-cmpr face 3 7))
+	#+(or ecl sbcl)
+	(signals type-error (cat:check-faces #'cat:f-cmpr face 2 3))
+	#-(or ecl sbcl) (cat:check-faces #'cat:f-cmpr face 4 15)
+	#-(or ecl sbcl) (cat:check-faces #'cat:f-cmpr face 3 7)
+	#-(or ecl sbcl) (cat:check-faces #'cat:f-cmpr face 2 3)
 	(setf face (cat:suspension-face (cat:face m)))
 	(dotimes (i 5) (print (funcall face i 4 'm3)))
 	(dotimes (i 6) (print (funcall face i 5 'mm4)))
 	(cat:check-faces #'cat:s-cmpr face 4 'm3)
-	(cat:check-faces #'cat:s-cmpr face 5 'mm4)))
-|#
+	(cat:check-faces #'cat:s-cmpr face 5 'mm4)
+	))
+
 
 (test suspension1
       (cat:cat-init)

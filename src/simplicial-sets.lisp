@@ -364,25 +364,27 @@
 	      (- 1dlop (logcount right))))))))
 
 
-(DEFUN A-FACE4 (face indx dmns absm) 
+(DEFUN A-FACE4 (face indx dmns absm)
   (declare
    (type face face)
    (fixnum indx dmns)
    (type absm absm))
   (the absm
-       (with-absm (dgop gmsm) absm
-		  (multiple-value-bind (dgop2 1dlop) (1dlop-dgop indx dgop)
-		    (declare (fixnum dgop2)
-			     #-(or ccl ecl lispworks sbcl)
-			     (type (or fixnum nil) 1dlop))
-		    ;; Bug LispWorks if this or-type defined
-		    (unless 1dlop
-		      (return-from a-face4 (absm dgop2 gmsm)))
-		    (locally (declare (fixnum 1dlop))
-		      (let ((gmsm-face (funcall face 1dlop (- dmns (logcount dgop)) gmsm)))
-			(declare (type absm gmsm-face))
-			(with-absm (dgop3 gmsm3) gmsm-face
-				   (absm (dgop*dgop dgop2 dgop3) gmsm3))))))))
+       (with-absm
+	   (dgop gmsm) absm
+	   (multiple-value-bind (dgop2 1dlop) (1dlop-dgop indx dgop)
+	     (declare (fixnum dgop2)
+		      #-(or ccl ecl lispworks sbcl)
+		      (type (or fixnum nil) 1dlop))
+	     ;; Bug LispWorks if this or-type defined
+	     (unless 1dlop
+	       (return-from a-face4 (absm dgop2 gmsm)))
+	     (locally (declare (fixnum 1dlop))
+	       (let ((gmsm-face (funcall face 1dlop (- dmns (logcount dgop))
+					 gmsm)))
+		 (declare (type absm gmsm-face))
+		 (with-absm (dgop3 gmsm3) gmsm-face
+			    (absm (dgop*dgop dgop2 dgop3) gmsm3))))))))
 
 
 (DEFUN 1DGNR (indx absm)
