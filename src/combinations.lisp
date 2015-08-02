@@ -132,8 +132,9 @@ degree DEGR."
 			    ((endp mark) (nreverse rslt))
 			  (declare (list rslt mark))))))
 
-#+allegro
+
 (setf *print-pretty* nil)
+
 
 (DEFUN CHECK-CMBN (chcm cmbn)
   (declare

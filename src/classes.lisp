@@ -220,12 +220,13 @@
 ;;;
 
 (DEFSTRUCT (CONE (:conc-name nil) (:print-function cone-print))
-  (conx #+allegro :type #+allegro (member 0 1))
-  (icon #+allegro :type #+allegro gnrt))
+  (conx (:type '(member 0 1)))
+  (icon (:type 'gnrt)))
+
 
 (DEFSTRUCT (BICN (:conc-name nil) (:print-function bicn-print))
-  (bcnx #+allegro :type #+allegro (member :bcnb :bcnc :bcnd))
-  (ibicn #+allegro :type #+allegro gnrt))
+  (bcnx (:type '(member :bcnb :bcnc :bcnd)))
+  (ibicn (:type 'gnrt)))
 
 
 ;;;
@@ -270,7 +271,7 @@
 (DEFTYPE IALLP () '(satisfies iallp-p))
 
 (DEFSTRUCT (ALLP (:print-function allp-print))
-  (list #+allegro :type #+allegro iallp))
+  (list (:type 'iallp)))
 
 #+ccl
 (DEFMETHOD make-load-form ((a allp) &optional env)
@@ -326,7 +327,7 @@
 |#
 
 (DEFSTRUCT (ABAR (:print-function abar-print))
-  (list #+allegro :type #+allegro list))
+  (list (:type 'list)))
 
 #+ccl
 (DEFMETHOD make-load-form ((a abar) &optional env)
@@ -357,8 +358,8 @@
 (DEFTYPE IABSM () '(satisfies iabsm-p))
 
 (DEFSTRUCT (ABSM (:conc-name nil) (:print-function absm-print))
-  (dgop #+allegro :type #+allegro dgop)
-  (gmsm #+allegro :type #+allegro gmsm))
+  (dgop (:type 'dgop))
+  (gmsm (:type 'gmsm)))
 
 #|
 ()
@@ -409,10 +410,10 @@
 
 
 (DEFSTRUCT (CRPR (:print-function crpr-print) (:conc-name nil))
-  (dgop1 #+allegro :type #+allegro dgop)
-  (gmsm1 #+allegro :type #+allegro gmsm)
-  (dgop2 #+allegro :type #+allegro dgop)
-  (gmsm2 #+allegro :type #+allegro gmsm))
+  (dgop1 (:type 'dgop))
+  (gmsm1 (:type 'gmsm))
+  (dgop2 (:type 'dgop))
+  (gmsm2 (:type 'gmsm)))
 
 ;;;;
 ;;;;  KAN
@@ -496,7 +497,7 @@
 	(sb-ext:unlock-package :common-lisp))
 
 (DEFSTRUCT (LOOP (:print-function loop-print))
-  (list #+allegro :type #+allegro iloop))
+  (list (:type 'iloop)))
 
 #+allegro
 (eval-when (:compile-toplevel :load-toplevel :execute)
