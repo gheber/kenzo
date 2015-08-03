@@ -490,3 +490,25 @@
 	(declare (type gmsm gmsm))
 	(unless (check-faces cmpr face dmns gmsm)
 	  (setf rslt nil))))))
+
+
+(DEFUN SHOW-STRUCTURE (smst dmns)
+  (declare
+   (type simplicial-set smst)
+   (fixnum dmns))
+  "--------------------------------------------------------------[function-doc]
+SHOW-STRUCTURE
+Args: (smst dmns)
+Shows the structure of the simplicial set SMST (i.e., generators and faces)
+from dimension 0 up to and including dimension DMNS.
+------------------------------------------------------------------------------"
+  (when (<= 0 dmns)
+    (dotimes (i (1+ dmns))
+      (format t "~2%Dimension = ~D:" i)
+      (case i
+	(0 (format t "~2%~8TVertices : ~8T~A" (basis smst 0)))
+	(otherwise
+	 (dolist (s (basis smst i))
+	   (format t "~2%~8TSimplex : ~A~2%~16TFaces : ~A"
+		   s (mapcar #'(lambda (j) (face smst j i s))
+			     (<a-b> 0 i)))))))))

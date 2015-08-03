@@ -479,6 +479,7 @@
 	   NDGNR
 	   NFACE
 	   REMOVE-BIT
+	   SHOW-STRUCTURE
 	   SMST
 
 	   ;; smith.lisp
