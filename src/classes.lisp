@@ -17,7 +17,12 @@
 ;;;
 
 (DEFSTRUCT (CMBN (:print-function cmbn-print))
-  "Internal representation of combinations."
+  "------------------------------------------------------------------[type-doc]
+CMBN
+A structure with slots DEGR and LIST for the degree and the list of terms of
+a combination, of type FIXNUM and LIST, respectively. This is the internal
+representation of combinations.
+------------------------------------------------------------------------------"
   (degr -1 :type fixnum)
   (list () :type list))
 

@@ -100,15 +100,30 @@
 
 
 (DEFMACRO TERM-CMBN (degr cffc gnrt)
+  "------------------------------------------------------------------[macro-doc]
+TERM-CMBN
+Args: (degr cffc gnrt)
+Returns the combination of degree DEGR with the only term CFFC*GNRT.
+------------------------------------------------------------------------------"
   `(make-cmbn :degr ,degr
               :list (list (term ,cffc ,gnrt))))
 
 
 (DEFMACRO CMBN-NON-ZERO-P (cmbn)
+  "------------------------------------------------------------------[macro-doc]
+CMBN-NON-ZERO-P
+Args: (cmbn)
+Tests if the combination CMBN is a non-null combination of any degree.
+------------------------------------------------------------------------------"
   `(cmbn-list ,cmbn))
 
 
 (DEFMACRO CMBN-ZERO-P (cmbn)
+  "------------------------------------------------------------------[macro-doc]
+CMBN-ZERO-P
+Args: (cmbn)
+Tests if the combination CMBN is the null combination of any degree.
+------------------------------------------------------------------------------"
   `(null (cmbn-list ,cmbn)))
 
 
