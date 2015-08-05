@@ -62,7 +62,7 @@ To load "kenzo":
 *
 ```
 
-Verify that you're good to go by loading and running the Kenzo regression test suite. For example, in an `sbcl` prompt you should see something like this:
+Verify that you're good to go by loading and running the Kenzo regression test suite. For example, in an SBCL prompt you should see something like this:
 ```
 * (ql:quickload :kenzo-test)
 To load "kenzo-test":
