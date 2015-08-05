@@ -20,15 +20,9 @@ This version aims to update its infrastructure by providing the following:
 3. Installation via the [Quicklisp](http://www.quicklisp.org/beta/) library
    manager
 
-Items 1 and 2 are well underway. Item 3 is pending after Francis Sergeraert kindly
-agreed to license the software under [GPLv3](http://www.gnu.org/licenses/gpl-3.0.en.html).
-
 *!!! WARNING !!!*
 
 This is work in progress and there are several [issues](https://github.com/gheber/kenzo/issues).
-The entire code now compiles fine w/ CCL, ECL, SBCL, but that's just the first step. There are plenty
-of examples in [publications](http://www-fourier.ujf-grenoble.fr/~sergerar/Papers/) and scattered
-throughout the source. Many work (most?), some don't. *Let's get to work! ...*
 
 ## Getting up and running
 
@@ -49,18 +43,26 @@ Then in your Lisp (e.g., in ECL) type
 
 ### Quicklisp
 
-I'm a big fan and supporter of [Quicklisp](http://www.quicklisp.org/beta/), and use it for all my local projects.
-Assuming you've installed Quicklisp in `C:\home\quicklisp` or `/home/joeuser/quicklisp`, your *local projects directory* will be `C:\home\quicklisp\local-projects` or `/home/joeuser/quicklisp/local-projects`.
+Assuming you have [Quicklisp](http://www.quicklisp.org/beta/), there isn't really much to say here:
 
-Making Kenzo `quickload`-able is a piece of cake:
+```
+* (ql:quickload :kenzo)
+To load "kenzo":
+  Install 1 Quicklisp release:
+    kenzo
+; Fetching #<URL "http://beta.quicklisp.org/archive/kenzo/2015-08-04/kenzo-20150804-git.tgz">
+; 1835.57KB
+==================================================
+1,879,625 bytes in 1.48 seconds (1236.91KB/sec)
+; Loading "kenzo"
+[package cat].....................................
+..................................................
+..............................
+(:KENZO)
+*
+```
 
-1. Clone the Kenzo repository into your local projects directory, i.e., `C:\home\quicklisp\local-projects\kenzo` or `/home/joeuser/quicklisp/local-projects/kenzo`.
-2. Tell Quicklisp about Kenzo by adding the following two lines to the `system-index.txt` file in the local projects directory:
-```
-  kenzo\kenzo.asd
-  kenzo\kenzo-test.asd
-```
-Verify that you're good to go by loading and running the Kenzo test suite. For example, in an `sbcl` prompt (I've tested this with SBCL 1.2.13 on Debian and Windows) you should see something like this:
+Verify that you're good to go by loading and running the Kenzo regression test suite. For example, in an `sbcl` prompt you should see something like this:
 ```
 * (ql:quickload :kenzo-test)
 To load "kenzo-test":
@@ -76,15 +78,11 @@ Running test suite KENZO
  Running test L-CMPR ..........
  Running test S-CMPR .....
  ...
- Running test CDELTA
 ---done---
- Did 642 checks.
-    Pass: 642 (100%)
+ Did 786 checks.
+    Pass: 786 (100%)
     Skip: 0 ( 0%)
     Fail: 0 ( 0%)
 ```
 
 Similarly, you'd load Kenzo via `(ql:quickload :kenzo)`.
-
-
-[![GPLv3 Logo](http://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)
