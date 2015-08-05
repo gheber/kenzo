@@ -41,13 +41,6 @@ is ignored.
   (declare
    (type cmprf cmpr)
    (list list1 list2))
-  "--------------------------------------------------------------[function-doc]
-MAPLEXICO
-Args: (cmpr list1 list2)
-Returns :EQUAL, :GREATER or :LESS, based on the comparison of lists LIST1 and
-LIST2 according to lexicographical order, where list elements are compared with
-CMPR.
-------------------------------------------------------------------------------"
   (the boolean
        (do ((mark1 list1 (cdr mark1))
 	    (mark2 list2 (cdr mark2)))
@@ -68,8 +61,9 @@ CMPR.
   "--------------------------------------------------------------[function-doc]
 S-CMPR
 Args: (symbol1 symbol2)
-String-compares (SYMBOL-NAME SYMBOL1) and (SYMBOL-NAME SYMBOL2), and returns
-:EQUAL, :GREATER or :LESS.
+Returns :LESS, :EQUAL, or :GREATER, according to the result of the Lisp string
+comparison function of the strings (SYMBOL-NAME SYMBOL1) and
+(SYMBOL-NAME SYMBOL2).
 ------------------------------------------------------------------------------"
   (the cmpr
        (if (#+aclpc acl:whole-string<
@@ -86,7 +80,8 @@ String-compares (SYMBOL-NAME SYMBOL1) and (SYMBOL-NAME SYMBOL2), and returns
   "--------------------------------------------------------------[function-doc]
 F-CMPR
 Args: (n1 n2)
-Compares integers N1 and N2, and returns :EQUAL, :GREATER or :LESS.
+Returns :LESS, :EQUAL, or :GREATER, according to the result of the canonical
+comparison of the integers N1 and N2.
 ------------------------------------------------------------------------------"
   (the cmpr
        (if (< n1 n2)
@@ -101,8 +96,8 @@ Compares integers N1 and N2, and returns :EQUAL, :GREATER or :LESS.
   "--------------------------------------------------------------[function-doc]
 L-CMPR
 Args: (list1 list2)
-Compares the generator lists LIST1 and LIST2 according to lexicographical order
-and returns :EQUAL, :GREATER or :LESS.
+Returns :LESS, :EQUAL, or :GREATER, according to the lexicographical ordering
+of the generator lists LIST1 and LIST2.
 ------------------------------------------------------------------------------"
   (unless list1
     (return-from l-cmpr (if list2 :less :equal)))
@@ -165,7 +160,7 @@ combination is an instance of the null combination of degree DEGR.
   "--------------------------------------------------------------[function-doc]
 CHECK-CMBN
 Args: (chcm cmbn)
-Checks if the combination CMBN is a valid combination of chain complex CHCM.
+Tests if the combination CMBN is a valid combination of chain complex CHCM.
 CHECK-CMBN raises an error if the generators of CMBN are out-of-order.
 ------------------------------------------------------------------------------"
   (the boolean

@@ -121,7 +121,33 @@ representation of combinations.
    ;; IDentification NuMber
    (idnm :type fixnum :initform (incf *idnm-counter*) :reader idnm)
    ;; ORiGiN
-   (orgn :type list :initarg :orgn :reader orgn)))
+   (orgn :type list :initarg :orgn :reader orgn))
+  (:documentation
+   "-----------------------------------------------------------------[class-doc]
+CHAIN-COMPLEX
+Slots: (cmps basis bsgn dffr grmd efhm idnm orgn)
+Intances of this class represent chain complexes. The class has 8 slots:
+
+1. CMPR, a comparison function or method for generators, which returns :LESS,
+   :EQUAL, or :GREATER.
+
+2. BASIS, a Lisp function, which returns the ordered basis of the free
+   Z-modules (C_p), or the keyword :LOCALLY-EFFECTIVE.
+
+3. BSGN, a Lisp object representing the base generator in dimension 0.
+
+4. DFFR, the differential morphism, an instance of the class MORPHISM.
+
+5. GRMD, ???
+
+6. EFHM, ???
+
+7. IDNM, an integer, a system generated identifier for this object.
+
+8. ORGN, a list containg a comment indicating the origin of the object. The
+   should be unique (per session), since it is used in the implementation for
+   caching purposes.
+------------------------------------------------------------------------------"))
 
 ;; STRT = STRaTegy
 (DEFTYPE STRT () '(member :gnrt :cmbn))
