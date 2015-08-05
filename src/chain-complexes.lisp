@@ -6,10 +6,15 @@
 
 (PROVIDE "chain-complexes")
 
+
 (DEFUN CAT-INIT ()
   (declare (special *idnm-counter* *results-n* *results-cmlt-tm*))
-  "Clear the list of user created chain complexes *CHCM-LIST* and reset the
-global counter to 0."
+  "--------------------------------------------------------------[function-doc]
+CAT-INIT
+Args: ()
+Clear the list of user created chain complexes *CHCM-LIST* and reset the
+global counter to 0.
+------------------------------------------------------------------------------"
   (setf *idnm-counter* 0 *results-n* 0 *results-cmlt-tm* 0.0)
   (map nil #'(lambda (listname)
                (declare (symbol listname))
@@ -17,8 +22,13 @@ global counter to 0."
        *list-list*)
   (done))
 
+
 (DEFUN HOW-MANY-OBJECTS ()
-  "Return the number of user created objects by object type."
+  "--------------------------------------------------------------[function-doc]
+HOW-MANY-OBJECTS
+Args: ()
+Return the number of user created objects by object type.
+------------------------------------------------------------------------------"
   (mapc #'(lambda (symbol)
 	    (declare (type (or string symbol) symbol))
 	    (let ((length (length (eval symbol))))
@@ -29,8 +39,13 @@ global counter to 0."
 	*list-list*)
   (done))
 
+
 (DEFUN ALL-OBJECTS ()
-  "Return a string representation of a user created objects."
+  "--------------------------------------------------------------[function-doc]
+ALL-OBJECTS
+Args: ()
+Return a string representation of a user created objects.
+------------------------------------------------------------------------------"
   (let ((object-list
 	 (sort (delete-duplicates
 		(mapcan #'(lambda (symbol)
@@ -43,10 +58,15 @@ global counter to 0."
       (format t "~%~A = ~A" item (orgn item))))
   (done))
 
+
 (DEFUN KD (idnm)
   (declare (fixnum idnm))
-  "Return the type of Kenzo object number IDNM and print the comment list
-(SLOT :ORGN) of the object."
+  "--------------------------------------------------------------[function-doc]
+KD
+Args: (idnm)
+Return the type of Kenzo object number IDNM and print the comment list
+(SLOT :ORGN) of the object.
+------------------------------------------------------------------------------"
   (dolist (list *list-list*)
     (let ((found (find idnm (eval list) :key #'idnm)))
       (when found
@@ -54,20 +74,30 @@ global counter to 0."
 ~3TOrigin: ~A~2%" found (orgn found))
 	(return-from kd (values))))))
 
+
 (DEFUN K (idnm)
   (declare (fixnum idnm))
-  "Get the IDNM-th Kenzo object."
+  "--------------------------------------------------------------[function-doc]
+K
+Args: (idnm)
+Returns the IDNM-th Kenzo object.
+------------------------------------------------------------------------------"
   (dolist (list *list-list*)
     (let ((found (find idnm (eval list) :key #'idnm)))
       (when found
 	(return-from k found)))))
 
+
 (DEFUN KD2 (idnm)
   (declare (fixnum idnm))
-  "Return the type of Kenzo object number IDNM, print the comment list
+  "--------------------------------------------------------------[function-doc]
+KD2
+Args: (idnm)
+Return the type of Kenzo object number IDNM, print the comment list
 (SLOT :ORGN) of the object and, recursively, return the same information
 for all Kenzo objects of the same type in relation with this object. Return
-the list of object numbers."
+the list of object numbers.
+------------------------------------------------------------------------------"
   (let ((k-list (k idnm)))
     (declare (list k-list))
     (unless k-list
@@ -97,12 +127,18 @@ the list of object numbers."
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :clos) t))
 
+
 (DEFUN CHCM (idnm)
   (declare (fixnum idnm))
-  "Return from the list *CHCM-LIST* the chain complex instance with Kenzo
-identifier IDNUM or NIL, if it doesn't exist."
+  "--------------------------------------------------------------[function-doc]
+CHCM
+Args: (idnm)
+Return from the list *CHCM-LIST* the chain complex instance with Kenzo
+identifier IDNUM or NIL, if it doesn't exist.
+------------------------------------------------------------------------------"
   (the (or chain-complex null)
        (find idnm *chcm-list* :key #'idnm)))
+
 
 (DEFUN RESULT-PRINT (result stream depth)
   (declare
@@ -117,12 +153,15 @@ identifier IDNUM or NIL, if it doesn't exist."
 	  (result-clnm result) (result-rntm result))
   result)
 
+
 (DEFGENERIC ?2 (chcm-or-mrph cmbn))
+
 
 (DEFMETHOD ?2 ((mrph morphism) cmbn)
   (declare (type cmbn cmbn))
   (the cmbn
        (cmbn-? mrph cmbn)))
+
 
 (DEFMETHOD ?2 ((chcm chain-complex) cmbn)
   (declare
@@ -130,7 +169,9 @@ identifier IDNUM or NIL, if it doesn't exist."
   (the cmbn
        (cmbn-? (dffr1 chcm) cmbn)))
 
+
 (DEFGENERIC ?3 (chcm-or-mrph degr gnrt))
+
 
 (DEFMETHOD ?3 ((mrph morphism) degr gnrt)
   (declare
@@ -139,11 +180,13 @@ identifier IDNUM or NIL, if it doesn't exist."
   (the cmbn
        (gnrt-? mrph degr gnrt)))
 
+
 (DEFMETHOD ?3 ((chcm chain-complex) degr gnrt)
   (declare
    (fixnum degr)
    (type gnrt gnrt))
   (gnrt-? (dffr1 chcm) degr gnrt))
+
 
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :clos) nil))
@@ -167,6 +210,7 @@ IDNUM or NIL, if it doesn't exist."
   (the (or morphism null)
        (find n *mrph-list* :key #'idnm)))
 
+
 (DEFUN BUILD-CHCM (&key cmpr basis bsgn intr-dffr strt orgn)
   (declare
    (type cmprf cmpr)
@@ -175,8 +219,12 @@ IDNUM or NIL, if it doesn't exist."
    (type (or intr-mrph null) intr-dffr)
    (type strt strt)
    (type list orgn))
-  "Returns an instance of CHAIN-COMPLEX. Use this function instead of creating
-instances via the standard constructor MAKE-INSTANCE."
+  "--------------------------------------------------------------[function-doc]
+BUILD-CHCM
+Args: (&key cmpr basis bsgn intr-dffr strt orgn)
+Returns an instance of CHAIN-COMPLEX. Use this function instead of creating
+instances via the standard constructor MAKE-INSTANCE.
+------------------------------------------------------------------------------"
   (the chain-complex
        (progn
          (let ((already (find orgn *chcm-list* :test #'equal :key #'orgn)))
@@ -200,6 +248,7 @@ instances via the standard constructor MAKE-INSTANCE."
 	   (push chcm *chcm-list*)
 	   chcm))))
 
+
 (DEFUN BASIS2 (object n)         ;;;
   (declare
    (type t object)
@@ -210,6 +259,7 @@ instances via the standard constructor MAKE-INSTANCE."
          (when (eq :locally-effective basis)
 	   (error "The object ~A is locally-effective." object))
          (funcall basis n))))
+
 
 (DEFUN BUILD-MRPH (&key sorc trgt degr intr strt orgn)
   (declare

@@ -147,6 +147,14 @@ Tests if the combination CMBN is the null combination of any degree.
 ;;;
 
 (DEFMACRO CMPR (&rest rest)
+  "------------------------------------------------------------------[macro-doc]
+CMPR
+Args: (&rest rest)
+Args: (chcm gnrt1 gnrt2)
+Typically invoked with a chain complex CHCM and two generators GNRT1 and GNRT2.
+Applies the comparison function associated with CHCM to GNRT1 and GNRT2, and
+return the result.
+------------------------------------------------------------------------------"
   (ecase (length rest)
     (1 `(cmpr1 ,@rest))
     (3 `(cmpr3 ,@rest))))
@@ -157,6 +165,20 @@ Tests if the combination CMBN is the null combination of any degree.
 
 
 (DEFMACRO BASIS (&rest rest)
+  "------------------------------------------------------------------[macro-doc]
+BASIS
+Args: (&rest rest)
+Args: (chcm)
+Args: (chcm n)
+Args: (chcm n :dgnr)
+When invoked with only one argument, returns the function attached to the slot
+BASIS of the chain complex.
+When invoked with two arguments, returns the basis of the group of degree N of
+ the chain complex.
+When invoked with three arguments, the keyword :DGNR, it also returns the
+degenerate elements of the basis in degree N.
+This function returns an error if the chain complex is locally effective.
+------------------------------------------------------------------------------"
   (ecase (length rest)
     (1 `(basis1 ,@rest))
     (2 `(basis2 ,@rest))
@@ -169,6 +191,15 @@ Tests if the combination CMBN is the null combination of any degree.
 
 
 (DEFMACRO DFFR (&rest rest)
+  "------------------------------------------------------------------[macro-doc]
+DFFR
+Args: (&rest rest)
+Args: (chcm cmbn)
+Args: (chcm degr gnrt)
+Applies the differential morphism of the chain complex CHCM to a combination
+CMBN or a generator GNRT of a degree DEGR.
+See also the macro ?.
+------------------------------------------------------------------------------"
   (ecase (length rest)
     (1 `(dffr1 ,@rest))
     ((2 3) `(? (dffr1 ,(first rest)) ,@(rest rest)))))

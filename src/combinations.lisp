@@ -202,6 +202,12 @@ degree -1.
 
 (DEFUN ZERO-INTR-DFFR (cmbn)
   (declare (type cmbn cmbn))
+  "--------------------------------------------------------------[function-doc]
+ZERO-INTR-DFFR
+Args: (cmbn)
+Returns the null combination of degree p-1, for any combination CMBN of
+degree p.
+------------------------------------------------------------------------------"
   (the cmbn (zero-cmbn (1- (cmbn-degr cmbn)))))
 
 
