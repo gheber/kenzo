@@ -10,7 +10,13 @@
 ;;; VARIOUS
 ;;;
 
-(DEFTYPE ANY () t)
+(DEFTYPE ANY ()
+  "------------------------------------------------------------------[type-doc]
+ANY
+A derived type that is equivalent to Lisp's system class T, which includes all
+Lisp objects.
+------------------------------------------------------------------------------"
+  t)
 
 ;;;
 ;;;  COMBINATIONS
@@ -19,17 +25,20 @@
 (DEFSTRUCT (CMBN (:print-function cmbn-print))
   "------------------------------------------------------------------[type-doc]
 CMBN
-A structure with slots DEGR and LIST for the degree and the list of terms of
-a combination, of type FIXNUM and LIST, respectively. This is the internal
-representation of combinations.
+Slots: (degr list)
+A structure with two slots, DEGR and LIST, for the degree and the list of
+terms of a combination, of type FIXNUM and LIST, respectively. This is the
+internal representation of combinations.
 ------------------------------------------------------------------------------"
   (degr -1 :type fixnum)
   (list () :type list))
+
 
 #+ccl
 (DEFMETHOD make-load-form ((c cmbn) &optional env)
   (declare (ignore env))
   (make-load-form-saving-slots c))
+
 
 ;; CFFC = CoeFFiCient
 (DEFUN CFFC-P (object)
@@ -38,19 +47,44 @@ representation of combinations.
        (and (typep object 'fixnum)
 	    (/= 0 object))))
 
-(DEFTYPE CFFC () '(satisfies cffc-p))
+(DEFTYPE CFFC ()
+  "------------------------------------------------------------------[type-doc]
+CFFC
+A derived type to represent the coefficients of terms. In Kenzo, the set of
+coefficients it the set of objects which satisfy the CFFC-P predicate:
+non-zero FIXNUMs.
+------------------------------------------------------------------------------"
+  '(satisfies cffc-p))
+
 
 ;; GNRT = GeNeRaTor
-(DEFTYPE GNRT () 'any)
+(DEFTYPE GNRT ()
+  "------------------------------------------------------------------[type-doc]
+GNRT
+A type to represent the generators of terms. In Kenzo, the set of
+coefficients it the set of all Lisp objects (T).
+------------------------------------------------------------------------------"
+  'any)
+
 
 ;; CMPR = CoMPaRison
 (DEFTYPE CMPR ()
-  "CMPR repesents the result of comparison operations."
+  "------------------------------------------------------------------[type-doc]
+CMPR
+An enumerated type to represent the results of comparisons.
+------------------------------------------------------------------------------"
   '(member :less :equal :greater))
 
+
 ;; CMPRF = CoMPaRison Function
-(DEFTYPE CMPRF () 'function)
+(DEFTYPE CMPRF ()
+  "------------------------------------------------------------------[type-doc]
+CMPRF
+A derived type to represent comparison functions.
+------------------------------------------------------------------------------"
+  'function)
 ;; (function (gnrt gnrt) cmpr)
+
 
 (DEFUN TERM-P (object)
   (declare (type any object))
@@ -59,7 +93,15 @@ representation of combinations.
 	    (typep (car object) 'cffc)
 	    (typep (cdr object) 'gnrt))))
 
-(DEFTYPE TERM () '(satisfies term-p))
+(DEFTYPE TERM ()
+  "------------------------------------------------------------------[type-doc]
+TERM
+A derived type to represent terms. In Kenzo, the set of terms it the set of
+objects which satisfy the TERM-P predicate: CONSes whose CAR is of type CFFC
+and whose CDR is of type GNRT.
+------------------------------------------------------------------------------"
+  '(satisfies term-p))
+
 
 ;; ICMBN = Internal-CoMBiNation
 (DEFUN ICMBN-P (object)
@@ -72,22 +114,17 @@ representation of combinations.
 
 (DEFTYPE ICMBN () '(satisfies icmbn-p))
 
-#|
-;; CMBN = CoMBiNation
-(DEFUN CMBN-P (object)
-  (declare (type any object))
-  (the boolean
-       (and (consp object)
-	    (eql (car object) :cmbn)
-	    (consp (cdr object))
-	    (typep (second object) 'fixnum)
-	    (typep (cddr object) 'icmbn))))
 
-(DEFTYPE CMBN () '(satisfies cmbn-p))
-|#
-
-(DEFTYPE BASIS () '(or function (eql :locally-effective) #+ecl null))
+(DEFTYPE BASIS ()
+  "------------------------------------------------------------------[type-doc]
+BASIS
+A derived type to represent the basis of a chain complex. In Kenzo, a basis is
+either a (basis-)generating function or, for not finitely-generated modules,
+the symbol :LOCALLY-EFFECTIVE.
+------------------------------------------------------------------------------"
+  '(or function (eql :locally-effective) #+ecl null))
 ;; (function (degr) (list gnrt))
+
 
 ;; INTR-MRPH = INTeRnal-MoRPHism
 (DEFTYPE INTR-MRPH () '(or function morphism #+(or ccl ecl) null))
