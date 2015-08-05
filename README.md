@@ -17,12 +17,12 @@ This version aims to update its infrastructure by providing the following:
 
 1. A simple regression test suite based on [FiveAM](http://common-lisp.net/project/fiveam/)
 2. Support for the great freely available Lisp compilers out there, including [CCL](http://ccl.clozure.com/), [ECL] (https://common-lisp.net/project/ecl/), [SBCL](http://www.sbcl.org/), etc.
-3. Installation via the [Quicklisp](http://www.quicklisp.org/beta/) library
-   manager
+3. Installation via the [Quicklisp](http://www.quicklisp.org/beta/) library manager
+4. Updated documentation and examples
 
 *!!! WARNING !!!*
 
-This is work in progress and there are several [issues](https://github.com/gheber/kenzo/issues).
+This is work in progress and there are several outstanding [issues](https://github.com/gheber/kenzo/issues).
 
 ## Getting up and running
 
