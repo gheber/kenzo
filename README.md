@@ -2,6 +2,8 @@
 
 [![GPLv3 Logo](http://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)
 
+[![Quicklisp badge](http://quickdocs.org/badge/kenzo.svg)](http://quickdocs.org/kenzo/)
+
 According to the title of its
 [handbook](http://www-fourier.ujf-grenoble.fr/~sergerar/Kenzo/Kenzo-doc.pdf),
 Kenzo is a "Symbolic Software for Effective Homology Computation" and
