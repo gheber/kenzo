@@ -222,8 +222,29 @@ IDNUM or NIL, if it doesn't exist."
   "--------------------------------------------------------------[function-doc]
 BUILD-CHCM
 Args: (&key cmpr basis bsgn intr-dffr strt orgn)
-Returns an instance of CHAIN-COMPLEX. Use this function instead of creating
-instances via the standard constructor MAKE-INSTANCE.
+Returns an instance of CHAIN-COMPLEX. The keyword arguments are as follows:
+
+:CMPR CMPR, the comparison function for generators
+
+:BASIS BASIS, the function defining the basis of the freee Z-modules C_p or the
+              the keyword :LOCALLY-EFFECTIVE
+
+:BSGN BSGN, a generator, the base point of the underlying set
+
+:INTR-DFFR INTR-DFFR, a Lisp function defining the differential homomorphism
+                      for each p (d_p: C_p -> C_{p-1}
+
+:STRT STRT, one of the keywords :GNRT or :CMBN, defining the mapping strategy
+            of the differential homomorphism, either by generator or by
+            combination. The default is :GNRT
+
+:ORGN ORGN, a list containing a relevant and carefully chosen comment about
+            the origin of the chain complex. This comment should be unique
+            for a Kenzo session (between calls of CAT-INIT), as it is used
+            for caching purposes.
+
+Use this function instead of creating instances via the standard constructor
+MAKE-INSTANCE.
 ------------------------------------------------------------------------------"
   (the chain-complex
        (progn

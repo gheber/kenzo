@@ -186,8 +186,14 @@ Intances of this class represent chain complexes. The class has 8 slots:
    caching purposes.
 ------------------------------------------------------------------------------"))
 
+
 ;; STRT = STRaTegy
-(DEFTYPE STRT () '(member :gnrt :cmbn))
+(DEFTYPE STRT ()
+   "-----------------------------------------------------------------[type-doc]
+STRT
+A derived type, which represents the mapping strategy of morphisms.
+------------------------------------------------------------------------------"
+  '(member :gnrt :cmbn))
 
 
 (DEFCLASS MORPHISM ()
@@ -213,7 +219,42 @@ Intances of this class represent chain complexes. The class has 8 slots:
    ;; IDentification NuMber
    (idnm :type fixnum :initform (incf *idnm-counter*) :reader idnm)
    ;; ORiGiN
-   (orgn :type list :initarg :orgn :reader orgn)))
+   (orgn :type list :initarg :orgn :reader orgn))
+  (:documentation
+   "-----------------------------------------------------------------[class-doc]
+MORPHISM
+Slots: (sorc trgt degr intr strt ???-clnm ?-clnm rslts idnm orgn)
+Intances of this class represent morphisms between chain complexes, and the
+differential homomorphism of a chain complex is treated as a morphism of
+degree -1. The class has 10 slots:
+
+1. SORC, an object of class CHAIN-COMPLEX, the source chain complex of this
+   morphism.
+
+2. TRGT, an object of class CHAIN-COMPLEX, the target chain complex of this
+   morphism.
+
+3. DEGR, an integer, the degree of the morphism.
+
+4. INTR, a Lisp function implementing the morphism, taking account of the
+   strategy STRT.
+
+5. STRT, a symbol, one of :GNRT or :CMBN.
+
+6. ???-CLNM, an integer updated by the system for internal statistics.
+
+7. ?-CLNM, another integer maintained by the system for internal pusposes.
+
+8. RSLTS, an array of length +MAXIMAL-DIMENSION+ reserved by the system for
+   caching intermediate results.
+
+9. IDNM, an integer, a system-generated identifier for this object.
+
+10. ORGN, a list containg a comment indicating the origin of the object. The
+    should be unique (per session), since it is used in the implementation for
+    caching purposes.
+------------------------------------------------------------------------------"))
+
 
 (DEFSTRUCT (RESULT (:print-function result-print))
   (gnrt nil :type gnrt)
