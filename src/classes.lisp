@@ -165,8 +165,7 @@ CHAIN-COMPLEX
 Slots: (cmps basis bsgn dffr grmd efhm idnm orgn)
 Intances of this class represent chain complexes. The class has 8 slots:
 
-1. CMPR, a comparison function or method for generators, which returns :LESS,
-   :EQUAL, or :GREATER.
+1. CMPR, a comparison function or method for generators.
 
 2. BASIS, a Lisp function, which returns the ordered basis of the free
    Z-modules (C_p), or the keyword :LOCALLY-EFFECTIVE.

@@ -518,8 +518,8 @@ the result combination.
   "--------------------------------------------------------------[function-doc]
 CMBN-CMBN
 Args: (cmpr n-cmbn-list)
-Returns the linear combination of a list of integer/combination pairs. The first
-argument, CMPR, must be a function or macro, which is used to compare the
+Returns the linear combination of a list of integer/combination pairs. The
+first argument, CMPR, must be a function or macro, which is used to compare the
 generators of the input combinations and to order the terms of the result
 combination. The second argument, N-CMBN-LIST, is a list dotted pairs (CONSes),
 where the first element is a non-zero integer and the second element is a
@@ -574,9 +574,9 @@ combination.
   "--------------------------------------------------------------[function-doc]
 NTERM-ADD
 Args: (cmpr degr &rest rest)
-Returns a combination of degree DEGR which is the sum of terms supplied in REST.
-The first argument, CMPR, must be a function or macro, which is used to compare
-the generators of the input terms and to order the terms of the result
+Returns a combination of degree DEGR which is the sum of terms supplied in
+REST. The first argument, CMPR, must be a function or macro, which is used to
+compare the generators of the input terms and to order the terms of the result
 combination. If REST is NIL, an instance of the null combination of degree DEGR
 is returned.
 ------------------------------------------------------------------------------"

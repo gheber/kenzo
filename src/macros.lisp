@@ -100,7 +100,7 @@
 
 
 (DEFMACRO TERM-CMBN (degr cffc gnrt)
-  "------------------------------------------------------------------[macro-doc]
+  "-----------------------------------------------------------------[macro-doc]
 TERM-CMBN
 Args: (degr cffc gnrt)
 Returns the combination of degree DEGR with the only term CFFC*GNRT.
@@ -110,7 +110,7 @@ Returns the combination of degree DEGR with the only term CFFC*GNRT.
 
 
 (DEFMACRO CMBN-NON-ZERO-P (cmbn)
-  "------------------------------------------------------------------[macro-doc]
+  "-----------------------------------------------------------------[macro-doc]
 CMBN-NON-ZERO-P
 Args: (cmbn)
 Tests if the combination CMBN is a non-null combination of any degree.
@@ -119,7 +119,7 @@ Tests if the combination CMBN is a non-null combination of any degree.
 
 
 (DEFMACRO CMBN-ZERO-P (cmbn)
-  "------------------------------------------------------------------[macro-doc]
+  "-----------------------------------------------------------------[macro-doc]
 CMBN-ZERO-P
 Args: (cmbn)
 Tests if the combination CMBN is the null combination of any degree.
@@ -147,7 +147,7 @@ Tests if the combination CMBN is the null combination of any degree.
 ;;;
 
 (DEFMACRO CMPR (&rest rest)
-  "------------------------------------------------------------------[macro-doc]
+  "-----------------------------------------------------------------[macro-doc]
 CMPR
 Args: (&rest rest)
 Args: (chcm gnrt1 gnrt2)
@@ -165,7 +165,7 @@ return the result.
 
 
 (DEFMACRO BASIS (&rest rest)
-  "------------------------------------------------------------------[macro-doc]
+  "-----------------------------------------------------------------[macro-doc]
 BASIS
 Args: (&rest rest)
 Args: (chcm)
@@ -191,7 +191,7 @@ This function returns an error if the chain complex is locally effective.
 
 
 (DEFMACRO DFFR (&rest rest)
-  "------------------------------------------------------------------[macro-doc]
+  "-----------------------------------------------------------------[macro-doc]
 DFFR
 Args: (&rest rest)
 Args: (chcm cmbn)

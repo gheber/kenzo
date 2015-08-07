@@ -222,7 +222,8 @@ IDNUM or NIL, if it doesn't exist."
   "--------------------------------------------------------------[function-doc]
 BUILD-CHCM
 Args: (&key cmpr basis bsgn intr-dffr strt orgn)
-Returns an instance of CHAIN-COMPLEX. The keyword arguments are as follows:
+Returns an instance of the class CHAIN-COMPLEX. The keyword arguments are as
+follows:
 
 :CMPR CMPR, the comparison function for generators
 
@@ -289,8 +290,32 @@ MAKE-INSTANCE.
    (type (or intr-mrph null) intr)
    (type strt strt)
    (list orgn))
-  "Returns an instance of MORPHISM. Use this function instead of creating
-instances via the standard constructor MAKE-INSTANCE."
+  "--------------------------------------------------------------[function-doc]
+BUILD-MRPH
+Args: (&key sorc trgt degr intr strt orgn)
+Returns an instance of the class MORPHISM. The keyword arguments are as
+follows:
+
+:SORC SORC, the source object, a CHAIN-COMPLEX type object
+
+:TRGT TRGT, the target object, a CHAIN-COMPLEX type object
+
+:DEGR DEGR, the degree of the morphism, an integer
+
+:INTR INTR, the Lisp function defining the effective mapping
+
+:STRT STRT, one of the keywords :GNRT or :CMBN, defining the mapping strategy
+            of the differential homomorphism, either by generator or by
+            combination. The default is :GNRT
+
+:ORGN ORGN, a list containing a relevant and carefully chosen comment about
+            the origin of the chain complex. This comment should be unique
+            for a Kenzo session (between calls of CAT-INIT), as it is used
+            for caching purposes.
+
+Use this function instead of creating instances via the standard constructor
+MAKE-INSTANCE.
+------------------------------------------------------------------------------"
   (the morphism
        (progn
          (let ((already (find orgn *mrph-list* :test #'equal :key #'orgn)))
