@@ -12,8 +12,9 @@
   "--------------------------------------------------------------[function-doc]
 CAT-INIT
 Args: ()
-Clear the list of user created chain complexes *CHCM-LIST* and reset the
-global counter to 0.
+Initialize Kenzo internal data structures and clear, among other things,
+the list of user created chain complexes *CHCM-LIST* and reset the global
+counter to 0.
 ------------------------------------------------------------------------------"
   (setf *idnm-counter* 0 *results-n* 0 *results-cmlt-tm* 0.0)
   (map nil #'(lambda (listname)
