@@ -8,8 +8,10 @@ According to the title of its
 [handbook](http://www-fourier.ujf-grenoble.fr/~sergerar/Kenzo/Kenzo-doc.pdf),
 Kenzo is a "Symbolic Software for Effective Homology Computation" and
 its main audience might be students and researchers in algebraic topology.
-It is also a remarkable piece of LISP code, albeit in need of a little touch-up.
+Have a look at the [overview](https://github.com/gheber/kenzo/blob/master/examples/Overview.ipynb) to get a
+sense for what's yours to discover.
 
+It is also a remarkable piece of LISP code, albeit in need of a little touch-up.
 This repository contains a repackaged version of the Kenzo program by Francis Sergeraert
 and collaborators. The original version of the program can be found
 at http://www-fourier.ujf-grenoble.fr/~sergerar/Kenzo/ .
