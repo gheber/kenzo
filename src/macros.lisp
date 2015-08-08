@@ -134,7 +134,7 @@ CMBN-NON-ZERO-P
 Args: (cmbn)
 Tests if the combination CMBN is a non-null combination of any degree.
 ------------------------------------------------------------------------------"
-  `(cmbn-list ,cmbn))
+  `(not (null (cmbn-list ,cmbn))))
 
 
 (DEFMACRO CMBN-ZERO-P (cmbn)

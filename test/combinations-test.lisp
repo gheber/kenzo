@@ -65,7 +65,7 @@
     (is (equal (cat:cmbn-list comb) nil)))
 
   (is (null (cat:cmbn-non-zero-p (cat:cmbn 0))))
-  (is (equal (cat:cmbn-non-zero-p (cat:cmbn 0 1 'a)) '((1 . a))))
+  (is (cat:cmbn-non-zero-p (cat:cmbn 0 1 'a)))
   (is (cat:cmbn-zero-p (cat:cmbn 0)))
   (is (null (cat:cmbn-zero-p (cat:cmbn 0 1 'a)))))
 
