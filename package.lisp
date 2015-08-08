@@ -405,6 +405,7 @@
 	   CPRD
 	   CRPR
 	   D
+	   DEF
 	   F
 	   DFFR
 	   DGNL

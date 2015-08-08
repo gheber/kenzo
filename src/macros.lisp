@@ -6,6 +6,25 @@
 
 (PROVIDE "macros")
 
+
+;;;
+;;; UTILITIES
+
+
+(defmacro def (name value)
+  (declare (type symbol name))
+  "-----------------------------------------------------------------[macro-doc]
+DEF
+Args: (name value)
+Defines a dynamic variable NAME in the CL-USER package, assigns it VALUE,
+and returns VALUE.
+------------------------------------------------------------------------------"
+  `(progn
+     (intern (symbol-name ',name))
+     (defparameter ,name nil)
+     (setq ,name ,value)))
+
+
 ;;;
 ;;;  VARIOUS
 ;;;
