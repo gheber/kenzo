@@ -160,30 +160,35 @@ the symbol :LOCALLY-EFFECTIVE.
    ;; ORiGiN
    (orgn :type list :initarg :orgn :reader orgn))
   (:documentation
-   "-----------------------------------------------------------------[class-doc]
+   "----------------------------------------------------------------[class-doc]
 CHAIN-COMPLEX
 Slots: (cmps basis bsgn dffr grmd efhm idnm orgn)
 Intances of this class represent chain complexes. The class has 8 slots:
 
-1. CMPR, a comparison function or method for generators.
+1. CMPR, a comparison function or method for generators. Its reader function
+   is CMPR1.
 
 2. BASIS, a Lisp function, which returns the ordered basis of the free
-   Z-modules (C_p), or the keyword :LOCALLY-EFFECTIVE.
+   Z-modules (C_p), or the keyword :LOCALLY-EFFECTIVE. Its reader funtion
+   is BASIS1.
 
-3. BSGN, a Lisp object representing the base generator in dimension 0.
+3. BSGN, a Lisp object representing the base generator in dimension 0. Its
+   reader function is BSGN.
 
-4. DFFR, the differential morphism, an instance of the class MORPHISM.
+4. DFFR, the differential morphism, an instance of the class MORPHISM. Its
+   reader function is DFFR1.
 
-5. GRMD, ???
+5. GRMD, ???   Its reader function is GRMD.
 
-6. EFHM, ???
+6. EFHM, ???   Its reader function is EFHM.
 
-7. IDNM, an integer, a system generated identifier for this object.
+7. IDNM, an integer, a system generated identifier for this object. Its reader
+   function is IDNM.
 
 8. ORGN, a list containg a comment indicating the origin of the object. The
    should be unique (per session), since it is used in the implementation for
-   caching purposes.
-------------------------------------------------------------------------------"))
+   caching purposes. Its reader function is ORGN.
+-----------------------------------------------------------------------------"))
 
 
 ;; STRT = STRaTegy
@@ -220,39 +225,42 @@ A derived type, which represents the mapping strategy of morphisms.
    ;; ORiGiN
    (orgn :type list :initarg :orgn :reader orgn))
   (:documentation
-   "-----------------------------------------------------------------[class-doc]
+   "----------------------------------------------------------------[class-doc]
 MORPHISM
 Slots: (sorc trgt degr intr strt ???-clnm ?-clnm rslts idnm orgn)
 Intances of this class represent morphisms between chain complexes, and the
 differential homomorphism of a chain complex is treated as a morphism of
 degree -1. The class has 10 slots:
 
-1. SORC, an object of class CHAIN-COMPLEX, the source chain complex of this
-   morphism.
+1. SORC, an object of type CHAIN-COMPLEX, the source chain complex of this
+   morphism. Its reader function is SORC.
 
-2. TRGT, an object of class CHAIN-COMPLEX, the target chain complex of this
-   morphism.
+2. TRGT, an object of type CHAIN-COMPLEX, the target chain complex of this
+   morphism. Its reader function is TRGT.
 
-3. DEGR, an integer, the degree of the morphism.
+3. DEGR, an integer, the degree of the morphism. Its reader function is DEGR.
 
 4. INTR, a Lisp function implementing the morphism, taking account of the
-   strategy STRT.
+   strategy STRT. Its reader function is INTR.
 
-5. STRT, a symbol, one of :GNRT or :CMBN.
+5. STRT, a symbol, one of :GNRT or :CMBN. Its reader function is STRT.
 
-6. ???-CLNM, an integer updated by the system for internal statistics.
+6. ???-CLNM, an integer updated by the system for internal statistics. Its
+   reader function is ???-CLNM.
 
-7. ?-CLNM, another integer maintained by the system for internal pusposes.
+7. ?-CLNM, another integer maintained by the system for internal pusposes. Its
+   reader function is ?-CLNM.
 
 8. RSLTS, an array of length +MAXIMAL-DIMENSION+ reserved by the system for
-   caching intermediate results.
+   caching intermediate results. Its reader function is RSLTS.
 
-9. IDNM, an integer, a system-generated identifier for this object.
+9. IDNM, an integer, a system-generated identifier for this object. Its reader
+   function is IDNM.
 
 10. ORGN, a list containg a comment indicating the origin of the object. The
     should be unique (per session), since it is used in the implementation for
-    caching purposes.
-------------------------------------------------------------------------------"))
+    caching purposes. Its reader function is ORGN.
+-----------------------------------------------------------------------------"))
 
 
 (DEFSTRUCT (RESULT (:print-function result-print))
@@ -276,7 +284,47 @@ degree -1. The class has 10 slots:
    ;; IDentification NuMber
    (idnm :type fixnum :initform (incf *idnm-counter*) :reader idnm)
    ;; ORiGiN
-   (orgn :type list :initarg :orgn :reader orgn)))
+   (orgn :type list :initarg :orgn :reader orgn))
+  (:documentation
+   "----------------------------------------------------------------[class-doc]
+REDUCTION
+Slots: (tcc bcc f g h idnm orgn)
+Instances of this class represent reductions of chain complexes.
+
+     ^    h     s ^                 f ° g = 1
+     C  ----->    C                          C
+      ^                     h ° d + d ° h = 1  - g ° f
+    | |                                      ^
+  f | | g                                    C
+    | |                             f ° h = 0
+    v                               h ° g = 0
+     C                              h ° h = 0
+
+The class has 7 slots:
+                                                               ^
+1. TCC, an object of type CHAIN-COMPLEX, the top chain complex C. Its reader
+   function is TCC1.
+
+2. BCC, an object of type CHAIN-COMPLEX, the bottom chain complex C. Its reader
+   function is BCC1.
+
+3. F, an object of type MORPHISM representing the morphism f. Its reader
+   function is F1.
+
+4. G, an object of type MORPHISM representing the morphism g. Its reader
+   function is G1.
+
+5. H, an object of type MORPHISM representing the morphism h. Its reader
+   function is H1.
+
+9. IDNM, an integer, a system-generated identifier for this object. Its reader
+   function is IDNM.
+
+10. ORGN, a list containg a comment indicating the origin of the object. The
+    should be unique (per session), since it is used in the implementation for
+    caching purposes. Its reader function is ORGN.
+-----------------------------------------------------------------------------"))
+
 
 (DEFCLASS HOMOTOPY-EQUIVALENCE ()
   ;; Left Bottom Chain Complex
