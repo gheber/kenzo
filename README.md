@@ -20,7 +20,7 @@ This version aims to update its infrastructure by providing the following:
 1. A simple regression test suite based on [FiveAM](http://common-lisp.net/project/fiveam/)
 2. Support for the great freely available Lisp compilers out there, including [CCL](http://ccl.clozure.com/), [ECL] (https://common-lisp.net/project/ecl/), [SBCL](http://www.sbcl.org/), etc.
 3. Installation via the [Quicklisp](http://www.quicklisp.org/beta/) library manager
-4. Updated documentation and examples
+4. Updated documentation and examples runnable from [cl-jupyter](https://github.com/fredokun/cl-jupyter)
 
 *!!! WARNING !!!*
 
