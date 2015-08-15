@@ -100,7 +100,6 @@ for all Kenzo objects of the same type in relation with this object. Return
 the list of object numbers.
 ------------------------------------------------------------------------------"
   (let ((k-list (k idnm)))
-    (declare (list k-list))
     (unless k-list
       (return-from kd2 nil))
     (setf k-list (list k-list))
