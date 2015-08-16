@@ -63,7 +63,16 @@ Build the unit chain complex.
 	  :strt :cmbn
 	  :orgn `(opps ,mrph)))))
 
-(DEFGENERIC CMPS (chain-complex chcm-or-mrph &optional strt))
+
+(DEFGENERIC CMPS (chcm-or-mrph1 chcm-or-mrph2 &optional strt)
+  (:documentation
+  "---------------------------------------------------------------[generic-doc]
+CMPS
+Args: (arg1 arg2 &optional opt)
+A generic function whose specializations implement the composition
+ARG2 ° ARG1 modified by an optional argument OPT. A typical example is the
+composition of two morphisms, where the optional argument is a strategy.
+-----------------------------------------------------------------------------"))
 
 (DEFMETHOD CMPS ((chcm1 chain-complex) (chcm2 chain-complex) &optional strt)
   (declare (type (or strt null) strt))
