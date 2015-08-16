@@ -5,7 +5,7 @@
 [![Quicklisp badge](http://quickdocs.org/badge/kenzo.svg)](http://quickdocs.org/kenzo/)
 
 According to the title of its
-[handbook](http://www-fourier.ujf-grenoble.fr/~sergerar/Kenzo/Kenzo-doc.pdf),
+[handbook](https://github.com/gheber/kenzo/blob/master/doc/Kenzo-Doc.pdf),
 Kenzo is a "Symbolic Software for Effective Homology Computation" and
 its main audience might be students and researchers in algebraic topology.
 Have a look at the [overview](https://github.com/gheber/kenzo/blob/master/examples/Overview.ipynb) to get a
@@ -22,9 +22,7 @@ This version aims to update its infrastructure by providing the following:
 3. Installation via the [Quicklisp](http://www.quicklisp.org/beta/) library manager
 4. Updated documentation and examples runnable from [cl-jupyter](https://github.com/fredokun/cl-jupyter)
 
-*!!! WARNING !!!*
-
-This is work in progress and there are several outstanding [issues](https://github.com/gheber/kenzo/issues).
+This work is well underway, but there are several outstanding [issues](https://github.com/gheber/kenzo/issues).
 
 ## Getting up and running
 
