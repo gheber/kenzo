@@ -274,6 +274,7 @@
 	   CHECK-RDCT
 	   CMPS
 	   PRE-CHECK-RDCT
+	   RDCT
 	   TRIVIAL-HMEQ
 	   TRIVIAL-RDCT
 
@@ -409,11 +410,13 @@
 	   F
 	   DFFR
 	   DGNL
+	   G
 	   GMSM1
 	   GNRT
 	   GNRT-NAME
 	   GRIN
 	   GRML
+	   H
 	   I-ADD
 	   I-CMPS
 	   I-SBTR

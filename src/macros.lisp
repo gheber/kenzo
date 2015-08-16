@@ -254,6 +254,17 @@ See also the macro ?.
 ;;;
 
 (DEFMACRO BCC (&rest rest)
+  "-----------------------------------------------------------------[macro-doc]
+BCC
+Args: (&rest rest)
+Args: (rdct)
+Args: (rdct cmbn)
+Args: (rdct degr gnrt)
+With only one argument, a reduction RDCT, this macro returns the bottom
+chain complex of the reduction. Otherwise, it applies the differential of
+the bottom chain complex of RDCT to a combination provided in additional
+arguments such as CMBN or DEGR GNRT.
+------------------------------------------------------------------------------"
   (case (length rest)
     (1 `(bcc1 ,@rest))
     (otherwise
@@ -261,6 +272,17 @@ See also the macro ?.
 
 
 (DEFMACRO TCC (&rest rest)
+  "-----------------------------------------------------------------[macro-doc]
+TCC
+Args: (&rest rest)
+Args: (rdct)
+Args: (rdct cmbn)
+Args: (rdct degr gnrt)
+With only one argument, a reduction RDCT, this macro returns the top
+chain complex of the reduction. Otherwise, it applies the differential of
+the top chain complex of RDCT to a combination provided in additional
+arguments such as CMBN or DEGR GNRT.
+------------------------------------------------------------------------------"
   (case (length rest)
     (1 `(tcc1 ,@rest))
     (otherwise
@@ -268,6 +290,16 @@ See also the macro ?.
 
 
 (DEFMACRO F (&rest rest)
+  "-----------------------------------------------------------------[macro-doc]
+F
+Args: (&rest rest)
+Args: (rdct)
+Args: (rdct cmbn)
+Args: (rdct degr gnrt)
+With only one argument, a reduction RDCT, this macro returns the morphism f
+of the reduction. Otherwise, it applies f to a combination provided in
+additional arguments such as CMBN or DEGR GNRT.
+------------------------------------------------------------------------------"
   (case (length rest)
     (1 `(f1 ,@rest))
     (otherwise
@@ -275,6 +307,16 @@ See also the macro ?.
 
 
 (DEFMACRO G (&rest rest)
+  "-----------------------------------------------------------------[macro-doc]
+G
+Args: (&rest rest)
+Args: (rdct)
+Args: (rdct cmbn)
+Args: (rdct degr gnrt)
+With only one argument, a reduction RDCT, this macro returns the morphism g
+of the reduction. Otherwise, it applies g to a combination provided in
+additional arguments such as CMBN or DEGR GNRT.
+------------------------------------------------------------------------------"
   (case (length rest)
     (1 `(g1 ,@rest))
     (otherwise
@@ -282,6 +324,16 @@ See also the macro ?.
 
 
 (DEFMACRO H (&rest rest)
+  "-----------------------------------------------------------------[macro-doc]
+H
+Args: (&rest rest)
+Args: (rdct)
+Args: (rdct cmbn)
+Args: (rdct degr gnrt)
+With only one argument, a reduction RDCT, this macro returns the morphism h
+of the reduction. Otherwise, it applies h to a combination provided in
+additional arguments such as CMBN or DEGR GNRT.
+------------------------------------------------------------------------------"
   (case (length rest)
     (1 `(h1 ,@rest))
     (otherwise

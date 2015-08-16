@@ -22,18 +22,43 @@
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :clos) t))
 
+
 (DEFUN RDCT (n)
   (declare (fixnum n))
-  "Retrieve the N-th user created reduction from the list *RDCT-LIST*.
-Return NIL if it doesn't exist."
+  "--------------------------------------------------------------[function-doc]
+RDCT
+Args: (n)
+Returns the N-th user-created reduction from the list *RDCT-LIST*. Returns NIL
+if it doesn't exist.
+------------------------------------------------------------------------------"
   (the (or null reduction)
        (find n *rdct-list* :key #'idnm)))
+
 
 (DEFUN BUILD-RDCT (&key f g h orgn)
   (declare
    (type morphism f g h)
    (list orgn))
-  "Create a reduction. Use this function instead of the generic MAKE-INSTANCE."
+  "--------------------------------------------------------------[function-doc]
+BUILD-RDCT
+Args: (&key f g h orgn)
+Returns an instance of the class REDUCTION. The keyword arguments are as
+follows:
+
+:F F, an object of type morphism representing the morphism f of a reduction
+
+:G G, an object of type morphism representing the morphism g of a reduction
+
+:H H, an object of type morphism representing the morphism h of a reduction
+
+:ORGN ORGN, a list containing a relevant and carefully chosen comment about
+            the origin of the chain complex. This comment should be unique
+            for a Kenzo session (between calls of CAT-INIT), as it is used
+            for caching purposes.
+
+Use this function instead of creating instances via the standard constructor
+MAKE-INSTANCE.
+------------------------------------------------------------------------------"
   (the reduction
        (progn
          (unless orgn
@@ -70,21 +95,42 @@ Return NIL if it doesn't exist."
 		 (push rdct *rdct-list*)
 		 rdct)))))))
 
+
 (DEFUN TRIVIAL-RDCT (chcm)
   (declare (type chain-complex chcm))
+  "--------------------------------------------------------------[function-doc]
+TRIVIAL-RDCT
+Args: (chcm)
+Builds the trivial reduction according to the following diagram, which
+involves the chain complex CHCM only:
+
+          Zero    s
+     C  ------->   C
+      ^
+    | |
+ Id | | Id
+    | |
+    v
+     C
+
+Zero is the zero morphism of degree 1 of C and Id is its identity morphism.
+
+See also: ZERO-MRPH, IDNT-MRPH.
+------------------------------------------------------------------------------"
   (build-rdct
    :f (idnt-mrph chcm)
    :g (idnt-mrph chcm)
-   :h (zero-mrph chcm chcm +1) 
+   :h (zero-mrph chcm chcm +1)
    :orgn `(trivial-rdct ,chcm)))
+
 
 ;;;
 ;;;  HOMOTOPY-EQUIVALENCES
 ;;;
 
 ;;(defgeneric build-hmeq (keyword lrdct &key &allow-other-keys)
-(DEFGENERIC BUILD-HMEQ (keyword lrdct &key)
-  (:documentation "needed by ECL"))
+(DEFGENERIC BUILD-HMEQ (keyword lrdct &key))
+
 
 (DEFMETHOD BUILD-HMEQ ((keyword1 (eql :lrdct)) lrdct &key rrdct orgn)
   (declare
@@ -167,6 +213,40 @@ Return NIL if it doesn't exist."
 ;; Functions.
 
 (DEFUN PRE-CHECK-RDCT (rdct)
+  "--------------------------------------------------------------[function-doc]
+PRE-CHECK-RDCT
+Args: (rdct)
+Assigns the following Lisp global variables, using morphisms from RDCT and the
+differentials and identity morphisms of the underlying chain complexes,
+according to these formulas:
+
+*TDD*         = d  ° d
+                 ^    ^
+                 C    C
+
+*BDD*         = d  ° d
+                 C    C
+
+*ID-FG*       = Id  - f ° g
+                  C
+
+*ID-GF-DH-HD* = Id  - g ° f - (d ° h + h ° d )
+                  ^             ^           ^
+                  C             C           C
+
+*HH*          = h ° h
+*FH*          = f ° h
+*HG*          = h ° g
+
+*DF-FD*       = d  ° f - f ° d
+                 C            ^
+                              C
+
+*DG-GD*       = d  ° g - g ° d
+                 ^            C
+                 C
+
+------------------------------------------------------------------------------"
   (declare (type reduction rdct))
   (with-slots (bcc tcc f g h) rdct
     (declare
@@ -192,6 +272,19 @@ Return NIL if it doesn't exist."
 
 
 (DEFUN CHECK-RDCT ()
+  "--------------------------------------------------------------[function-doc]
+CHECK-RDCT
+Args: ()
+Maps combinations of the top and bottom chain complexes of a reduction using
+the morphisms created by PRE-CHECK-RDCT. Having no parameters, the
+combinations must be provided via the Lisp global variables *TC* and *BC*,
+for the top and bottom chain complex, respectively. If the morphisms are
+coherent, the result of each mapping is a null combination.
+
+Note: This function is intended for interactive use. It pauses after each
+evaluation for the user to inspect the result. Resume execution, by pressing
+the <Enter> key.
+------------------------------------------------------------------------------"
   (dolist (cmbn '(*tc* *bc*))
     (declare (type symbol cmbn))
     (format t "~%~A => ~A" cmbn (eval cmbn)))
@@ -205,6 +298,7 @@ Return NIL if it doesn't exist."
 		       *bc* *tc*)))
     (read-line))
   (done))
+
 
 (DEFMETHOD CMPS ((brdct reduction) (trdct reduction) &optional dummy)
   (declare (ignore dummy))
