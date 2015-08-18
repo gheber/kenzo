@@ -300,6 +300,30 @@ the <Enter> key.
   (done))
 
 
+(DEFUN CHECK-RDCT-NO-WAIT ()
+  "--------------------------------------------------------------[function-doc]
+CHECK-RDCT-NO-WAIT
+Args: ()
+Maps combinations of the top and bottom chain complexes of a reduction using
+the morphisms created by PRE-CHECK-RDCT. Having no parameters, the
+combinations must be provided via the Lisp global variables *TC* and *BC*,
+for the top and bottom chain complex, respectively. If the morphisms are
+coherent, the result of each mapping is a null combination.
+------------------------------------------------------------------------------"
+  (dolist (cmbn '(*tc* *bc*))
+    (declare (type symbol cmbn))
+    (format t "~%~A => ~A" cmbn (eval cmbn)))
+  (dolist (phi '(*tdd* *bdd* *df-fd* *dg-gd* *id-fg* *id-gf-dh-hd*
+		 *hh* *fh* *hg*))
+    (declare (type symbol phi))
+    (format t "~%Checking ~A = 0" phi)
+    (format t "~%Result: ")
+    (princ (cmbn-? (eval phi)
+		   (if (member phi '(*bdd* *dg-gd* *id-fg* *dg-gd* *hg*))
+		       *bc* *tc*))))
+  (done))
+
+
 (DEFMETHOD CMPS ((brdct reduction) (trdct reduction) &optional dummy)
   (declare (ignore dummy))
   (when (eq (first (orgn brdct)) 'trivial-rdct)
