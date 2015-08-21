@@ -299,6 +299,7 @@
 	   CHCM-HOMOLOGY
 	   CHCM-HOMOLOGY-GEN
 	   CHCM-MAT
+	   HOMOLOGIE
 
 	   ;; k-pi-n.lisp
 
