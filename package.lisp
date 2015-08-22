@@ -458,6 +458,10 @@
 	   FIBRATION-DTAU-D-INTR
 	   RIGHT-SERRE-EFHM
 
+	   ;; simplicial-groups.lisp
+
+	   SMGR
+
 	   ;; simplicial-mrphs.lisp
 
 	   BUILD-SMMR
