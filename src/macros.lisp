@@ -76,6 +76,11 @@ and returns VALUE.
 
 
 (DEFMACRO CFFC (term)
+  "-----------------------------------------------------------------[macro-doc]
+CFFC
+Args: (term)
+Returns the the coefficient (integer) of a term.
+------------------------------------------------------------------------------"
   `(car ,term))
 
 
@@ -84,6 +89,11 @@ and returns VALUE.
 
 
 (DEFMACRO GNRT (term)
+  "-----------------------------------------------------------------[macro-doc]
+GNRT
+Args: (term)
+Returns the the generator of a term.
+------------------------------------------------------------------------------"
   `(cdr ,term))
 
 
