@@ -137,8 +137,8 @@ CMBN
 Args: (degr &rest rest)
 Returns a combination of degree DEGR from a sum of terms provided as a sequence
 CF1 GNRT1 CF2 GNRT2 ... CFn GNRTn of coefficient / generator pairs in REST.
-REST can be of arbitrary even length and can be empty, in which case the
-combination is an instance of the null combination of degree DEGR.
+REST can be of arbitrary length including NIL, in which case the combination
+is an instance of the null combination of degree DEGR.
 ------------------------------------------------------------------------------"
   (the cmbn
        (make-cmbn :degr degr
