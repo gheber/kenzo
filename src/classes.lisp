@@ -326,21 +326,22 @@ The class has 7 slots:
 2. BCC, an object of type CHAIN-COMPLEX, the bottom chain complex C. Its reader
    function is BCC1.
 
-3. F, an object of type MORPHISM representing the morphism f. Its reader
+3. F, an object of type MORPHISM representing the chain morphism f. Its reader
    function is F1.
 
-4. G, an object of type MORPHISM representing the morphism g. Its reader
+4. G, an object of type MORPHISM representing the chain morphism g. Its reader
    function is G1.
 
-5. H, an object of type MORPHISM representing the morphism h. Its reader
-   function is H1.
+5. H, an object of type MORPHISM representing the morphism of graded modules h.
+   Its reader function is H1.
 
 9. IDNM, an integer, a system-generated identifier for this object. Its reader
    function is IDNM.
 
-10. ORGN, a list containg a comment indicating the origin of the object. The
-    should be unique (per session), since it is used in the implementation for
-    caching purposes. Its reader function is ORGN.
+10. ORGN, a list containg a comment indicating the origin of the object.
+    This comment should be unique for a Kenzo session (between calls of
+    CAT-INIT), as it is used for caching purposes. Its reader function
+    is ORGN.
 -----------------------------------------------------------------------------"))
 
 

@@ -45,11 +45,14 @@ Args: (&key f g h orgn)
 Returns an instance of the class REDUCTION. The keyword arguments are as
 follows:
 
-:F F, an object of type morphism representing the morphism f of a reduction
+:F F, an object of type MORPHISM representing the chain morphism f of a
+            reduction
 
-:G G, an object of type morphism representing the morphism g of a reduction
+:G G, an object of type MORPHISM representing the chain morphism g of a
+            reduction
 
-:H H, an object of type morphism representing the morphism h of a reduction
+:H H, an object of type MORPHISM representing the morphism of graded modules h
+            of a reduction
 
 :ORGN ORGN, a list containing a relevant and carefully chosen comment about
             the origin of the chain complex. This comment should be unique
