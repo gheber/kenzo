@@ -1,4 +1,4 @@
-:;;;; package.lisp
+;;;; package.lisp
 
 (defpackage #:cat
   (:use #:cl)
