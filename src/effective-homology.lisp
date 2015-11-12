@@ -16,9 +16,9 @@
 (DEFMETHOD PRINT-OBJECT ((rdct reduction) stream)
   (the reduction
        (progn
-	 (format stream "[K~D Reduction K~D => K~D]"
-		 (idnm rdct) (idnm (tcc rdct)) (idnm (bcc rdct)))
-	 rdct)))
+         (format stream "[K~D Reduction K~D => K~D]"
+                 (idnm rdct) (idnm (tcc rdct)) (idnm (bcc rdct)))
+         rdct)))
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :clos) t))
 
@@ -54,10 +54,12 @@ follows:
 :H H, an object of type MORPHISM representing the morphism of graded modules h
             of a reduction
 
-:ORGN ORGN, a list containing a relevant and carefully chosen comment about
-            the origin of the chain complex. This comment should be unique
-            for a Kenzo session (between calls of CAT-INIT), as it is used
-            for caching purposes.
+:ORGN ORGN, a list which is the copy of a Lisp statement, in principle the
+            statement which was at the origin of the creation of this Kenzo
+            object. A caching process, using this slot, prevents the creation
+            of multiple copies of the same mathematical object, which is
+            important for efficiency. It is used also for debugging and
+            analyzing the program.
 
 Use this function instead of creating instances via the standard constructor
 MAKE-INSTANCE.
@@ -65,38 +67,38 @@ MAKE-INSTANCE.
   (the reduction
        (progn
          (unless orgn
-	   (setf orgn `(build-rdct ,f ,g ,h)))
+           (setf orgn `(build-rdct ,f ,g ,h)))
          (let ((already (find orgn *rdct-list* :test #'equal :key #'orgn)))
-	   (declare (type (or reduction null) already))
-	   (when already
-	     (return-from build-rdct already)))
+           (declare (type (or reduction null) already))
+           (when already
+             (return-from build-rdct already)))
          (with-slots ((fsorc sorc) (ftrgt trgt) (fdegr degr)) f
-	   (declare
-	    (type chain-complex fsorc ftrgt)
-	    (fixnum fdegr))
-	   (with-slots ((gsorc sorc) (gtrgt trgt) (gdegr degr)) g
-	     (declare
-	      (type chain-complex gsorc gtrgt)
-	      (fixnum gdegr))
-	     (with-slots ((hsorc sorc) (htrgt trgt) (hdegr degr)) h
-	       (declare
-		(type chain-complex hsorc htrgt)
-		(fixnum hdegr))
-	       (unless (and (eq gsorc ftrgt)
-			    (eq fsorc gtrgt)
-			    (eq hsorc fsorc)
-			    (eq htrgt fsorc)
-			    (zerop fdegr)
-			    (zerop gdegr)
-			    (= +1 hdegr))
-		 (error "In BUILD-RDCT, the data are non coherent."))
-	       (let ((rdct (make-instance 'reduction
-					  :tcc fsorc :bcc ftrgt
-					  :f f :g g :h h
-					  :orgn orgn)))
-		 (declare (type reduction rdct))
-		 (push rdct *rdct-list*)
-		 rdct)))))))
+           (declare
+            (type chain-complex fsorc ftrgt)
+            (fixnum fdegr))
+           (with-slots ((gsorc sorc) (gtrgt trgt) (gdegr degr)) g
+             (declare
+              (type chain-complex gsorc gtrgt)
+              (fixnum gdegr))
+             (with-slots ((hsorc sorc) (htrgt trgt) (hdegr degr)) h
+               (declare
+                (type chain-complex hsorc htrgt)
+                (fixnum hdegr))
+               (unless (and (eq gsorc ftrgt)
+                            (eq fsorc gtrgt)
+                            (eq hsorc fsorc)
+                            (eq htrgt fsorc)
+                            (zerop fdegr)
+                            (zerop gdegr)
+                            (= +1 hdegr))
+                 (error "In BUILD-RDCT, the data are non coherent."))
+               (let ((rdct (make-instance 'reduction
+                                          :tcc fsorc :bcc ftrgt
+                                          :f f :g g :h h
+                                          :orgn orgn)))
+                 (declare (type reduction rdct))
+                 (push rdct *rdct-list*)
+                 rdct)))))))
 
 
 (DEFUN TRIVIAL-RDCT (chcm)
@@ -142,27 +144,27 @@ See also: ZERO-MRPH, IDNT-MRPH.
   (the homotopy-equivalence
        (progn
          (with-slots ((lf f) (lg g) (lh h) (ltcc tcc) (lbcc bcc)) lrdct
-	   (declare
-	    (type morphism lf lg lh)
-	    (type chain-complex ltcc lbcc))
-	   (with-slots ((rf f) (rg g) (rh h) (rtcc tcc) (rbcc bcc)) rrdct
-	     (declare
-	      (type morphism rf rg rh)
-	      (type chain-complex rtcc rbcc))
-	     (unless (eq ltcc rtcc)
+           (declare
+            (type morphism lf lg lh)
+            (type chain-complex ltcc lbcc))
+           (with-slots ((rf f) (rg g) (rh h) (rtcc tcc) (rbcc bcc)) rrdct
+             (declare
+              (type morphism rf rg rh)
+              (type chain-complex rtcc rbcc))
+             (unless (eq ltcc rtcc)
                (error "In BUILD-HMEQ (version from rdct), the tcc's are not the same."))
-	     (unless orgn
+             (unless orgn
                (setf orgn `(build-hmeq ,lrdct ,rrdct)))
-	     (let ((already (find orgn *hmeq-list* :test #'equal :key #'orgn)))
+             (let ((already (find orgn *hmeq-list* :test #'equal :key #'orgn)))
                (declare (type (or homotopy-equivalence null) already))
                (when already
-		 (return-from build-hmeq already)))
-	     (let ((hmeq (make-instance 'homotopy-equivalence
-					:lbcc lbcc :tcc ltcc :rbcc rbcc
-					:lf lf :lg lg :lh lh
-					:rf rf :rg rg :rh rh
-					:lrdct lrdct :rrdct rrdct
-					:orgn orgn)))
+                 (return-from build-hmeq already)))
+             (let ((hmeq (make-instance 'homotopy-equivalence
+                                        :lbcc lbcc :tcc ltcc :rbcc rbcc
+                                        :lf lf :lg lg :lh lh
+                                        :rf rf :rg rg :rh rh
+                                        :lrdct lrdct :rrdct rrdct
+                                        :orgn orgn)))
                (declare (type homotopy-equivalence hmeq))
                (push hmeq *hmeq-list*)
                hmeq))))))
@@ -173,10 +175,10 @@ See also: ZERO-MRPH, IDNT-MRPH.
 (DEFMETHOD PRINT-OBJECT ((hmeq homotopy-equivalence) stream)
   (the homotopy-equivalence
        (progn
-	 (format stream "[K~D Homotopy-Equivalence K~D <= K~D => K~D]"
-		 (idnm hmeq)
-		 (idnm (lbcc hmeq)) (idnm (tcc hmeq)) (idnm (rbcc hmeq)))
-	 hmeq)))
+         (format stream "[K~D Homotopy-Equivalence K~D <= K~D => K~D]"
+                 (idnm hmeq)
+                 (idnm (lbcc hmeq)) (idnm (tcc hmeq)) (idnm (rbcc hmeq)))
+         hmeq)))
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :clos) t))
 
@@ -194,16 +196,16 @@ See also: ZERO-MRPH, IDNT-MRPH.
   (the homotopy-equivalence
        (progn
          (unless orgn
-	   (setf orgn `(build-hmeq ,lf ,lg ,lh ,rf ,rg ,rh)))
+           (setf orgn `(build-hmeq ,lf ,lg ,lh ,rf ,rg ,rh)))
          (let ((already (find orgn *hmeq-list* :test #'equal :key #'orgn)))
-	   (declare (type (or null homotopy-equivalence) already))
-	   (when already
-	     (return-from build-hmeq already)))
+           (declare (type (or null homotopy-equivalence) already))
+           (when already
+             (return-from build-hmeq already)))
          (build-hmeq
           :lrdct (build-rdct :f lf :g lg :h lh
-			     :orgn `(build-hmeq ,lf ,lg ,lh ,rf ,rg ,rh lrdct))
+                             :orgn `(build-hmeq ,lf ,lg ,lh ,rf ,rg ,rh lrdct))
           :rrdct (build-rdct :f rf :g rg :h rh
-			     :orgn `(build-hmeq ,lf ,lg ,lh ,rf ,rg ,rh rrdct))
+                             :orgn `(build-hmeq ,lf ,lg ,lh ,rf ,rg ,rh rrdct))
           :orgn orgn))))
 
 (DEFUN TRIVIAL-HMEQ (chcm)
@@ -256,21 +258,21 @@ according to these formulas:
      (type chain-complex bcc tcc)
      (type morphism f g h))
     (setf *tdd* (cmps tcc tcc)
-	  *bdd* (cmps bcc bcc)
-	  *df-fd* (sbtr
-		   (cmps bcc f)
-		   (cmps f tcc))
-	  *dg-gd* (sbtr
-		   (cmps tcc g)
-		   (cmps g bcc))
-	  *id-fg* (sbtr (idnt-mrph bcc) (cmps f g))
-	  *id-gf-dh-hd* (i-sbtr (idnt-mrph tcc)
-				(cmps g f)
-				(cmps tcc h)
-				(cmps h tcc))
-	  *hh* (cmps h h)
-	  *fh* (cmps f h)
-	  *hg* (cmps h g)))
+          *bdd* (cmps bcc bcc)
+          *df-fd* (sbtr
+                   (cmps bcc f)
+                   (cmps f tcc))
+          *dg-gd* (sbtr
+                   (cmps tcc g)
+                   (cmps g bcc))
+          *id-fg* (sbtr (idnt-mrph bcc) (cmps f g))
+          *id-gf-dh-hd* (i-sbtr (idnt-mrph tcc)
+                                (cmps g f)
+                                (cmps tcc h)
+                                (cmps h tcc))
+          *hh* (cmps h h)
+          *fh* (cmps f h)
+          *hg* (cmps h g)))
   (done))
 
 
@@ -292,13 +294,13 @@ the <Enter> key.
     (declare (type symbol cmbn))
     (format t "~%~A => ~A" cmbn (eval cmbn)))
   (dolist (phi '(*tdd* *bdd* *df-fd* *dg-gd* *id-fg* *id-gf-dh-hd*
-		 *hh* *fh* *hg*))
+                 *hh* *fh* *hg*))
     (declare (type symbol phi))
     (format t "~%Checking ~A = 0" phi)
     (format t "~%Result: ")
     (princ (cmbn-? (eval phi)
-		   (if (member phi '(*bdd* *dg-gd* *id-fg* *dg-gd* *hg*))
-		       *bc* *tc*)))
+                   (if (member phi '(*bdd* *dg-gd* *id-fg* *dg-gd* *hg*))
+                       *bc* *tc*)))
     (read-line))
   (done))
 
@@ -317,13 +319,13 @@ coherent, the result of each mapping is a null combination.
     (declare (type symbol cmbn))
     (format t "~%~A => ~A" cmbn (eval cmbn)))
   (dolist (phi '(*tdd* *bdd* *df-fd* *dg-gd* *id-fg* *id-gf-dh-hd*
-		 *hh* *fh* *hg*))
+                 *hh* *fh* *hg*))
     (declare (type symbol phi))
     (format t "~%Checking ~A = 0" phi)
     (format t "~%Result: ")
     (princ (cmbn-? (eval phi)
-		   (if (member phi '(*bdd* *dg-gd* *id-fg* *dg-gd* *hg*))
-		       *bc* *tc*))))
+                   (if (member phi '(*bdd* *dg-gd* *id-fg* *dg-gd* *hg*))
+                       *bc* *tc*))))
   (done))
 
 
@@ -366,47 +368,47 @@ coherent, the result of each mapping is a null combination.
    (type morphism top-perturbation))
   (the (values reduction morphism)
        (with-slots ((old-tcc tcc) (old-bcc bcc)
-		    (old-f f) (old-g g) (old-h h)) reduction
+                    (old-f f) (old-g g) (old-h h)) reduction
          (declare
-	  (type chain-complex old-tcc old-bcc)
-	  (type morphism old-f old-g old-h))
+          (type chain-complex old-tcc old-bcc)
+          (type morphism old-f old-g old-h))
          (when (eq (first (orgn top-perturbation)) 'zero-mrph)
-	   (return-from basic-perturbation-lemma
-	     (values reduction (zero-mrph old-bcc))))
+           (return-from basic-perturbation-lemma
+             (values reduction (zero-mrph old-bcc))))
          (when (eq (first (orgn (h reduction))) 'zero-mrph)
-	   (return-from basic-perturbation-lemma
-	     (values
-	      (trivial-rdct (add old-tcc top-perturbation))
-	      (i-cmps old-f top-perturbation old-g))))
+           (return-from basic-perturbation-lemma
+             (values
+              (trivial-rdct (add old-tcc top-perturbation))
+              (i-cmps old-f top-perturbation old-g))))
          (let* ((sigma (bpl-*-sigma old-h top-perturbation))
                 (new-f (cmps old-f
-			     (sbtr (idnt-mrph old-tcc)
-				   (i-cmps
-				    top-perturbation
-				    sigma
-				    old-h))))
+                             (sbtr (idnt-mrph old-tcc)
+                                   (i-cmps
+                                    top-perturbation
+                                    sigma
+                                    old-h))))
                 (new-g (cmps sigma old-g))
                 (new-h (cmps sigma old-h))
                 (bottom-perturbation (i-cmps
-				      old-f
-				      top-perturbation
-				      new-g))
+                                      old-f
+                                      top-perturbation
+                                      new-g))
                 (new-tcc (add old-tcc top-perturbation))
                 (new-bcc (add old-bcc bottom-perturbation)))
-	   (declare
-	    (type chain-complex new-tcc new-bcc)
-	    (type morphism sigma new-f new-g new-h bottom-perturbation))
-	   (setf new-f (dstr-change-sorc-trgt new-f :new-sorc new-tcc
-					      :new-trgt new-bcc)
-		 new-g (dstr-change-sorc-trgt new-g :new-sorc new-bcc
-					      :new-trgt new-tcc)
-		 new-h (dstr-change-sorc-trgt new-h :new-sorc new-tcc
-					      :new-trgt new-tcc))
-	   (values
-	    (build-rdct :f new-f :g new-g :h new-h
-			:orgn `(basic-perturbation-lemma ,reduction
-							 ,top-perturbation))
-	    bottom-perturbation)))))
+           (declare
+            (type chain-complex new-tcc new-bcc)
+            (type morphism sigma new-f new-g new-h bottom-perturbation))
+           (setf new-f (dstr-change-sorc-trgt new-f :new-sorc new-tcc
+                                              :new-trgt new-bcc)
+                 new-g (dstr-change-sorc-trgt new-g :new-sorc new-bcc
+                                              :new-trgt new-tcc)
+                 new-h (dstr-change-sorc-trgt new-h :new-sorc new-tcc
+                                              :new-trgt new-tcc))
+           (values
+            (build-rdct :f new-f :g new-g :h new-h
+                        :orgn `(basic-perturbation-lemma ,reduction
+                                                         ,top-perturbation))
+            bottom-perturbation)))))
 
 (DEFUN EASY-PERTURBATION-LEMMA (reduction bottom-perturbation)
   (declare
@@ -414,32 +416,32 @@ coherent, the result of each mapping is a null combination.
    (type morphism bottom-perturbation))
   (the (values reduction morphism)
        (with-slots ((old-tcc tcc) (old-bcc bcc)
-		    (old-f f) (old-g g) (old-h h)) reduction
+                    (old-f f) (old-g g) (old-h h)) reduction
          (declare
-	  (type chain-complex old-tcc old-bcc)
-	  (type morphism old-f old-g old-h))
+          (type chain-complex old-tcc old-bcc)
+          (type morphism old-f old-g old-h))
          (when (eq 'zero-mrph (first (orgn bottom-perturbation)))
-	   (return-from easy-perturbation-lemma
-	     (values reduction (zero-mrph old-tcc))))
-	 (when (eq 'trivial-rdct (first (orgn reduction)))
-	   (return-from easy-perturbation-lemma
-	     (trivial-rdct (add (bcc reduction) bottom-perturbation))))
+           (return-from easy-perturbation-lemma
+             (values reduction (zero-mrph old-tcc))))
+         (when (eq 'trivial-rdct (first (orgn reduction)))
+           (return-from easy-perturbation-lemma
+             (trivial-rdct (add (bcc reduction) bottom-perturbation))))
          (let ((top-perturbation (i-cmps old-g bottom-perturbation old-f)))
-	   (declare (type morphism top-perturbation))
-	   (let ((new-bcc (add old-bcc bottom-perturbation))
-		 (new-tcc (add old-tcc top-perturbation)))
-	     (declare (type chain-complex new-bcc new-tcc))
-	     (values
-	      (build-rdct
-	       :f (dstr-change-sorc-trgt old-f :new-sorc new-tcc
-					 :new-trgt new-bcc)
-	       :g (dstr-change-sorc-trgt old-g :new-sorc new-bcc
-					 :new-trgt new-tcc)
-	       :h (dstr-change-sorc-trgt old-h :new-sorc new-tcc
-					 :new-trgt new-tcc)
-	       :orgn `(easy-perturbation-lemma ,reduction
-					       ,bottom-perturbation))
-	      top-perturbation))))))
+           (declare (type morphism top-perturbation))
+           (let ((new-bcc (add old-bcc bottom-perturbation))
+                 (new-tcc (add old-tcc top-perturbation)))
+             (declare (type chain-complex new-bcc new-tcc))
+             (values
+              (build-rdct
+               :f (dstr-change-sorc-trgt old-f :new-sorc new-tcc
+                                         :new-trgt new-bcc)
+               :g (dstr-change-sorc-trgt old-g :new-sorc new-bcc
+                                         :new-trgt new-tcc)
+               :h (dstr-change-sorc-trgt old-h :new-sorc new-tcc
+                                         :new-trgt new-tcc)
+               :orgn `(easy-perturbation-lemma ,reduction
+                                               ,bottom-perturbation))
+              top-perturbation))))))
 
 (DEFUN SPECIAL-BPL (reduction top-perturbation)
   (declare
@@ -449,28 +451,28 @@ coherent, the result of each mapping is a null combination.
     (return-from special-bpl reduction))
   (the reduction
        (with-slots ((old-tcc tcc) (old-bcc bcc)
-		    (old-f f) (old-g g) (old-h h)) reduction
+                    (old-f f) (old-g g) (old-h h)) reduction
          (declare
-	  (type chain-complex old-tcc old-bcc)
-	  (type morphism old-f old-g old-h))
+          (type chain-complex old-tcc old-bcc)
+          (type morphism old-f old-g old-h))
          (let* ((sigma (bpl-*-sigma old-h top-perturbation))
                 (new-f (cmps old-f
-			     (sbtr (idnt-mrph old-tcc)
-				   (i-cmps
-				    top-perturbation
-				    sigma
-				    old-h))))
+                             (sbtr (idnt-mrph old-tcc)
+                                   (i-cmps
+                                    top-perturbation
+                                    sigma
+                                    old-h))))
                 (new-h (cmps sigma old-h))
                 (new-tcc (add old-tcc top-perturbation)))
-	   (declare
-	    (type chain-complex new-tcc)
-	    (type morphism sigma new-f new-h))
-	   (setf new-f (dstr-change-sorc-trgt new-f :new-sorc new-tcc)
-		 old-g (dstr-change-sorc-trgt old-g :new-trgt new-tcc)
-		 new-h (dstr-change-sorc-trgt new-h :new-sorc new-tcc
-					      :new-trgt new-tcc))
-	   (build-rdct :f new-f :g old-g :h new-h
-		       :orgn `(special-bpl ,reduction ,top-perturbation))))))
+           (declare
+            (type chain-complex new-tcc)
+            (type morphism sigma new-f new-h))
+           (setf new-f (dstr-change-sorc-trgt new-f :new-sorc new-tcc)
+                 old-g (dstr-change-sorc-trgt old-g :new-trgt new-tcc)
+                 new-h (dstr-change-sorc-trgt new-h :new-sorc new-tcc
+                                              :new-trgt new-tcc))
+           (build-rdct :f new-f :g old-g :h new-h
+                       :orgn `(special-bpl ,reduction ,top-perturbation))))))
 
 (DEFUN SPECIAL-BPL-2 (reduction top-perturbation)
   (declare
@@ -478,69 +480,69 @@ coherent, the result of each mapping is a null combination.
    (type morphism top-perturbation))
   (the reduction
        (with-slots ((old-tcc tcc) (old-bcc bcc)
-		    (old-f f) (old-g g) (old-h h)) reduction
+                    (old-f f) (old-g g) (old-h h)) reduction
          (declare
-	  (type chain-complex old-tcc old-bcc)
-	  (type morphism old-f old-g old-h))
+          (type chain-complex old-tcc old-bcc)
+          (type morphism old-f old-g old-h))
          (when (eq (first (orgn top-perturbation)) 'zero-mrph)
-	   (return-from special-bpl-2
-	     (values reduction (zero-mrph old-bcc))))
+           (return-from special-bpl-2
+             (values reduction (zero-mrph old-bcc))))
          (when (eq (first (orgn (h reduction))) 'zero-mrph)
-	   (return-from special-bpl-2
-	     (values
-	      (trivial-rdct (add old-tcc top-perturbation))
-	      (i-cmps old-f top-perturbation old-g))))
+           (return-from special-bpl-2
+             (values
+              (trivial-rdct (add old-tcc top-perturbation))
+              (i-cmps old-f top-perturbation old-g))))
          (let* ((sigma (bpl-*-sigma old-h top-perturbation))
                 (new-g (cmps sigma old-g))
                 (new-h (cmps sigma old-h))
                 (new-tcc (add old-tcc top-perturbation)))
-	   (declare
-	    (type chain-complex new-tcc)
-	    (type morphism sigma new-g new-h))
-	   (setf old-f (dstr-change-sorc-trgt old-f :new-sorc new-tcc)
-		 new-g (dstr-change-sorc-trgt new-g :new-trgt new-tcc)
-		 new-h (dstr-change-sorc-trgt new-h :new-sorc new-tcc
-					      :new-trgt new-tcc))
-	   (values
-	    (build-rdct :f old-f :g new-g :h new-h
-			:orgn `(special-bpl-2 ,reduction ,top-perturbation)))))))
+           (declare
+            (type chain-complex new-tcc)
+            (type morphism sigma new-g new-h))
+           (setf old-f (dstr-change-sorc-trgt old-f :new-sorc new-tcc)
+                 new-g (dstr-change-sorc-trgt new-g :new-trgt new-tcc)
+                 new-h (dstr-change-sorc-trgt new-h :new-sorc new-tcc
+                                              :new-trgt new-tcc))
+           (values
+            (build-rdct :f old-f :g new-g :h new-h
+                        :orgn `(special-bpl-2 ,reduction ,top-perturbation)))))))
 
 (DEFUN BPL-*-sigma (homotopy perturbation)
   (declare (type morphism homotopy perturbation))
   (the morphism
        (let ((cmpr (cmpr (sorc perturbation)))
-	     (h-delta (cmps homotopy perturbation)))
+             (h-delta (cmps homotopy perturbation)))
          (declare
-	  (type cmprf cmpr)
-	  (type morphism h-delta))
+          (type cmprf cmpr)
+          (type morphism h-delta))
          (flet
-	     ((sigma-* (degr gnrt)
+             ((sigma-* (degr gnrt)
                 (declare
-		 (fixnum degr)
-		 (type gnrt gnrt))
+                 (fixnum degr)
+                 (type gnrt gnrt))
                 (do ((rslt (zero-cmbn degr) (2cmbn-add cmpr rslt iterated))
                      (iterated (term-cmbn degr 1 gnrt)
-			       (cmbn-opps (cmbn-? h-delta iterated))))
+                               (cmbn-opps (cmbn-? h-delta iterated))))
                     ((cmbn-zero-p iterated) rslt)
-		  (declare (type cmbn rslt iterated)))))
-	   (build-mrph
-	    :sorc (sorc homotopy) :trgt (sorc homotopy) :degr 0
-	    :intr #'sigma-*
-	    :strt :gnrt
-	    :orgn `(bpl-*-sigma ,homotopy ,perturbation))))))
+                  (declare (type cmbn rslt iterated)))))
+           (build-mrph
+            :sorc (sorc homotopy) :trgt (sorc homotopy) :degr 0
+            :intr #'sigma-*
+            :strt :gnrt
+            :orgn `(bpl-*-sigma ,homotopy ,perturbation))))))
 
 (DEFMETHOD ADD ((hmeq homotopy-equivalence) (lb-perturbation morphism)
-		&optional dummy)
+                &optional dummy)
   (declare (ignore dummy))
   (the homotopy-equivalence
        (with-slots (lrdct rrdct) hmeq
          (declare (type reduction lrdct rrdct))
          (multiple-value-bind (new-lrdct top-perturbation)
-	     (add lrdct lb-perturbation)
-	   (declare
-	    (type reduction new-lrdct)
-	    (type morphism lb-perturbation))
-	   (build-hmeq
-	    :lrdct new-lrdct
-	    :rrdct (add rrdct top-perturbation)
-	    :orgn `(add ,hmeq ,lb-perturbation))))))
+             (add lrdct lb-perturbation)
+           (declare
+            (type reduction new-lrdct)
+            (type morphism lb-perturbation))
+           (build-hmeq
+            :lrdct new-lrdct
+            :rrdct (add rrdct top-perturbation)
+            :orgn `(add ,hmeq ,lb-perturbation))))))

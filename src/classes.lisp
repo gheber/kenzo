@@ -192,9 +192,11 @@ Intances of this class represent chain complexes. The class has 8 slots:
 7. IDNM, an integer, a system generated identifier for this object. Its reader
    function is IDNM.
 
-8. ORGN, a list containg a comment indicating the origin of the object. The
-   should be unique (per session), since it is used in the implementation for
-   caching purposes. Its reader function is ORGN.
+8. ORGN, a list which is the copy of a Lisp statement, in principle the
+   statement which was at the origin of the creation of this Kenzo object.
+   A caching process, using this slot, prevents the creation of multiple
+   copies of the same mathematical object, which is important for efficiency.
+   It is used also for debugging and analyzing the program.
 -----------------------------------------------------------------------------"))
 
 
@@ -275,9 +277,11 @@ degree -1. The class has 10 slots:
 9. IDNM, an integer, a system-generated identifier for this object. Its reader
    function is IDNM.
 
-10. ORGN, a list containg a comment indicating the origin of the object. The
-    should be unique (per session), since it is used in the implementation for
-    caching purposes. Its reader function is ORGN.
+10. ORGN, a list which is the copy of a Lisp statement, in principle the
+    statement which was at the origin of the creation of this Kenzo object.
+    A caching process, using this slot, prevents the creation of multiple
+    copies of the same mathematical object, which is important for efficiency.
+    It is used also for debugging and analyzing the program.
 -----------------------------------------------------------------------------"))
 
 
@@ -335,13 +339,14 @@ The class has 7 slots:
 5. H, an object of type MORPHISM representing the morphism of graded modules h.
    Its reader function is H1.
 
-9. IDNM, an integer, a system-generated identifier for this object. Its reader
+6. IDNM, an integer, a system-generated identifier for this object. Its reader
    function is IDNM.
 
-10. ORGN, a list containg a comment indicating the origin of the object.
-    This comment should be unique for a Kenzo session (between calls of
-    CAT-INIT), as it is used for caching purposes. Its reader function
-    is ORGN.
+7. ORGN, a list which is the copy of a Lisp statement, in principle the
+   statement which was at the origin of the creation of this Kenzo object.
+   A caching process, using this slot, prevents the creation of multiple
+   copies of the same mathematical object, which is important for efficiency.
+   It is used also for debugging and analyzing the program.
 -----------------------------------------------------------------------------"))
 
 
