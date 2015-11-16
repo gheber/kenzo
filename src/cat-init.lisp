@@ -79,6 +79,8 @@
 (DEFVAR *CMBN-CONTROL*)
 (SETF *CMBN-CONTROL* T)
 
+#+SBCL (DECLAIM (SB-EXT:MUFFLE-CONDITIONS style-warning compiler-note))
+
 (DEFUN COMPILE-FILES ()
   (format t "~%*CMBN-CONTROL*  = ~A~2%" *cmbn-control*)
   (mapc #'(lambda (file-name)
