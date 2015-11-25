@@ -1,4 +1,4 @@
- 
+
 (in-package :kenzo-test)
 
 (in-suite :kenzo)
@@ -59,7 +59,7 @@
 (defun random-abar1 (length)
   (let ((rslt nil))
     (dotimes (i length)
-      (let* ((gmsm (random (cat:mask 7)))
+      (let* ((gmsm (random (cat:mask 6)))
          (dmns (1- (logcount gmsm))))
     (when (plusp dmns)
       (push (cat:brgn (1+ dmns) (cat:d gmsm)) rslt))))
@@ -68,18 +68,18 @@
 
 (test vrtc-bar
       (progn
-    (cat:cat-init)
-    (let ((v (cat:vrtc-bar (cat:soft-delta-infinity))))
-      (dotimes (i 10)
-        (print (random-abar1 5)))
-      (dotimes (i 10)
-        (let ((abar (random-abar1 3)))
-          (print abar)
-          (print (cat:? v (apply #'+ (mapcar #'car (cat:abar-list abar)))
-                abar))
-          (print (cat:? v (cat:? v (apply #'+ (mapcar #'car
-                              (cat:abar-list abar)))
-                     abar))))))))
+        (cat:cat-init)
+        (let ((v (cat:vrtc-bar (cat:delta-infinity))))
+          (dotimes (i 10)
+            (print (random-abar1 5)))
+          (dotimes (i 10)
+            (let ((abar (random-abar1 3)))
+              (print abar)
+              (print (cat:? v (apply #'+ (mapcar #'car (cat:abar-list abar)))
+                            abar))
+              (print (cat:? v (cat:? v (apply #'+ (mapcar #'car
+                                                          (cat:abar-list abar)))
+                                     abar))))))))
 
 
 (test bar-intr-hrzn-dffr
@@ -177,65 +177,64 @@
                  3 (cat:crpr 0 14 0 14))))))
 
 
-#|
 (test vrtc-bar1
       (progn
-    (cat:cat-init)
+        (cat:cat-init)
 
-    (let* ((tcc (cat:build-chcm
-             :cmpr #'cat:s-cmpr
-             :basis #'(lambda (degr) '(a b c d))
-             :bsgn 'd
-             :intr-dffr #'(lambda (degr gnrt)
-                    (ecase gnrt
-                      (a (cat:cmbn (1- degr) 1 'b 1 'd))
-                      ((b d) (cat:cmbn (1- degr)))
-                      (c (cat:cmbn (1- degr) 1 'd))))
-             :strt :gnrt
-             :orgn '(tcc)))
-           (bcc (cat:build-chcm
-             :cmpr #'cat:s-cmpr
-             :basis #'(lambda (degr) '(c d))
-             :bsgn 'd
-             :intr-dffr #'(lambda (degr gnrt)
-                    (ecase gnrt
-                      (d (cat:cmbn (1- degr)))
-                      (c (cat:cmbn (1- degr) 1 'd))))
-             :strt :gnrt
-             :orgn '(bcc)))
-           (f (cat:build-mrph :sorc tcc :trgt bcc :degr 0
-                  :intr #'(lambda (degr gnrt)
-                        (ecase gnrt
-                          (a (cat:cmbn degr 1 'c 1 'd))
-                          (b (cat:cmbn degr))
-                          ((c d) (cat:cmbn degr 1 gnrt))))
-                  :strt :gnrt :orgn '(f)))
-           (g (cat:build-mrph :sorc bcc :trgt tcc :degr 0
-                  :intr #'identity :strt :cmbn :orgn '(g)))
-           (h (cat:build-mrph :sorc tcc :trgt tcc :degr +1
-                  :intr #'(lambda (degr gnrt)
-                        (ecase gnrt
-                          ((a b) (cat:cmbn
-                              (1+ degr)
-                              1 'a -1 'b -1 'c -1 'd))
-                          ((c d) (cat:cmbn (1+ degr)))))
-                  :strt :gnrt :orgn '(h)))
-           (rdct (cat:build-rdct :f f :g g :h h :orgn '(rdct)))
-           (bar))
-      (cat:tcc rdct 3 'a)
-      (cat:g rdct (cat:f rdct 3 'a))
-      (cat:h rdct 3 'a)
-      (setf bar (cat:vrtc-bar rdct))
-      (cat:pre-check-rdct bar)
-      (aleat-tc)
-      (aleat-bc)
-      ;;(loop (c))
-      (dotimes (i 10) (c))))) ;; degrees >= 15 is possible => error.
-|#
+        (let* ((tcc (cat:build-chcm
+                     :cmpr #'cat:s-cmpr
+                     :basis #'(lambda (degr) '(a b c d))
+                     :bsgn 'd
+                     :intr-dffr #'(lambda (degr gnrt)
+                                    (ecase gnrt
+                                      (a (cat:cmbn (1- degr) 1 'b 1 'd))
+                                      ((b d) (cat:cmbn (1- degr)))
+                                      (c (cat:cmbn (1- degr) 1 'd))))
+                     :strt :gnrt
+                     :orgn '(tcc)))
+               (bcc (cat:build-chcm
+                     :cmpr #'cat:s-cmpr
+                     :basis #'(lambda (degr) '(c d))
+                     :bsgn 'd
+                     :intr-dffr #'(lambda (degr gnrt)
+                                    (ecase gnrt
+                                      (d (cat:cmbn (1- degr)))
+                                      (c (cat:cmbn (1- degr) 1 'd))))
+                     :strt :gnrt
+                     :orgn '(bcc)))
+               (f (cat:build-mrph :sorc tcc :trgt bcc :degr 0
+                                  :intr #'(lambda (degr gnrt)
+                                            (ecase gnrt
+                                              (a (cat:cmbn degr 1 'c 1 'd))
+                                              (b (cat:cmbn degr))
+                                              ((c d) (cat:cmbn degr 1 gnrt))))
+                                  :strt :gnrt :orgn '(f)))
+               (g (cat:build-mrph :sorc bcc :trgt tcc :degr 0
+                                  :intr #'identity :strt :cmbn :orgn '(g)))
+               (h (cat:build-mrph :sorc tcc :trgt tcc :degr +1
+                                  :intr #'(lambda (degr gnrt)
+                                            (ecase gnrt
+                                              ((a b) (cat:cmbn
+                                                      (1+ degr)
+                                                      1 'a -1 'b -1 'c -1 'd))
+                                              ((c d) (cat:cmbn (1+ degr)))))
+                                  :strt :gnrt :orgn '(h)))
+               (rdct (cat:build-rdct :f f :g g :h h :orgn '(rdct)))
+               (bar))
+          (cat:tcc rdct 3 'a)
+          (cat:g rdct (cat:f rdct 3 'a))
+          (cat:h rdct 3 'a)
+          (setf bar (cat:vrtc-bar rdct))
+          (cat:pre-check-rdct bar)
+          (aleat-tc)
+          (aleat-bc)
+          ;;(loop (c))
+          (dotimes (i 10) (c))))) ;; degrees >= 15 is possible => error.
+
 
 (test homology
       (progn
-    (cat:cat-init)
-    (let* ((h (cat:efhm (cat:k-z-1)))
-           (b (cat:bar h)))
-      (cat:homology (cat:rbcc b) 0 11))))
+        (cat:cat-init)
+        (let* ((h (cat:efhm (cat:k-z-1)))
+               (b (cat:bar h)))
+          (cat:homology (cat:rbcc b) 0 11))))

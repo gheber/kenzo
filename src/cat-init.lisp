@@ -60,8 +60,8 @@
    (format t "~% FILE ~2D: ~A" i (car mark)))
 
 (DEFCONSTANT +SOURCE-EXTENSION+
-  #+(or allegro clisp lispworks) "cl"
-  #+(or ccl ecl sbcl) "lisp"
+  #+(or allegro lispworks) "cl"
+  #+(or clisp ccl ecl sbcl) "lisp"
   #-(or allegro ccl clisp ecl lispworks sbcl)
     (error "Not an Allegro or CCL or CLisp or LispWorks or SBCL environment."))
 
