@@ -313,7 +313,7 @@
               (setf cat:*bc* (cat:cmbn abar-degr 1 abar))
               (check-rdct))))))
 
-#|
+
 (test cs-left-hmeq-right-reduction
       (cat:cat-init)
       (let ((rdct (cat:cs-left-hmeq-right-reduction (cat:k-z-1)))
@@ -349,18 +349,8 @@
             (unless (>= abar-degr 9)
               (setf cat:*tc* (cat:cmbn (+ 5 abar-degr) 1 gnrt))
               (setf cat:*bc* (cat:cmbn abar-degr 1 abar))
-              (check-rdct))))
-        (dotimes (i 10)
-          (let ((abar (random-abar 6 4)))
-            (setf abar-degr (apply #'+ (mapcar #'car (cat:abar-list abar))))
-            (setf gnrt (cat:tnpr 4 (cat:tnpr 2 (cat:gbar 2 0 '(3) 0 '())
-                                             2 '(4 5))
-                                 abar-degr abar))
-            (unless (>= abar-degr 10)
-              (setf cat:*tc* (cat:cmbn (+ 4 abar-degr) 1 gnrt))
-              (setf cat:*bc* (cat:cmbn abar-degr 1 abar))
               (check-rdct))))))
-|#
+
 
 (test cs-left-hmeq
       (cat:cat-init)
