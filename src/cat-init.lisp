@@ -60,8 +60,8 @@
    (format t "~% FILE ~2D: ~A" i (car mark)))
 
 (DEFCONSTANT +SOURCE-EXTENSION+
-  #+(or allegro clisp lispworks) "cl"
-  #+(or ccl ecl sbcl) "lisp"
+  #+(or allegro lispworks) "cl"
+  #+(or clisp ccl ecl sbcl) "lisp"
   #-(or allegro ccl clisp ecl lispworks sbcl)
     (error "Not an Allegro or CCL or CLisp or LispWorks or SBCL environment."))
 
@@ -78,6 +78,8 @@
 
 (DEFVAR *CMBN-CONTROL*)
 (SETF *CMBN-CONTROL* T)
+
+#+SBCL (DECLAIM (SB-EXT:MUFFLE-CONDITIONS style-warning compiler-note))
 
 (DEFUN COMPILE-FILES ()
   (format t "~%*CMBN-CONTROL*  = ~A~2%" *cmbn-control*)

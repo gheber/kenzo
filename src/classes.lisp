@@ -45,7 +45,7 @@ internal representation of combinations.
   (declare (type any object))
   (the boolean
        (and (typep object 'fixnum)
-	    (/= 0 object))))
+            (/= 0 object))))
 
 (DEFTYPE CFFC ()
   "------------------------------------------------------------------[type-doc]
@@ -90,8 +90,8 @@ A derived type to represent comparison functions.
   (declare (type any object))
   (the boolean
        (and (consp object)
-	    (typep (car object) 'cffc)
-	    (typep (cdr object) 'gnrt))))
+            (typep (car object) 'cffc)
+            (typep (cdr object) 'gnrt))))
 
 (DEFTYPE TERM ()
   "------------------------------------------------------------------[type-doc]
@@ -110,7 +110,7 @@ and whose CDR is of type GNRT.
   (declare (type any object))
   (the boolean
        (and (listp object)
-	    (every #'term-p object))))
+            (every #'term-p object))))
 
 (DEFTYPE ICMBN () '(satisfies icmbn-p))
 
@@ -141,8 +141,8 @@ the symbol :LOCALLY-EFFECTIVE.
 #+allegro
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (setf redefinition-warnings-saved
-	excl::*redefinition-warnings*
-	*redefinition-warnings* nil))
+        excl::*redefinition-warnings*
+        *redefinition-warnings* nil))
 
 (DEFCLASS CHAIN-COMPLEX ()
   ((cmpr :type cmprf :initarg :cmpr :reader cmpr1)
@@ -178,16 +178,25 @@ Intances of this class represent chain complexes. The class has 8 slots:
 4. DFFR, the differential morphism, an instance of the class MORPHISM. Its
    reader function is DFFR1.
 
-5. GRMD, ???   Its reader function is GRMD.
+5. GRMD, refers to some chain-complex considered as a reference for the
+   underlying graded module structure. Sometimes, it is better to check two
+   chain-complexes have the same underlying graded module. Typically if C1 is
+   a chain-complex and C2 is obtained from C1 by perturbing the differential,
+   then (eq (grmd C1) (grmd C2)) should return T. Its reader function is GRMD.
 
-6. EFHM, ???   Its reader function is EFHM.
+6. EFHM, if the effective homology of the chain complex has already been
+   computed, then this slot points to the HOMOTOPY-EQUIVALENCE which IS the
+   effective homology  of this object. Otherwise the slot is unbound. Its
+   reader function is EFHM.
 
 7. IDNM, an integer, a system generated identifier for this object. Its reader
    function is IDNM.
 
-8. ORGN, a list containg a comment indicating the origin of the object. The
-   should be unique (per session), since it is used in the implementation for
-   caching purposes. Its reader function is ORGN.
+8. ORGN, a list which is the copy of a Lisp statement, in principle the
+   statement which was at the origin of the creation of this Kenzo object.
+   A caching process, using this slot, prevents the creation of multiple
+   copies of the same mathematical object, which is important for efficiency.
+   It is used also for debugging and analyzing the program.
 -----------------------------------------------------------------------------"))
 
 
@@ -218,8 +227,8 @@ A derived type, which represents the mapping strategy of morphisms.
    (?-clnm :type fixnum :initform 0 :accessor ?-clnm)
    ;; ReSuLTS
    (rslts :type simple-vector
-	  ;; (vector (vector result))
-	  :reader rslts)
+          ;; (vector (vector result))
+          :reader rslts)
    ;; IDentification NuMber
    (idnm :type fixnum :initform (incf *idnm-counter*) :reader idnm)
    ;; ORiGiN
@@ -240,10 +249,21 @@ degree -1. The class has 10 slots:
 
 3. DEGR, an integer, the degree of the morphism. Its reader function is DEGR.
 
-4. INTR, a Lisp function implementing the morphism, taking account of the
-   strategy STRT. Its reader function is INTR.
+4. INTR, a Lisp INTeRnal function implementing the morphism, taking account
+   of the strategy STRT. Its reader function is INTR.
 
 5. STRT, a symbol, one of :GNRT or :CMBN. Its reader function is STRT.
+
+   If this slot is :GNRT, the implementation of INTR is a function:
+     (function (degr gnrt) cmbn)
+   and for any call of this function, the result is stored in the slot
+   RSLTS to avoid later a possibly long recalculation for  the same
+   argument.
+
+   If this slot is :CMBN, the implementation of INTR is a function:
+     (function (cmbn) cmbn)
+   and the RSLTS slot is not used. Think for example to an identity or
+   null function, where storing a result is wasted time.
 
 6. ???-CLNM, an integer updated by the system for internal statistics. Its
    reader function is ???-CLNM.
@@ -257,9 +277,11 @@ degree -1. The class has 10 slots:
 9. IDNM, an integer, a system-generated identifier for this object. Its reader
    function is IDNM.
 
-10. ORGN, a list containg a comment indicating the origin of the object. The
-    should be unique (per session), since it is used in the implementation for
-    caching purposes. Its reader function is ORGN.
+10. ORGN, a list which is the copy of a Lisp statement, in principle the
+    statement which was at the origin of the creation of this Kenzo object.
+    A caching process, using this slot, prevents the creation of multiple
+    copies of the same mathematical object, which is important for efficiency.
+    It is used also for debugging and analyzing the program.
 -----------------------------------------------------------------------------"))
 
 
@@ -308,21 +330,23 @@ The class has 7 slots:
 2. BCC, an object of type CHAIN-COMPLEX, the bottom chain complex C. Its reader
    function is BCC1.
 
-3. F, an object of type MORPHISM representing the morphism f. Its reader
+3. F, an object of type MORPHISM representing the chain morphism f. Its reader
    function is F1.
 
-4. G, an object of type MORPHISM representing the morphism g. Its reader
+4. G, an object of type MORPHISM representing the chain morphism g. Its reader
    function is G1.
 
-5. H, an object of type MORPHISM representing the morphism h. Its reader
-   function is H1.
+5. H, an object of type MORPHISM representing the morphism of graded modules h.
+   Its reader function is H1.
 
-9. IDNM, an integer, a system-generated identifier for this object. Its reader
+6. IDNM, an integer, a system-generated identifier for this object. Its reader
    function is IDNM.
 
-10. ORGN, a list containg a comment indicating the origin of the object. The
-    should be unique (per session), since it is used in the implementation for
-    caching purposes. Its reader function is ORGN.
+7. ORGN, a list which is the copy of a Lisp statement, in principle the
+   statement which was at the origin of the creation of this Kenzo object.
+   A caching process, using this slot, prevents the creation of multiple
+   copies of the same mathematical object, which is important for efficiency.
+   It is used also for debugging and analyzing the program.
 -----------------------------------------------------------------------------"))
 
 
@@ -352,12 +376,19 @@ The class has 7 slots:
    ;; IDentification NuMber
    (idnm :type fixnum :initform (incf *idnm-counter*) :reader idnm)
    ;; ORiGiN
-   (orgn :type list          :initarg :orgn :reader orgn)))
+   (orgn :type list          :initarg :orgn :reader orgn))
+  (:documentation
+   "----------------------------------------------------------------[class-doc]
+HOMOTOPY-EQUIVALENCE
+A homotopy-equivalence is essentially a pair of respective reductions from an
+intermediate chain complex TCC to the LBCC (left bottom) and RBCC (rigth
+bottom) chain complexes. It is an equivalence between LBCC and RBCC.
+-----------------------------------------------------------------------------"))
 
 #+allegro
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (setf excl::*redefinition-warnings*
-	redefinition-warnings-saved))
+        redefinition-warnings-saved))
 
 ;;;
 ;;;  HOMOLOGY-GROUPS
@@ -365,9 +396,31 @@ The class has 7 slots:
 
 
 (DEFSTRUCT (matrice (:conc-name nil))
+  "------------------------------------------------------------------[type-doc]
+MATRICE
+Slots: (leftcol uplig)
+A MATRICE is made of two vectors LEFTCOL and UPLIG. LEFTCOL is a
+vector of size m+1 if m is the number of rows of the matrix, UPLIG is
+a vector of size n+1 if n is the number of columns.
+Every element of LEFTCOL and UPLIG is a T-MAT with the value NIL
+indicating it is a fake term.
+------------------------------------------------------------------------------"
   leftcol uplig)
 
 (DEFSTRUCT (t-mat (:conc-name nil))
+  "------------------------------------------------------------------[type-doc]
+T-MAT
+Slots: (val ilig icol left up)
+A T-MAT (= Terme de Matrice) has five components:
+
+  VAL  = A value, an integer, in principle a non-null integer.
+  ILIG = the line (row is better) index of this term
+  ICOL = the column index of this term
+  LEFT = a pointer to the next term on the left on the same line,
+         or to a fake term, an element of LEFTCOL of the matrice.
+  UP   = a pointer to the next term above on the same column,
+         or to a fake term, an element of UPLIG of the matrice.
+------------------------------------------------------------------------------"
   val ilig icol left up)
 
 
@@ -379,11 +432,26 @@ The class has 7 slots:
   (conx (:type '(member 0 1)))
   (icon (:type 'gnrt)))
 
+;; Given a morphism f : C1 -> C0 between two chain complexes,
+;; the cone of f is a chain complex made of C0 as such,
+;; C1 suspended.
+;; The differential of the C0 component is unchanged.
+;; If x is an element of C1, then d_cone(x) = -dx + fx
+;;   with dx computed as in the original C1.
+;; A CONE generator is an conx 0 (resp. 1) and
+;;   and an icon (= internal cone generator) being a
+;;   generator of C0 (resp. C1).
 
 (DEFSTRUCT (BICN (:conc-name nil) (:print-function bicn-print))
   (bcnx (:type '(member :bcnb :bcnc :bcnd)))
   (ibicn (:type 'gnrt)))
 
+;; Analogous with two morphisms f: B -> C and g: D -> C.
+
+;; Intended to become the central part of a zigzag :
+;;                  A <- B -> C <- D -> E
+;; The key structure to compose two equivalences:
+;;   A <- B -> C   and   C <- D -> E
 
 ;;;
 ;;;  TENSOR-PRODUCTS
@@ -412,8 +480,8 @@ The class has 7 slots:
   (declare (type any object))
   (the boolean
        (and (consp object)
-	    (typep (car object) 'fixnum)      ;; degree *in* the cobar
-	    (typep (cdr object) 'gnrt))))
+            (typep (car object) 'fixnum)      ;; degree *in* the cobar
+            (typep (cdr object) 'gnrt))))
 
 (DEFTYPE CBGN () '(satisfies cbgn-p))
 
@@ -422,7 +490,7 @@ The class has 7 slots:
   (declare (type any object))
   (the boolean
        (and (listp object)
-	    (every #'cbgn-p object))))
+            (every #'cbgn-p object))))
 
 (DEFTYPE IALLP () '(satisfies iallp-p))
 
@@ -454,8 +522,8 @@ The class has 7 slots:
   (declare (type any object))
   (the boolean
        (and (consp object)
-	    (typep (car object) 'fixnum)      ;; degree *in* the bar
-	    (typep (cdr object) 'gnrt))))
+            (typep (car object) 'fixnum)      ;; degree *in* the bar
+            (typep (cdr object) 'gnrt))))
 
 (DEFTYPE BRGN () '(satisfies brgn-p))
 
@@ -464,7 +532,7 @@ The class has 7 slots:
   (declare (type any object))
   (the boolean
        (and (listp object)
-	    (every #'brgn-p object))))
+            (every #'brgn-p object))))
 
 (DEFTYPE IABAR () '(satisfies iabar-p))
 
@@ -476,8 +544,8 @@ The class has 7 slots:
   (declare (type any object))
   (the boolean
        (and (consp object)
-	    (eq :abar (car object))
-	    (typep (cdr object) 'iabar))))
+            (eq :abar (car object))
+            (typep (cdr object) 'iabar))))
 
 (DEFTYPE ABAR () '(satisfies abar-p))
 |#
@@ -508,8 +576,8 @@ The class has 7 slots:
   (declare (type any object))
   (the boolean
        (and (consp object)
-	    (typep (car object) 'dgop)
-	    (typep (cdr object) 'gmsm))))
+            (typep (car object) 'dgop)
+            (typep (cdr object) 'gmsm))))
 
 (DEFTYPE IABSM () '(satisfies iabsm-p))
 
@@ -555,8 +623,8 @@ The class has 7 slots:
   (declare (type any object))
   (the boolean
        (and (consp object)
-	    (eq :delt (car object))
-	    (typep (cdr object) 'dgop))))
+            (eq :delt (car object))
+            (typep (cdr object) 'dgop))))
 
 (DEFTYPE SOFT-DLOP () '(satisfies soft-dlop-p))
 
@@ -589,7 +657,7 @@ The class has 7 slots:
   (declare (type any object))
   (the boolean
        (and (typep object 'simplicial-mrph)
-	    (= -1 (degr object)))))
+            (= -1 (degr object)))))
 
 (DEFTYPE FIBRATION ()
   '(satisfies fibration-p))
@@ -610,7 +678,7 @@ The class has 7 slots:
   (declare (type any object))
   (the boolean
        (typep object '(and fixnum
-		       (not (eql 0))))))
+                       (not (eql 0))))))
 
 (DEFTYPE EXPN () '(satisfies expn-p))
 
@@ -619,8 +687,8 @@ The class has 7 slots:
   (declare (type any object))
   (the boolean
        (and (consp object)
-	    (typep (car object) 'gmsm)
-	    (typep (cdr object) 'expn))))
+            (typep (car object) 'gmsm)
+            (typep (cdr object) 'expn))))
 
 (DEFTYPE POWR () '(satisfies powr-p))
 
@@ -629,8 +697,8 @@ The class has 7 slots:
   (declare (type any object))
   (the boolean
        (and (consp object)
-	    (typep (car object) 'dgop)
-	    (typep (cdr object) 'powr))))
+            (typep (car object) 'dgop)
+            (typep (cdr object) 'powr))))
 
 (DEFTYPE APOWR () '(satisfies apowr-p))
 
@@ -639,7 +707,7 @@ The class has 7 slots:
   (declare (type any object))
   (the boolean
        (and (listp object)
-	    (every #'apowr-p object))))
+            (every #'apowr-p object))))
 
 (DEFTYPE ILOOP () '(satisfies iloop-p))
 
@@ -650,7 +718,7 @@ The class has 7 slots:
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :common-lisp) nil))
 #+sbcl(eval-when (:compile-toplevel :load-toplevel :execute)
-	(sb-ext:unlock-package :common-lisp))
+        (sb-ext:unlock-package :common-lisp))
 
 (DEFSTRUCT (LOOP (:print-function loop-print))
   (list (:type 'iloop)))
@@ -661,7 +729,7 @@ The class has 7 slots:
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :common-lisp) t))
 #+sbcl(eval-when (:compile-toplevel :load-toplevel :execute)
-	(sb-ext:lock-package :common-lisp))
+        (sb-ext:lock-package :common-lisp))
 
 #+ccl
 (DEFMETHOD make-load-form ((l loop) &optional env)
