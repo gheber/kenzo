@@ -1,3 +1,5 @@
+;;;; -*- Mode: Lisp; indent-tabs-mode: nil -*-
+
 ;;;  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES
 ;;;  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES
 ;;;  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES
@@ -202,7 +204,7 @@ Intances of this class represent chain complexes. The class has 8 slots:
 
 ;; STRT = STRaTegy
 (DEFTYPE STRT ()
-   "-----------------------------------------------------------------[type-doc]
+  "-----------------------------------------------------------------[type-doc]
 STRT
 A derived type, which represents the mapping strategy of morphisms.
 ------------------------------------------------------------------------------"
