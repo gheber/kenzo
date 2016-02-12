@@ -1,3 +1,5 @@
+;;;; -*- Mode: Lisp; indent-tabs-mode: nil -*-
+
 ;;;  CHAIN-COMPLEXES  CHAIN-COMPLEXES  CHAIN-COMPLEXES  CHAIN-COMPLEXES
 ;;;  CHAIN-COMPLEXES  CHAIN-COMPLEXES  CHAIN-COMPLEXES  CHAIN-COMPLEXES
 ;;;  CHAIN-COMPLEXES  CHAIN-COMPLEXES  CHAIN-COMPLEXES  CHAIN-COMPLEXES
@@ -513,7 +515,7 @@ MAKE-INSTANCE.
           (error "In the combination located by *WRONG-CMBN*, the generators:~@
                     ~A and ~A are in a wrong order." (cdar mark2)
                     (cdar mark1))))))
-   cmbn)
+  cmbn)
 
 #|
 (DEFVAR *PROFILER-STACK*)

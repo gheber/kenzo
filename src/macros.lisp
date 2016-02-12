@@ -1,3 +1,5 @@
+;;;; -*- Mode: Lisp; indent-tabs-mode: nil -*-
+
 ;;;  MACROS  MACROS  MACROS  MACROS  MACROS  MACROS  MACROS
 ;;;  MACROS  MACROS  MACROS  MACROS  MACROS  MACROS  MACROS
 ;;;  MACROS  MACROS  MACROS  MACROS  MACROS  MACROS  MACROS
@@ -63,8 +65,8 @@ and returns VALUE.
     `(let ((,vrslt ,(first rest)))
        (declare (type cmpr ,vrslt))
        (if (eq ,vrslt :equal)
-	   (lexico ,@(rest rest))
-	   ,vrslt))))
+           (lexico ,@(rest rest))
+           ,vrslt))))
 
 
 (DEFMACRO TERM (cffc gnrt)
@@ -103,7 +105,7 @@ Returns the the generator of a term.
 
 (DEFMACRO WITH-TERM ((cffc gnrt) term . body)
   `(let (,@(if cffc `((,cffc (cffc ,term))) nil)
-	 ,@(if gnrt `((,gnrt (gnrt ,term))) nil))
+         ,@(if gnrt `((,gnrt (gnrt ,term))) nil))
      (declare
       (fixnum ,@(if cffc `(,cffc) nil))
       (type gnrt ,@(if gnrt `(,gnrt) nil)))
@@ -112,7 +114,7 @@ Returns the the generator of a term.
 
 (DEFMACRO WITH--TERM ((cffc gnrt) mark . body)
   `(let ((,cffc (-cffc ,mark))
-	 (,gnrt (-gnrt ,mark)))
+         (,gnrt (-gnrt ,mark)))
      (declare
       (fixnum ,cffc)
       (type gnrt ,gnrt))
@@ -121,7 +123,7 @@ Returns the the generator of a term.
 
 (DEFMACRO WITH-CMBN ((degr list) cmbn . body)
   `(let ((,degr (cmbn-degr ,cmbn))
-	 (,list (cmbn-list ,cmbn)))
+         (,list (cmbn-list ,cmbn)))
      (declare
       (fixnum ,degr)
       (list ,list))
@@ -459,7 +461,7 @@ the chain complex D."
 
 (DEFMACRO WITH-BICN ((bcnx ibicn) bicn . body)
   `(let ((,bcnx (bcnx ,bicn))
-	 (,ibicn (ibicn ,bicn)))
+         (,ibicn (ibicn ,bicn)))
      (declare
       (type (member :bcnb :bcnc :bcnd) ,bcnx)
       (type gnrt ,ibicn))
@@ -492,9 +494,9 @@ the chain complex D."
 
 (DEFMACRO WITH-TNPR ((degr1 gnrt1 degr2 gnrt2) tnpr . body)
   `(let (,@(if degr1 `((,degr1 (degr1 ,tnpr))) nil)
-	 ,@(if gnrt1 `((,gnrt1 (gnrt1 ,tnpr))) nil)
-	   ,@(if degr2 `((,degr2 (degr2 ,tnpr))) nil)
-	   ,@(if gnrt2 `((,gnrt2 (gnrt2 ,tnpr))) nil))
+         ,@(if gnrt1 `((,gnrt1 (gnrt1 ,tnpr))) nil)
+           ,@(if degr2 `((,degr2 (degr2 ,tnpr))) nil)
+           ,@(if gnrt2 `((,gnrt2 (gnrt2 ,tnpr))) nil))
      (declare
       (fixnum ,@(if degr1 `(,degr1) nil) ,@(if degr2 `(,degr2) nil))
       (type gnrt ,@(if gnrt1 `(,gnrt1) nil) ,@(if gnrt2 `(,gnrt2) nil)))
@@ -535,7 +537,7 @@ the chain complex D."
 
 (DEFMACRO WITH-CBGN ((cdegr cgnrt) cbgn . body)
   `(let ((,cdegr (cdegr ,cbgn))
-	 (,cgnrt (cgnrt ,cbgn)))
+         (,cgnrt (cgnrt ,cbgn)))
      (declare
       (fixnum ,cdegr)
       (type gnrt ,cgnrt))
@@ -544,7 +546,7 @@ the chain complex D."
 
 (DEFMACRO WITH--CBGN ((cdegr cgnrt) cbgn . body)
   `(let ((,cdegr (-cdegr ,cbgn))
-	 (,cgnrt (-cgnrt ,cbgn)))
+         (,cgnrt (-cgnrt ,cbgn)))
      (declare
       (fixnum ,cdegr)
       (type gnrt ,cgnrt))
@@ -596,7 +598,7 @@ the chain complex D."
 
 (DEFMACRO WITH-BRGN ((bdegr bgnrt) brgn . body)
   `(let ((,bdegr (bdegr ,brgn))
-	 (,bgnrt (bgnrt ,brgn)))
+         (,bgnrt (bgnrt ,brgn)))
      (declare
       (fixnum ,bdegr)
       (type gnrt ,bgnrt))
@@ -605,7 +607,7 @@ the chain complex D."
 
 (DEFMACRO WITH--BRGN ((bdegr bgnrt) brgn . body)
   `(let ((,bdegr (-bdegr ,brgn))
-	 (,bgnrt (-bgnrt ,brgn)))
+         (,bgnrt (-bgnrt ,brgn)))
      (declare
       (fixnum ,bdegr)
       (type gnrt ,bgnrt))
@@ -681,7 +683,7 @@ the chain complex D."
          (declare
           (fixnum ,dgop-var)
           (type gmsm ,gmsm-var))
-	 ,@body))))
+         ,@body))))
 
 
 (DEFMACRO DEGENERATE-P (absm)
@@ -751,8 +753,8 @@ the chain complex D."
   (ecase (length rest)
     (2 `(cons :crpr (cons (cdr ,(first rest)) (cdr ,(second rest)))))
     (4 `(cons :crpr (cons
-		     (cons ,(first rest) ,(second rest))
-		     (cons ,(third rest) ,(fourth rest)))))))
+                     (cons ,(first rest) ,(second rest))
+                     (cons ,(third rest) ,(fourth rest)))))))
 |#
 (DEFMACRO CRPR (&rest rest)
   (ecase (length rest)
@@ -805,7 +807,7 @@ the chain complex D."
 #|
 (DEFMACRO WITH-CRPR-2 ((absm1 absm2) crpr . body)
   `(let ((,absm1 (cons :absm (cadr ,crpr)))
-	 (,absm2 (cons :absm (cddr ,crpr))))
+         (,absm2 (cons :absm (cddr ,crpr))))
      (declare (type absm ,absm1 ,absm2))
      ,@body))
 |#
@@ -819,9 +821,9 @@ the chain complex D."
 
 (DEFMACRO WITH-CRPR-4 ((dgop1 gmsm1 dgop2 gmsm2) crpr . body)
   `(let ((,dgop1 (dgop1 ,crpr))
-	 (,gmsm1 (gmsm1 ,crpr))
-	 (,dgop2 (dgop2 ,crpr))
-	 (,gmsm2 (gmsm2 ,crpr)))
+         (,gmsm1 (gmsm1 ,crpr))
+         (,dgop2 (dgop2 ,crpr))
+         (,gmsm2 (gmsm2 ,crpr)))
      (declare
       (fixnum ,dgop1 ,dgop2)
       (type gmsm ,gmsm1 ,gmsm2))
@@ -884,7 +886,7 @@ the chain complex D."
 
 (DEFMACRO WITH-POWR ((gmsm expn) powr . body)
   `(let ((,gmsm (car ,powr))
-	 (,expn (cdr ,powr)))
+         (,expn (cdr ,powr)))
      (declare
       (type gmsm ,gmsm)
       (fixnum expn))
@@ -893,8 +895,8 @@ the chain complex D."
 
 (DEFMACRO WITH-APOWR ((dgop gmsm expn) apowr . body)
   `(let ((,dgop (apdgop ,apowr))
-	 (,gmsm (cadr ,apowr))
-	 (,expn (cddr ,apowr)))
+         (,gmsm (cadr ,apowr))
+         (,expn (cddr ,apowr)))
      (declare
       (fixnum ,dgop ,expn)
       (type gmsm ,gmsm))
