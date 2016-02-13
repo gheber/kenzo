@@ -1,3 +1,5 @@
+;;;; -*- Mode: Lisp; indent-tabs-mode: nil -*-
+
 (in-package :kenzo-test)
 
 (in-suite :kenzo)
