@@ -1,0 +1,29 @@
+language: common-lisp
+
+branches:
+  only:
+    - master
+    - integration
+
+sudo: required
+env:
+  matrix:
+    - LISP=sbcl
+
+install:
+  - if [ -x ./install.sh ] && head -2 ./install.sh | grep '^# cl-travis' > /dev/null;
+    then
+      ./install.sh;
+    else
+      curl https://raw.githubusercontent.com/luismbo/cl-travis/master/install.sh | sh;
+    fi
+
+script:
+  - cl -e '(in-package :cl-user)'
+       -e '(ql:quickload (list :fiveam :kenzo :kenzo-test))'
+       -e '(let ((*debugger-hook*
+                  (lambda (c h)
+                    (declare (ignore c h))
+                    (uiop:quit -1))))
+             (lisp-unit2:with-failure-debugging ()
+                 (fiveam:run!)))'
