@@ -95,7 +95,7 @@
               (is (cat:cmbn-zero-p (cat:? c (cat:? c (+ 4 abar-degr)
                                                    gnrt)))))))))
 
-
+#|
 (test cs-left-hmeq-hat
       (cat:cat-init)
       (let ((c (cat:cs-left-hmeq-hat (cat:k-z-1)))
@@ -141,7 +141,7 @@
               (print (cat:? c (+ 4 abar-degr) gnrt))
               (is (cat:cmbn-zero-p (cat:? c (cat:? c (+ 4 abar-degr)
                                                    gnrt)))))))))
-
+|#
 
 (test cs-pre-left-hmeq-left-reduction
       (cat:cat-init)
