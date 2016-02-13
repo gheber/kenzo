@@ -1,7 +1,7 @@
 # Welcome to Kenzo
 
 [![GPLv3 Logo](http://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)
-
+[![Travis Status](https://travis-ci.org/gheber/kenzo.svg?branch=master)
 [![Quicklisp badge](http://quickdocs.org/badge/kenzo.svg)](http://quickdocs.org/kenzo/)
 
 According to the title of its
