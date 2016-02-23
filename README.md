@@ -2,13 +2,12 @@
 
 [![GPLv3 Logo](http://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)
 [![Travis Status](https://travis-ci.org/gheber/kenzo.svg?branch=master)](https://travis-ci.org/gheber/kenzo)
-[![Quicklisp badge](http://quickdocs.org/badge/kenzo.svg)](http://quickdocs.org/kenzo/)
 
 According to the title of its
 [handbook](https://github.com/gheber/kenzo/blob/master/doc/Kenzo-Doc.pdf),
 Kenzo is a "Symbolic Software for Effective Homology Computation" and
 its main audience might be students and researchers in algebraic topology.
-Have a look at the [overview](https://github.com/gheber/kenzo/blob/master/examples/Overview.ipynb) to get a
+Have a look at the [overview](http://heidegger.beingandti.me:8888/notebooks/Overview.ipynb) to get a
 sense for what's yours to discover.
 
 It is also a remarkable piece of LISP code, albeit in need of a little touch-up.
@@ -26,7 +25,11 @@ This work is well underway, but there are several outstanding [issues](https://g
 
 ## Getting up and running
 
-Here are two simple methods to get going: plain ASDF and Quicklisp.
+There are several methods to get going:
+
+1. [Just play with it a little! (Live)](http://heidegger.beingandti.me:8888/tree#)
+2. [Just give me a Docker container!](https://hub.docker.com/r/hapax/kenzo/)
+3. Local installation via [Quicklisp](http://www.quicklisp.org/beta/) or ASDF
 
 ### Plain ASDF
 
@@ -79,8 +82,8 @@ Running test suite KENZO
  Running test S-CMPR .....
  ...
 ---done---
- Did 786 checks.
-    Pass: 786 (100%)
+Did 1482 checks.
+    Pass: 1482 (100%)
     Skip: 0 ( 0%)
     Fail: 0 ( 0%)
 ```
