@@ -44,3 +44,4 @@ RUN wget https://github.com/gheber/kenzo/archive/master.zip \
 RUN mv /root/quicklisp/local-projects/kenzo-master /root/quicklisp/local-projects/kenzo 
 
 RUN sbcl --eval "(ql:quickload :kenzo)"
+RUN sbcl --eval "(require 'asdf)" --eval "(require 'kenzo)"

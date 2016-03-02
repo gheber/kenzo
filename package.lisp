@@ -11,6 +11,7 @@
            #:*BC*
            #:*BDD*
            #:*CMBN-CONTROL*
+           #:*CHCM-LIST*
            #:*DF-FD*
            #:*DG-GD*
            #:*FH*
@@ -20,6 +21,7 @@
            #:*ID-FG*
            #:*ID-GF-DH-HD*
            #:*LIST-LIST*
+           #:*MRPH-LIST*
            #:*RESULTS-VERBOSE*
            #:*TC*
            #:*TDD*
