@@ -32,6 +32,7 @@
 
            ;; algebras.lisp
 
+           #:CHANGE-CHCM-TO-ALGB
            #:HOPF
 
            ;; bar.lisp
@@ -186,7 +187,7 @@
            #:COBAR-BASIS
            #:COBAR-BASIS-LENGTH
            #:COBAR-CMPR
-           #:#:COBAR-HRZN-DFFR
+           #:COBAR-HRZN-DFFR
            #:COBAR-INTR-HRZN-DFFR
            #:COBAR-INTR-VRTC-DFFR
            #:HMTP-VRTC-COBAR-INTR
@@ -529,6 +530,7 @@
            ;; special-smsts.lisp
 
            #:BUILD-FINITE-SS
+           #:BUILD-SMST
            #:FINITE-SS-PRE-TABLE
            #:FINITE-SS-PRE-TABLE-TABLE
            #:FINITE-SS-TABLE
