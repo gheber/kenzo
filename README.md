@@ -8,7 +8,7 @@ According to the title of its
 Kenzo is a "Symbolic Software for Effective Homology Computation" and
 its main audience might be students and researchers in algebraic topology.
 Have a look at the [overview](http://yes.kenzocat.works/notebooks/Overview.ipynb) to get a
-sense for what's yours to discover.
+sense for what's there for you to discover.
 
 It is also a remarkable piece of LISP code, albeit in need of a little touch-up.
 This repository contains a repackaged version of the Kenzo program by Francis Sergeraert
