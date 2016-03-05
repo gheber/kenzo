@@ -36,6 +36,8 @@ RUN wget -nv https://github.com/fredokun/cl-jupyter/archive/master.zip \
  && python3 /root/cl-jupyter-master/install-cl-jupyter.py \
  && sbcl --load /root/cl-jupyter-master/cl-jupyter.lisp --non-interactive
 
+RUN ln -s /root/cl-jupyter-master/src /root/quicklisp/local-projects/cl-jupyter
+
 # Kenzo
 
 RUN wget https://github.com/gheber/kenzo/archive/master.zip \
@@ -43,5 +45,8 @@ RUN wget https://github.com/gheber/kenzo/archive/master.zip \
 
 RUN mv /root/quicklisp/local-projects/kenzo-master /root/quicklisp/local-projects/kenzo 
 
-RUN sbcl --eval "(ql:quickload :kenzo)"
-RUN sbcl --eval "(require 'asdf)" --eval "(require 'kenzo)"
+RUN echo '(ql:quickload :cl-jupyter)' >> /root/.sbclrc
+RUN echo '(ql:quickload :kenzo)' >> /root/.sbclrc
+RUN echo '(use-package :cat :cl-jupyter-user)' >> /root/.sbclrc
+RUN echo '(cat:cat-init)' >> /root/.sbclrc
+RUN sbcl --eval "(require 'asdf)"
