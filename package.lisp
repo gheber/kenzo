@@ -122,6 +122,7 @@
            ;; classes.lisp
 
            #:ABSM
+           #:ABSM-P
            #:ABSM1
            #:ABSM2
            #:AB-SIMPLICIAL-GROUP
@@ -168,6 +169,8 @@
            #:SINTR
            #:SORC
            #:TCC
+           #:TNPR
+           #:TNPR-P
 
            ;; classifying-space.lisp
 
@@ -444,7 +447,6 @@
            #:TERM
            #:TERM-CMBN
            #:TCC
-           #:TNPR
            #:WITH--TERM
            #:WITH-ABSM
            #:WITH-CMBN
