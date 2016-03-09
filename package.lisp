@@ -533,6 +533,8 @@
 
            ;; special-smsts.lisp
 
+           #:ABSM-EXT-INT
+           #:ABSM-INT-EXT
            #:BUILD-FINITE-SS
            #:BUILD-SMST
            #:FINITE-SS-PRE-TABLE
@@ -545,6 +547,7 @@
            #:SPHERE
            #:SPHERE-FACE
            #:SPHERE-WEDGE
+           #:VERTEX-I
 
            ;; suspensions.lisp
 
