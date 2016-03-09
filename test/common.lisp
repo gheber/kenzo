@@ -1,3 +1,4 @@
+;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
 
 (in-package :kenzo-test)
 
@@ -83,10 +84,10 @@
 
 (defun make-rdct (tdmns bdmns)
   (let ((rdct (cat:build-rdct
-              :f (make-f tdmns bdmns)
-              :g (make-g tdmns bdmns)
-              :h (make-h tdmns bdmns)
-              :orgn `(reduction delta ,tdmns ,bdmns))))
+               :f (make-f tdmns bdmns)
+               :g (make-g tdmns bdmns)
+               :h (make-h tdmns bdmns)
+               :orgn `(reduction delta ,tdmns ,bdmns))))
     rdct))
 
 (defun cdelta1 (dmns)
@@ -151,10 +152,10 @@
 
 (defun make-rdct1 (tdmns bdmns)
   (let ((rdct (cat:build-rdct
-              :f (make-f1 tdmns bdmns)
-              :g (make-g1 tdmns bdmns)
-              :h (make-h1 tdmns bdmns)
-              :orgn `(reduction delta ,tdmns ,bdmns))))
+               :f (make-f1 tdmns bdmns)
+               :g (make-g1 tdmns bdmns)
+               :h (make-h1 tdmns bdmns)
+               :orgn `(reduction delta ,tdmns ,bdmns))))
     rdct))
 
 
@@ -177,7 +178,7 @@
              (intern (coerce (vector (code-char (+ 65 (random 4)))) 'string)))
        (rslt nil (cons (cat:brgn degr gnrt) rslt)))
       ((> tdegr 8) (setf cat:*tc* (cat:cmbn tdegr 1 (cat:make-abar
-                                                  :list rslt))))))
+                                                     :list rslt))))))
 
 
 (defun aleat-bc ()
@@ -187,7 +188,7 @@
              (intern (coerce (vector (code-char (+ 67 (random 2)))) 'string)))
        (rslt nil (cons (cat:brgn degr gnrt) rslt)))
       ((> tdegr 8) (setf cat:*bc* (cat:cmbn tdegr 1 (cat:make-abar
-                                                  :list rslt))))))
+                                                     :list rslt))))))
 
 
 (defun c ()
@@ -203,12 +204,12 @@
       ((>= cum-degr tot-degr~) (cat:make-abar :list rslt))
     (setf degr (1+ (random max-degr)))
     (push (cat:brgn (1+ degr)
-                (let ((list (make-list degr)))
-                  (mapl
-                   #'(lambda (sublist)
-                       (setf (car sublist) (- (random 21) 10)))
-                   list)
-                  list))
+                    (let ((list (make-list degr)))
+                      (mapl
+                       #'(lambda (sublist)
+                           (setf (car sublist) (- (random 21) 10)))
+                       list)
+                      list))
           rslt)))
 
 

@@ -1,5 +1,5 @@
-;;;; -*- Mode: Lisp; indent-tabs-mode: nil -*-
-;;;
+;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
+
 ;;;  BAR  BAR  BAR  BAR  BAR  BAR  BAR  BAR  BAR
 ;;;  BAR  BAR  BAR  BAR  BAR  BAR  BAR  BAR  BAR
 ;;;  BAR  BAR  BAR  BAR  BAR  BAR  BAR  BAR  BAR

@@ -1,3 +1,5 @@
+;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
+
 (in-package :kenzo-test)
 
 (in-suite :kenzo)
@@ -358,9 +360,9 @@
       (let* ((h (cat:cs-left-hmeq (cat:k-z-1)))
              (abar (cat:abar 2 '(2) 3 '(3 4))))
         (cat:rf h
-            (cat:lg h
-                (cat:lf h
-                    (cat:rg h 5 abar))))))
+                (cat:lg h
+                        (cat:lf h
+                                (cat:rg h 5 abar))))))
 
 
 (test classifying-space

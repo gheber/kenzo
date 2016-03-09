@@ -1,6 +1,4 @@
-;;;; -*- Mode: lisp; indent-tabs-mode: nil -*-
-;;;;
-;;;; package.lisp
+;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
 
 (defpackage #:cat
   (:use #:cl)

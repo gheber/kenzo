@@ -1,3 +1,4 @@
+;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
 
 (in-package :kenzo-test)
 
@@ -21,30 +22,30 @@
 (test lexico
       (setf cl:*print-level* nil)
       (pprint (macroexpand-1
-	       '(cat:lexico
-		 comparison1
-		 comparison2
-		 comparison3
-		 comparison4))))
+               '(cat:lexico
+                 comparison1
+                 comparison2
+                 comparison3
+                 comparison4))))
 
 (test with-term
       (macroexpand-1 '(cat:with-term (cffc gnrt) term
-		       (statement-1)
-		       (statement-2)))
+                       (statement-1)
+                       (statement-2)))
       (macroexpand-1 '(cat:with-term (nil gnrt) term
-		       (statement-1)
-		       (statement-2))))
+                       (statement-1)
+                       (statement-2))))
 
 (test with--term
       (macroexpand-1 '(cat:with--term (cffc gnrt) mark
-		       (statement-1)
-		       (statement-2))))
+                       (statement-1)
+                       (statement-2))))
 
 
 (test with-cmbn
       (macroexpand-1 '(cat:with-cmbn (degr list) cmbn
-		       (statement-1)
-		       (statement-2))))
+                       (statement-1)
+                       (statement-2))))
 
 
 (test cmpr
@@ -88,11 +89,11 @@
 
 (test with-tnpr
       (macroexpand-1 '(cat:with-tnpr (degr1 gnrt1 degr2 gnrt2) tnpr
-		       (statement-1)
-		       (statement-2)))
+                       (statement-1)
+                       (statement-2)))
       (macroexpand-1 '(cat:with-tnpr (nil gnrt1 degr2 gnrt2) tnpr
-		       (statement-1)
-		       (statement-2))))
+                       (statement-1)
+                       (statement-2))))
 
 
 (test crpr
@@ -101,23 +102,21 @@
       (macroexpand '(cat:crpr absm1 absm2))
       (macroexpand '(cat:crpr dgop1 gmsm1 dgop2 gmsm2))
       (let ((c (cat:crpr 1 'a 2 'b)))
-	(cat:dgop1 c)
-	(cat:gmsm1 c)
-	(cat:dgop2 c)
-	(cat:gmsm2 c)
-	(cat:absm1 c)
-	(cat:absm2 c)))
+        (cat:dgop1 c)
+        (cat:gmsm1 c)
+        (cat:dgop2 c)
+        (cat:gmsm2 c)
+        (cat:absm1 c)
+        (cat:absm2 c)))
 
 
 (test with-crpr
       (cat:with-crpr (absm1 absm2) (cat:crpr 3 'a 4 'b) (list absm1 absm2))
       (macroexpand-1
        (macroexpand-1 '(cat:with-crpr (dgop1 gmsm1 dgop2 gmsm2) crpr
-			(statement-1)
-			(statement-2))))
+                        (statement-1)
+                        (statement-2))))
       (macroexpand-1
        (macroexpand-1 '(cat:with-crpr (absm1 absm2) crpr
-			(statement-1)
-			(statement-2)))))
-
-
+                        (statement-1)
+                        (statement-2)))))

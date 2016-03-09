@@ -1,3 +1,5 @@
+;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
+
 ;;;  TEST  TEST  TEST  TEST  TEST  TEST  TEST  TEST  TEST  TEST  TEST  TEST
 ;;;  TEST  TEST  TEST  TEST  TEST  TEST  TEST  TEST  TEST  TEST  TEST  TEST
 ;;;  TEST  TEST  TEST  TEST  TEST  TEST  TEST  TEST  TEST  TEST  TEST  TEST
@@ -16,9 +18,9 @@
         (homology (loop-space (moore 2 4) 2) 7)
 
         (homology (k-z2 2) 3 8)
-        
+
         (homology (k-z2 3) 3 8)
-        
+
         (setf s3 (sphere 3))
         (homology s3 3)
         (setf ch3 (chml-clss s3 3))
@@ -33,7 +35,7 @@
         (setf f5 (z-whitehead x5 ch5))
         (setf x6 (fibration-total f5))
 
-))
+        ))
 
 (time (homology o2s3 7))
 (time (homology x6 6))

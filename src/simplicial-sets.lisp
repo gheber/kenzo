@@ -1,3 +1,5 @@
+;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
+
 ;;;  SIMPLICIAL-SETS  SIMPLICIAL-SETS  SIMPLICIAL-SETS
 ;;;  SIMPLICIAL-SETS  SIMPLICIAL-SETS  SIMPLICIAL-SETS
 ;;;  SIMPLICIAL-SETS  SIMPLICIAL-SETS  SIMPLICIAL-SETS
@@ -15,10 +17,10 @@
       (error "In DGOP-EXT-INT, the external dgop ~A is not decreasing." ext-dgop)))
   (the fixnum
        (apply #'logxor (mapcar
-			#'(lambda (item)
-			    (declare (fixnum item))
-			    (the fixnum (2-exp item)))
-			ext-dgop))))
+                        #'(lambda (item)
+                            (declare (fixnum item))
+                            (the fixnum (2-exp item)))
+                        ext-dgop))))
 
 
 (DEFUN DGOP-INT-EXT (dgop)
@@ -27,14 +29,14 @@
     (error "In DXOP-INT-EXT, ~A is not a dxop." dgop))
   (the list
        (do ((dgop dgop (ash dgop -1))
-	    (rslt +empty-list+)
-	    (bmark 0 (1+ bmark)))
-	   ((zerop dgop) rslt)
+            (rslt +empty-list+)
+            (bmark 0 (1+ bmark)))
+           ((zerop dgop) rslt)
          (declare
-	  (fixnum dgop bmark)
-	  (list rslt))
+          (fixnum dgop bmark)
+          (list rslt))
          (when (oddp dgop)
-	   (push bmark rslt)))))
+           (push bmark rslt)))))
 
 
 (DEFUN HYPHENIZE-LIST (list)
@@ -50,9 +52,9 @@
    (type stream stream)
    (ignore depth))
   (format stream
-	  "<AbSm ~A ~A>"
-	  (hyphenize-list (dgop-int-ext (dgop absm)))
-	  (gmsm absm))
+          "<AbSm ~A ~A>"
+          (hyphenize-list (dgop-int-ext (dgop absm)))
+          (gmsm absm))
   absm)
 
 
@@ -68,7 +70,7 @@
   (the simplicial-set
        (progn
          (format stream "[K~D Simplicial-Set]" (idnm smst))
-	 smst)))
+         smst)))
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (ext:package-lock :clos) t))
 
@@ -97,24 +99,24 @@
       (return-from build-smst already)))
   (if intr-bndr
       (unless bndr-strt
-	(error "In BUILD-SMST, an intr-bndr is given but not its strategy."))
+        (error "In BUILD-SMST, an intr-bndr is given but not its strategy."))
       (cond (face*
-	     (setf bndr-strt :gnrt
-		   intr-bndr (face*-bndr cmpr face*)))
+             (setf bndr-strt :gnrt
+                   intr-bndr (face*-bndr cmpr face*)))
             (face
-	     (setf bndr-strt :gnrt
-		   intr-bndr (face-bndr cmpr face)))))
+             (setf bndr-strt :gnrt
+                   intr-bndr (face-bndr cmpr face)))))
   (if intr-dgnl
       (unless dgnl-strt
-	(error "In BUILD-SMST, an intr-dgnl is given but not its strategy."))
+        (error "In BUILD-SMST, an intr-dgnl is given but not its strategy."))
       (setf dgnl-strt :gnrt
             intr-dgnl (intr-diagonal face)))
   (the simplicial-set
        (let ((rslt (build-chcm :cmpr cmpr :basis basis :bsgn bspn
-			       :intr-dffr intr-bndr
-			       :strt bndr-strt :orgn orgn)))
+                               :intr-dffr intr-bndr
+                               :strt bndr-strt :orgn orgn)))
          (change-chcm-to-clgb rslt
-			      :intr-cprd intr-dgnl :cprd-strt dgnl-strt)
+                              :intr-cprd intr-dgnl :cprd-strt dgnl-strt)
          (setf (slot-value (dgnl rslt) 'orgn)
                `(diagonal ,rslt))
          (change-class rslt 'simplicial-set)
@@ -129,53 +131,53 @@
    (fixnum dmns))
   (the list
        (let ((basis-array (make-array (1+ dmns) :element-type 'list)))
-	 (declare (type (vector list) basis-array))
-	 (dotimes (i (1+ dmns))
-	   (declare (fixnum i))
-	   (setf (aref basis-array i) (funcall basis i)))
-	 (do ((dgop (mask dmns) (1- dgop))
-	      (rslt +empty-list+
-		    (nconc (mapcar
-			    #'(lambda (gmsm)
-				(declare (type gmsm gmsm))
-				(absm dgop gmsm))
-			    (aref basis-array (- dmns (logcount dgop))))
-			   rslt)))
-	     ((minusp dgop) rslt)))))
+         (declare (type (vector list) basis-array))
+         (dotimes (i (1+ dmns))
+           (declare (fixnum i))
+           (setf (aref basis-array i) (funcall basis i)))
+         (do ((dgop (mask dmns) (1- dgop))
+              (rslt +empty-list+
+                    (nconc (mapcar
+                            #'(lambda (gmsm)
+                                (declare (type gmsm gmsm))
+                                (absm dgop gmsm))
+                            (aref basis-array (- dmns (logcount dgop))))
+                           rslt)))
+             ((minusp dgop) rslt)))))
 
 
 (DEFUN INTR-DIAGONAL (face)
   (declare (type face face))
   (flet ((rslt (dmns gmsm)
-	   (declare
-	    (fixnum dmns)
-	    (type gmsm gmsm))
-	   (the cmbn
-		(let ((del-0-s +empty-list+)
-		      (rslt +empty-list+))
-		  (declare (list del-0-s rslt))
-		  (do ((dmns dmns (1- dmns))
-		       (absm (absm 0 gmsm) (a-face4 face 0 dmns absm)))
-		      ((zerop dmns) (push absm del-0-s))
-		    (declare (fixnum dmns) (type absm absm))
-		    (push absm del-0-s))
-		  (do ((ldmns dmns (1- ldmns))
-		       (rdmns 0 (1+ rdmns))
-		       (absm (absm 0 gmsm) (a-face4 face ldmns ldmns absm))
-		       (mark-del-0 del-0-s (cdr mark-del-0)))
-		      ((zerop ldmns)
-		       (push (term 1 (tnpr 0 (gmsm absm) dmns gmsm))
-			     rslt))
-		    (declare
-		     (fixnum ldmns rdmns)
-		     (type gmsm gmsm)
-		     (list mark-del-0))
-		    (unless (or (plusp (dgop absm))
-				(plusp (dgop (car mark-del-0))))
-		      (push (term 1 (tnpr ldmns (gmsm absm)
-					  rdmns (gmsm (car mark-del-0))))
-			    rslt)))
-		  (make-cmbn :degr dmns :list rslt)))))
+           (declare
+            (fixnum dmns)
+            (type gmsm gmsm))
+           (the cmbn
+                (let ((del-0-s +empty-list+)
+                      (rslt +empty-list+))
+                  (declare (list del-0-s rslt))
+                  (do ((dmns dmns (1- dmns))
+                       (absm (absm 0 gmsm) (a-face4 face 0 dmns absm)))
+                      ((zerop dmns) (push absm del-0-s))
+                    (declare (fixnum dmns) (type absm absm))
+                    (push absm del-0-s))
+                  (do ((ldmns dmns (1- ldmns))
+                       (rdmns 0 (1+ rdmns))
+                       (absm (absm 0 gmsm) (a-face4 face ldmns ldmns absm))
+                       (mark-del-0 del-0-s (cdr mark-del-0)))
+                      ((zerop ldmns)
+                       (push (term 1 (tnpr 0 (gmsm absm) dmns gmsm))
+                             rslt))
+                    (declare
+                     (fixnum ldmns rdmns)
+                     (type gmsm gmsm)
+                     (list mark-del-0))
+                    (unless (or (plusp (dgop absm))
+                                (plusp (dgop (car mark-del-0))))
+                      (push (term 1 (tnpr ldmns (gmsm absm)
+                                          rdmns (gmsm (car mark-del-0))))
+                            rslt)))
+                  (make-cmbn :degr dmns :list rslt)))))
     (the intr-mrph #'rslt)))
 
 
@@ -184,24 +186,24 @@
    (type cmprf cmpr)
    (type face face))
   (flet ((rslt (dmns gmsm)
-	   (declare
-	    (fixnum dmns)
-	    (type gmsm gmsm))
-	   (the cmbn
+           (declare
+            (fixnum dmns)
+            (type gmsm gmsm))
+           (the cmbn
                 (progn
-		  (when (zerop dmns)
-		    (return-from rslt +zero-negative-cmbn+))
-		  (let ((pre-rslt +empty-list+))
-		    (declare (list pre-rslt))
-		    ;; (list (cons cffc face))
-		    (dotimes (indx (1+ dmns))
-		      (declare (fixnum indx))
-		      (let ((face (funcall face indx dmns gmsm)))
-			(declare (type absm face))
-			(unless (degenerate-p face)
-			  (push (term (-1-expt-n indx) (gmsm face))
-				pre-rslt))))
-		    (apply #'nterm-add cmpr (1- dmns) pre-rslt))))))
+                  (when (zerop dmns)
+                    (return-from rslt +zero-negative-cmbn+))
+                  (let ((pre-rslt +empty-list+))
+                    (declare (list pre-rslt))
+                    ;; (list (cons cffc face))
+                    (dotimes (indx (1+ dmns))
+                      (declare (fixnum indx))
+                      (let ((face (funcall face indx dmns gmsm)))
+                        (declare (type absm face))
+                        (unless (degenerate-p face)
+                          (push (term (-1-expt-n indx) (gmsm face))
+                                pre-rslt))))
+                    (apply #'nterm-add cmpr (1- dmns) pre-rslt))))))
     (the intr-mrph #'rslt)))
 
 
@@ -210,23 +212,23 @@
    (type cmprf cmpr)
    (type face* face*))
   (flet ((rslt (dmns gmsm)
-	   (declare
-	    (fixnum dmns)
-	    (type gmsm gmsm))
-	   (the cmbn
+           (declare
+            (fixnum dmns)
+            (type gmsm gmsm))
+           (the cmbn
                 (progn
-		  (when (zerop dmns)
-		    (return-from rslt +zero-negative-cmbn+))
-		  (let ((pre-rslt +empty-list+))
-		    (declare (list pre-rslt))
-		    ;; (list (list gmsm fixnum))
-		    (dotimes (indx (1+ dmns))
-		      (declare (fixnum indx))
-		      (let ((face (funcall face* indx dmns gmsm)))
-			(declare (type (or gmsm (eql :degenerate)) face))
-			(unless (eq face :degenerate)
-			  (push (term (-1-expt-n indx) face) pre-rslt))))
-		    (apply #'nterm-add cmpr (1- dmns) pre-rslt))))))
+                  (when (zerop dmns)
+                    (return-from rslt +zero-negative-cmbn+))
+                  (let ((pre-rslt +empty-list+))
+                    (declare (list pre-rslt))
+                    ;; (list (list gmsm fixnum))
+                    (dotimes (indx (1+ dmns))
+                      (declare (fixnum indx))
+                      (let ((face (funcall face* indx dmns gmsm)))
+                        (declare (type (or gmsm (eql :degenerate)) face))
+                        (unless (eq face :degenerate)
+                          (push (term (-1-expt-n indx) face) pre-rslt))))
+                    (apply #'nterm-add cmpr (1- dmns) pre-rslt))))))
     (the intr-mrph #'rslt)))
 
 
@@ -236,10 +238,10 @@
    (type absm absm1 absm2))
   (the cmpr
        (with-absm (dgop1 gmsm1) absm1
-		  (with-absm (dgop2 gmsm2) absm2
-			     (lexico
-			      (f-cmpr dgop1 dgop2)
-			      (funcall cmpr gmsm1 gmsm2))))))
+                  (with-absm (dgop2 gmsm2) absm2
+                             (lexico
+                              (f-cmpr dgop1 dgop2)
+                              (funcall cmpr gmsm1 gmsm2))))))
 
 
 (DEFUN BSPN-P (cmpr bspn dmns absm)
@@ -251,8 +253,8 @@
    (type absm absm))
   (the boolean
        (with-absm (dgop gmsm) absm
-		  (and (= dgop (mask dmns))
-		       (eq :equal (funcall cmpr bspn gmsm))))))
+                  (and (= dgop (mask dmns))
+                       (eq :equal (funcall cmpr bspn gmsm))))))
 
 
 (DEFUN DLOP-EXT-INT (ext-dlop)
@@ -263,10 +265,10 @@
       (error "In DLOP-EXT-INT, the external dlop ~A is not increasing." ext-dlop)))
   (the fixnum
        (apply #'logxor
-	      (mapcar #'(lambda (item)
-			  (declare (fixnum item))
-			  (the fixnum (2-exp item)))
-		      ext-dlop))))
+              (mapcar #'(lambda (item)
+                          (declare (fixnum item))
+                          (the fixnum (2-exp item)))
+                      ext-dlop))))
 
 
 (DEFUN DLOP-INT-EXT (dlop)
@@ -283,29 +285,29 @@
        (let ((share (ash -1 1dgop)))
          (declare (fixnum share))
          (logxor
-	  (ash (logand share dgop) 1)
-	  (2-exp 1dgop)
-	  (logandc1 share dgop)))))
+          (ash (logand share dgop) 1)
+          (2-exp 1dgop)
+          (logandc1 share dgop)))))
 
 
 (DEFUN DGOP*DGOP (dgop1 dgop2)
   (declare (type fixnum dgop1 dgop2))
   (let ((dgop 0)
-	(bmark 0))
+        (bmark 0))
     (declare (fixnum dgop bmark))
     (loop
        (when (zerop dgop1)
-	 (return-from dgop*dgop
-	   (logxor dgop (ash dgop2 bmark))))
+         (return-from dgop*dgop
+           (logxor dgop (ash dgop2 bmark))))
        (when (zerop dgop2)
-	 (return-from dgop*dgop
-	   (logxor dgop (ash dgop1 bmark))))
+         (return-from dgop*dgop
+           (logxor dgop (ash dgop1 bmark))))
        (cond ((evenp dgop1)
-	      (when (oddp dgop2)
-		(incf dgop (2-exp bmark)))
-	      (setf dgop2 (ash dgop2 -1)))
-	     (t
-	      (incf dgop (2-exp bmark))))
+              (when (oddp dgop2)
+                (incf dgop (2-exp bmark)))
+              (setf dgop2 (ash dgop2 -1)))
+             (t
+              (incf dgop (2-exp bmark))))
        (setf dgop1 (ash dgop1 -1))
        (incf bmark))))
 
@@ -315,18 +317,18 @@
   (the fixnum
        (let ((cut (2-exp indx)))
          (multiple-value-bind (quotient remainder) (truncate n cut)
-	   (declare (fixnum quotient remainder))
-	   (+ (ash (ash quotient -1) indx) remainder)))))
+           (declare (fixnum quotient remainder))
+           (+ (ash (ash quotient -1) indx) remainder)))))
 
 
 (DEFUN DGOP/DGOP (dgop1 dgop2)
   (declare (fixnum dgop1 dgop2))
   (the fixnum
        (do ((indx (1- (integer-length dgop2)) (1- indx)))
-	   ((minusp indx) dgop1)
+           ((minusp indx) dgop1)
          (declare (fixnum indx))
          (when (logbitp indx dgop2)
-	   (setf dgop1 (remove-bit dgop1 indx))))))
+           (setf dgop1 (remove-bit dgop1 indx))))))
 
 
 (DEFUN 1DLOP-DGOP (1dlop dgop)
@@ -336,32 +338,32 @@
   (the (values fixnum (or fixnum null))
        (progn
          (when (logbitp 1dlop dgop)
-	   (let ((share (ash -1 1dlop)))
-	     (declare (fixnum share))
-	     (return-from 1dlop-dgop
-	       (values
-		(logxor
-		 (logand share (ash dgop -1))
-		 (logandc1 share dgop))
-		nil))))
+           (let ((share (ash -1 1dlop)))
+             (declare (fixnum share))
+             (return-from 1dlop-dgop
+               (values
+                (logxor
+                 (logand share (ash dgop -1))
+                 (logandc1 share dgop))
+                nil))))
          (when (and (plusp 1dlop)
                     (logbitp (1- 1dlop) dgop))
-	   (let ((share (ash -1 1dlop)))   ;;;
-	     (declare (fixnum share))
-	     (setf share (ash share -1))  ;;; because of the compiler bug
-	     (return-from 1dlop-dgop
-	       (values
-		(logxor
-		 (logand share (ash dgop -1))
-		 (logandc1 share dgop))
-		nil))))
+           (let ((share (ash -1 1dlop)))   ;;;
+             (declare (fixnum share))
+             (setf share (ash share -1))  ;;; because of the compiler bug
+             (return-from 1dlop-dgop
+               (values
+                (logxor
+                 (logand share (ash dgop -1))
+                 (logandc1 share dgop))
+                nil))))
          (let ((share (ash -1 1dlop)))
-	   (declare (fixnum share))
-	   (let ((right (logandc1 share dgop)))
-	     (declare (fixnum right))
-	     (values
-	      (logxor right (logand share (ash dgop -1)))
-	      (- 1dlop (logcount right))))))))
+           (declare (fixnum share))
+           (let ((right (logandc1 share dgop)))
+             (declare (fixnum right))
+             (values
+              (logxor right (logand share (ash dgop -1)))
+              (- 1dlop (logcount right))))))))
 
 
 (DEFUN A-FACE4 (face indx dmns absm)
@@ -371,20 +373,20 @@
    (type absm absm))
   (the absm
        (with-absm
-	   (dgop gmsm) absm
-	   (multiple-value-bind (dgop2 1dlop) (1dlop-dgop indx dgop)
-	     (declare (fixnum dgop2)
-		      #-(or ccl ecl lispworks sbcl)
-		      (type (or fixnum nil) 1dlop))
-	     ;; Bug LispWorks if this or-type defined
-	     (unless 1dlop
-	       (return-from a-face4 (absm dgop2 gmsm)))
-	     (locally (declare (fixnum 1dlop))
-	       (let ((gmsm-face (funcall face 1dlop (- dmns (logcount dgop))
-					 gmsm)))
-		 (declare (type absm gmsm-face))
-		 (with-absm (dgop3 gmsm3) gmsm-face
-			    (absm (dgop*dgop dgop2 dgop3) gmsm3))))))))
+           (dgop gmsm) absm
+           (multiple-value-bind (dgop2 1dlop) (1dlop-dgop indx dgop)
+             (declare (fixnum dgop2)
+                      #-(or ccl ecl lispworks sbcl)
+                      (type (or fixnum nil) 1dlop))
+             ;; Bug LispWorks if this or-type defined
+             (unless 1dlop
+               (return-from a-face4 (absm dgop2 gmsm)))
+             (locally (declare (fixnum 1dlop))
+               (let ((gmsm-face (funcall face 1dlop (- dmns (logcount dgop))
+                                         gmsm)))
+                 (declare (type absm gmsm-face))
+                 (with-absm (dgop3 gmsm3) gmsm-face
+                            (absm (dgop*dgop dgop2 dgop3) gmsm3))))))))
 
 
 (DEFUN 1DGNR (indx absm)
@@ -393,7 +395,7 @@
    (type absm absm))
   (the absm
        (with-absm (dgop gmsm) absm
-		  (absm (1dgop*dgop indx dgop) gmsm))))
+                  (absm (1dgop*dgop indx dgop) gmsm))))
 
 
 (DEFUN NDGNR (dgop absm)
@@ -402,7 +404,7 @@
    (type absm absm))
   (the absm
        (with-absm (dgop2 gmsm) absm
-		  (absm (dgop*dgop dgop dgop2) gmsm))))
+                  (absm (dgop*dgop dgop dgop2) gmsm))))
 
 
 (DEFUN NFACE (face dlop dmns gmsm)
@@ -412,11 +414,11 @@
    (fixnum dmns)
    (type gmsm gmsm))
   (do* ((gmsm gmsm)
-	(dmns dmns)
-	(dgop 0)
-	(dlop dlop (- dlop (2-exp bark)))
-	(bark (1- (integer-length dlop))
-	      (1- (integer-length dlop))))
+        (dmns dmns)
+        (dgop 0)
+        (dlop dlop (- dlop (2-exp bark)))
+        (bark (1- (integer-length dlop))
+              (1- (integer-length dlop))))
        ((zerop dlop) (absm dgop gmsm))
     (declare
      (type gmsm gmsm)
@@ -426,15 +428,15 @@
        (fixnum dgop2)
        (type (or null fixnum) indx))
       (if indx
-	  (locally (declare (fixnum indx))
-	    (let ((new-absm (funcall face indx dmns gmsm)))
-	      (declare (type absm new-absm))
-	      (with-absm (dgop3 gmsm2) new-absm
-			 (setf gmsm gmsm2
-			       dmns (- dmns 1
-				       (logcount dgop3))
-			       dgop (dgop*dgop dgop2 dgop3)))))
-	  (setf dgop dgop2)))))
+          (locally (declare (fixnum indx))
+            (let ((new-absm (funcall face indx dmns gmsm)))
+              (declare (type absm new-absm))
+              (with-absm (dgop3 gmsm2) new-absm
+                         (setf gmsm gmsm2
+                               dmns (- dmns 1
+                                       (logcount dgop3))
+                               dgop (dgop*dgop dgop2 dgop3)))))
+          (setf dgop dgop2)))))
 
 
 (DEFUN CHECK-FACES (cmpr face dmns gmsm)
@@ -446,25 +448,25 @@
   (the boolean
        (progn
          (when (> dmns 1)
-	   (let ((dmns-1 (1- dmns)))
-	     (declare (fixnum dmns-1))
-	     (dotimes (i dmns)
-	       (declare (fixnum i))
-	       (dotimes (j (1+ i))
-		 (declare (fixnum j))
-		 (let ((rslt1 (a-face4 face i dmns-1
-				       (funcall face j dmns gmsm)))
-		       (rslt2 (a-face4 face j dmns-1
-				       (funcall face (1+ i) dmns gmsm))))
-		   (declare (type absm rslt1 rslt2))
-		   (unless (eq (a-cmpr3 cmpr rslt1 rslt2) :equal)
-		     (cerror "CHECK-FACES will return NIL."
-			     "Noncoherent boundary operators detected by CHECK-FACES :~@
+           (let ((dmns-1 (1- dmns)))
+             (declare (fixnum dmns-1))
+             (dotimes (i dmns)
+               (declare (fixnum i))
+               (dotimes (j (1+ i))
+                 (declare (fixnum j))
+                 (let ((rslt1 (a-face4 face i dmns-1
+                                       (funcall face j dmns gmsm)))
+                       (rslt2 (a-face4 face j dmns-1
+                                       (funcall face (1+ i) dmns gmsm))))
+                   (declare (type absm rslt1 rslt2))
+                   (unless (eq (a-cmpr3 cmpr rslt1 rslt2) :equal)
+                     (cerror "CHECK-FACES will return NIL."
+                             "Noncoherent boundary operators detected by CHECK-FACES :~@
                                Simplex => ~A~@
                                del_~D o del_~D => ~A~@
                                del_~D o del_~D => ~A"
-			     gmsm i j rslt1 j (1+ i) rslt2)
-		     (return-from check-faces nil)))))))
+                             gmsm i j rslt1 j (1+ i) rslt2)
+                     (return-from check-faces nil)))))))
          t)))
 
 
@@ -480,16 +482,16 @@
       (error "In CHECK-SMST, the locally-effective simplicial-set ~A~@
               cannot be checked." smst))
     (do ((rslt t)
-	 (dmns dmns1 (1+ dmns)))
-	((>= dmns dmns2) rslt)
+         (dmns dmns1 (1+ dmns)))
+        ((>= dmns dmns2) rslt)
       (declare
        (type boolean rslt)
        (fixnum dmns))
       (format t "~%Checking the ~D-simplices..." dmns)
       (dolist (gmsm (funcall basis dmns))
-	(declare (type gmsm gmsm))
-	(unless (check-faces cmpr face dmns gmsm)
-	  (setf rslt nil))))))
+        (declare (type gmsm gmsm))
+        (unless (check-faces cmpr face dmns gmsm)
+          (setf rslt nil))))))
 
 
 (DEFUN SHOW-STRUCTURE (smst dmns)
@@ -506,9 +508,9 @@ from dimension 0 up to and including dimension DMNS.
     (dotimes (i (1+ dmns))
       (format t "~2%Dimension = ~D:" i)
       (case i
-	(0 (format t "~2%~8TVertices : ~8T~A" (basis smst 0)))
-	(otherwise
-	 (dolist (s (basis smst i))
-	   (format t "~2%~8TSimplex : ~A~2%~16TFaces : ~A"
-		   s (mapcar #'(lambda (j) (face smst j i s))
-			     (<a-b> 0 i)))))))))
+        (0 (format t "~2%~8TVertices : ~8T~A" (basis smst 0)))
+        (otherwise
+         (dolist (s (basis smst i))
+           (format t "~2%~8TSimplex : ~A~2%~16TFaces : ~A"
+                   s (mapcar #'(lambda (j) (face smst j i s))
+                             (<a-b> 0 i)))))))))

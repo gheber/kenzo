@@ -1,3 +1,5 @@
+;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
+
 ;;;  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES
 ;;;  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES
 ;;;  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES
@@ -14,67 +16,66 @@
 (PROCLAIM '(OPTIMIZE (speed 3) (safety 1) (space 0) (debug 0)))
 
 (DEFCONSTANT +FILE-LIST+
-    '("kenzo"
-      "macros"
-      "various"
-      "classes"
-      "combinations"
-      "chain-complexes"
-      "chcm-elementary-op"
-      "effective-homology"
-      "homology-groups"
-      "searching-homology"
-      "cones"
-      "bicones"
-      "tensor-products"
-      "coalgebras"
-      "cobar"
-      "algebras"
-      "bar"
-      "simplicial-sets"
-      "simplicial-mrphs"
-      "delta"
-      "special-smsts"
-      "suspensions"
-      "disk-pasting"
-      "cartesian-products"
-      "eilenberg-zilber"
-      "kan"
-      "simplicial-groups"
-      "fibrations"
-      "loop-spaces"
-      "ls-twisted-products"
-      "lp-space-efhm"
-      "classifying-spaces"
-      "k-pi-n"
-      "serre"
-      "cs-twisted-products"
-      "cl-space-efhm"
-      "whitehead"
-      "smith"
-      ))
+  '("kenzo"
+    "macros"
+    "various"
+    "classes"
+    "combinations"
+    "chain-complexes"
+    "chcm-elementary-op"
+    "effective-homology"
+    "homology-groups"
+    "searching-homology"
+    "cones"
+    "bicones"
+    "tensor-products"
+    "coalgebras"
+    "cobar"
+    "algebras"
+    "bar"
+    "simplicial-sets"
+    "simplicial-mrphs"
+    "delta"
+    "special-smsts"
+    "suspensions"
+    "disk-pasting"
+    "cartesian-products"
+    "eilenberg-zilber"
+    "kan"
+    "simplicial-groups"
+    "fibrations"
+    "loop-spaces"
+    "ls-twisted-products"
+    "lp-space-efhm"
+    "classifying-spaces"
+    "k-pi-n"
+    "serre"
+    "cs-twisted-products"
+    "cl-space-efhm"
+    "whitehead"
+    "smith"))
 
 (DO ((i 1 (1+ i))
      (mark +file-list+ (cdr mark)))
     ((endp mark) (terpri))
-   (format t "~% FILE ~2D: ~A" i (car mark)))
+  (format t "~% FILE ~2D: ~A" i (car mark)))
 
 (DEFCONSTANT +SOURCE-EXTENSION+
   #+(or allegro lispworks) "cl"
   #+(or clisp ccl ecl sbcl) "lisp"
   #-(or allegro ccl clisp ecl lispworks sbcl)
-    (error "Not an Allegro or CCL or CLisp or LispWorks or SBCL environment."))
+  (error "Not an Allegro or CCL or CLisp or LispWorks or SBCL environment."))
 
-(DEFCONSTANT +COMPILED-EXTENSION+ 
-    #+(or allegro sbcl) "fasl"
-    #+ccl "lafsl"
-    #+ (or clisp ecl) "fas"
-    #+lispworks "ofasl")
+(DEFCONSTANT +COMPILED-EXTENSION+
+  #+(or allegro sbcl) "fasl"
+  #+ccl "lafsl"
+  #+ (or clisp ecl) "fas"
+  #+lispworks "ofasl")
 
 (DEFUN LOAD-SFILES ()
-   (mapc #'(lambda (file-name)
-             (load (concatenate 'string file-name "." +source-extension+)))
-    +file-list+))
+  (mapc #'(lambda (file-name)
+            (load (concatenate 'string file-name "." +source-extension+)))
+        +file-list+))
 
 (DEFVAR *CMBN-CONTROL*)
 (SETF *CMBN-CONTROL* T)
@@ -86,9 +87,9 @@
   (mapc #'(lambda (file-name)
             (compile-file (concatenate 'string file-name "." +source-extension+))
             (load (concatenate 'string file-name "." +compiled-extension+)))
-    +file-list+))
+        +file-list+))
 
 (DEFUN LOAD-CFILES ()
-   (mapc #'(lambda (file-name)
-             (load (concatenate 'string file-name "." +compiled-extension+)))
-    +file-list+))
+  (mapc #'(lambda (file-name)
+            (load (concatenate 'string file-name "." +compiled-extension+)))
+        +file-list+))

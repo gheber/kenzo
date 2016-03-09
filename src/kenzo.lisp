@@ -1,3 +1,5 @@
+;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
+
 ;;;; kenzo.lisp
 
 (IN-PACKAGE #:cat)
@@ -12,7 +14,7 @@
 
 (DEFMACRO DEFINE-CONSTANT (name value &optional doc)
   `(defconstant ,name (if (boundp ',name) (symbol-value ',name) ,value)
-                      ,@(when doc (list doc))))
+     ,@(when doc (list doc))))
 
 ;; globals from cat-init.lisp
 
@@ -26,7 +28,7 @@ validation of combinations.")
 (DEFINE-CONSTANT +EMPTY-LIST+ '())
 
 (DEFINE-CONSTANT +F-EMPTY-VECTOR+
-   (make-array 0 :element-type 'fixnum))
+    (make-array 0 :element-type 'fixnum))
 
 (DEFINE-CONSTANT +S-EMPTY-VECTOR+ #())
 
@@ -36,17 +38,17 @@ validation of combinations.")
 
 (DEFINE-CONSTANT +2-EXP+
     (let ((rslt (make-array (integer-length most-positive-fixnum)
-			    :element-type 'fixnum)))
+                            :element-type 'fixnum)))
       (declare (type (array fixnum 1) rslt))
       (dotimes (i (integer-length most-positive-fixnum) rslt)
-	(setf (aref rslt i) (the fixnum (expt 2 i))))))
+        (setf (aref rslt i) (the fixnum (expt 2 i))))))
 
 (DEFINE-CONSTANT +MASK+
     (let ((rslt (make-array (integer-length most-positive-fixnum)
-			    :element-type 'fixnum)))
+                            :element-type 'fixnum)))
       (declare (type (array fixnum 1) rslt))
       (dotimes (i (integer-length most-positive-fixnum) rslt)
-	(setf (aref rslt i) (the fixnum (1- (expt 2 i)))))))
+        (setf (aref rslt i) (the fixnum (1- (expt 2 i)))))))
 
 ;; globals from combinations.lisp
 

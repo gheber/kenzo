@@ -1,3 +1,5 @@
+;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
+
 ;;; DEMO DEMO DEMO DEMO DEMO DEMO DEMO DEMO DEMO DEMO DEMO
 ;;; DEMO DEMO DEMO DEMO DEMO DEMO DEMO DEMO DEMO DEMO DEMO
 ;;; DEMO DEMO DEMO DEMO DEMO DEMO DEMO DEMO DEMO DEMO DEMO
@@ -11,10 +13,10 @@
   (terpri)
   (dotimes (i 50) (princ "-"))
   (princ "<Comment>")
-;  (dotimes (i 31) (princ "-"))
-;  (terpri)
+                                        ;  (dotimes (i 31) (princ "-"))
+                                        ;  (terpri)
   (princ string)
-;  (terpri)
+                                        ;  (terpri)
   (dotimes (i 50) (princ "-"))
   (values))
 
@@ -26,8 +28,8 @@
      (terpri)
      (dotimes (i 50) (princ "-"))
      (princ "<Lisp Statement>")
-;     (dotimes (i 29) (princ "-"))
-;     (terpri)
+                                        ;     (dotimes (i 29) (princ "-"))
+                                        ;     (terpri)
      (pprint ',statement)
      (terpri) ; (terpri)
      (dotimes (i 50) (princ "-"))
@@ -51,14 +53,14 @@
   (setf *statement* (read-from-string dstatement))
   `(progn
      (terpri)
-      (dotimes (i 50) (princ "-"))
-      (princ "<Lisp Statement>")
-      ;  (dotimes (i 31) (princ "-"))
-      ;  (terpri)
-      (princ (strip-initial-spaces *dstatement*))
-      ;  (terpri)
-      (dotimes (i 50) (princ "-"))
-      (values)))
+     (dotimes (i 50) (princ "-"))
+     (princ "<Lisp Statement>")
+                                        ;  (dotimes (i 31) (princ "-"))
+                                        ;  (terpri)
+     (princ (strip-initial-spaces *dstatement*))
+                                        ;  (terpri)
+     (dotimes (i 50) (princ "-"))
+     (values)))
 
 ;; E = EXECUTE
 (DEFUN E ()
@@ -66,7 +68,7 @@
   (terpri)
   (dotimes (i 50) (princ "-"))
   (princ "<Result>")
-;  (dotimes (i 32) (princ "-"))
+                                        ;  (dotimes (i 32) (princ "-"))
   (terpri) ; (terpri)
   (prin1 (eval *statement*))
   (terpri) ; (terpri)
@@ -82,14 +84,14 @@
   (terpri) (terpri)
   (restart-case
       (handler-bind ((error
-                         #'(lambda (condition)
-                             (format t "Type-error: ~S~&"
-                               (class-name (class-of condition)))
-                             (apply #'format t
-                                    (simple-condition-format-control condition)
-                                    (simple-condition-format-arguments condition))
-                             (invoke-restart 'my-restart))))
-                  (eval *statement*))
+                      #'(lambda (condition)
+                          (format t "Type-error: ~S~&"
+                                  (class-name (class-of condition)))
+                          (apply #'format t
+                                 (simple-condition-format-control condition)
+                                 (simple-condition-format-arguments condition))
+                          (invoke-restart 'my-restart))))
+        (eval *statement*))
     (my-restart () (values)))
   (terpri) (terpri)
   (dotimes (i 50) (princ "-"))

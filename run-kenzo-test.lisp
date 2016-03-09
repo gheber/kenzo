@@ -1,3 +1,4 @@
+;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
 
 (DECLAIM (OPTIMIZE (speed 3) (space 0) (debug 3)))
 

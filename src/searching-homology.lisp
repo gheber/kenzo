@@ -1,3 +1,5 @@
+;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
+
 ;;;  SEARCHING-HOMOLOGY  SEARCHING-HOMOLOGY  SEARCHING-HOMOLOGY
 ;;;  SEARCHING-HOMOLOGY  SEARCHING-HOMOLOGY  SEARCHING-HOMOLOGY
 ;;;  SEARCHING-HOMOLOGY  SEARCHING-HOMOLOGY  SEARCHING-HOMOLOGY
@@ -34,10 +36,10 @@
   (declare (ignore class))
   (the homotopy-equivalence
        (let ((efhm (search-efhm chcm (first (orgn chcm)))))
-	 (setf (efhm chcm)
-	       (or efhm
-		   (when (functionp (basis chcm))
-		     (trivial-hmeq chcm))
-		   (error "I don't know how to determine ~
+         (setf (efhm chcm)
+               (or efhm
+                   (when (functionp (basis chcm))
+                     (trivial-hmeq chcm))
+                   (error "I don't know how to determine ~
                          the effective homology of:~@
                          ~A (Origin: ~A)." chcm (orgn chcm)))))))

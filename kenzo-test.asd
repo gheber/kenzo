@@ -1,3 +1,4 @@
+;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
 
 (defsystem :kenzo-test
     :description "A simple regression test suite for Kenzo"

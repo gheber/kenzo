@@ -1,3 +1,4 @@
+;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
 
 (in-package :kenzo-test)
 
@@ -22,7 +23,7 @@
       (cat:z-absm-bar (cat:absm 1 '()))
       (cat:z-absm-bar (cat:absm 0 '(2)))
       (dotimes (i 8)
-	(print (cat:z-absm-bar (cat:absm i '(3 6))))))
+        (print (cat:z-absm-bar (cat:absm i '(3 6))))))
 
 
 (test z-bar-absm
@@ -30,7 +31,7 @@
       (cat:z-bar-absm (cat:z-absm-bar (cat:absm 1 '())))
       (cat:z-bar-absm (cat:z-absm-bar (cat:absm 0 '(2))))
       (dotimes (i 8)
-	(print (cat:z-bar-absm (cat:z-absm-bar (cat:absm i '(3 6)))))))
+        (print (cat:z-bar-absm (cat:z-absm-bar (cat:absm i '(3 6)))))))
 
 
 (test k-z-1-grml
@@ -46,35 +47,35 @@
 (test k-z-1-grin
       (cat:k-z-1-grin 3 '(2 3 -4))
       (let ((gmsm '(2 3 -4)))
-	(cat:k-z-1-grml 3 (cat:crpr 0 gmsm 0
-				    (cat:gmsm (cat:k-z-1-grin 3 gmsm))))))
+        (cat:k-z-1-grml 3 (cat:crpr 0 gmsm 0
+                                    (cat:gmsm (cat:k-z-1-grin 3 gmsm))))))
 
 
 (defun aleat-list (max length)
   (let ((rslt nil)
-	(2max (+ max max)))
+        (2max (+ max max)))
     (dotimes (i length)
       (push (let ((k (- (random 2max) max)))
-	      (if (zerop k)
-		  max
-		  k))
-	    rslt))
+              (if (zerop k)
+                  max
+                  k))
+            rslt))
     rslt))
 
 
 (test k-z-1
       (let ((k (cat:k-z-1))
-	    zero?)
-	(cat:? k (cat:? k 14 (aleat-list 200 14)))
-	(setf zero? (cat:add (cat:idnt-mrph k) (cat:grin k)))
-	(cat:? zero? 14 (aleat-list 200 14))))
+            zero?)
+        (cat:? k (cat:? k 14 (aleat-list 200 14)))
+        (setf zero? (cat:add (cat:idnt-mrph k) (cat:grin k)))
+        (cat:? zero? 14 (aleat-list 200 14))))
 
 
 (test circle
       (let ((c (cat:circle)))
-	(cat:cmpr c '* '*)
-	(cat:basis c 1)
-	(cat:? c 1 's1)))
+        (cat:cmpr c '* '*)
+        (cat:basis c 1)
+        (cat:? c 1 's1)))
 
 
 (test kz1-rdct-f-intr
@@ -111,7 +112,7 @@
       (setf cat:*tc* (cat:cmbn 2 1 '(-4 2) 10 '(-1 3) 100 '(1 -4) 1000 '(5 5)))
       (check-rdct)
       (setf cat:*tc* (cat:cmbn 3 1 '(-4 -4 5) 10 '(-1 2 1)
-			       100 '(1 4 2) 1000 '(5 1 -1)))
+                               100 '(1 4 2) 1000 '(5 1 -1)))
       (check-rdct))
 
 
@@ -122,18 +123,18 @@
 
 (test k-z2-1-homology
       (let ((k (cat:k-z2-1)))
-	(cat:homology k 0 4)))
+        (cat:homology k 0 4)))
 
 
 (test k-z2-homology
       (let ((k3 (cat:k-z2 3)))
-	(cat:homology k3 7)))
+        (cat:homology k3 7)))
 
 
 (test z2-bar-absm
       (dotimes (i 8)    ;;; not really legal
-	(dotimes (j 8)
-	  (print (cat:z2-bar-absm (cat:z2-absm-bar (cat:absm i j)))))))
+        (dotimes (j 8)
+          (print (cat:z2-bar-absm (cat:z2-absm-bar (cat:absm i j)))))))
 
 
 (test z-fundamental-gmsm
@@ -145,129 +146,129 @@
 
 (test interesting-faces
       (let* ((d (cat:delta 14))
-	     (f (cat:face d)))
-	(do ((i 5 (1- i)))
-	    ((minusp i))
-	  (print (cat:interesting-faces f i 5 (cat:mask 6))))))
+             (f (cat:face d)))
+        (do ((i 5 (1- i)))
+            ((minusp i))
+          (print (cat:interesting-faces f i 5 (cat:mask 6))))))
 
 
 (test gmsm-cocycle
       (cat:cat-init)
       (let* ((d (cat:delta 10))
-	     (chml-clss (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -2
-					:intr #'(lambda (dmns gmsm)
-						  (cat:term-cmbn 0 gmsm
-								 :gnrt-z))
-					:strt :gnrt
-					:orgn '(essai-1))))
-	(cat:gmsm-cocycle (cat:face d) 2 4 31 chml-clss)
-	(setf chml-clss (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -1
-					:intr #'(lambda (dmns gmsm)
-						  (cat:term-cmbn 0 gmsm
-								 :gnrt-z))
-					:strt :gnrt
-					:orgn '(essai-2)))
-	(cat:gmsm-cocycle (cat:face d) 1 4 31 chml-clss)))
+             (chml-clss (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -2
+                                        :intr #'(lambda (dmns gmsm)
+                                                  (cat:term-cmbn 0 gmsm
+                                                                 :gnrt-z))
+                                        :strt :gnrt
+                                        :orgn '(essai-1))))
+        (cat:gmsm-cocycle (cat:face d) 2 4 31 chml-clss)
+        (setf chml-clss (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -1
+                                        :intr #'(lambda (dmns gmsm)
+                                                  (cat:term-cmbn 0 gmsm
+                                                                 :gnrt-z))
+                                        :strt :gnrt
+                                        :orgn '(essai-2)))
+        (cat:gmsm-cocycle (cat:face d) 1 4 31 chml-clss)))
 
 (test z-cocycle-gbar
       (cat:cat-init)
       (let* ((d (cat:delta 10))
-	     (chml-clss (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -1
-					:intr #'(lambda (dmns gmsm)
-						  (cat:term-cmbn 0 gmsm
-								 :gnrt-z))
-					:strt :gnrt
-					:orgn '(essai-1))))
-	(cat:gmsm-cocycle (cat:face d) 1 4 31 chml-clss)
-	(cat:z-cocycle-gbar 1 4 (cat:gmsm-cocycle (cat:face d)
-						  1 4 31 chml-clss))
-	(setf chml-clss
-	      (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -2
-			      :intr #'(lambda (dmns gmsm)
-					(cat:term-cmbn 0 gmsm :gnrt-z))
-			      :strt :gnrt
-			      :orgn '(essai-2)))
-	(cat:gmsm-cocycle (cat:face d) 2 2 7 chml-clss)
-	(cat:z-cocycle-gbar 2 2 (cat:gmsm-cocycle (cat:face d)
-						  2 2 7 chml-clss))
-	(cat:gmsm-cocycle (cat:face d) 2 2 0 chml-clss) ;; normally illegal
-	(cat:z-cocycle-gbar 2 2 (cat:gmsm-cocycle (cat:face d)
-						  2 2 0 chml-clss))
-	(cat:gmsm-cocycle (cat:face d) 2 3 15 chml-clss)
-	(cat:z-cocycle-gbar 2 3 (cat:gmsm-cocycle (cat:face d)
-						  2 3 15 chml-clss))
-	(cat:gmsm-cocycle (cat:face d) 2 4 31 chml-clss)
-	(cat:z-cocycle-gbar 2 4 (cat:gmsm-cocycle (cat:face d)
-						  2 4 31 chml-clss))
-	(setf chml-clss
-	      (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -3
-			      :intr #'(lambda (dmns gmsm)
-					(cat:term-cmbn 0 gmsm :gnrt-z))
-			      :strt :gnrt
-			      :orgn '(essai-3)))
-	(cat:gmsm-cocycle (cat:face d) 3 4 31 chml-clss)
-	(cat:z-cocycle-gbar 3 4 (cat:gmsm-cocycle (cat:face d)
-						  3 4 31 chml-clss))
-	(setf chml-clss
-	      (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -3
-			      :intr #'(lambda (dmns gmsm)
-					(cat:zero-cmbn 0))
-			      :strt :gnrt
-			      :orgn '(essai-33)))
-	(cat:gmsm-cocycle (cat:face d) 3 4 31 chml-clss)
-	(cat:z-cocycle-gbar 3 4 (cat:gmsm-cocycle (cat:face d)
-						  3 4 31 chml-clss))))
+             (chml-clss (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -1
+                                        :intr #'(lambda (dmns gmsm)
+                                                  (cat:term-cmbn 0 gmsm
+                                                                 :gnrt-z))
+                                        :strt :gnrt
+                                        :orgn '(essai-1))))
+        (cat:gmsm-cocycle (cat:face d) 1 4 31 chml-clss)
+        (cat:z-cocycle-gbar 1 4 (cat:gmsm-cocycle (cat:face d)
+                                                  1 4 31 chml-clss))
+        (setf chml-clss
+              (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -2
+                              :intr #'(lambda (dmns gmsm)
+                                        (cat:term-cmbn 0 gmsm :gnrt-z))
+                              :strt :gnrt
+                              :orgn '(essai-2)))
+        (cat:gmsm-cocycle (cat:face d) 2 2 7 chml-clss)
+        (cat:z-cocycle-gbar 2 2 (cat:gmsm-cocycle (cat:face d)
+                                                  2 2 7 chml-clss))
+        (cat:gmsm-cocycle (cat:face d) 2 2 0 chml-clss) ;; normally illegal
+        (cat:z-cocycle-gbar 2 2 (cat:gmsm-cocycle (cat:face d)
+                                                  2 2 0 chml-clss))
+        (cat:gmsm-cocycle (cat:face d) 2 3 15 chml-clss)
+        (cat:z-cocycle-gbar 2 3 (cat:gmsm-cocycle (cat:face d)
+                                                  2 3 15 chml-clss))
+        (cat:gmsm-cocycle (cat:face d) 2 4 31 chml-clss)
+        (cat:z-cocycle-gbar 2 4 (cat:gmsm-cocycle (cat:face d)
+                                                  2 4 31 chml-clss))
+        (setf chml-clss
+              (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -3
+                              :intr #'(lambda (dmns gmsm)
+                                        (cat:term-cmbn 0 gmsm :gnrt-z))
+                              :strt :gnrt
+                              :orgn '(essai-3)))
+        (cat:gmsm-cocycle (cat:face d) 3 4 31 chml-clss)
+        (cat:z-cocycle-gbar 3 4 (cat:gmsm-cocycle (cat:face d)
+                                                  3 4 31 chml-clss))
+        (setf chml-clss
+              (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -3
+                              :intr #'(lambda (dmns gmsm)
+                                        (cat:zero-cmbn 0))
+                              :strt :gnrt
+                              :orgn '(essai-33)))
+        (cat:gmsm-cocycle (cat:face d) 3 4 31 chml-clss)
+        (cat:z-cocycle-gbar 3 4 (cat:gmsm-cocycle (cat:face d)
+                                                  3 4 31 chml-clss))))
 
 
 (test z-cocycle-gbar-head
       (cat:cat-init)
       (let* ((d (cat:delta 10))
-	     (chml-clss
-	      (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -1
-			      :intr #'(lambda (dmns gmsm)
-					(cat:term-cmbn 0 gmsm :gnrt-z))
-			      :strt :gnrt
-			      :orgn '(essai-1)))
-	     (x (cat:gmsm-cocycle (cat:face d) 1 4 31 chml-clss)))
-	(cat:z-cocycle-gbar 1 4 x)
-	(signals simple-error (cat:z-cocycle-gbar-head 1 4 x))
-	(setf chml-clss
-	      (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -2
-			      :intr #'(lambda (dmns gmsm)
-					(cat:term-cmbn 0 gmsm :gnrt-z))
-			      :strt :gnrt
-			      :orgn '(essai-2)))
-	(setf x (cat:gmsm-cocycle (cat:face d) 2 2 7 chml-clss))
-	(cat:z-cocycle-gbar 2 2 x)
-	(cat:z-cocycle-gbar-head 2 2 x)
-	;; normally illegal
-	(setf x (cat:gmsm-cocycle (cat:face d) 2 2 0 chml-clss))
-	(cat:z-cocycle-gbar 2 2 x)
-	(cat:z-cocycle-gbar-head 2 2 x)
-	(setf x (cat:gmsm-cocycle (cat:face d) 2 3 15 chml-clss))
-	(cat:z-cocycle-gbar 2 3 x)
-	(cat:z-cocycle-gbar-head 2 3 x)
-	(setf x (cat:gmsm-cocycle (cat:face d) 2 4 31 chml-clss))
-	(cat:z-cocycle-gbar 2 4 x)
-	(cat:z-cocycle-gbar-head 2 4 x)
-	(setf chml-clss
-	      (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -3
-			      :intr #'(lambda (dmns gmsm)
-					(cat:term-cmbn 0 gmsm :gnrt-z))
-			      :strt :gnrt
-			      :orgn '(essai-3)))
-	(setf x (cat:gmsm-cocycle (cat:face d) 3 4 31 chml-clss))
-	(cat:z-cocycle-gbar 3 4 x)
-	(cat:z-cocycle-gbar-head 3 4 x)
-	(setf chml-clss
-	      (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -3
-			      :intr #'(lambda (dmns gmsm)
-					(cat:zero-cmbn 0))
-			      :strt :gnrt
-			      :orgn '(essai-33)))
-	(setf x (cat:gmsm-cocycle (cat:face d) 3 4 31 chml-clss))
-	(cat:z-cocycle-gbar 3 4 x)
-	(cat:z-cocycle-gbar-head 3 4 x)))
+             (chml-clss
+              (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -1
+                              :intr #'(lambda (dmns gmsm)
+                                        (cat:term-cmbn 0 gmsm :gnrt-z))
+                              :strt :gnrt
+                              :orgn '(essai-1)))
+             (x (cat:gmsm-cocycle (cat:face d) 1 4 31 chml-clss)))
+        (cat:z-cocycle-gbar 1 4 x)
+        (signals simple-error (cat:z-cocycle-gbar-head 1 4 x))
+        (setf chml-clss
+              (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -2
+                              :intr #'(lambda (dmns gmsm)
+                                        (cat:term-cmbn 0 gmsm :gnrt-z))
+                              :strt :gnrt
+                              :orgn '(essai-2)))
+        (setf x (cat:gmsm-cocycle (cat:face d) 2 2 7 chml-clss))
+        (cat:z-cocycle-gbar 2 2 x)
+        (cat:z-cocycle-gbar-head 2 2 x)
+        ;; normally illegal
+        (setf x (cat:gmsm-cocycle (cat:face d) 2 2 0 chml-clss))
+        (cat:z-cocycle-gbar 2 2 x)
+        (cat:z-cocycle-gbar-head 2 2 x)
+        (setf x (cat:gmsm-cocycle (cat:face d) 2 3 15 chml-clss))
+        (cat:z-cocycle-gbar 2 3 x)
+        (cat:z-cocycle-gbar-head 2 3 x)
+        (setf x (cat:gmsm-cocycle (cat:face d) 2 4 31 chml-clss))
+        (cat:z-cocycle-gbar 2 4 x)
+        (cat:z-cocycle-gbar-head 2 4 x)
+        (setf chml-clss
+              (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -3
+                              :intr #'(lambda (dmns gmsm)
+                                        (cat:term-cmbn 0 gmsm :gnrt-z))
+                              :strt :gnrt
+                              :orgn '(essai-3)))
+        (setf x (cat:gmsm-cocycle (cat:face d) 3 4 31 chml-clss))
+        (cat:z-cocycle-gbar 3 4 x)
+        (cat:z-cocycle-gbar-head 3 4 x)
+        (setf chml-clss
+              (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -3
+                              :intr #'(lambda (dmns gmsm)
+                                        (cat:zero-cmbn 0))
+                              :strt :gnrt
+                              :orgn '(essai-33)))
+        (setf x (cat:gmsm-cocycle (cat:face d) 3 4 31 chml-clss))
+        (cat:z-cocycle-gbar 3 4 x)
+        (cat:z-cocycle-gbar-head 3 4 x)))
 
 
 (test Z2-fundamental-gmsm
@@ -280,94 +281,94 @@
 (test z2-cocycle-gbar
       (cat:cat-init)
       (let* ((d (cat:delta 10))
-	     (chml-clss
-	      (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -1
-			      :intr #'(lambda (dmns gmsm)
-					(cat:term-cmbn 0 (mod gmsm 2) :gnrt-z))
-			      :strt :gnrt
-			      :orgn '(essai-1)))
-	     (x (cat:gmsm-cocycle (cat:face d) 1 4 31 chml-clss)))
-	(cat:z2-cocycle-gbar 1 4 x)
-	(setf chml-clss
-	      (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -2
-			      :intr #'(lambda (dmns gmsm)
-					(cat:term-cmbn 0 (mod gmsm 2) :gnrt-z))
-			      :strt :gnrt
-			      :orgn '(essai-2)))
-	(setf x (cat:gmsm-cocycle (cat:face d) 2 2 7 chml-clss))
-	(cat:z2-cocycle-gbar 2 2 x)
-	;; normally illegal
-	(setf x (cat:gmsm-cocycle (cat:face d) 2 2 0 chml-clss))
-	(cat:z2-cocycle-gbar 2 2 x)
-	(setf x (cat:gmsm-cocycle (cat:face d) 2 3 15 chml-clss))
-	(cat:z2-cocycle-gbar 2 3 x)
-	(setf x (cat:gmsm-cocycle (cat:face d) 2 4 31 chml-clss))
-	(cat:z2-cocycle-gbar 2 4 x)
-	(setf chml-clss
-	      (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -3
-			      :intr #'(lambda (dmns gmsm)
-					(cat:term-cmbn 0 (mod gmsm 2) :gnrt-z))
-			      :strt :gnrt
-			      :orgn '(essai-3)))
-	(setf x (cat:gmsm-cocycle (cat:face d) 3 4 31 chml-clss))
-	(cat:z2-cocycle-gbar 3 4 x)))
+             (chml-clss
+              (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -1
+                              :intr #'(lambda (dmns gmsm)
+                                        (cat:term-cmbn 0 (mod gmsm 2) :gnrt-z))
+                              :strt :gnrt
+                              :orgn '(essai-1)))
+             (x (cat:gmsm-cocycle (cat:face d) 1 4 31 chml-clss)))
+        (cat:z2-cocycle-gbar 1 4 x)
+        (setf chml-clss
+              (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -2
+                              :intr #'(lambda (dmns gmsm)
+                                        (cat:term-cmbn 0 (mod gmsm 2) :gnrt-z))
+                              :strt :gnrt
+                              :orgn '(essai-2)))
+        (setf x (cat:gmsm-cocycle (cat:face d) 2 2 7 chml-clss))
+        (cat:z2-cocycle-gbar 2 2 x)
+        ;; normally illegal
+        (setf x (cat:gmsm-cocycle (cat:face d) 2 2 0 chml-clss))
+        (cat:z2-cocycle-gbar 2 2 x)
+        (setf x (cat:gmsm-cocycle (cat:face d) 2 3 15 chml-clss))
+        (cat:z2-cocycle-gbar 2 3 x)
+        (setf x (cat:gmsm-cocycle (cat:face d) 2 4 31 chml-clss))
+        (cat:z2-cocycle-gbar 2 4 x)
+        (setf chml-clss
+              (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -3
+                              :intr #'(lambda (dmns gmsm)
+                                        (cat:term-cmbn 0 (mod gmsm 2) :gnrt-z))
+                              :strt :gnrt
+                              :orgn '(essai-3)))
+        (setf x (cat:gmsm-cocycle (cat:face d) 3 4 31 chml-clss))
+        (cat:z2-cocycle-gbar 3 4 x)))
 
 
 (test z2-cocycle-gbar-head
       (cat:cat-init)
       (let* ((d (cat:delta 10))
-	     (chml-clss
-	      (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -1
-			      :intr #'(lambda (dmns gmsm)
-					(cat:term-cmbn 0 (mod gmsm 2) :gnrt-z))
-			      :strt :gnrt
-			      :orgn '(essai-1)))
-	     (x (cat:gmsm-cocycle (cat:face d) 1 4 31 chml-clss)))
-	(cat:z2-cocycle-gbar 1 4 x)
-	(signals simple-error (cat:z2-cocycle-gbar-head 1 4 x))
-	(setf chml-clss
-	      (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -2
-			      :intr #'(lambda (dmns gmsm)
-					(cat:term-cmbn 0 (mod gmsm 2) :gnrt-z))
-			      :strt :gnrt
-			      :orgn '(essai-2)))
-	(setf x (cat:gmsm-cocycle (cat:face d) 2 2 7 chml-clss))
-	(cat:z2-cocycle-gbar 2 2 x)
-	(cat:z2-cocycle-gbar-head 2 2 x)
-	;; normally illegal
-	(setf x (cat:gmsm-cocycle (cat:face d) 2 2 0 chml-clss))
-	(cat:z2-cocycle-gbar 2 2 x)
-	(cat:z2-cocycle-gbar-head 2 2 x)
-	(setf x (cat:gmsm-cocycle (cat:face d) 2 3 15 chml-clss))
-	(cat:z2-cocycle-gbar 2 3 x)
-	(cat:z2-cocycle-gbar-head 2 3 x)
-	(setf x (cat:gmsm-cocycle (cat:face d) 2 4 31 chml-clss))
-	(cat:z2-cocycle-gbar 2 4 x)
-	(cat:z2-cocycle-gbar-head 2 4 x)
-	(setf chml-clss
-	      (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -3
-			      :intr #'(lambda (dmns gmsm)
-					(cat:term-cmbn 0 (mod gmsm 2) :gnrt-z))
-			      :strt :gnrt
-			      :orgn '(essai-3)))
-	(setf x (cat:gmsm-cocycle (cat:face d) 3 4 31 chml-clss))
-	(cat:z2-cocycle-gbar 3 4 x)
-	(cat:z2-cocycle-gbar-head 3 4 x)))
+             (chml-clss
+              (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -1
+                              :intr #'(lambda (dmns gmsm)
+                                        (cat:term-cmbn 0 (mod gmsm 2) :gnrt-z))
+                              :strt :gnrt
+                              :orgn '(essai-1)))
+             (x (cat:gmsm-cocycle (cat:face d) 1 4 31 chml-clss)))
+        (cat:z2-cocycle-gbar 1 4 x)
+        (signals simple-error (cat:z2-cocycle-gbar-head 1 4 x))
+        (setf chml-clss
+              (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -2
+                              :intr #'(lambda (dmns gmsm)
+                                        (cat:term-cmbn 0 (mod gmsm 2) :gnrt-z))
+                              :strt :gnrt
+                              :orgn '(essai-2)))
+        (setf x (cat:gmsm-cocycle (cat:face d) 2 2 7 chml-clss))
+        (cat:z2-cocycle-gbar 2 2 x)
+        (cat:z2-cocycle-gbar-head 2 2 x)
+        ;; normally illegal
+        (setf x (cat:gmsm-cocycle (cat:face d) 2 2 0 chml-clss))
+        (cat:z2-cocycle-gbar 2 2 x)
+        (cat:z2-cocycle-gbar-head 2 2 x)
+        (setf x (cat:gmsm-cocycle (cat:face d) 2 3 15 chml-clss))
+        (cat:z2-cocycle-gbar 2 3 x)
+        (cat:z2-cocycle-gbar-head 2 3 x)
+        (setf x (cat:gmsm-cocycle (cat:face d) 2 4 31 chml-clss))
+        (cat:z2-cocycle-gbar 2 4 x)
+        (cat:z2-cocycle-gbar-head 2 4 x)
+        (setf chml-clss
+              (cat:build-mrph :sorc d :trgt (cat:z-chcm) :degr -3
+                              :intr #'(lambda (dmns gmsm)
+                                        (cat:term-cmbn 0 (mod gmsm 2) :gnrt-z))
+                              :strt :gnrt
+                              :orgn '(essai-3)))
+        (setf x (cat:gmsm-cocycle (cat:face d) 3 4 31 chml-clss))
+        (cat:z2-cocycle-gbar 3 4 x)
+        (cat:z2-cocycle-gbar-head 3 4 x)))
 
 
 (test k-z-fundamental-class
       (cat:cat-init)
       (let ((c1 (cat:k-z-fundamental-class 1))
-	    (c3 (cat:k-z-fundamental-class 3)))
-	(cat:? c1 1 '(34))
-	(cat:? c1 2 '(34 45))
-	(cat:? c3 3 (cat:z-fundamental-gmsm 3 45))))
+            (c3 (cat:k-z-fundamental-class 3)))
+        (cat:? c1 1 '(34))
+        (cat:? c1 2 '(34 45))
+        (cat:? c3 3 (cat:z-fundamental-gmsm 3 45))))
 
 
 (test k-z2-fundamental-class
       (cat:cat-init)
       (let ((c1 (cat:k-z2-fundamental-class 1))
-	    (c3 (cat:k-z2-fundamental-class 3)))
-	(cat:? c1 1 1)
-	(cat:? c1 2 2)
-	(cat:? c3 3 (cat:z2-fundamental-gmsm 3 1))))
+            (c3 (cat:k-z2-fundamental-class 3)))
+        (cat:? c1 1 1)
+        (cat:? c1 2 2)
+        (cat:? c3 3 (cat:z2-fundamental-gmsm 3 1))))

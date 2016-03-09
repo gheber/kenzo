@@ -1,3 +1,4 @@
+;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
 
 (IN-PACKAGE #:cat)
 
@@ -119,7 +120,7 @@
   "WHAT-IS returns the full word or term for an abbreviation provided as a
 keyword, string, or symbol. It returns NIL for unknown abbreviations."
   (unless (null kwd)
-      (getf +ABBREVIATIONS+
-	(cond ((keywordp kwd) kwd)
-	      ((stringp kwd) (intern (string-upcase kwd) 'keyword))
-	      ((symbolp kwd) (intern (symbol-name kwd) 'keyword))))))
+    (getf +ABBREVIATIONS+
+          (cond ((keywordp kwd) kwd)
+                ((stringp kwd) (intern (string-upcase kwd) 'keyword))
+                ((symbolp kwd) (intern (symbol-name kwd) 'keyword))))))
