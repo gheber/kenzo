@@ -417,9 +417,10 @@
            #:CRPR
            #:D
            #:DEF
-           #:F
+           #:DEGENERATE-P
            #:DFFR
            #:DGNL
+           #:F
            #:G
            #:GMSM1
            #:GNRT
@@ -439,6 +440,7 @@
            #:LINE-SWAP-5
            #:MASK
            #:MAKE-GBAR
+           #:NON-DEGENERATE-P
            #:RBCC
            #:RF
            #:RG
