@@ -382,11 +382,13 @@
            #:ABSM-LOOPABSM
            #:CRTS-CONTRACTION
            #:CRTS-CONTRACTION-INTR
+           #:DTAU-D
            #:DTAU-D-INTR
            #:POP-FIRST-ABSM
            #:SZCZARBA
            #:TNPR-CONTRACTION
            #:TWISTED-CRTS-PRDC
+           #:TWISTED-CRTS-PRDC-FACE
 
            ;; macros.lisp
 
