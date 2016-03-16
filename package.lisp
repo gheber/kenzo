@@ -391,6 +391,7 @@
            #:TNPR-CONTRACTION
            #:TWISTED-CRTS-PRDC
            #:TWISTED-CRTS-PRDC-FACE
+           #:TWISTED-TNSR-PRDC
 
            ;; macros.lisp
 
