@@ -165,6 +165,8 @@
            #:RRDCT
            #:SIMPLICIAL-GROUP
            #:SINTR
+           #:SOFT-DLOP
+           #:SOFT-DLOP-P
            #:SORC
            #:TCC
            #:TNPR
