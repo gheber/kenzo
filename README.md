@@ -27,7 +27,7 @@ This work is well underway, but there are several outstanding [issues](https://g
 
 There are several methods to get going:
 
-1. [Just play with it a little! (Live)](http://yes.kenzocat.works/)
+1. [Just play with it a little! (Live)](http://this.kenzocat.works/)
 2. [Just give me a Docker container!](https://hub.docker.com/r/hapax/kenzo/)
 3. Local installation via [Quicklisp](http://www.quicklisp.org/beta/) or ASDF
 
