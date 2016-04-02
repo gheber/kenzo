@@ -487,12 +487,13 @@
       (ecase (length args)
         (0 t)
         (1 (let ((a (first args)))
-             (when (dimp a)
+             (if (dimp a)
                (unless (infinityp a)
-                   (setq k a)))))
+                 (setq k a))
+               (error "~A is not a positive FIXNUM." a))))
         (2 (let ((a (first args))
                  (b (first (last args))))
-             (when (and (and (dimp a)
+             (if (and (and (dimp a)
                              (dimp b))
                         (or (not (infinityp a))
                             (not (infinityp b))))
@@ -500,7 +501,8 @@
                  ((infinityp a) (setq k b))
                  ((infinityp b) (setq k a))
                  ((<= a b) (setq l b k a))
-                 (t (setq l a k b)))))))
+                 (t (setq l a k b)))
+               (error "At most two arguments of type FIXNUM or value :INFINITY are expected,~%and at most one of them can be :INFINITY.")))))
       (the simplicial-set
            (build-smst
             :cmpr #'R-proj-space-cmpr
