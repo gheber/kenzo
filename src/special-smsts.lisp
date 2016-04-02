@@ -468,23 +468,48 @@
                               (zero-cmbn (1- degr)))))))
     (the intr-mrph #'rslt)))
 
-(DEFUN R-PROJ-SPACE (&optional (l :infinity) (k 1))
-  (declare (fixnum k) (type (or fixnum (eql :infinity))))
-  (assert
-   (and (typep k 'fixnum)
-        (plusp k)
-        (or (eq l :infinity)
-            (and (typep l 'fixnum)
-                 (<= k l)))))
-  (the simplicial-set
-       (build-smst
-        :cmpr #'R-proj-space-cmpr
-        :basis (R-proj-space-basis k l)
-        :bspn 0
-        :face (R-proj-space-face k)
-        :intr-bndr (R-proj-space-intr-bndr k)
-        :bndr-strt :cmbn
-        :orgn `(R-proj-space ,k ,l))))
+
+(DEFUN R-PROJ-SPACE (&rest args)
+  (labels ((infinityp (x)
+             (and (symbolp x)
+                  (eql x :infinity)))
+           (dimp (x)
+             (or (infinityp x)
+                 (and (integerp x)
+                      (< x most-positive-fixnum)
+                      (plusp x)))))
+    (let ((l :infinity)
+          (k 1))
+      ;; accept zero, one or two arguments
+      ;; must be positive FIXNUM or :INFINITY
+      ;; if one is FIXNUM, assign K
+      ;; if both are FIXNUM, sort and assign such that (<= k l)
+      (ecase (length args)
+        (0 t)
+        (1 (let ((a (first args)))
+             (when (dimp a)
+               (unless (infinityp a)
+                   (setq k a)))))
+        (2 (let ((a (first args))
+                 (b (first (last args))))
+             (when (and (and (dimp a)
+                             (dimp b))
+                        (or (not (infinityp a))
+                            (not (infinityp b))))
+               (cond
+                 ((infinityp a) (setq k b))
+                 ((infinityp b) (setq k a))
+                 ((<= a b) (setq l b k a))
+                 (t (setq l a k b)))))))
+      (the simplicial-set
+           (build-smst
+            :cmpr #'R-proj-space-cmpr
+            :basis (R-proj-space-basis k l)
+            :bspn 0
+            :face (R-proj-space-face k)
+            :intr-bndr (R-proj-space-intr-bndr k)
+            :bndr-strt :cmbn
+            :orgn `(R-proj-space ,k ,l))))))
 
 
 ;;; Constructing a small simplicial subset
