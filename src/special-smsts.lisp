@@ -484,24 +484,26 @@
       ;; must be positive FIXNUM or :INFINITY
       ;; if one is FIXNUM, assign K
       ;; if both are FIXNUM, sort and assign such that (<= k l)
+      ;; if both are :INFINITY -> error
       (ecase (length args)
         (0 t)
         (1 (let ((a (first args)))
              (if (dimp a)
-               (unless (infinityp a)
+               (unless (infinityp a)  ; set K only if it's a FIXNUM
                  (setq k a))
-               (error "~A is not a positive FIXNUM." a))))
+               (error "~A is not a positive FIXNUM or :INFINITY." a))))
         (2 (let ((a (first args))
                  (b (first (last args))))
-             (if (and (and (dimp a)
-                             (dimp b))
-                        (or (not (infinityp a))
-                            (not (infinityp b))))
+             (if (and
+                  (and (dimp a)
+                       (dimp b))
+                  (or (not (infinityp a))
+                      (not (infinityp b))))
                (cond
                  ((infinityp a) (setq k b))
                  ((infinityp b) (setq k a))
                  ((<= a b) (setq l b k a))
-                 (t (setq l a k b)))
+                 (t (setq l a k b)))  ; (< b a)
                (error "At most two arguments of type FIXNUM or value :INFINITY are expected,~%and at most one of them can be :INFINITY.")))))
       (the simplicial-set
            (build-smst
