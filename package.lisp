@@ -119,10 +119,7 @@
 
            ;; classes.lisp
 
-           #:ABSM
            #:ABSM-P
-           #:ABSM1
-           #:ABSM2
            #:AB-SIMPLICIAL-GROUP
            #:ALLP-LIST
            #:APOWR
@@ -155,6 +152,7 @@
            #:LOOP-LIST
            #:LRDCT
            #:MAKE-ABAR
+           #:MAKE-ABSM
            #:MAKE-ALLP
            #:MAKE-CMBN
            #:MAKE-LOOP
@@ -401,6 +399,9 @@
            #:?
            #:2-EXP
            #:ABAR-LIST
+           #:ABSM
+           #:ABSM1
+           #:ABSM2
            #:APRD
            #:BASIS
            #:BCC
