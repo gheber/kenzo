@@ -488,6 +488,7 @@
            #:1DLOP-DGOP
            #:A-CMPR3
            #:A-FACE4
+           #:ABSM-PRINT
            #:BSPN-P
            #:CHECK-FACES
            #:CHECK-SMST
