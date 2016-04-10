@@ -8,6 +8,7 @@ branches:
 env:
   matrix:
     - LISP=sbcl
+    - LISP=sbcl32
 
 install:
   - if [ -x ./install.sh ] && head -2 ./install.sh | grep '^# cl-travis' > /dev/null;
