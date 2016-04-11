@@ -584,8 +584,9 @@ A T-MAT (= Terme de Matrice) has five components:
 (DEFTYPE IABSM () '(satisfies iabsm-p))
 
 (DEFSTRUCT (ABSM (:conc-name nil) (:print-function absm-print))
-  (dgop (:type 'dgop))
-  (gmsm (:type 'gmsm)))
+  (dgop 0 :type dgop)
+  (gmsm nil :type gmsm))
+
 
 #|
 ()
