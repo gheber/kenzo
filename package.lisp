@@ -162,6 +162,8 @@
            #:REDUCTION
            #:RRDCT
            #:SIMPLICIAL-GROUP
+           #:SIMPLICIAL-MRPH
+           #:SIMPLICIAL-SET
            #:SINTR
            #:SOFT-DLOP
            #:SOFT-DLOP-P
