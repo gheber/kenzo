@@ -316,6 +316,8 @@
            #:CIRCLE
            #:INTERESTING-FACES
            #:GMSM-COCYCLE
+           #:HOPF-FIBRATION
+           #:HOPF-FIBRATION-SINTR
            #:K-Z
            #:K-Z-1
            #:K-Z-1-CMPR
