@@ -11,9 +11,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install texlive-generic-recommended
 
 # SBCL
 
-RUN wget -nv http://downloads.sourceforge.net/project/sbcl/sbcl/1.3.7/sbcl-1.3.7-x86-64-linux-binary.tar.bz2 \
- && tar -jxvf sbcl-1.3.7-x86-64-linux-binary.tar.bz2 \
- && cd sbcl-1.3.7-x86-64-linux \
+RUN wget -nv http://downloads.sourceforge.net/project/sbcl/sbcl/1.3.11/sbcl-1.3.11-x86-64-linux-binary.tar.bz2 \
+ && tar -jxvf sbcl-1.3.11-x86-64-linux-binary.tar.bz2 \
+ && cd sbcl-1.3.11-x86-64-linux \
  && sh install.sh
 
 # Quicklisp
