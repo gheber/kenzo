@@ -1,0 +1,214 @@
+;;;
+;;; [[ Comments added to the listing.]]
+;;;
+
+
+International Allegro CL Free Express Edition
+8.0 [Windows] (Dec 27, 2006 16:11)
+Copyright (C) 1985-2006, Franz Inc., Oakland, CA, USA.  All Rights Reserved.
+
+This development copy of Allegro CL is licensed to:
+   Trial User
+
+CG version 1.81.2.23 / IDE version 1.80.2.21
+Loaded options from C:\Documents and Settings\Fourier\Mes documents\allegro-prefs.cl.
+
+;; Optimization settings: safety 1, space 1, speed 1, debug 2.
+;; For a complete description of all compiler switches given the current
+;; optimization settings evaluate (EXPLAIN-COMPILER-SETTINGS).
+;;;
+;;; [[ Don't forget to define the standard package "COMMON-LISP-USER"
+;;; [[   before starting.
+;;; [[ Cf Tools > IDE 1 > Initial Package := COMMON-LISP-USER
+;;;
+CL-USER(1): (load "cat-init")
+; Loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\cat-init.cl
+
+ FILE  1: macros
+ FILE  2: various
+ FILE  3: classes
+ FILE  4: combinations
+ FILE  5: chain-complexes
+ FILE  6: chcm-elementary-op
+ FILE  7: effective-homology
+ FILE  8: homology-groups
+ FILE  9: searching-homology
+ FILE 10: cones
+ FILE 11: tensor-products
+ FILE 12: coalgebras
+ FILE 13: cobar
+ FILE 14: algebras
+ FILE 15: bar
+ FILE 16: simplicial-sets
+ FILE 17: simplicial-mrphs
+ FILE 18: delta
+ FILE 19: special-smsts
+ FILE 20: suspensions
+ FILE 21: disk-pasting
+ FILE 22: cartesian-products
+ FILE 23: eilenberg-zilber
+ FILE 24: kan
+ FILE 25: simplicial-groups
+ FILE 26: fibrations
+ FILE 27: loop-spaces
+ FILE 28: ls-twisted-products
+ FILE 29: lp-space-efhm
+ FILE 30: classifying-spaces
+ FILE 31: k-pi-n
+ FILE 32: serre
+ FILE 33: cs-twisted-products
+ FILE 34: cl-space-efhm
+ FILE 35: whitehead
+ FILE 36: smith
+T
+CL-USER(2): (compile-files)
+
+*CMBN-CONTROL*  = T
+
+;;; Compiling file macros.cl
+;;; Writing fasl file macros.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\macros.fasl
+;;; Compiling file various.cl
+;;; Writing fasl file various.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\various.fasl
+;;; Compiling file classes.cl
+;;; Writing fasl file classes.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\classes.fasl
+;;; Compiling file combinations.cl
+;;; Writing fasl file combinations.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\combinations.fasl
+;;; Compiling file chain-complexes.cl
+;;; Writing fasl file chain-complexes.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\chain-complexes.fasl
+;;; Compiling file chcm-elementary-op.cl
+;;; Writing fasl file chcm-elementary-op.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\chcm-elementary-op.fasl
+;;; Compiling file effective-homology.cl
+;;; Writing fasl file effective-homology.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\effective-homology.fasl
+;;; Compiling file homology-groups.cl
+;;; Writing fasl file homology-groups.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\homology-groups.fasl
+;;; Compiling file searching-homology.cl
+;;; Writing fasl file searching-homology.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\searching-homology.fasl
+;;; Compiling file cones.cl
+;;; Writing fasl file cones.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\cones.fasl
+;;; Compiling file tensor-products.cl
+;;; Writing fasl file tensor-products.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\tensor-products.fasl
+;;; Compiling file coalgebras.cl
+;;; Writing fasl file coalgebras.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\coalgebras.fasl
+;;; Compiling file cobar.cl
+;;; Writing fasl file cobar.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\cobar.fasl
+;;; Compiling file algebras.cl
+;;; Writing fasl file algebras.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\algebras.fasl
+;;; Compiling file bar.cl
+;;; Writing fasl file bar.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\bar.fasl
+;;; Compiling file simplicial-sets.cl
+;;; Writing fasl file simplicial-sets.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\simplicial-sets.fasl
+;;; Compiling file simplicial-mrphs.cl
+;;; Writing fasl file simplicial-mrphs.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\simplicial-mrphs.fasl
+;;; Compiling file delta.cl
+;;; Writing fasl file delta.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\delta.fasl
+;;; Compiling file special-smsts.cl
+;;; Writing fasl file special-smsts.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\special-smsts.fasl
+;;; Compiling file suspensions.cl
+;;; Writing fasl file suspensions.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\suspensions.fasl
+;;; Compiling file disk-pasting.cl
+;;; Writing fasl file disk-pasting.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\disk-pasting.fasl
+;;; Compiling file cartesian-products.cl
+;;; Writing fasl file cartesian-products.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\cartesian-products.fasl
+;;; Compiling file eilenberg-zilber.cl
+;;; Writing fasl file eilenberg-zilber.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\eilenberg-zilber.fasl
+;;; Compiling file kan.cl
+;;; Writing fasl file kan.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\kan.fasl
+;;; Compiling file simplicial-groups.cl
+;;; Writing fasl file simplicial-groups.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\simplicial-groups.fasl
+;;; Compiling file fibrations.cl
+;;; Writing fasl file fibrations.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\fibrations.fasl
+;;; Compiling file loop-spaces.cl
+;;; Writing fasl file loop-spaces.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\loop-spaces.fasl
+;;; Compiling file ls-twisted-products.cl
+;;; Writing fasl file ls-twisted-products.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\ls-twisted-products.fasl
+;;; Compiling file lp-space-efhm.cl
+;;; Writing fasl file lp-space-efhm.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\lp-space-efhm.fasl
+;;; Compiling file classifying-spaces.cl
+;;; Writing fasl file classifying-spaces.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\classifying-spaces.fasl
+;;; Compiling file k-pi-n.cl
+;;; Writing fasl file k-pi-n.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\k-pi-n.fasl
+;;; Compiling file serre.cl
+;;; Writing fasl file serre.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\serre.fasl
+;;; Compiling file cs-twisted-products.cl
+;;; Writing fasl file cs-twisted-products.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\cs-twisted-products.fasl
+;;; Compiling file cl-space-efhm.cl
+;;; Writing fasl file cl-space-efhm.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\cl-space-efhm.fasl
+;;; Compiling file whitehead.cl
+;;; Writing fasl file whitehead.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\whitehead.fasl
+;;; Compiling file smith.cl
+;;; Writing fasl file smith.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-Acl8\smith.fasl
+("macros" "various" "classes" "combinations" "chain-complexes" "chcm-elementary-op"
+ "effective-homology" "homology-groups" "searching-homology" "cones" ...)
+CL-USER(3): (exit)

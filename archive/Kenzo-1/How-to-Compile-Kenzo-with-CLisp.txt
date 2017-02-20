@@ -1,0 +1,257 @@
+c:\Documents and Settings\Francis\AA\Kenzo\Kenzo-1.1-CLisp>CLisp
+
+  i i i i i i i       ooooo    o        ooooooo   ooooo   ooooo
+  I I I I I I I      8     8   8           8     8     o  8    8
+  I  \ `+' /  I      8         8           8     8        8    8
+   \  `-+-'  /       8         8           8      ooooo   8oooo
+    `-__|__-'        8         8           8           8  8
+        |            8     o   8           8     o     8  8
+  ------+------       ooooo    8oooooo  ooo8ooo   ooooo   8
+
+Copyright (c) Bruno Haible, Michael Stoll 1992, 1993
+Copyright (c) Bruno Haible, Marcus Daniels 1994-1997
+Copyright (c) Bruno Haible, Pierpaolo Bernardi, Sam Steingold 1998
+Copyright (c) Bruno Haible, Sam Steingold 1999-2000
+Copyright (c) Sam Steingold, Bruno Haible 2001-2006
+
+[1]> (load "cat-init")
+
+;; Loading file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\cat-init.cl ...
+ FILE  1: macros
+ FILE  2: various
+ FILE  3: classes
+ FILE  4: combinations
+ FILE  5: chain-complexes
+ FILE  6: chcm-elementary-op
+ FILE  7: effective-homology
+ FILE  8: homology-groups
+ FILE  9: searching-homology
+ FILE 10: cones
+ FILE 11: tensor-products
+ FILE 12: coalgebras
+ FILE 13: cobar
+ FILE 14: algebras
+ FILE 15: bar
+ FILE 16: simplicial-sets
+ FILE 17: simplicial-mrphs
+ FILE 18: delta
+ FILE 19: special-smsts
+ FILE 20: suspensions
+ FILE 21: disk-pasting
+ FILE 22: cartesian-products
+ FILE 23: eilenberg-zilber
+ FILE 24: kan
+ FILE 25: simplicial-groups
+ FILE 26: fibrations
+ FILE 27: loop-spaces
+ FILE 28: ls-twisted-products
+ FILE 29: lp-space-efhm
+ FILE 30: classifying-spaces
+ FILE 31: k-pi-n
+ FILE 32: serre
+ FILE 33: cs-twisted-products
+ FILE 34: cl-space-efhm
+ FILE 35: whitehead
+ FILE 36: smith
+;; Loaded file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\cat-init.cl
+T
+[2]> (compile-files)
+
+*CMBN-CONTROL*  = T
+
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\macros.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\macros.fas
+0 errors, 0 warnings
+;; Loading file macros.fas ...
+;; Loaded file macros.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\various.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\various.fas
+0 errors, 0 warnings
+;; Loading file various.fas ...
+;; Loaded file various.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\classes.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\classes.fas
+
+;;;
+;;; [[ Do not take account of this warning.
+;;; [[ For coherence, these functions are defined in later files.
+;;;
+
+The following functions were used but not defined:
+ CMBN-PRINT RESULT-PRINT BICN-PRINT TNPR-PRINT ALLP-PRINT ABAR-PRINT
+ ABSM-PRINT CRPR-PRINT LOOP-PRINT GBAR-PRINT
+0 errors, 0 warnings
+;; Loading file classes.fas ...
+;; Loaded file classes.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\combinations.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\combinations.fas
+0 errors, 0 warnings
+;; Loading file combinations.fas ...
+;; Loaded file combinations.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\chain-complexes.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\chain-complexes.fas
+0 errors, 0 warnings
+;; Loading file chain-complexes.fas ...
+;; Loaded file chain-complexes.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\chcm-elementary-op.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\chcm-elementary-op.fas
+0 errors, 0 warnings
+;; Loading file chcm-elementary-op.fas ...
+;; Loaded file chcm-elementary-op.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\effective-homology.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\effective-homology.fas
+0 errors, 0 warnings
+;; Loading file effective-homology.fas ...
+;; Loaded file effective-homology.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\homology-groups.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\homology-groups.fas
+0 errors, 0 warnings
+;; Loading file homology-groups.fas ...
+;; Loaded file homology-groups.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\searching-homology.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\searching-homology.fas
+0 errors, 0 warnings
+;; Loading file searching-homology.fas ...
+;; Loaded file searching-homology.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\cones.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\cones.fas
+0 errors, 0 warnings
+;; Loading file cones.fas ...
+;; Loaded file cones.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\tensor-products.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\tensor-products.fas
+0 errors, 0 warnings
+;; Loading file tensor-products.fas ...
+;; Loaded file tensor-products.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\coalgebras.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\coalgebras.fas
+0 errors, 0 warnings
+;; Loading file coalgebras.fas ...
+;; Loaded file coalgebras.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\cobar.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\cobar.fas
+0 errors, 0 warnings
+;; Loading file cobar.fas ...
+;; Loaded file cobar.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\algebras.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\algebras.fas
+0 errors, 0 warnings
+;; Loading file algebras.fas ...
+;; Loaded file algebras.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\bar.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\bar.fas
+0 errors, 0 warnings
+;; Loading file bar.fas ...
+;; Loaded file bar.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\simplicial-sets.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\simplicial-sets.fas
+0 errors, 0 warnings
+;; Loading file simplicial-sets.fas ...
+;; Loaded file simplicial-sets.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\simplicial-mrphs.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\simplicial-mrphs.fas
+0 errors, 0 warnings
+;; Loading file simplicial-mrphs.fas ...
+;; Loaded file simplicial-mrphs.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\delta.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\delta.fas
+0 errors, 0 warnings
+;; Loading file delta.fas ...
+;; Loaded file delta.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\special-smsts.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\special-smsts.fas
+0 errors, 0 warnings
+;; Loading file special-smsts.fas ...
+;; Loaded file special-smsts.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\suspensions.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\suspensions.fas
+0 errors, 0 warnings
+;; Loading file suspensions.fas ...
+;; Loaded file suspensions.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\disk-pasting.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\disk-pasting.fas
+0 errors, 0 warnings
+;; Loading file disk-pasting.fas ...
+;; Loaded file disk-pasting.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\cartesian-products.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\cartesian-products.fas
+0 errors, 0 warnings
+;; Loading file cartesian-products.fas ...
+;; Loaded file cartesian-products.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\eilenberg-zilber.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\eilenberg-zilber.fas
+0 errors, 0 warnings
+;; Loading file eilenberg-zilber.fas ...
+;; Loaded file eilenberg-zilber.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\kan.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\kan.fas
+0 errors, 0 warnings
+;; Loading file kan.fas ...
+;; Loaded file kan.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\simplicial-groups.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\simplicial-groups.fas
+0 errors, 0 warnings
+;; Loading file simplicial-groups.fas ...
+;; Loaded file simplicial-groups.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\fibrations.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\fibrations.fas
+0 errors, 0 warnings
+;; Loading file fibrations.fas ...
+;; Loaded file fibrations.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\loop-spaces.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\loop-spaces.fas
+0 errors, 0 warnings
+;; Loading file loop-spaces.fas ...
+;; Loaded file loop-spaces.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\ls-twisted-products.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\ls-twisted-products.fas
+0 errors, 0 warnings
+;; Loading file ls-twisted-products.fas ...
+;; Loaded file ls-twisted-products.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\lp-space-efhm.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\lp-space-efhm.fas
+0 errors, 0 warnings
+;; Loading file lp-space-efhm.fas ...
+;; Loaded file lp-space-efhm.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\classifying-spaces.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\classifying-spaces.fas
+0 errors, 0 warnings
+;; Loading file classifying-spaces.fas ...
+;; Loaded file classifying-spaces.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\k-pi-n.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\k-pi-n.fas
+0 errors, 0 warnings
+;; Loading file k-pi-n.fas ...
+;; Loaded file k-pi-n.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\serre.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\serre.fas
+0 errors, 0 warnings
+;; Loading file serre.fas ...
+;; Loaded file serre.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\cs-twisted-products.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\cs-twisted-products.fas
+0 errors, 0 warnings
+;; Loading file cs-twisted-products.fas ...
+;; Loaded file cs-twisted-products.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\cl-space-efhm.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\cl-space-efhm.fas
+0 errors, 0 warnings
+;; Loading file cl-space-efhm.fas ...
+;; Loaded file cl-space-efhm.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\whitehead.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\whitehead.fas
+0 errors, 0 warnings
+;; Loading file whitehead.fas ...
+;; Loaded file whitehead.fas
+;; Compiling file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\smith.cl ...
+;; Wrote file C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp\smith.fas
+0 errors, 0 warnings
+;; Loading file smith.fas ...
+;; Loaded file smith.fas
+("macros" "various" "classes" "combinations" "chain-complexes" "chcm-elementary-op" "effective-homology"
+ "homology-groups" "searching-homology" "cones" ...)
+[3]> (exit)
+
+Bye.
+
+C:\DOCUME~1\Francis\AA\Kenzo\Kenzo-1.1-CLisp>

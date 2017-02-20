@@ -1,0 +1,10 @@
+Kenzo-2-2 => Kenzo-2-3
+
+  The speial-smsts.cl is modified ; the bsgn slot had been forgotten
+  in the sphere-wedge constructor.
+
+Kenzo-2-1 => Kenzo-2-2
+
+  The delta.cl file is modified, but the modification is not
+  satisfactory : the slot face *should_be* able to generate the slot
+  dffr.

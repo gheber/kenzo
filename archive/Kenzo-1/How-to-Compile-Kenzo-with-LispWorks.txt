@@ -1,0 +1,1338 @@
+;;;
+;;; [[ Loading the initialization file.
+;;; [[ Do not forget the extension ".cl" not guessed by LispWorks.
+;;; 
+
+CL-USER 1 > (load "cat-init.cl")
+; Loading text file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\cat-init.cl
+
+ FILE  1: macros
+ FILE  2: various
+ FILE  3: classes
+ FILE  4: combinations
+ FILE  5: chain-complexes
+ FILE  6: chcm-elementary-op
+ FILE  7: effective-homology
+ FILE  8: homology-groups
+ FILE  9: searching-homology
+ FILE 10: cones
+ FILE 11: tensor-products
+ FILE 12: coalgebras
+ FILE 13: cobar
+ FILE 14: algebras
+ FILE 15: bar
+ FILE 16: simplicial-sets
+ FILE 17: simplicial-mrphs
+ FILE 18: delta
+ FILE 19: special-smsts
+ FILE 20: suspensions
+ FILE 21: disk-pasting
+ FILE 22: cartesian-products
+ FILE 23: eilenberg-zilber
+ FILE 24: kan
+ FILE 25: simplicial-groups
+ FILE 26: fibrations
+ FILE 27: loop-spaces
+ FILE 28: ls-twisted-products
+ FILE 29: lp-space-efhm
+ FILE 30: classifying-spaces
+ FILE 31: k-pi-n
+ FILE 32: serre
+ FILE 33: cs-twisted-products
+ FILE 34: cl-space-efhm
+ FILE 35: whitehead
+ FILE 36: smith
+#P"C:/Docume~1/Francis/AA/Kenzo/Kenzo-1.1-LispWorks/cat-init.cl"
+
+;;;
+;;; [[ Compiling the Kenzo files.
+;;; [[ Compiling will be stopped by LispWorks because
+;;; [[   a claimed error; which is not one!
+;;; [[   see below how to bypass.
+;;; [[ Find "***" with your editor.
+;;;
+
+CL-USER 2 > (compile-files)
+
+*CMBN-CONTROL*  = T
+
+;;; Compiling file macros.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; -1-EXPT-N
+; -1-EXPT-N+1
+; -1-EXPT-N-1
+; 2-EXP
+; MASK
+; BINOMIAL-P-Q
+; LEXICO
+; TERM
+; -TERM
+; CFFC
+; -CFFC
+; GNRT
+; -GNRT
+; WITH-TERM
+; WITH--TERM
+; WITH-CMBN
+; TERM-CMBN
+; CMBN-NON-ZERO-P
+; CMBN-ZERO-P
+; CONTROL
+; CONTROLN
+; (DEFVAR *WRONG-CMBN*)
+; CMPR
+; CMPR3
+; BASIS
+; BASIS3
+; DFFR
+; ?
+; MAKE-RSLT
+; RSLT-GNRT
+; RSLT-VALUE
+; RSLT-CLNM
+; RSLT-RNTM
+; I-CMPS
+; I-ADD
+; I-SBTR
+; BCC
+; TCC
+; F
+; G
+; H
+; LBCC
+; RBCC
+; LF
+; LG
+; LH
+; RF
+; RG
+; RH
+; BASELIG
+; BASECOL
+; BCNB
+; BCNC
+; BCND
+; WITH-BICN
+; TNPR
+; WITH-TNPR
+; CPRD
+; CBGN
+; CDEGR
+; CGNRT
+; -CDEGR
+; -CGNRT
+; WITH-CBGN
+; WITH--CBGN
+; WITH-ALLP
+; GNRT-ALLP-TNPR
+; APRD
+; BRGN
+; BDEGR
+; BGNRT
+; -BDEGR
+; -BGNRT
+; WITH-BRGN
+; WITH--BRGN
+; WITH-ABAR
+; WITH-GBAR
+; ABSM
+; WITH-ABSM
+; DEGENERATE-P
+; NON-DEGENERATE-P
+; BSPN
+; BNDR
+; DGNL
+; FACE
+; D
+; MAKE-GMSM-FACES-INFO
+; INFO-GMSM
+; INFO-FACES
+; INFO-FACE-I
+; INFO-BNDR
+; CRPR
+; CRPR2
+; CRPR4
+; ABSM1
+; ABSM2
+; WITH-CRPR
+; WITH-CRPR-2
+; WITH-CRPR-4
+; EILENBERG-ZILBER
+; KFLL
+; KFLL4
+; GRML
+; GRIN
+; BUILD-AB-SMGR
+; POWR
+; PGMSM
+; EXPN
+; WITH-POWR
+; WITH-APOWR
+; APOWR
+; APDGOP
+; APGMSM
+; APEXPN
+; LINE-NUMBER
+; COLUMN-NUMBER
+; LINE-OP-5
+; COLUMN-OP-5
+; LINE-SWAP-5
+; COLUMN-SWAP-5
+; LINE-MINUS-5
+; COLUMN-MINUS-5
+; GNRT-NAME
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\macros.ofasl
+;;; Compiling file various.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; (DEFCONSTANT +EMPTY-LIST+)
+; (DEFCONSTANT +F-EMPTY-VECTOR+)
+; (DEFCONSTANT +S-EMPTY-VECTOR+)
+; (DEFCONSTANT +TRUE+)
+; (DEFCONSTANT +FALSE+)
+; (DEFCONSTANT +2-EXP+)
+; (DEFCONSTANT +MASK+)
+; BINOMIAL-N-P
+; (TOP-LEVEL-FORM 4)
+; (TOP-LEVEL-FORM 5)
+; <A-B<
+; <A-B>
+; >A-B<
+; >A-B>
+; V<A-B>
+; SRANDOM
+; CLOCK
+; DONE
+; (TOP-LEVEL-FORM 6)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\various.ofasl
+;;; Compiling file classes.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; (DEFTYPE ANY)
+; (SUBFUNCTION (DEFSETF CMBN-LIST) (DEFSTRUCT CMBN))
+; (SUBFUNCTION (DEFSETF CMBN-DEGR) (DEFSTRUCT CMBN))
+; (SUBFUNCTION MAKE-CMBN (DEFSTRUCT CMBN))
+; (SUBFUNCTION MAKE-CMBN (DEFSTRUCT CMBN))
+; CFFC-P
+; (DEFTYPE CFFC)
+; (DEFTYPE GNRT)
+; (DEFTYPE CMPR)
+; (DEFTYPE CMPRF)
+; TERM-P
+; (DEFTYPE TERM)
+; ICMBN-P
+; (DEFTYPE ICMBN)
+; (DEFTYPE BASIS)
+; (DEFTYPE INTR-MRPH)
+; (DEFCLASS CHAIN-COMPLEX)
+; (DEFCLASS MORPHISM)
+; (DEFCLASS HOMOTOPY-EQUIVALENCE)
+; (DEFVAR *IDNM-COUNTER*)
+; (TOP-LEVEL-FORM 4)
+
+;;;
+;;; [[ Do not take account of these warnings.
+;;; [[ These classes are mutually recursive
+;;; [[   and redefinitions are necessary.
+;;;
+
+;;;*** Warning in (DEFCLASS CHAIN-COMPLEX): (DEFCLASS CHAIN-COMPLEX) defined more than once in C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\classes.cl.
+; (DEFCLASS CHAIN-COMPLEX)
+; (DEFTYPE STRT)
+;;;*** Warning in (DEFCLASS MORPHISM): (DEFCLASS MORPHISM) defined more than once in C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\classes.cl.
+; (DEFCLASS MORPHISM)
+; (SUBFUNCTION (DEFSETF RESULT-RNTM) (DEFSTRUCT RESULT))
+; (SUBFUNCTION (DEFSETF RESULT-CLNM) (DEFSTRUCT RESULT))
+; (SUBFUNCTION (DEFSETF RESULT-VALUE) (DEFSTRUCT RESULT))
+; (SUBFUNCTION (DEFSETF RESULT-GNRT) (DEFSTRUCT RESULT))
+; (SUBFUNCTION MAKE-RESULT (DEFSTRUCT RESULT))
+; (SUBFUNCTION MAKE-RESULT (DEFSTRUCT RESULT))
+; (DEFCLASS REDUCTION)
+;;;*** Warning in (DEFCLASS HOMOTOPY-EQUIVALENCE): (DEFCLASS HOMOTOPY-EQUIVALENCE) defined more than once in C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\classes.cl.
+; (DEFCLASS HOMOTOPY-EQUIVALENCE)
+; (SUBFUNCTION (DEFSETF UPLIG) (DEFSTRUCT MATRICE))
+; (SUBFUNCTION (DEFSETF LEFTCOL) (DEFSTRUCT MATRICE))
+; (SUBFUNCTION MAKE-MATRICE (DEFSTRUCT MATRICE))
+; (SUBFUNCTION MAKE-MATRICE (DEFSTRUCT MATRICE))
+; (SUBFUNCTION (DEFSETF UP) (DEFSTRUCT T-MAT))
+; (SUBFUNCTION (DEFSETF LEFT) (DEFSTRUCT T-MAT))
+; (SUBFUNCTION (DEFSETF ICOL) (DEFSTRUCT T-MAT))
+; (SUBFUNCTION (DEFSETF ILIG) (DEFSTRUCT T-MAT))
+; (SUBFUNCTION (DEFSETF VAL) (DEFSTRUCT T-MAT))
+; (SUBFUNCTION MAKE-T-MAT (DEFSTRUCT T-MAT))
+; (SUBFUNCTION MAKE-T-MAT (DEFSTRUCT T-MAT))
+; (SUBFUNCTION (DEFSETF IBICN) (DEFSTRUCT BICN))
+; (SUBFUNCTION (DEFSETF BCNX) (DEFSTRUCT BICN))
+; (SUBFUNCTION MAKE-BICN (DEFSTRUCT BICN))
+; (SUBFUNCTION MAKE-BICN (DEFSTRUCT BICN))
+; (SUBFUNCTION (DEFSETF GNRT2) (DEFSTRUCT TNPR))
+; (SUBFUNCTION (DEFSETF DEGR2) (DEFSTRUCT TNPR))
+; (SUBFUNCTION (DEFSETF GNRT1) (DEFSTRUCT TNPR))
+; (SUBFUNCTION (DEFSETF DEGR1) (DEFSTRUCT TNPR))
+; (SUBFUNCTION MAKE-TNPR (DEFSTRUCT TNPR))
+; (SUBFUNCTION MAKE-TNPR (DEFSTRUCT TNPR))
+; (DEFCLASS COALGEBRA)
+; CBGN-P
+; (DEFTYPE CBGN)
+; IALLP-P
+; (DEFTYPE IALLP)
+; (SUBFUNCTION (DEFSETF ALLP-LIST) (DEFSTRUCT ALLP))
+; (SUBFUNCTION MAKE-ALLP (DEFSTRUCT ALLP))
+; (SUBFUNCTION MAKE-ALLP (DEFSTRUCT ALLP))
+; (DEFCLASS ALGEBRA)
+; (DEFCLASS HOPF-ALGEBRA)
+; BRGN-P
+; (DEFTYPE BRGN)
+; IABAR-P
+; (DEFTYPE IABAR)
+; (SUBFUNCTION (DEFSETF ABAR-LIST) (DEFSTRUCT ABAR))
+; (SUBFUNCTION MAKE-ABAR (DEFSTRUCT ABAR))
+; (SUBFUNCTION MAKE-ABAR (DEFSTRUCT ABAR))
+; (DEFTYPE DGOP)
+; (DEFTYPE GMSM)
+; (DEFTYPE DLOP)
+; (SUBFUNCTION (DEFSETF GMSM) (DEFSTRUCT ABSM))
+; (SUBFUNCTION (DEFSETF DGOP) (DEFSTRUCT ABSM))
+; (SUBFUNCTION MAKE-ABSM (DEFSTRUCT ABSM))
+; (SUBFUNCTION MAKE-ABSM (DEFSTRUCT ABSM))
+; (DEFTYPE FACE)
+; (DEFTYPE FACE*)
+; (DEFCLASS SIMPLICIAL-SET)
+; (DEFTYPE SINTR)
+; (DEFCLASS SIMPLICIAL-MRPH)
+; SOFT-DLOP-P
+; (DEFTYPE SOFT-DLOP)
+; (SUBFUNCTION (DEFSETF GMSM2) (DEFSTRUCT CRPR))
+; (SUBFUNCTION (DEFSETF DGOP2) (DEFSTRUCT CRPR))
+; (SUBFUNCTION (DEFSETF GMSM1) (DEFSTRUCT CRPR))
+; (SUBFUNCTION (DEFSETF DGOP1) (DEFSTRUCT CRPR))
+; (SUBFUNCTION MAKE-CRPR (DEFSTRUCT CRPR))
+; (SUBFUNCTION MAKE-CRPR (DEFSTRUCT CRPR))
+; (DEFTYPE KFLL)
+; (DEFCLASS KAN)
+; FIBRATION-P
+; (DEFTYPE FIBRATION)
+; (DEFCLASS SIMPLICIAL-GROUP)
+; (DEFCLASS AB-SIMPLICIAL-GROUP)
+; EXPN-P
+; (DEFTYPE EXPN)
+; POWR-P
+; (DEFTYPE POWR)
+; APOWR-P
+; (DEFTYPE APOWR)
+; ILOOP-P
+; (DEFTYPE ILOOP)
+; (SUBFUNCTION (DEFSETF LOOP-LIST) (DEFSTRUCT LOOP))
+; (SUBFUNCTION MAKE-LOOP (DEFSTRUCT LOOP))
+; (SUBFUNCTION MAKE-LOOP (DEFSTRUCT LOOP))
+; (SUBFUNCTION (DEFSETF GBAR-LIST) (DEFSTRUCT GBAR))
+; (SUBFUNCTION (DEFSETF GBAR-DMNS) (DEFSTRUCT GBAR))
+; (SUBFUNCTION MAKE-GBAR (DEFSTRUCT GBAR))
+; (SUBFUNCTION MAKE-GBAR (DEFSTRUCT GBAR))
+; (TOP-LEVEL-FORM 5)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\classes.ofasl
+Warning: (DEFCLASS CHAIN-COMPLEX) defined more than once in C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\classes.cl.
+Warning: (DEFCLASS MORPHISM) defined more than once in C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\classes.cl.
+Warning: (DEFCLASS HOMOTOPY-EQUIVALENCE) defined more than once in C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\classes.cl.
+
+;;; ***
+;;; [[ Defining (METHOD PRINT-OBJECT (LOOP T))
+;;; [[   is not at all an error.
+;;; [[ LispWorks complains for Loop being an identifier
+;;; [[   of the Common-Lisp Package and is afraid we damage the system!
+;;; [[ The loops here are the loops of Algebraic Topology
+;;; [[   not the iterated loops of standard programming !!!
+;;;
+
+Error: Defining (METHOD PRINT-OBJECT (LOOP T)) visible from packages COMMON-LISP, CLOS.
+  1 (continue) Define it anyway.
+  2 Discard the new method.
+  3 Try loading classes.ofasl again.
+  4 Give up loading classes.ofasl.
+  5 Try loading another file instead of classes.ofasl.
+  6 (abort) Return to level 0.
+  7 Return to top loop level 0.
+
+Type :b for backtrace, :c <option number> to proceed,  or :? for other options
+
+;;;
+;;; [[ To bypass this claimed "error", answer ":c 1".
+;;;
+
+CL-USER 3 : 1 > :c 1
+;;; Compiling file combinations.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; CMBN-PRINT
+; MAPLEXICO
+; S-CMPR
+; F-CMPR
+; L-CMPR
+; CMBN
+; CHECK-CMBN
+; ZERO-CMBN
+; ZERO-INTR-DFFR
+; (DEFCONSTANT +ZERO-NEGATIVE-CMBN+)
+; CMBN-OPPS
+; N-CMBN
+; 2CMBN-ADD
+; 2CMBN-SBTR
+; 2N-2CMBN
+; CMBN-CMBN
+; NTERM-ADD
+; NCMBN-ADD
+; DSTR-ADD-TERM-TO-CMBN
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\combinations.ofasl
+;;; Compiling file chain-complexes.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; (DEFVAR *LIST-LIST*)
+; CAT-INIT
+; HOW-MANY-OBJECTS
+; ALL-OBJECTS
+; KD
+; K
+; KD2
+; (DEFVAR *CHCM-LIST*)
+; (TOP-LEVEL-FORM 4)
+; (TOP-LEVEL-FORM 5)
+; (METHOD PRINT-OBJECT (CHAIN-COMPLEX T))
+; CHCM
+; (METHOD PRINT-KEYCONS ((EQL :RSLT) T T))
+; (DEFPARAMETER +MAXIMAL-DIMENSION+)
+; (DEFVAR *MRPH-LIST*)
+; (TOP-LEVEL-FORM 6)
+; (TOP-LEVEL-FORM 7)
+; (METHOD ?2 (MORPHISM T))
+; (METHOD ?2 (CHAIN-COMPLEX T))
+; (METHOD ?3 (MORPHISM T T))
+; (METHOD ?3 (CHAIN-COMPLEX T T))
+; (METHOD PRINT-OBJECT (MORPHISM T))
+; MRPH
+;;;*** Warning in BUILD-CHCM: Eliminating a test of a variable with a declared type : BASIS [type BASIS]
+; BUILD-CHCM
+; BASIS2
+; BUILD-MRPH
+; (DEFVAR *START-STACK*)
+; (DEFPARAMETER +TOO-MUCH-TIME+)
+; MRPH-GNRT
+; MRPH-CMBN
+; DO-CONTROL
+; (DEFVAR *FUTURE-DISPLAY*)
+; (DEFVAR *TIME-INTERVAL*)
+;;;*** Warning in GNRT-?: symbol-macro MDEGR is bound but not referenced
+; GNRT-?
+; CMBN-?
+; (TOP-LEVEL-FORM 8)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\chain-complexes.ofasl
+;;; Compiling file chcm-elementary-op.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; Z-CHCM
+; ZERO-MRPH
+; IDNT-MRPH
+; OPPS
+; (METHOD CMPS (CHAIN-COMPLEX CHAIN-COMPLEX))
+; (METHOD CMPS (CHAIN-COMPLEX MORPHISM))
+; (METHOD CMPS (MORPHISM CHAIN-COMPLEX))
+; (METHOD CMPS (MORPHISM MORPHISM))
+; N-MRPH-INTR
+; N-MRPH
+; (METHOD ADD (MORPHISM MORPHISM))
+; (METHOD SBTR (MORPHISM MORPHISM))
+; CHANGE-SORC-TRGT
+; DSTR-CHANGE-SORC-TRGT
+; (METHOD ADD (CHAIN-COMPLEX MORPHISM))
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\chcm-elementary-op.ofasl
+;;; Compiling file effective-homology.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; (DEFVAR *RDCT-LIST*)
+; (TOP-LEVEL-FORM 4)
+; (TOP-LEVEL-FORM 5)
+; (METHOD PRINT-OBJECT (REDUCTION STREAM))
+; RDCT
+; BUILD-RDCT
+; TRIVIAL-RDCT
+; (DEFVAR *HMEQ-LIST*)
+; (TOP-LEVEL-FORM 6)
+; (TOP-LEVEL-FORM 7)
+; (METHOD BUILD-HMEQ ((EQL :LRDCT) T))
+; (METHOD PRINT-OBJECT (HOMOTOPY-EQUIVALENCE STREAM))
+; (METHOD HMEQ (INTEGER))
+; (METHOD BUILD-HMEQ ((EQL :LF) T))
+; TRIVIAL-HMEQ
+; (DEFVAR *TDD*)
+; (DEFVAR *BDD*)
+; (DEFVAR *ID-FG*)
+; (DEFVAR *ID-GF-DH-HD*)
+; (DEFVAR *HH*)
+; (DEFVAR *FH*)
+; (DEFVAR *HG*)
+; (DEFVAR *DF-FD*)
+; (DEFVAR *DG-GD*)
+; PRE-CHECK-RDCT
+; (DEFVAR *TC*)
+; (DEFVAR *BC*)
+; CHECK-RDCT
+; (METHOD CMPS (REDUCTION REDUCTION))
+; (METHOD ADD (REDUCTION MORPHISM))
+; BASIC-PERTURBATION-LEMMA
+; EASY-PERTURBATION-LEMMA
+;;;*** Warning in SPECIAL-BPL: symbol-macro OLD-BCC is bound but not referenced
+; SPECIAL-BPL
+; SPECIAL-BPL-2
+; BPL-*-SIGMA
+; (METHOD ADD (HOMOTOPY-EQUIVALENCE MORPHISM))
+; (TOP-LEVEL-FORM 8)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\effective-homology.ofasl
+;;; Compiling file homology-groups.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; CREER-MATRICE
+; CHERCHER-HOR
+; CHERCHER-VER
+; INSERER-TERME
+; SUPPRIMER-TERME
+; MAJ-TERME
+; MAJ-LIGNE
+; MAJ-COLONNE
+; MAJ-MATRICE
+; DISP-P
+; DISP-LIGNE
+; DISP-COLONNE
+; NLIG
+; NCOL
+; DISP-MATRICE
+; (METHOD PRINT-OBJECT (MATRICE T))
+; DISP-MATRICE-COLONNES
+; TERME
+; MAT-ALEAT
+; OP-ELEM
+; PEIGNE-VER
+; PEIGNE-HOR
+; OP-LIG
+; OP-COL
+; OP-LIG-N
+; OP-COL-N
+; N-LIG
+; N-COL
+; COPIER-MATRICE
+; RESTE
+; DIVISEUR
+; MAJ-PEIGNE-VER
+; MAJ-PEIGNE-HOR
+; IDENTITE
+; INIT-PEIGNE-VER
+; INIT-PEIGNE-HOR
+; DISP-PEIGNE
+; TERME-MINIMAL-MATRICE
+; TUER-LIGNE
+; TUER-COLONNE
+; PIVOT
+; PIVOT-PARALLELE
+; GENERATEUR-TORSION-H*
+; TERMINER-H*
+; RESTE-MINIMAL-LIGNE
+; RESTE-MINIMAL-COLONNE
+; HOMOLOGIE
+; CHCM-MAT
+; CHCM-HOMOLOGY
+; CHCM-HOMOLOGY-GEN
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\homology-groups.ofasl
+;;; Compiling file searching-homology.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; ECHCM
+; (METHOD HOMOLOGY (CHAIN-COMPLEX T))
+; (DEFGENERIC SEARCH-EFHM)
+; (METHOD SEARCH-EFHM (T T))
+; (METHOD SLOT-UNBOUND (T CHAIN-COMPLEX (EQL (QUOTE EFHM))))
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\searching-homology.ofasl
+;;; Compiling file cones.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; DISPATCH-BICN-CMBN
+; BICN-CMBN-CMBNB
+; BICN-CMBN-CMBNC
+; BICN-CMBN-CMBND
+; MAKE-BICN-CMBN
+; BICN-PRINT
+; BICONE-CMPR
+; BICONE-BASIS
+; BICONE-INTR-DFFR
+; BICONE
+; (METHOD CMPS (HOMOTOPY-EQUIVALENCE HOMOTOPY-EQUIVALENCE))
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\cones.ofasl
+;;; Compiling file tensor-products.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; (DEFVAR *TNPR-WITH-DEGREES*)
+; TNPR-PRINT
+; 2CMBN-TNPR
+; TNSR-PRDC-CMPR
+; TNSR-PRDC-BASIS
+; TNSR-PRDC-INTR-DFFR
+; (METHOD TNSR-PRDC (CHAIN-COMPLEX CHAIN-COMPLEX))
+; TNSR-PRDC-INTR
+; (METHOD TNSR-PRDC (MORPHISM MORPHISM))
+;;;*** Warning in (METHOD TNSR-PRDC (REDUCTION REDUCTION)): symbol-macro TCC2 is bound but not referenced
+;;;*** Warning in (METHOD TNSR-PRDC (REDUCTION REDUCTION)): symbol-macro BCC2 is bound but not referenced
+;;;*** Warning in (METHOD TNSR-PRDC (REDUCTION REDUCTION)): symbol-macro BCC1 is bound but not referenced
+; (METHOD TNSR-PRDC (REDUCTION REDUCTION))
+; (METHOD TNSR-PRDC (HOMOTOPY-EQUIVALENCE HOMOTOPY-EQUIVALENCE))
+; (METHOD SEARCH-EFHM (T (EQL (QUOTE TNSR-PRDC))))
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\tensor-products.ofasl
+;;; Compiling file coalgebras.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; (DEFVAR *CLGB-LIST*)
+; (TOP-LEVEL-FORM 4)
+; (TOP-LEVEL-FORM 5)
+; (METHOD PRINT-OBJECT (COALGEBRA T))
+; CLGB
+; BUILD-CLGB
+; CHANGE-CHCM-TO-CLGB
+; (TOP-LEVEL-FORM 6)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\coalgebras.ofasl
+;;; Compiling file cobar.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; ALLP
+; (DEFCONSTANT +NULL-ALLP+)
+; ALLP-PRINT
+; COBAR-CMPR
+; COBAR-BASIS-LENGTH
+; COBAR-BASIS
+; COBAR-INTR-VRTC-DFFR
+; (METHOD VRTC-COBAR (CHAIN-COMPLEX))
+; COBAR-INTR-HRZN-DFFR
+; COBAR-HRZN-DFFR
+; COBAR-INTR-DFFR
+; (METHOD COBAR (COALGEBRA))
+; CMBN-ALLP-CMBN-TNPR
+; NCMBN-COBAR
+; MRPH-VRTC-COBAR-INTR
+; (METHOD VRTC-COBAR (MORPHISM))
+;;;*** Warning in HMTP-VRTC-COBAR-INTR: Eliminating a test of a variable with a declared type : SIGN [type FIXNUM]
+;;;*** Warning in HMTP-VRTC-COBAR-INTR: Eliminating a test of a variable with a declared type : SIGN [type FIXNUM]
+; HMTP-VRTC-COBAR-INTR
+; HMTP-VRTC-COBAR
+; (METHOD VRTC-COBAR (REDUCTION))
+; (METHOD VRTC-COBAR (HOMOTOPY-EQUIVALENCE))
+; (METHOD COBAR (HOMOTOPY-EQUIVALENCE))
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\cobar.ofasl
+;;; Compiling file algebras.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; (DEFVAR *ALGB-LIST*)
+; (TOP-LEVEL-FORM 4)
+; (TOP-LEVEL-FORM 5)
+; (METHOD PRINT-OBJECT (ALGEBRA T))
+; ALGB
+; BUILD-ALGB
+; CHANGE-CHCM-TO-ALGB
+; (DEFVAR *HOPF-LIST*)
+; (TOP-LEVEL-FORM 6)
+; (TOP-LEVEL-FORM 7)
+; (METHOD PRINT-OBJECT (HOPF-ALGEBRA T))
+; HOPF
+; (TOP-LEVEL-FORM 8)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\algebras.ofasl
+;;; Compiling file bar.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; ABAR
+; (DEFCONSTANT +NULL-ABAR+)
+; ABAR-PRINT
+; BAR-CMPR
+; BAR-BASIS-LENGTH
+; BAR-BASIS
+; BAR-INTR-VRTC-DFFR
+; (METHOD VRTC-BAR (CHAIN-COMPLEX))
+; BAR-INTR-HRZN-DFFR
+; BAR-HRZN-DFFR
+; BAR-INTR-DFFR
+; (METHOD BAR (ALGEBRA))
+; CMBN-ABAR-CMBN-TNPR
+; NCMBN-BAR
+; MRPH-VRTC-BAR-INTR
+; (METHOD VRTC-BAR (MORPHISM))
+; HMTP-VRTC-BAR-INTR
+; HMTP-VRTC-BAR
+; (METHOD VRTC-BAR (REDUCTION))
+; (METHOD VRTC-BAR (HOMOTOPY-EQUIVALENCE))
+; (METHOD BAR (HOMOTOPY-EQUIVALENCE))
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\bar.ofasl
+;;; Compiling file simplicial-sets.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; (DEFVAR *SMST-LIST*)
+; (TOP-LEVEL-FORM 4)
+; (TOP-LEVEL-FORM 5)
+; DGOP-EXT-INT
+; DGOP-INT-EXT
+; HYPHENIZE-LIST
+; ABSM-PRINT
+; FACE4
+; (METHOD PRINT-OBJECT (SIMPLICIAL-SET T))
+; SMST
+;;;*** Warning in BUILD-SMST: Eliminating a test of a variable with a declared type : FACE [type FACE]
+; BUILD-SMST
+; A-BASIS2
+; INTR-DIAGONAL
+; FACE-BNDR
+; FACE*-BNDR
+; A-CMPR3
+; BSPN-P
+; DLOP-EXT-INT
+; DLOP-INT-EXT
+; 1DGOP*DGOP
+; DGOP*DGOP
+; REMOVE-BIT
+; DGOP/DGOP
+; 1DLOP-DGOP
+; A-FACE4
+; 1DGNR
+; NDGNR
+; NFACE
+; CHECK-FACES
+; CHECK-SMST
+; (TOP-LEVEL-FORM 6)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\simplicial-sets.ofasl
+;;; Compiling file simplicial-mrphs.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; (DEFVAR *SMMR-LIST*)
+; (TOP-LEVEL-FORM 4)
+; (TOP-LEVEL-FORM 5)
+; (METHOD ?3 (SIMPLICIAL-MRPH T T))
+; (METHOD PRINT-OBJECT (SIMPLICIAL-MRPH T))
+; SMMR
+; SINTR-INTR
+; BUILD-SMMR
+; TW-A-SINTR3
+; (TOP-LEVEL-FORM 6)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\simplicial-mrphs.ofasl
+;;; Compiling file delta.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; (METHOD PRINT-KEYCONS ((EQL :DELT) T T))
+; SOFT-DELTA-CMPR
+; DELTA-FACE
+; SOFT-DELTA-FACE
+; DELTA-BNDR
+; SOFT-DELTA-BNDR
+; DELTA-DGNL
+; SOFT-DELTA-DGNL
+; DELTA-INFINITY
+; SOFT-DELTA-INFINITY
+; DELTA-N-BASIS
+; SOFT-DELTA-N-BASIS
+; DELTA
+; SOFT-DELTA
+; DELTAB-CMPR
+; DELTAB-BNDR
+; DELTAB2-FACE
+; DELTAB2-DGNL
+; DELTAB2-BNDR
+; DELTAB
+; DELTAB2
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\delta.ofasl
+;;; Compiling file special-smsts.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; FINITE-SS-PRE-TABLE
+; FINITE-SS-PRE-TABLE-TABLE
+; FINITE-SS-FIND-GMSM
+; FINITE-SS-FINISH-TABLE
+; FINITE-SS-FINISH-LINE
+; FINITE-SS-FINISH-ENTRY
+; FINITE-SS-TABLE
+; FINITE-SS-BASIS
+; FINITE-SS-FACE
+; FINITE-SS-INTR-BNDR
+; BUILD-FINITE-SS
+; SPHERE-CMPR
+; SPHERE-BASIS
+; SPHERE-FACE
+; SPHERE
+; SPHERE-WEDGE-BASIS
+; SPHERE-WEDGE-FACE
+; SPHERE-WEDGE
+; MOORE-CMPR
+; MOORE-BASIS
+; MOORE-FACE
+; MOORE-INTR-BNDR
+; MOORE
+; R-PROJ-SPACE-CMPR
+; R-PROJ-SPACE-BASIS
+; R-PROJ-SPACE-FACE
+; R-PROJ-SPACE-INTR-BNDR
+; R-PROJ-SPACE
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\special-smsts.ofasl
+;;; Compiling file suspensions.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; SUSPENSION-CMPR
+; SUSPENSION-BASIS
+; SUSPENSION-INTR-DFFR
+; SUSPENSION
+; (METHOD SUSPENSION-1 (CHAIN-COMPLEX))
+; SUSPENSION-INTR-CPRD
+; (METHOD SUSPENSION-1 (COALGEBRA))
+; SUSPENSION-FACE
+; (METHOD SUSPENSION-1 (SIMPLICIAL-SET))
+; SUSPENSION-INTR
+; (METHOD SUSPENSION-1 (MORPHISM))
+; (METHOD SUSPENSION-1 (REDUCTION))
+; (METHOD SUSPENSION-1 (HOMOTOPY-EQUIVALENCE))
+; (METHOD SEARCH-EFHM (T (EQL (QUOTE SUSPENSION))))
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\suspensions.ofasl
+;;; Compiling file disk-pasting.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; DISK-PASTING-CMPR
+; DISK-PASTING-BASIS
+; DISK-PASTING-INTR-DFFR
+; CHCM-DISK-PASTING
+; DISK-PASTING-FACE
+; DISK-PASTING
+; MRPH-DISK-PASTING-INTR
+; MRPH-DISK-PASTING
+; HMEQ-DISK-PASTING
+; (METHOD SEARCH-EFHM (T (EQL (QUOTE DISK-PASTING))))
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\disk-pasting.ofasl
+;;; Compiling file cartesian-products.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; CRPR-PRINT
+; EXTRACT-COMMON-DGOP
+; 2ABSM-ACRPR
+; CRTS-PRDC-CMPR
+; CRTS-PRDC-BASIS
+; CRTS-PRDC-FACE
+; CRTS-PRDC-FACE*
+; CRTS-PRDC
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\cartesian-products.ofasl
+;;; Compiling file eilenberg-zilber.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; SHUFFLE-SIGN
+; INTR-EML
+; EML
+; INTR-PHI
+; INTR-PHI-2
+; PHI
+; INTR-AW
+; AW
+; EZ
+; LEFT-CRTS-PRDC-EFHM
+; (METHOD SEARCH-EFHM (T (EQL (QUOTE CRTS-PRDC))))
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\eilenberg-zilber.ofasl
+;;; Compiling file kan.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; (DEFVAR *KAN-LIST*)
+; (TOP-LEVEL-FORM 4)
+; (TOP-LEVEL-FORM 5)
+; KAN
+; (METHOD PRINT-OBJECT (KAN T))
+; SMST-KAN
+; CHECK-HAT
+; CHECK-KAN
+; (TOP-LEVEL-FORM 6)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\kan.ofasl
+;;; Compiling file simplicial-groups.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; (DEFVAR *SMGR-LIST*)
+; (TOP-LEVEL-FORM 4)
+; (TOP-LEVEL-FORM 5)
+; SMGR
+; (METHOD PRINT-OBJECT (SIMPLICIAL-GROUP T))
+; (METHOD PRINT-OBJECT (AB-SIMPLICIAL-GROUP T))
+; BUILD-SMGR
+; A-GRML4
+; A-GRIN4
+; (METHOD SLOT-UNBOUND (T SIMPLICIAL-GROUP (EQL (QUOTE KFLL))))
+; SMGR-KFLL-INTR
+; SMGR-KFLL
+; (METHOD SLOT-UNBOUND (T SIMPLICIAL-GROUP (EQL (QUOTE APRD))))
+; SMGR-APRD
+; (TOP-LEVEL-FORM 6)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\simplicial-groups.ofasl
+;;; Compiling file fibrations.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; FIBRATION-TOTAL-FACE
+; FIBRATION-TOTAL
+; FIBRATION-KFLL
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\fibrations.ofasl
+;;; Compiling file loop-spaces.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; (DEFCONSTANT +NULL-LOOP+)
+; NORMALIZE-LOOP
+; UNNORMALIZE-LOOP
+; LOOP3
+;;;*** Warning in LOOP-PRINT: Eliminating a test of a variable with a declared type : STREAM [type STREAM]
+; LOOP-PRINT
+; APOWR-NILOOP
+; LOOP-SPACE-CMPR
+; APOWR-FACE4
+; APOWR-LASTFACE4
+; LOOP-SPACE-FACE
+; LOOP-SPACE-FACE*
+; LOOP-SPACE-GRIN-SINTR
+; LOOP-SPACE-GRML-SINTR
+; LOOP-SPACE
+; GDELTAB
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\loop-spaces.ofasl
+;;; Compiling file ls-twisted-products.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; ABSM-LOOPABSM
+; TWISTED-CRTS-PRDC-FACE
+; TWISTED-CRTS-PRDC
+; DTAU-D-INTR
+; DTAU-D
+; SZCZARBA
+; TWISTED-TNSR-PRDC
+; POP-FIRST-ABSM
+; CRTS-CONTRACTION-INTR
+; CRTS-CONTRACTION
+; TNPR-CONTRACTION
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\ls-twisted-products.ofasl
+;;; Compiling file lp-space-efhm.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; LS-HAT-U-U
+; LS-HAT-LEFT-PERTURBATION-INTR
+; LS-HAT-LEFT-PERTURBATION
+; LS-HAT-T-U
+; LS-HAT-RIGHT-PERTURBATION
+; LS-HAT-U-T
+; LS-LEFT-HMEQ-HAT
+; LS-PRE-LEFT-HMEQ-LEFT-REDUCTION-INTR-F
+; LS-PRE-LEFT-HMEQ-LEFT-REDUCTION-F
+; LS-LEFT-HMEQ-LEFT-REDUCTION-G-INTR
+; LS-LEFT-HMEQ-LEFT-REDUCTION-G
+; LS-PRE-LEFT-HMEQ-LEFT-REDUCTION-H-INTR
+; LS-PRE-LEFT-HMEQ-LEFT-REDUCTION-H
+; LS-PRE-LEFT-HMEQ-LEFT-REDUCTION
+; LS-LEFT-HMEQ-LEFT-REDUCTION
+; LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-INTR-F
+; LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-F
+; LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-INTR-G
+; LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-G
+; LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-H
+; LS-PRE-LEFT-HMEQ-RIGHT-REDUCTION
+; LS-LEFT-HMEQ-RIGHT-REDUCTION
+; LS-LEFT-HMEQ
+; LOOP-SPACE-EFHM
+; (METHOD SEARCH-EFHM (T (EQL (QUOTE LOOP-SPACE))))
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\lp-space-efhm.ofasl
+;;; Compiling file classifying-spaces.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; (DEFCONSTANT +NULL-GBAR+)
+; GBAR-PRINT
+; NORMALIZE-GBAR
+; UNNORMALIZE-GBAR
+; GBAR
+; CLASSIFYING-SPACE-CMPR
+; CLASSIFYING-SPACE-BASIS
+; CLASSIFYING-SPACE-FACE
+; (METHOD CLASSIFYING-SPACE (SIMPLICIAL-GROUP))
+; CLASSIFYING-SPACE-GRML-SINTR
+; CLASSIFYING-SPACE-GRIN-SINTR
+; (METHOD CLASSIFYING-SPACE (AB-SIMPLICIAL-GROUP))
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\classifying-spaces.ofasl
+;;; Compiling file k-pi-n.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; K-Z-1-CMPR
+; K-Z-1-FACE
+; Z-ABSM-BAR
+; Z-BAR-ABSM
+; K-Z-1-GRML
+; K-Z-1-GRIN
+; K-Z-1
+; K-Z
+; CIRCLE-CMPR
+; CIRCLE-BASIS
+; CIRCLE
+; KZ1-RDCT-F-INTR
+; KZ1-RDCT-F
+; KZ1-RDCT-G-INTR
+; KZ1-RDCT-G
+; KZ1-RDCT-H-INTR
+; KZ1-RDCT-H
+; KZ1-RDCT
+; KZ1-EFHM
+; (METHOD SEARCH-EFHM (T (EQL (QUOTE K-Z-1))))
+; K-Z2-1-GRML-INTR
+; K-Z2-1-GRML
+; K-Z2-1-GRIN-INTR
+; K-Z2-1-GRIN
+; K-Z2-1
+; K-Z2
+; Z2-ABSM-BAR
+; Z2-BAR-ABSM
+; HOPF-FIBRATION-SINTR
+; HOPF-FIBRATION
+; Z-FUNDAMENTAL-GMSM
+; INTERESTING-FACES
+; GMSM-COCYCLE
+; Z-COCYCLE-GBAR
+; Z-COCYCLE-GBAR-HEAD
+; Z2-FUNDAMENTAL-GMSM
+; Z2-COCYCLE-GBAR
+; Z2-COCYCLE-GBAR-HEAD
+; K-Z-FUNDAMENTAL-CLASS
+; K-Z2-FUNDAMENTAL-CLASS
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\k-pi-n.ofasl
+;;; Compiling file serre.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; FIBRATION-DTAU-D-INTR
+; FIBRATION-DTAU-D
+; BROWN-REDUCTION
+; LEFT-SERRE-EFHM
+; RIGHT-SERRE-EFHM
+; FIBRATION-TOTAL-EFHM
+; (METHOD SEARCH-EFHM (T (EQL (QUOTE FIBRATION-TOTAL))))
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\serre.ofasl
+;;; Compiling file cs-twisted-products.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; SMGR-FIBRATION-SINTR
+; SMGR-FIBRATION
+; SMGR-CRTS-CONTRACTION-INTR
+; SMGR-CRTS-CONTRACTION
+; SMGR-TNPR-CONTRACTION
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\cs-twisted-products.ofasl
+;;; Compiling file cl-space-efhm.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; CS-HAT-U-U
+; CS-HAT-RIGHT-PERTURBATION-INTR
+; CS-HAT-RIGHT-PERTURBATION
+; CS-HAT-U-T
+; CS-HAT-LEFT-PERTURBATION
+; CS-HAT-T-U
+; CS-LEFT-HMEQ-HAT
+; CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-INTR-F
+; CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-F
+; CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-INTR-G
+; CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-G
+; CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-INTR-H
+; CS-PRE-LEFT-HMEQ-LEFT-REDUCTION-H
+; CS-PRE-LEFT-HMEQ-LEFT-REDUCTION
+; CS-LEFT-HMEQ-LEFT-REDUCTION
+; CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-INTR-F
+; CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-F
+; CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-INTR-G
+; CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-G
+; CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION-H
+; CS-PRE-LEFT-HMEQ-RIGHT-REDUCTION
+; CS-LEFT-HMEQ-RIGHT-REDUCTION
+; CS-LEFT-HMEQ
+; CLASSIFYING-SPACE-EFHM
+; (METHOD SEARCH-EFHM (T (EQL (QUOTE CLASSIFYING-SPACE))))
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\cl-space-efhm.ofasl
+;;; Compiling file whitehead.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; Z-WWHITEHEAD-SINTR
+; Z-WHITEHEAD-SINTR
+; Z-WHITEHEAD
+; Z2-WWHITEHEAD-SINTR
+; Z2-WHITEHEAD-SINTR
+; Z2-WHITEHEAD
+; (TOP-LEVEL-FORM 4)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\whitehead.ofasl
+;;; Compiling file smith.cl ...
+;;; Safety = 1, Speed = 3, Space = 0, Float = 1, Interruptible = 0
+;;; Compilation speed = 1, Debug = 0, Fixnum safety = 3
+;;; Source level debugging is off 
+;;; Source file recording is  on 
+;;; Cross referencing is on
+; (TOP-LEVEL-FORM 1)
+; (TOP-LEVEL-FORM 2)
+; (TOP-LEVEL-FORM 3)
+; (DEFTYPE MATRIX)
+; RANDOM-MATRIX
+; IDNT-MTRX
+; COPY-MTRX
+; LEFT-SUBMATRIX
+; MTRX-PRDC
+; CHCM-MTRX
+; LINE-OP
+; COLUMN-OP
+; LINE-SWAP
+; COLUMN-SWAP
+; LINE-MINUS
+; COLUMN-MINUS
+; MINIMAL-TERM
+; MINIMAL-REST-1
+; MINIMAL-REST-2
+;;;*** Warning in MINIMAL-TERM-TOP-LEFT: Declared type (ARRAY FIXNUM (* *)) and value type LIST are disjoint.
+; MINIMAL-TERM-TOP-LEFT
+; PIVOTT
+; LIST-SMITH
+; SMITH
+; (TOP-LEVEL-FORM 4)
+; (DEFCONSTANT +GNRTS-PCKG+)
+; GNRT-NAME-BASIS
+; ECHCM-KILL-EPI-F-INTR
+; ECHCM-KILL-EPI-G-INTR
+; ECHCM-KILL-EPI-H-INTR
+;;;*** Warning in ECHCM-WITHOUT-EPI: symbol-macro ORGN is bound but not referenced
+; ECHCM-WITHOUT-EPI
+; ECHCM-KILL-EPI
+; KILL-EPI
+; KILL-EPIS
+; CHML-CLSS-INTR
+; CHML-CLSS
+; (TOP-LEVEL-FORM 5)
+; Loading fasl file C:\Docume~1\Francis\AA\Kenzo\Kenzo-1.1-LispWorks\smith.ofasl
+("macros" "various" "classes" "combinations" "chain-complexes" "chcm-elementary-op" "effective-homology" "homology-groups" "searching-homology" "cones" ...)
+
+CL-USER 4 > (quit)

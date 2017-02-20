@@ -1,0 +1,331 @@
+Allegro CL Personal Edition 5.0.1 [Windows/x86] (6/29/99 16:56)
+Copyright (C) 1985-1999, Franz Inc., Berkeley, CA, USA.  All Rights Reserved.
+CG/IDE Version: 1.323.2.169
+
+[changing package from "COMMON-LISP-USER" to "COMMON-GRAPHICS-USER"]
+
+> (load "file-list")
+; Loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\file-list.cl
+
+ FILE  1: classes
+ FILE  2: macros
+ FILE  3: various
+ FILE  4: combinations
+ FILE  5: chain-complexes
+ FILE  6: chcm-elementary-op
+ FILE  7: effective-homology
+ FILE  8: homology-groups
+ FILE  9: searching-homology
+ FILE 10: cones
+ FILE 11: tensor-products
+ FILE 12: coalgebras
+ FILE 13: cobar
+ FILE 14: algebras
+ FILE 15: bar
+ FILE 16: simplicial-sets
+ FILE 17: simplicial-mrphs
+ FILE 18: delta
+ FILE 19: special-smsts
+ FILE 20: suspensions
+ FILE 21: disk-pasting
+ FILE 22: cartesian-products
+ FILE 23: eilenberg-zilber
+ FILE 24: kan
+ FILE 25: simplicial-groups
+ FILE 26: fibrations
+ FILE 27: loop-spaces
+ FILE 28: ls-twisted-products
+ FILE 29: lp-space-efhm
+ FILE 30: classifying-spaces
+ FILE 31: k-pi-n
+ FILE 32: serre
+ FILE 33: cs-twisted-products
+ FILE 34: cl-space-efhm
+ FILE 35: whitehead
+ FILE 36: smith
+T
+> (in-package :cat)
+#<The CAT package>
+> (compile-files)
+
+SPEED-PARAMETER = 3
+
+ *CMBN-CONTROL* = T
+
+;;; Compiling file classes.cl
+;;; Writing fasl file classes.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\classes.fasl
+;;; Compiling file macros.cl
+;;; Writing fasl file macros.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\macros.fasl
+;;; Compiling file various.cl
+;;; Writing fasl file various.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\various.fasl
+;;; Compiling file combinations.cl
+;;; Writing fasl file combinations.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\combinations.fasl
+;;; Compiling file chain-complexes.cl
+;;; Writing fasl file chain-complexes.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\chain-complexes.fasl
+;;; Compiling file chcm-elementary-op.cl
+;;; Writing fasl file chcm-elementary-op.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\chcm-elementary-op.fasl
+;;; Compiling file effective-homology.cl
+;;; Writing fasl file effective-homology.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\effective-homology.fasl
+;;; Compiling file homology-groups.cl
+;;; Writing fasl file homology-groups.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\homology-groups.fasl
+;;; Compiling file searching-homology.cl
+;;; Writing fasl file searching-homology.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\searching-homology.fasl
+;;; Compiling file cones.cl
+;;; Writing fasl file cones.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\cones.fasl
+;;; Compiling file tensor-products.cl
+;;; Writing fasl file tensor-products.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\tensor-products.fasl
+;;; Compiling file coalgebras.cl
+;;; Writing fasl file coalgebras.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\coalgebras.fasl
+;;; Compiling file cobar.cl
+;;; Writing fasl file cobar.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\cobar.fasl
+;;; Compiling file algebras.cl
+;;; Writing fasl file algebras.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\algebras.fasl
+;;; Compiling file bar.cl
+;;; Writing fasl file bar.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\bar.fasl
+;;; Compiling file simplicial-sets.cl
+;;; Writing fasl file simplicial-sets.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\simplicial-sets.fasl
+;;; Compiling file simplicial-mrphs.cl
+;;; Writing fasl file simplicial-mrphs.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\simplicial-mrphs.fasl
+;;; Compiling file delta.cl
+;;; Writing fasl file delta.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\delta.fasl
+;;; Compiling file special-smsts.cl
+;;; Writing fasl file special-smsts.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\special-smsts.fasl
+;;; Compiling file suspensions.cl
+;;; Writing fasl file suspensions.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\suspensions.fasl
+;;; Compiling file disk-pasting.cl
+;;; Writing fasl file disk-pasting.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\disk-pasting.fasl
+;;; Compiling file cartesian-products.cl
+;;; Writing fasl file cartesian-products.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\cartesian-products.fasl
+;;; Compiling file eilenberg-zilber.cl
+;;; Writing fasl file eilenberg-zilber.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\eilenberg-zilber.fasl
+;;; Compiling file kan.cl
+;;; Writing fasl file kan.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\kan.fasl
+;;; Compiling file simplicial-groups.cl
+;;; Writing fasl file simplicial-groups.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\simplicial-groups.fasl
+;;; Compiling file fibrations.cl
+;;; Writing fasl file fibrations.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\fibrations.fasl
+;;; Compiling file loop-spaces.cl
+;;; Writing fasl file loop-spaces.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\loop-spaces.fasl
+;;; Compiling file ls-twisted-products.cl
+;;; Writing fasl file ls-twisted-products.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\ls-twisted-products.fasl
+;;; Compiling file lp-space-efhm.cl
+;;; Writing fasl file lp-space-efhm.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\lp-space-efhm.fasl
+;;; Compiling file classifying-spaces.cl
+;;; Writing fasl file classifying-spaces.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\classifying-spaces.fasl
+;;; Compiling file k-pi-n.cl
+;;; Writing fasl file k-pi-n.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\k-pi-n.fasl
+;;; Compiling file serre.cl
+;;; Writing fasl file serre.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\serre.fasl
+;;; Compiling file cs-twisted-products.cl
+;;; Writing fasl file cs-twisted-products.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\cs-twisted-products.fasl
+;;; Compiling file cl-space-efhm.cl
+;;; Writing fasl file cl-space-efhm.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\cl-space-efhm.fasl
+;;; Compiling file whitehead.cl
+;;; Writing fasl file whitehead.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\whitehead.fasl
+;;; Compiling file smith.cl
+;;; Writing fasl file smith.fasl
+;;; Fasl write complete
+; Fast loading C:\Docume~1\Francis\AA\Kenzo\Kenzo-2\smith.fasl
+--- done ---
+> (time (homology (loop-space (moore 2 4) 2) 7))
+
+Computing boundary-matrix in dimension 7.
+Rank of the source-module : 6.
+
+
+;; Clock -> 2005-10-03, 15h 6m 53s.
+Computing the boundary of the generator 1 (dimension 7) :
+<<AlLp[7 <<AlLp[4 N5][4 N5]>>]>> 
+End of computing.
+
+
+;; Clock -> 2005-10-03, 15h 6m 53s.
+Computing the boundary of the generator 2 (dimension 7) :
+<<AlLp[2 <<AlLp[3 M4]>>][5 <<AlLp[3 M4][3 M4]>>]>> 
+End of computing.
+
+
+;; Clock -> 2005-10-03, 15h 6m 53s.
+Computing the boundary of the generator 3 (dimension 7) :
+<<AlLp[5 <<AlLp[3 M4][3 M4]>>][2 <<AlLp[3 M4]>>]>> 
+End of computing.
+
+
+;; Clock -> 2005-10-03, 15h 6m 53s.
+Computing the boundary of the generator 4 (dimension 7) :
+<<AlLp[2 <<AlLp[3 M4]>>][2 <<AlLp[3 M4]>>][3 <<AlLp[4 N5]>>]>> 
+End of computing.
+
+
+;; Clock -> 2005-10-03, 15h 6m 53s.
+Computing the boundary of the generator 5 (dimension 7) :
+<<AlLp[2 <<AlLp[3 M4]>>][3 <<AlLp[4 N5]>>][2 <<AlLp[3 M4]>>]>> 
+End of computing.
+
+
+;; Clock -> 2005-10-03, 15h 6m 53s.
+Computing the boundary of the generator 6 (dimension 7) :
+<<AlLp[3 <<AlLp[4 N5]>>][2 <<AlLp[3 M4]>>][2 <<AlLp[3 M4]>>]>> 
+End of computing.
+
+
+Computing boundary-matrix in dimension 8.
+Rank of the source-module : 11.
+
+
+;; Clock -> 2005-10-03, 15h 6m 53s.
+Computing the boundary of the generator 1 (dimension 8) :
+<<AlLp[8 <<AlLp[3 M4][3 M4][3 M4]>>]>> 
+End of computing.
+
+
+;; Clock -> 2005-10-03, 15h 6m 58s.
+Computing the boundary of the generator 2 (dimension 8) :
+<<AlLp[2 <<AlLp[3 M4]>>][6 <<AlLp[3 M4][4 N5]>>]>> 
+End of computing.
+
+
+;; Clock -> 2005-10-03, 15h 6m 58s.
+Computing the boundary of the generator 3 (dimension 8) :
+<<AlLp[2 <<AlLp[3 M4]>>][6 <<AlLp[4 N5][3 M4]>>]>> 
+End of computing.
+
+
+;; Clock -> 2005-10-03, 15h 6m 58s.
+Computing the boundary of the generator 4 (dimension 8) :
+<<AlLp[3 <<AlLp[4 N5]>>][5 <<AlLp[3 M4][3 M4]>>]>> 
+End of computing.
+
+
+;; Clock -> 2005-10-03, 15h 6m 58s.
+Computing the boundary of the generator 5 (dimension 8) :
+<<AlLp[5 <<AlLp[3 M4][3 M4]>>][3 <<AlLp[4 N5]>>]>> 
+End of computing.
+
+
+;; Clock -> 2005-10-03, 15h 6m 58s.
+Computing the boundary of the generator 6 (dimension 8) :
+<<AlLp[6 <<AlLp[3 M4][4 N5]>>][2 <<AlLp[3 M4]>>]>> 
+End of computing.
+
+
+;; Clock -> 2005-10-03, 15h 6m 58s.
+Computing the boundary of the generator 7 (dimension 8) :
+<<AlLp[6 <<AlLp[4 N5][3 M4]>>][2 <<AlLp[3 M4]>>]>> 
+End of computing.
+
+
+;; Clock -> 2005-10-03, 15h 6m 58s.
+Computing the boundary of the generator 8 (dimension 8) :
+<<AlLp[2 <<AlLp[3 M4]>>][3 <<AlLp[4 N5]>>][3 <<AlLp[4 N5]>>]>> 
+End of computing.
+
+
+;; Clock -> 2005-10-03, 15h 6m 58s.
+Computing the boundary of the generator 9 (dimension 8) :
+<<AlLp[3 <<AlLp[4 N5]>>][2 <<AlLp[3 M4]>>][3 <<AlLp[4 N5]>>]>> 
+End of computing.
+
+
+;; Clock -> 2005-10-03, 15h 6m 58s.
+Computing the boundary of the generator 10 (dimension 8) :
+<<AlLp[3 <<AlLp[4 N5]>>][3 <<AlLp[4 N5]>>][2 <<AlLp[3 M4]>>]>> 
+End of computing.
+
+
+;; Clock -> 2005-10-03, 15h 6m 58s.
+Computing the boundary of the generator 11 (dimension 8) :
+<<AlLp[2 <<AlLp[3 M4]>>][2 <<AlLp[3 M4]>>][2 <<AlLp[3 M4]>>][2 <<AlLp[3 M4]>>]>> 
+End of computing.
+
+
+
+
+Homology in dimension 7 :
+
+
+Component Z/2Z
+
+
+---done---
+
+;; Clock -> 2005-10-03, 15h 6m 58s.
+
+; cpu time (non-gc) 4,735 msec user, 0 msec system
+; cpu time (gc)     640 msec user, 0 msec system
+; cpu time (total)  5,375 msec user, 0 msec system
+; real time  5,375 msec
+; space allocation:
+;  2,916,685 cons cells, 2 symbols, 7,077,280 other bytes, 3484 static bytes
+NIL
+> 
