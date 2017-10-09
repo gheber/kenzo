@@ -1,52 +1,46 @@
-FROM jupyter/notebook:stable
-MAINTAINER gheber <gheber@hdfgroup.org>
+# original Dockerfile from https://github.com/melhadad/cl-jupyter-docker
 
-RUN apt-get update
+FROM python:3.6
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install wget unzip
+ENV HOME /root
 
-# LaTeX (missing bits)
+# -----------------------
+# zeromq with libsodium for encrypted communication
+# https://github.com/ogomezm/zeromq-container
+# MAINTAINER Oscar Gómez
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install texlive-generic-recommended
+RUN apt-get update && apt-get install -y git build-essential libtool autoconf automake pkg-config unzip libkrb5-dev curl wget pandoc texlive-generic-recommended texlive-xetex
+RUN cd /tmp && git clone git://github.com/jedisct1/libsodium.git && cd libsodium && git checkout e2a30a && ./autogen.sh && ./configure && make check && make install && ldconfig
+RUN cd /tmp && git clone --depth 1 git://github.com/zeromq/libzmq.git && cd libzmq && ./autogen.sh && ./configure && make
+# RUN cd /tmp/libzmq && make check
 
-# SBCL
+RUN cd /tmp/libzmq && make install && ldconfig
+RUN rm /tmp/* -rf
 
-RUN wget -nv http://downloads.sourceforge.net/project/sbcl/sbcl/1.3.11/sbcl-1.3.11-x86-64-linux-binary.tar.bz2 \
- && tar -jxvf sbcl-1.3.11-x86-64-linux-binary.tar.bz2 \
- && cd sbcl-1.3.11-x86-64-linux \
- && sh install.sh
+# -----------------------
+# sbcl with quicklist
+RUN wget http://prdownloads.sourceforge.net/sbcl/sbcl-1.4.0-x86-64-linux-binary.tar.bz2 -O /tmp/sbcl.tar.bz2 && \
+    mkdir /tmp/sbcl && \
+    tar jxvf /tmp/sbcl.tar.bz2 --strip-components=1 -C /tmp/sbcl/ && \
+    cd /tmp/sbcl && \
+    sh install.sh && \
+    cd /tmp \
+    rm -rf /tmp/sbcl/
+	
+WORKDIR /tmp/
+RUN wget http://beta.quicklisp.org/quicklisp.lisp
 
-# Quicklisp
+RUN sbcl --non-interactive --load quicklisp.lisp --eval "(quicklisp-quickstart:install)" --eval "(setq  ql-util::*do-not-prompt* t)" --eval "(ql:add-to-init-file)"
 
-RUN wget -nv https://beta.quicklisp.org/quicklisp.lisp \
- && sbcl --load quicklisp.lisp --non-interactive --eval "(quicklisp-quickstart:install)"
+RUN sbcl --non-interactive --eval '(ql:quickload "alexandria")' --eval '(ql:quickload "trivial-features")' --eval '(ql:quickload "babel")' --eval '(ql:quickload "kenzo")'
 
-RUN echo '#-quicklisp' >> /root/.sbclrc
-RUN echo '(let ((quicklisp-init (merge-pathnames "quicklisp/setup.lisp"' >> /root/.sbclrc
-RUN echo '                                       (user-homedir-pathname))))' >> /root/.sbclrc
-RUN echo '  (when (probe-file quicklisp-init)' >> /root/.sbclrc
-RUN echo '    (load quicklisp-init)))' >> /root/.sbclrc
-RUN echo '(push #p"/workspace/" asdf:*central-registry*)' >> /root/.sbclrc
-
+# -----------------------
 # cl-jupyter
+RUN pip3 install ipython
+RUN pip3 install jupyter
 
-RUN wget -nv https://github.com/fredokun/cl-jupyter/archive/master.zip \
- && unzip master.zip \
- && mv cl-jupyter-master /root \
- && python3 /root/cl-jupyter-master/install-cl-jupyter.py \
- && sbcl --load /root/cl-jupyter-master/cl-jupyter.lisp --non-interactive
+WORKDIR /root
+RUN cd /root && git clone https://github.com/fredokun/cl-jupyter.git && cd cl-jupyter && python3 ./install-cl-jupyter.py && sbcl --load ./cl-jupyter.lisp
 
-RUN ln -s /root/cl-jupyter-master/src /root/quicklisp/local-projects/cl-jupyter
-
-# Kenzo
-
-RUN wget https://github.com/gheber/kenzo/archive/master.zip \
- && unzip master.zip -d /root/quicklisp/local-projects && rm master.zip
-
-RUN mv /root/quicklisp/local-projects/kenzo-master /root/quicklisp/local-projects/kenzo 
-
-RUN echo '(ql:quickload :cl-jupyter)' >> /root/.sbclrc
-RUN echo '(ql:quickload :kenzo)' >> /root/.sbclrc
-RUN echo '(use-package :cat :cl-jupyter-user)' >> /root/.sbclrc
-RUN echo '(cat:cat-init)' >> /root/.sbclrc
-RUN sbcl --eval "(require 'asdf)"
+EXPOSE 8888
+CMD jupyter notebook --allow-root --no-browser --NotebookApp.token='' --ip '*' --port 8888
