@@ -1,0 +1,48 @@
+\begin{center}
+\line(1,0){450}
+\end{center}
+
+The *Kenzo* program implements the general ideas of the second author about
+/Effective Homology/[fn:1], mainly around the Serre and Eilenberg-Moore
+spectral sequences. The first author (re-)discovered the importance of the
+/Basic Perturbation Lemma/ in these questions, already noted by Victor
+Guggenheim[fn:2] and this program directly implements and directly uses this
+"lemma" which should be called the /Fundamental Theorem of Algebraic Topology/.
+The first version of the program, called *EAT*, was written in 1989-90 by the
+first and the second authors. It has been demonstrated in several universities:
+France: Grenoble and Montpellier, Belgium: Louvain-la-Neuve, Italy: Genoa and
+Pisa, Sweden: Stockholm, Japan: Sapporo, Morioka, Urawa, Tokyo, Kyoto, Nara,
+Osaka and Hiroshima.
+
+In this *Kenzo* version, numerous improvements have been integrated in
+comparison with *EAT*.
+
+1. Standard CLOS (Common Lisp Object System) techniques.
+2. Use of Zermelo theorem about ordered sets (!): any set can be well ordered
+   and this remark gives important new ideas to improve execution speed.
+3. Better memory management.
+4. Use of Szczarba's formulas instead of Shih's for implementing the twisted
+   Eilenberg-Zilber theorem.
+5. New mathematical objects:
+   - Serre spectral sequences.
+   - Differential algebras.
+   - Simplicial morphisms.
+   - Kan simplicial sets.
+   - Simplicial groups.
+   - Fibrations.
+   - Classifying spaces.
+   In particular, using these tools, the first homotopy groups of /arbitrary/
+   simplicial sets with effective homology, are now reachable.
+
+The present documentation is a joint work between the second and third authors.
+
+\begin{center}
+\line(1,0){450}
+\end{center}
+
+[fn:1] *Francis Sergeraert.* /The computability problem in algebraic topology./
+Advances in Mathematics, 1994, vol. 104, pp 1-29.
+
+[fn:2] *V.K.A.M. Guggenheim.* /On a perturbation theory for the homology of the
+loop space./ Journal of Pure and Applied Algebra, 1982, vol. 25, pp 197-205.
+
