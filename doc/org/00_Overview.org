@@ -1,3 +1,8 @@
+#+BEGIN_SRC lisp :session 00 :exports none :results silent
+(ql:quickload "kenzo")
+(use-package :cat)
+#+END_SRC
+
 
 * Overview
 
@@ -9,11 +14,11 @@ labelled =*=, =M3= and =N4=. The faces 0 and 2 of the 4-simplex =N4= are
 identified with (pasted to) the 3-simplex =M3=, the others being contracted on
 the base point. To create the simplicial set one types simply:
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar m23)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (setf m23 (moore 2 3))
 #+END_SRC
 
@@ -23,7 +28,7 @@ the base point. To create the simplicial set one types simply:
 The system answers that a Kenzo object has been created, with number 1 and
 type =SIMPLICIAL SET=. This object may be referenced by the symbol =m23=.
 
-#+BEGIN_SRC lisp :session cat
+#+BEGIN_SRC lisp :session 00
 m23
 #+END_SRC
 
@@ -35,7 +40,7 @@ complex induced by the simplicial set description. Here we compute the $H_i$
 from 0 to 4 included. When in the answer the component part is void, it means
 that the corresponding homology group is null.
 
-#+BEGIN_SRC lisp :session cat :results output
+#+BEGIN_SRC lisp :session 00 :results output
 (homology m23 0 5)
 #+END_SRC
 
@@ -180,11 +185,11 @@ As =m23= is a simplicial set, it is possible to create the cartesian product
 =m23xm23= by the function =crts-prdc= (= CaRTeSian PRoDuCt). This is a new
 simplicial set.
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar m23xm23)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (setf m23xm23 (crts-prdc m23 m23))
 #+END_SRC
 
@@ -194,14 +199,14 @@ simplicial set.
 Being a simplicial set, =m23xm23= is also a chain complex object and we may for
 instance ask for the basis in dimension 6.
 
-#+BEGIN_SRC lisp :session cat :exports both :results verbatim
+#+BEGIN_SRC lisp :session 00 :exports both :results verbatim
 (basis m23xm23 6)
 #+END_SRC
 
 #+RESULTS:
 : (<CrPr 1-0 N4 3-2 N4> <CrPr 1-0 N4 4-2 N4> <CrPr 1-0 N4 4-3 N4> <CrPr 1-0 N4 4-3-2 M3> <CrPr 1-0 N4 5-2 N4> <CrPr 1-0 N4 5-3 N4> <CrPr 1-0 N4 5-3-2 M3> <CrPr 1-0 N4 5-4 N4> <CrPr 1-0 N4 5-4-2 M3> <CrPr 1-0 N4 5-4-3 M3> ...)
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (length (basis m23xm23 6))
 #+END_SRC
 
@@ -220,18 +225,18 @@ two simplicial sets do not make sense, and Kenzo understands to work on the
 underlying chain complex =m23=. This tensor product is a new chain complex and
 we see that the basis in dimension 6 has only one element:
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar t2m23)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (setf t2m23 (tnsr-prdc m23 m23))
 #+END_SRC
 
 #+RESULTS:
 : [K3 Chain-Complex]
 
-#+BEGIN_SRC lisp :session cat :exports both :results verbatim
+#+BEGIN_SRC lisp :session 00 :exports both :results verbatim
 (basis t2m23 6)
 #+END_SRC
 
@@ -243,7 +248,7 @@ cartesian product space: as chain complexes, =m23xm23= and =t2m23= have the
 same homology groups, but the computations using the tensor product are
 considerably faster. The user can check Künneth's theorem.
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (homology m23xm23 0 8)
 #+END_SRC
 
@@ -518,11 +523,11 @@ In =Kenzo=, a non-degenerate simplex of $\mathrm{K}(\mathbb{Z}, 1)$ in
 dimension $n$ will be simply a list of $n$ non-null integers, for instance:
 =(2 3 4 5)=. In dimension 0, the only simplex is =NIL= (the base point).
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar kz1)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (setf kz1 (k-z 1))
 #+END_SRC
 
@@ -532,7 +537,7 @@ dimension $n$ will be simply a list of $n$ non-null integers, for instance:
 But this object is also a /coalgebra/ and an /algebra/, and we may see the
 effect of the respective induced /coproduct/ and /product/: 
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (princ (cprd kz1 4 '(2 3 4 5)))
 #+END_SRC
 
@@ -546,7 +551,7 @@ effect of the respective induced /coproduct/ and /product/:
 : <1 * <TnPr (2 3 4 5) NIL>>
 : ------------------------------------------------------------------------------
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (princ (aprd kz1 6 (tnpr 2 '(1 2) 4 '(3 4 5 6))))
 #+END_SRC
 
@@ -576,11 +581,11 @@ morphisms. The degree of the combination is indicated by the information:
 In the same way, we may create the Abelian simplicial groups
 $\mathrm{K}(\mathbb{Z}/2\mathbb{Z}, n)$:
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar k-z2-2)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (setf k-z2-2 (k-z2 2))
 #+END_SRC
 
@@ -650,7 +655,7 @@ Let us play now with the sphere $S^3$ and its loop spaces. $S^3$ and
 $\Omega^2 S^3$ are created by respective calls to the functions =sphere= and
 =loop-space=. Then we compute the $H_4$ and $H_5$ of $\Omega^2 S^3$:
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar s3)
 #+END_SRC
 
@@ -661,18 +666,18 @@ $\Omega^2 S^3$ are created by respective calls to the functions =sphere= and
 #+RESULTS:
 : [K174 Simplicial-Set]
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar o2s3)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (setf o2s3 (loop-space s3 2))
 #+END_SRC
 
 #+RESULTS:
 : [K191 Simplicial-Group]
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (homology o2s3 4 6)
 #+END_SRC
 
@@ -854,11 +859,11 @@ Component Z/2Z
 
 Let us take now the first loop space $\Omega^1 S^3$
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar os3)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (setf os3 (loop-space s3))
 #+END_SRC
 
@@ -871,11 +876,11 @@ original sphere. In fact, the object created by the command
 $\texttt{(loop3 0 's3 1)}$ is the "word" $S3^1$ belonging to the Kan simplicial
 version $G(S^3)$ (a simplicial group) of the loop space $\Omega S^3$.
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar L1)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (princ (setf L1 (loop3 0 's3 1)))
 #+END_SRC
 
@@ -886,11 +891,11 @@ Let us consider also the 2-degeneracy of the base point of the loop space. In
 the printed result, the user will recognize the degeneracy $\eta_1\eta_0$ of
 the null loop, base point of $\Omega^1 S^3$: 
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar null-simp)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (princ (setf null-simp (absm 3 +null-loop+)))
 #+END_SRC
 
@@ -905,11 +910,11 @@ following call. It means that we "paste" to the space =os3= a 3-simplex named
 collapsed on the base point; in this way the attaching map
 $(S^2 \rightarrow \Omega S^3)$ has degree 2.
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar dos3)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (setf dos3 (disk-pasting os3 3 '<D3> (list L1 null-simp L1 null-simp)))
 #+END_SRC
 
@@ -918,7 +923,7 @@ $(S^2 \rightarrow \Omega S^3)$ has degree 2.
 
 Let us compute a few homology groups of the new space =dos3=:
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (homology dos3 2 4)
 #+END_SRC
 
@@ -993,18 +998,18 @@ Homology in dimension 3 :
 But more interesting, let us build the loop space of the object =dos3= and let
 us compute the homology in dimension 5:
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar odos3)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (setf odos3 (loop-space dos3))
 #+END_SRC
 
 #+RESULTS:
 : [K471 Simplicial-Group]
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (homology odos3 5)
 #+END_SRC
 
@@ -1289,21 +1294,21 @@ Let us continue with the Kan theory. First, we check that $S^3$ is not of type
 Kan and that $\Omega S^3$ is indeed of type Kan and a non-Abelian simplicial
 group.
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (typep s3 'kan)
 #+END_SRC
 
 #+RESULTS:
 : NIL
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (typep os3 'kan)
 #+END_SRC
 
 #+RESULTS:
 : T
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (typep os3 'simplicial-group)
 #+END_SRC
 
@@ -1320,22 +1325,22 @@ group.
 Let us create the word $L2=(S3)^2$, i.e an object belonging to $\Omega S^3$ and
 let us apply the product of the underlying algebra upon $L2 \otimes L2$:
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar L2)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (princ (setf L2 (loop3 0 's3 2)))
 #+END_SRC
 
 #+RESULTS:
 : <<Loop[S3\2]>>
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar square)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (princ (setf square (aprd os3 4 (tnpr 2 L2 2 L2))))
 #+END_SRC
 
@@ -1354,11 +1359,11 @@ We see that the result is a linear combination of words composed from
 degeneracies of =L2=. The following instruction selects the generator part of
 the second element of the previous combination.
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar L4)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (princ (setf L4 (gnrt (second (cmbn-list square)))))
 #+END_SRC
 
@@ -1370,11 +1375,11 @@ Let us use the lisp function =mapcar= (one among the various iteration
 functions of Lisp) to create the list of the faces 1, 2, 3 and 4 of the object
 =L4=, this list is a "Kan horn".
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar horn)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (princ (setf horn (mapcar #'(lambda (i) (face os3 i 4 l4)) '(1 2 3 4))))
 #+END_SRC
 
@@ -1386,11 +1391,11 @@ The function =kfll= tries to find a filling of this "Kan horn", and we see that
 the face 2 of the resulting simplex (which is very different from =L4=) is the
 same as the face 2 of =L4=.
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar kan-simplex)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (princ (setf kan-simplex (kfll os3 0 4 horn)))
 #+END_SRC
 
@@ -1398,7 +1403,7 @@ same as the face 2 of =L4=.
 : 
 : <AbSm - <<Loop[3-1 S3\2][2-1 S3\-2][2-0 S3\2][1-0 S3\-2][2-1 S3\2][3-1 S3\-2][1-0 S3\2][3-1 S3\2][3-0 S3\-2][1-0 S3\-2][3-0 S3\2][2-0 S3\-2][1-0 S3\2][3-0 S3\-2][2-0 S3\2][3-0 S3\2]>>> 
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (princ (face os3 2 4 kan-simplex))
 #+END_SRC
 
@@ -1406,7 +1411,7 @@ same as the face 2 of =L4=.
 : 
 : <AbSm - <<Loop[0 S3\2][2 S3\2]>>> 
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (princ (second horn))
 #+END_SRC
 
@@ -1422,25 +1427,25 @@ ${\cal G}$. In our case, as $\Omega S^3$ in non-Abelian, the result is not a
 simplicial group but only a simplicial set. We verify that the $H_4$, which in
 principle should be isomorphic to $H_4 S^3 = 0$, is really null.
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar cls-os3)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (setf cls-os3 (classifying-space os3))
 #+END_SRC
 
 #+RESULTS:
 : [K938 Simplicial-Set]
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (typep cls-os3 'simplicial-group)
 #+END_SRC
 
 #+RESULTS:
 : NIL
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (homology cls-os3 4)
 #+END_SRC
 
@@ -1486,11 +1491,11 @@ We take again $\mathrm{Moore}(\mathbb{Z}/2\mathbb{Z}, 3)$ whose $H_3$ is
 $\mathbb{Z}/2\mathbb{Z}$. First the fundamental cohomology class is
 constructed:
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar ch3)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (setf ch3 (chml-clss m23 3))
 #+END_SRC
 
@@ -1500,11 +1505,11 @@ constructed:
 Then the function =z2-whitehead= is called to build a fibration over the
 simplicial set =m23= canonically associated to the cohomology class =ch3=.
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar f3)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (setf f3 (z2-whitehead m23 ch3))
 #+END_SRC
 
@@ -1513,11 +1518,11 @@ simplicial set =m23= canonically associated to the cohomology class =ch3=.
 
 Then the total space of the fibration is built:
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar x4)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (setf x4 (fibration-total f3))
 #+END_SRC
 
@@ -1527,7 +1532,7 @@ Then the total space of the fibration is built:
 The $H_4$ of this total space is the $\pi_4$ of
 $\mathrm{Moore}(\mathbb{Z}/2\mathbb{Z})$:
 
-#+BEGIN_SRC lisp :session cat :exports both :results output
+#+BEGIN_SRC lisp :session 00 :exports both :results output
 (homology x4 3 5)
 #+END_SRC
 
@@ -1650,29 +1655,29 @@ Component Z/2Z
 We may now iterate the process, to compute the $\pi_5$ of
 $\mathrm{Moore}(\mathbb{Z}/2\mathbb{Z})$:
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar ch4)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (setf ch4 (chml-clss x4 4))
 #+END_SRC
 
 #+RESULTS:
 : [K1318 Cohomology-Class on K1303 of degree 4]
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar f4)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session cat :exports both
+#+BEGIN_SRC lisp :session 00 :exports both
 (setf f4 (z2-whitehead x4 ch4))
 #+END_SRC
 
 #+RESULTS:
 : [K1333 Fibration K1237 -> K1319]
 
-#+BEGIN_SRC lisp :session cat :exports none
+#+BEGIN_SRC lisp :session 00 :exports none
 (defvar x5)
 #+END_SRC
 

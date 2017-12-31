@@ -2,10 +2,6 @@
 #+AUTHOR: Julio Rubio Garcia, Francis Sergeraert, Yvon Siret
 #+DATE: April 26, 1999
 
-#+BEGIN_SRC lisp :session cat :exports none :results silent
-(ql:quickload "kenzo")
-(use-package :cat)
-#+END_SRC
-
 #+INCLUDE: "Foreword.org"
 #+INCLUDE: "00_Overview.org"
+#+INCLUDE: "01_Chain_Complexes.org"
