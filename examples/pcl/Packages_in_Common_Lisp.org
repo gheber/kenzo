@@ -586,3 +586,173 @@
   package should in principle be void of symbols. To make our experiments more
   understandable it is better to allocate and use toy packages. The
   [[http://clhs.lisp.se/Body/m_defpkg.htm][=defpackage=]] function (a macro) allocates a package of a given name.
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (defpackage "P1" (:use "CL"))
+  #+END_SRC
+
+  A package ="P1"= is now present in our environment, without any internal
+  symbols.
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (package-internal-symbols "P1")
+  #+END_SRC
+
+  (The symbol =nil= also represents the empty list.) Let's allocate a few
+  symbols and make them internal in the package ="P1"=! The current default
+  package is ="COMMON-LISP-USER"= and we switch it to ="P1"= like this:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (in-package "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1"
+  *package*
+  #+END_SRC
+
+  From now on, the default package is ="P1"=. If we write down a symbol then it
+  will be understood by the Lisp reader as accessed via the package ="P1"=,
+  that is, unless we use a special syntax. Let us create a list of three
+  symbols and assign it to the symbol =list=, and then examine the internal
+  symbols of the package ="P1"=:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1"
+  (multiple-value-list
+   (ignore-errors 
+     (setf (symbol-value 'list) '(symb1 symb2 symb3))))
+  #+END_SRC
+
+  The reader probably would prefer =(defvar list)= followed by
+  =(setf list ...)=, which is rejected by some Lisp implementations, in
+  particular SBCL, because in principle the symbol =list=, owned by the package
+  ="COMMON-LISP"=, is "locked". It is possible to unlock such a symbol, which
+  is a little technical, but using =(symbol-value 'list)= as above gets the job
+  done.
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1"
+  (multiple-value-list
+   (ignore-errors 
+     (package-internal-symbols "P1")))
+  #+END_SRC
+
+  Oops! What happened? We've successfully used the function
+  =package-internal-symbols= earlier and suddenly it seems to have disappeared
+  from the environment. The point is that it was /defined when/
+  ="COMMON-LISP-USER"= was the default package. Let us examine the situation!
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (multiple-value-list (find-symbol "PACKAGE-INTERNAL-SYMBOLS" "COMMON-LISP-USER"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (multiple-value-list (find-symbol "PACKAGE-INTERNAL-SYMBOLS" "P1"))
+  #+END_SRC
+  
+  A symbol with the given name is found in both packages. Before encountering
+  the undefined functional value error, Lisp ( more precisely, the Lisp reader)
+  had interned a /new/ symbol with the name ="PACKAGE-INTERNAL-SYMBOLS"= in the
+  current default package, ="P1"=, for the sole reason that it was present in
+  the source text. Let us verify that both symbols are different!
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1"
+  (eq (find-symbol "PACKAGE-INTERNAL-SYMBOLS" "COMMON-LISP-USER")
+    (find-symbol "PACKAGE-INTERNAL-SYMBOLS" "P1"))
+  #+END_SRC
+  
+  The symbols are different. Compare that with the status of =nil=, where the
+  same symbol =nil= was accessible via ="COMMON-LISP"= and via
+  ="COMMON-LISP-USER"=. In our present situation both symbols are /different/,
+  and so are their respective properties. For example, the first symbol does
+  have a functional value and the second does not, which can be tested with the
+  function [[http://clhs.lisp.se/Body/f_fbound.htm][=fboundp=]]x:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1"
+  (fboundp (find-symbol "PACKAGE-INTERNAL-SYMBOLS" "COMMON-LISP-USER"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1"
+  (fboundp (find-symbol "PACKAGE-INTERNAL-SYMBOLS" "P1"))
+  #+END_SRC
+
+  This is the first time we have seen the double-colon =‘::’= notation: When
+  the symbol =package-internal-symbols= was searched via ="COMMON-LISP-USER"=,
+  the answer was positive but the returned symbol was a little lengthy:
+  =COMMON-LISP-USER::PACKAGE-INTERNAL-SYMBOLS=. The current default package is
+  ="P1"=, via which /this/ symbol is not accessible. However, we may access it
+  using the double-colon notation:
+
+  #+BEGIN_CENTER
+  =package-name::symbol-name=
+  #+END_CENTER
+  
+  This is one of the methods which allows the user or Lisp to refer to a symbol
+  not accessible via the default package. The Lisp reader is told: "We mean the
+  symbol =symbol-name= via the package =package-name=." In contrast, for the
+  symbol with the same name but interned in the different ="P1"= package,
+  because ="P1"= is the current default package, the double colon notation is
+  not necessary. The longer notation lets us access a symbol interned in the
+  ="COMMON-LISP-USER"= package and its functional value as follows:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (cl-user::package-internal-symbols "P1")
+  #+END_SRC
+
+  The =cl-user::= prefix tells Lisp to look for the symbol via the ="CL-USER"=
+  package (Remember that ="CL-USER"= is a nickname for ="COMMON-LISP-USER"=?)
+  and, because of its position just after a left parenthesis, to use its
+  functional value. Currently, there are four internal symbols in the package
+  ="P1"= and they are returned in an arbitrary order. By the way, what about
+  the symbol =list=, to which we assigned a list (!) of symbols?
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (multiple-value-list (find-symbol "LIST" "P1"))
+  #+END_SRC
+
+  The symbol is accessible via the package ="P1"= but with a different status,
+  the status /inherited/. We will examine this situation later. In fact, the
+  symbol =list=, one of the most important symbols in Lisp, is already present
+  in the package ="COMMON-LISP"= at the beginning of a session, and by default
+  accessible from any package.
+
+  We must mention also that our function $\rho$, or the function =find-symbol=
+  if you prefer, is (almost) injective /with respect to/ $st$. Let $p_1$ and
+  $p_2$ be two packages, $st_1$ and $st_2$ two strings. Then if
+  $\rho(p_1, st_1) = \rho(p_2, st_2)\neq\mathtt{nil}$, then $st_1 = st_2$. Pay
+  attention to the fact that the equality is an equality between /symbols/.
+  This is a consequence of $\mathtt{symbol-name}(\rho(p, st)) = st$; in other
+  words, there is no possibility of nicknames for a symbol name. In particular,
+  there is a 1-1 correspondence between the internal symbols of a package and
+  their respective names.
+
+* Importing a symbol.
+
+  Instead of using the lengthy notation =cl-user::xxx= to make an internal
+  symbol in ="CL-USER"= accessible from ="P1"=, we may opt to /import/ this
+  symbol in the package ="P1"=. However, in doing so there is another problem
+  due to a name conflict, a point which will be examined in detail later:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (multiple-value-list
+   (ignore-errors
+     (import 'cl-user::package-internal-symbols "P1")))
+  #+END_SRC
+
+  The problem is a "collision" between two /different/ symbols, which cannot
+  coexist as internal symbols in the /same/ package ="P1"= with the /same/
+  name. Importing the symbol internal in ="CL-USER"= into the package ="P1"= is
+  not compatible with the current presence of /another/ symbol in ="P1"= with
+  the same =symbol-name=. We must first [[http://clhs.lisp.se/Body/f_uninte.htm][=unintern=]] the accidental, pre-existing
+  symbol in ="P1"= to "make room" for the symbol from ="CL-USER"=.
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (unintern 'package-internal-symbols "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (import 'cl-user::package-internal-symbols "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (package-internal-symbols "P1")
+  #+END_SRC
+
