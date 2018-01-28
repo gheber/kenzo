@@ -87,13 +87,13 @@
   we give a complete mathematical definition of this system as a set of
   mathematical formulas.
 
-** Main sets of objects.
+* Main sets of objects.
 
-   The first part of the packaging system is made of three disjoint sets:
+  The first part of the packaging system is made of three disjoint sets:
 
-   - The set $St$ of *strings*.
-   - The set $P$ of *packages*.
-   - The set $Sm$ of *symbols*.
+  - The set $St$ of *strings*.
+  - The set $P$ of *packages*.
+  - The set $Sm$ of *symbols*.
 
    In our description of the packaging system, the statuses of these sets are
    different. Think of the (infinite) set $St$ of /strings/ as made of /all/
@@ -115,356 +115,474 @@
    Lisp session, and they are an essential component of the /current/
    environment.
 
-** Packages
+* Packages
 
-   There is a simple, almost bijective (one-to-one), correspondence between
-   strings and packages, and a convenient place to start our subject. First, at
-   any time during a Lisp session, a /default package/ is defined and it can be
-   discovered via the global symbol [[http://clhs.lisp.se/Body/v_pkg.htm][=*package*=]]:
+  There is a simple, almost bijective (one-to-one), correspondence between
+  strings and packages, and a convenient place to start our subject. First, at
+  any time during a Lisp session, a /default package/ is defined and it can be
+  discovered via the global symbol [[http://clhs.lisp.se/Body/v_pkg.htm][=*package*=]]:
 
-   #+BEGIN_SRC lisp :session pcl :exports both
-   *package*
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both
+  *package*
+  #+END_SRC
 
-   This is to be read as: the /value/ of the /symbol/ =*package*= is the
-   package whose /name/ is the string ="COMMON-LISP-USER"=. The types =symbol=
-   and =package= are system-defined, disjoint sets of machine objects. A symbol
-   is frequently used as a convenient intermediate object, which allows the
-   user to reach some object of arbitrary nature, its /value/. Here,
-   =*package*= is a symbol, the value of which is the package named
-   ="COMMON-LISP-USER"=. Technically, a symbol contains a pointer to its
-   (possible) value, here a package which happens to be the package used
-   ordinarily in a simple Lisp session. There are no facilities to refer to a
-   package object /directly/. However, one can use its /name/ and the function
-   [[http://clhs.lisp.se/Body/f_find_p.htm][=find-package=]] to obtain a reference:
+  This is to be read as: the /value/ of the /symbol/ =*package*= is the
+  package whose /name/ is the string ="COMMON-LISP-USER"=. The types =symbol=
+  and =package= are system-defined, disjoint sets of machine objects. A symbol
+  is frequently used as a convenient intermediate object, which allows the
+  user to reach some object of arbitrary nature, its /value/. Here,
+  =*package*= is a symbol, the value of which is the package named
+  ="COMMON-LISP-USER"=. Technically, a symbol contains a pointer to its
+  (possible) value, here a package which happens to be the package used
+  ordinarily in a simple Lisp session. There are no facilities to refer to a
+  package object /directly/. However, one can use its /name/ and the function
+  [[http://clhs.lisp.se/Body/f_find_p.htm][=find-package=]] to obtain a reference:
 
-   #+BEGIN_SRC lisp :session pcl :exports both
-   (find-package "COMMON-LISP-USER")
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both
+  (find-package "COMMON-LISP-USER")
+  #+END_SRC
 
-   Conversely, given a package, the function [[http://clhs.lisp.se/Body/f_pkg_na.htm][=package-name=]] returns its name:
+  Conversely, given a package, the function [[http://clhs.lisp.se/Body/f_pkg_na.htm][=package-name=]] returns its name:
 
-   #+BEGIN_SRC lisp :session pcl :exports both
-   (package-name (find-package "COMMON-LISP-USER"))
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both
+  (package-name (find-package "COMMON-LISP-USER"))
+  #+END_SRC
 
-   The example was given to illustrate that the functions =find-package= and
-   =package-name= are the inverse of each other, defining a 1-1 correspondence
-   between the packages /currently/ defined in the environment and their
-   respective names, some character strings. Because of rules not of interest
-   here, it is common and convenient to use only uppercase character strings to
-   name packages. If a name does not correspond to any current package, the
-   =find-package= function returns the symbol =nil=, usually displayed
-   uppercase:
+  The example was given to illustrate that the functions =find-package= and
+  =package-name= are the inverse of each other, defining a 1-1 correspondence
+  between the packages /currently/ defined in the environment and their
+  respective names, some character strings. Because of rules not of interest
+  here, it is common and convenient to use only uppercase character strings to
+  name packages. If a name does not correspond to any current package, the
+  =find-package= function returns the symbol =nil=, usually displayed
+  uppercase:
 
-   #+BEGIN_SRC lisp :session pcl :exports both
-   (find-package "COMMON-LISP-user")
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both
+  (find-package "COMMON-LISP-user")
+  #+END_SRC
 
-   which illustrates that a package name is case-sensitive. Frequently, only a
-   few packages are in use, and because of their importance, descriptive names
-   are used. These descriptive names can be a little long, and it is possible
-   to define and use various /nicknames/ for these names. For example, the
-   ="COMMON-LISP-USER"= package usually has the nicknames ="CL-USER"= and
-   ="USER"=. The function [[http://clhs.lisp.se/Body/f_pkg_ni.htm][=package-nicknames=]] can be used to retrieve the list
-   of nicknames (strings) for a package, which doesn't include the name of the
-   package.
+  which illustrates that a package name is case-sensitive. Frequently, only a
+  few packages are in use, and because of their importance, descriptive names
+  are used. These descriptive names can be a little long, and it is possible
+  to define and use various /nicknames/ for these names. For example, the
+  ="COMMON-LISP-USER"= package usually has the nicknames ="CL-USER"= and
+  ="USER"=. The function [[http://clhs.lisp.se/Body/f_pkg_ni.htm][=package-nicknames=]] can be used to retrieve the list
+  of nicknames (strings) for a package, which doesn't include the name of the
+  package.
 
-   #+BEGIN_SRC lisp :session pcl :exports both
-   (find-package "COMMON-LISP-USER")
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both
+  (find-package "COMMON-LISP-USER")
+  #+END_SRC
 
-   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
-   (package-nicknames (find-package "COMMON-LISP-USER"))
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (package-nicknames (find-package "COMMON-LISP-USER"))
+  #+END_SRC
 
-   If a package is to be unambiguously identified by its name or one of its
-   nicknames, two different packages must have disjoint sets of
-   /name + nicknames/.
+  If a package is to be unambiguously identified by its name or one of its
+  nicknames, two different packages must have disjoint sets of
+  /name + nicknames/.
 
-** Tracking a symbol.
+* Tracking a symbol.
 
-   The Lisp symbols are very particular when compared to the identifiers of
-   other programming languages. They persist throughout the runtime of an
-   environment and are an important component of the power of Lisp. A package
-   is referenced via its name; the same goes for a symbol, but the process is
-   much more complex. The first and most common method to create or "to
-   /allocate/ a symbol" consists in just writing it down and passing it to the
-   Lisp reader using the standard Lisp conventions. In a Lisp environment,
-   there is a set of "pre-defined" symbols ready to be used. To caution the
-   reader about the complexity of the subject, we begin with a seemingly
-   strange example:
+  The Lisp symbols are very particular when compared to the identifiers of
+  other programming languages. They persist throughout the runtime of an
+  environment and are an important component of the power of Lisp. A package
+  is referenced via its name; the same goes for a symbol, but the process is
+  much more complex. The first and most common method to create or "to
+  /allocate/ a symbol" consists in just writing it down and passing it to the
+  Lisp reader using the standard Lisp conventions. In a Lisp environment,
+  there is a set of "pre-defined" symbols ready to be used. To caution the
+  reader about the complexity of the subject, we begin with a seemingly
+  strange example:
 
-   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
-   (multiple-value-list (find-symbol "X" "COMMON-LISP-USER"))
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (multiple-value-list (find-symbol "X" "COMMON-LISP-USER"))
+  #+END_SRC
 
-   #+BEGIN_SRC lisp :session pcl :exports both
-   (multiple-value-list (ignore-errors x))
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (multiple-value-list (ignore-errors x))
+  #+END_SRC
 
-   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
-   (multiple-value-list (find-symbol "X" "COMMON-LISP-USER"))
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (multiple-value-list (find-symbol "X" "COMMON-LISP-USER"))
+  #+END_SRC
 
-   The function [[http://clhs.lisp.se/Body/f_find_s.htm][=find-symbol=]] is analogous to the function =find-package=:
-   given some /name/, a character string, it looks for a symbol with this name.
-   Remember the correspondence between packages and names? A similar
-   correspondence exists between symbols and names, but it's more involved. In
-   particular, a name is /never sufficient/ to determine a symbol, a
-   /package/ is also necessary. This is why the =find-symbol= function requires
-   /two/ arguments, the name of the symbol and the package with respect to
-   which the search is to be done.
+  The function [[http://clhs.lisp.se/Body/f_find_s.htm][=find-symbol=]] is analogous to the function =find-package=:
+  given some /name/, a character string, it looks for a symbol with this name.
+  Remember the correspondence between packages and names? A similar
+  correspondence exists between symbols and names, but it's more involved. In
+  particular, a name is /never sufficient/ to determine a symbol, a
+  /package/ is also necessary. This is why the =find-symbol= function requires
+  /two/ arguments, the name of the symbol and the package with respect to
+  which the search is to be done.
 
-   At the beginning of our story, no symbol with the name ="X"= existed in the
-   default package ="COMMON-LISP-USER"=, and the return value of =find-symbol=
-   is negative, =nil=. (We will explain the second =nil= value in a moment.)
-   Then we pass the Lisp reader the one character expression '=x='. Lisp
-   evaluates it according to its /read-eval-print/ cycle. First, Lisp
-   /reads/ the expression and notices that the symbol =x= is used. It examines
-   the current package ="COMMON-LISP-USER"=, and does /not/ find such a symbol.
-   Before doing anything else, Lisp /allocates/ (creates) this symbol, the
-   right terminology being: "Lisp /interns/ a symbol =x= of name ="X"= in the
-   package ="COMMON-LISP-USER"=." To refer to this symbol, the pair made of
-   /its/ name ="X"= and the (not /its/!!) package ="COMMON-LISP-USER"= are
-   necessary, but it would be cumbersome to have to write the expression
-   =(find-symbol "X" "COMMON-LISP-USER")= every time this symbol is used. To
-   simplify the process of referring to a symbol the designers of Lisp have
-   organized the workspace as follows: if a symbol is read, its character
-   string is capitalized, giving its /name/, and the default package is
-   assumed. In other words, the text ='x'= is roughly  equivalent to the text
-   =(find-symbol "X" "COMMON-LISP-USER")=. How convenient! ('Roughly', because
-   '=x=' may trigger the allocation of a symbol. In contrast, =find-symbol=
-   never allocates a symbol; but see the function =intern= later.) In the
-   second expression of our example, once Lisp has "understood" that the user
-   intends to use the symbol =x=, and observing that such a symbol is not
-   present in the package ="COMMON-LISP-USER"=, it allocates a symbol of name
-   ="X"= and /interns/ it in the package ="COMMON-LISP-USER"=. More
-   specifically, a pointer referring to the just allocated symbol is added to
-   the list $InS(p)$ of the internal symbols of the package $p$.
+  At the beginning of our story, no symbol with the name ="X"= existed in the
+  default package ="COMMON-LISP-USER"=, and the return value of =find-symbol=
+  is negative, =nil=. (We will explain the second =nil= value in a moment.)
+  Then we pass the Lisp reader the one character expression '=x='. Lisp
+  evaluates it according to its /read-eval-print/ cycle. First, Lisp
+  /reads/ the expression and notices that the symbol =x= is used. It examines
+  the current package ="COMMON-LISP-USER"=, and does /not/ find such a symbol.
+  Before doing anything else, Lisp /allocates/ (creates) this symbol, the
+  right terminology being: "Lisp /interns/ a symbol =x= of name ="X"= in the
+  package ="COMMON-LISP-USER"=." To refer to this symbol, the pair made of
+  /its/ name ="X"= and the (not /its/!!) package ="COMMON-LISP-USER"= are
+  necessary, but it would be cumbersome to have to write the expression
+  =(find-symbol "X" "COMMON-LISP-USER")= every time this symbol is used. To
+  simplify the process of referring to a symbol the designers of Lisp have
+  organized the workspace as follows: if a symbol is read, its character
+  string is capitalized, giving its /name/, and the default package is
+  assumed. In other words, the text ='x'= is roughly  equivalent to the text
+  =(find-symbol "X" "COMMON-LISP-USER")=. How convenient! ('Roughly', because
+  '=x=' may trigger the allocation of a symbol. In contrast, =find-symbol=
+  never allocates a symbol; but see the function =intern= later.) In the
+  second expression of our example, once Lisp has "understood" that the user
+  intends to use the symbol =x=, and observing that such a symbol is not
+  present in the package ="COMMON-LISP-USER"=, it allocates a symbol of name
+  ="X"= and /interns/ it in the package ="COMMON-LISP-USER"=. More
+  specifically, a pointer referring to the just allocated symbol is added to
+  the list $InS(p)$ of the internal symbols of the package $p$.
 
-   Note also that it is common in Lisp to input the symbols in lowercase
-   letters, and Lisp prints them in uppercase. This might be convenient for
-   distinguishing input from output in an interactive session, but requires
-   some clarification. In particular, there is no difference between the
-   symbols =nil= and =NIL=, whereas the strings ="nil"= and ="NIL"= are
-   different.
+  Note also that it is common in Lisp to input the symbols in lowercase
+  letters, and Lisp prints them in uppercase. This might be convenient for
+  distinguishing input from output in an interactive session, but requires
+  some clarification. In particular, there is no difference between the
+  symbols =nil= and =NIL=, whereas the strings ="nil"= and ="NIL"= are
+  different.
 
-   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
-   (multiple-value-list (find-symbol "nil" "COMMON-LISP-USER"))
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (multiple-value-list (find-symbol "nil" "COMMON-LISP-USER"))
+  #+END_SRC
 
-   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
-   (multiple-value-list (find-symbol "NIL" "COMMON-LISP-USER"))
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (multiple-value-list (find-symbol "NIL" "COMMON-LISP-USER"))
+  #+END_SRC
 
-   The fruitless search for a /symbol/ with the lower-case name ="nil"= (a
-   /string/) returns a double negative answer, but it is the second =NIL= that
-   is meaningful! Compare that with the second expression which has the same
-   first return value, but a different second one. The symbol =NIL= also plays
-   in Lisp the role of the boolean /false/, which creates an ambiguity: if the
-   answer is the symbol =NIL= is that a negative answer or is it a positive
-   answer made of the symbol =NIL=? The ambiguity is resolved by the /second/
-   return value. In the first case, the second =NIL= /confirms/ that the first
-   =NIL= is to be interpreted as the boolean /false/. In the second expression,
-   the second return value =:INHERITED=, not a negative, indicates that the
-   symbol =NIL= has been found, and that its /accessibility/ via the package
-   ="COMMON-LISP-USER"= is /inherited/, a point to be explained later. In other
-   words, the function =find-symbol= returns a genuine symbol /and/ its
-   accessibility via the package argument, or a pair of =nil='s if no symbol is
-   found. The logician can deduce that an accessibility cannot be the symbol
-   =nil=!
+  The fruitless search for a /symbol/ with the lower-case name ="nil"= (a
+  /string/) returns a double negative answer, but it is the second =NIL= that
+  is meaningful! Compare that with the second expression which has the same
+  first return value, but a different second one. The symbol =NIL= also plays
+  in Lisp the role of the boolean /false/, which creates an ambiguity: if the
+  answer is the symbol =NIL= is that a negative answer or is it a positive
+  answer made of the symbol =NIL=? The ambiguity is resolved by the /second/
+  return value. In the first case, the second =NIL= /confirms/ that the first
+  =NIL= is to be interpreted as the boolean /false/. In the second expression,
+  the second return value =:INHERITED=, not a negative, indicates that the
+  symbol =NIL= has been found, and that its /accessibility/ via the package
+  ="COMMON-LISP-USER"= is /inherited/, a point to be explained later. In other
+  words, the function =find-symbol= returns a genuine symbol /and/ its
+  accessibility via the package argument, or a pair of =nil='s if no symbol is
+  found. The logician can deduce that an accessibility cannot be the symbol
+  =nil=!
 
-   Let us return to the one character expression '=x='. The read part of the
-   read-eval-print loop cycle reads the symbol =x= and interns it in the
-   package ="COMMON-LISP-USER"=. The expression is /read/ and must now be
-   /evaluated/. The evaluation of a symbol consists in looking for a /value/
-   of this symbol. To this end a value pointer in the symbol's internal
-   representation is examined. In this case it is found that, at this time,
-   there is no value for the freshly allocated symbol =x=. Therefore the /eval/
-   step of the /read-eval-print/ cycle generates an error, terminating the
-   cycle with an informative error message. In any case, a symbol of name
-   ="X"= is now present in the package ="COMMON-LISP-USER"=, as confirmed by
-   the value of the last expression. The symbol's accessibility via the
-   ="COMMON-LISP-USER"= package is /internal/, which is to be explained later.
+  Let us return to the one character expression '=x='. The read part of the
+  read-eval-print loop cycle reads the symbol =x= and interns it in the
+  package ="COMMON-LISP-USER"=. The expression is /read/ and must now be
+  /evaluated/. The evaluation of a symbol consists in looking for a /value/
+  of this symbol. To this end a value pointer in the symbol's internal
+  representation is examined. In this case it is found that, at this time,
+  there is no value for the freshly allocated symbol =x=. Therefore the /eval/
+  step of the /read-eval-print/ cycle generates an error, terminating the
+  cycle with an informative error message. In any case, a symbol of name
+  ="X"= is now present in the package ="COMMON-LISP-USER"=, as confirmed by
+  the value of the last expression. The symbol's accessibility via the
+  ="COMMON-LISP-USER"= package is /internal/, which is to be explained later.
 
-** Examining a symbol.
+* Examining a symbol.
 
-   A symbol is a Lisp object with a rich internal structure and there are
-   several functions for exploring symbols and their properties. Let us
-   examine in detail the symbol =x= allocated in the previous section.
+  A symbol is a Lisp object with a rich internal structure and there are
+  several functions for exploring symbols and their properties. Let us
+  examine in detail the symbol =x= allocated in the previous section.
 
-   #+BEGIN_SRC lisp :session pcl :exports both
-   (symbol-name 'x)
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both
+  (symbol-name 'x)
+  #+END_SRC
    
-   The [[http://clhs.lisp.se/Body/f_symb_2.htm][=symbol-name=]] function returns the /name/ of a symbol; it is analogous
-   to the =package-name= function for a package. The Lisp function
-   =symbol-name= is crucial for our subject, and we denote it as a mathematical
-   function $sn: Sm \longrightarrow St$, a function which in general is not
-   injective: several symbols may have the same name, this is our main subject.
+  The [[http://clhs.lisp.se/Body/f_symb_2.htm][=symbol-name=]] function returns the /name/ of a symbol; it is analogous
+  to the =package-name= function for a package. The Lisp function
+  =symbol-name= is crucial for our subject, and we denote it as a mathematical
+  function $sn: Sm \longrightarrow St$, a function which in general is not
+  injective: several symbols may have the same name, this is our main subject.
 
-   Note that in the previous expression the symbol =x= has been quoted ='x= to
-   prevent its evaluation. More precisely, ='x= is an abbreviation for the
-   expression =(quote x)=, where [[http://clhs.lisp.se/Body/s_quote.htm][=quote=]] is a /special/ function which /does
-   not/ evaluate its argument, and it returns this argument as is. Hence, the
-   previous expression is equivalent to:
+  Note that in the previous expression the symbol =x= has been quoted ='x= to
+  prevent its evaluation. More precisely, ='x= is an abbreviation for the
+  expression =(quote x)=, where [[http://clhs.lisp.se/Body/s_quote.htm][=quote=]] is a /special/ function which /does
+  not/ evaluate its argument, and it returns this argument as is. Hence, the
+  previous expression is equivalent to:
 
-   #+BEGIN_SRC lisp :session pcl :exports both
-   (symbol-name (quote x))
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both
+  (symbol-name (quote x))
+  #+END_SRC
 
-   Here, the non-quoted =x= does not generate an error. If instead you do not
-   quote the symbol =x= (implicitly via ='=, or explicitly via =quote=) it will
-   be evaluated before being used and generate an error:
+  Here, the non-quoted =x= does not generate an error. If instead you do not
+  quote the symbol =x= (implicitly via ='=, or explicitly via =quote=) it will
+  be evaluated before being used and generate an error:
 
-   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
-   (multiple-value-list (ignore-errors (symbol-name x)))
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (multiple-value-list
+   (ignore-errors
+     (symbol-name x)))
+  #+END_SRC
 
-   The package which /owns/ a symbol, its /home package/, can be determined
-   with the function [[http://clhs.lisp.se/Body/f_symb_3.htm][=symbol-package=]].
+  The package which /owns/ a symbol, its /home package/, can be determined
+  with the function [[http://clhs.lisp.se/Body/f_symb_3.htm][=symbol-package=]].
 
-   #+BEGIN_SRC lisp :session pcl :exports both
-   (symbol-package 'x)
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both
+  (symbol-package 'x)
+  #+END_SRC
 
-   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
-   (multiple-value-list (find-symbol "X" "COMMON-LISP-USER"))
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (multiple-value-list (find-symbol "X" "COMMON-LISP-USER"))
+  #+END_SRC
 
-   As we have just seen, a symbol produces a name and a package (with the help
-   of =symbol-name= and =symbol-package=). Conversely, given a name and a
-   package, =find-symbol= produces the symbol with this name /via/ this
-   package. The reader might think that there is a correspondence between
-   symbols and pairs of strings and packages:
-   $$Sm \longleftrightarrow St\times P$$
-   However, the situation is more involved: for the beginner, this might be a
-   convenient point of view, but in fact such a point of view is wrong. If you
-   intend to fully understand the complex relationship between strings,
-   packages and symbols, please forget this tempting but terribly misleading
-   correspondence. The goal of the next sections is to establish the correct
-   point of view. For completeness we finish this section with a brief glance
-   at the other data possibly stored in a symbol. A symbol can have a value.
-   You may remember that in our Lisp session the symbol =x= does not (yet) have
-   a value. This can be established by the predicate [[http://clhs.lisp.se/Body/f_boundp.htm][=boundp=]]:
+  As we have just seen, a symbol produces a name and a package (with the help
+  of =symbol-name= and =symbol-package=). Conversely, given a name and a
+  package, =find-symbol= produces the symbol with this name /via/ this
+  package. The reader might think that there is a correspondence between
+  symbols and pairs of strings and packages:
+  $$Sm \longleftrightarrow St\times P$$
+  However, the situation is more involved: for the beginner, this might be a
+  convenient point of view, but in fact such a point of view is wrong. If you
+  intend to fully understand the complex relationship between strings,
+  packages and symbols, please forget this tempting but terribly misleading
+  correspondence. The goal of the next sections is to establish the correct
+  point of view. For completeness we finish this section with a brief glance
+  at the other data possibly stored in a symbol. A symbol can have a value.
+  You may remember that in our Lisp session the symbol =x= does not (yet) have
+  a value. This can be established by the predicate [[http://clhs.lisp.se/Body/f_boundp.htm][=boundp=]]:
 
-   #+BEGIN_SRC lisp :session pcl :exports both
-   (boundp 'x)
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both
+  (boundp 'x)
+  #+END_SRC
 
-   The main method to give a symbol a value is the [[http://clhs.lisp.se/Body/m_setf_.htm][=setf=]] function (a macro).
-   In most Common Lisp implementations, the =setf= macro may be used directly,
-   in which case the default status of the argument symbol is /variable/. In
-   strict ANSI implementations such as SBCL here, a =defvar= statement is
-   required to explicitly define this status. Other possible statuses are
-   /constant/ (via =defconstant=) and /parameter/ (via =defparameter=).
+  The main method to give a symbol a value is the [[http://clhs.lisp.se/Body/m_setf_.htm][=setf=]] function (a macro).
+  In most Common Lisp implementations, the =setf= macro may be used directly,
+  in which case the default status of the argument symbol is /variable/. In
+  strict ANSI implementations such as SBCL here, a =defvar= statement is
+  required to explicitly define this status. Other possible statuses are
+  /constant/ (via =defconstant=) and /parameter/ (via =defparameter=).
 
-   #+BEGIN_SRC lisp :session pcl :exports both
-   (defvar x)
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both
+  (defvar x)
+  #+END_SRC
    
-   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
-   (setf x '(4 5 6))
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (setf x '(4 5 6))
+  #+END_SRC
 
-   #+BEGIN_SRC lisp :session pcl :exports both
-   (boundp 'x)
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both
+  (boundp 'x)
+  #+END_SRC
 
-   Note that the first argument of =setf=, the symbol =x=, is not evaluated.
-   Otherwise an error would be generated, since the symbol =x= does not yet
-   have a value. After the =(setf ...)= expression has been evaluated, the
-   symbol =x= does have a value, in this case, the list =(4 5 6)=. This value
-   would now be the result of the evaluation of the expression =x=. It can also
-   be obtained with the function [[http://clhs.lisp.se/Body/f_symb_5.htm][=symbol-value=]]. (In this tutorial, we do not
-   study the possible difference between, on the one hand, the simple
-   /evaluation/ of the symbol =x= asked for by the expression ='x'= and the
-   /evaluation/ of =(symbol-value 'x)= on the other. In our elementary examples
-   there is no difference between the two. Possible differences might come from
-   different variable scopes, such as /lexical/ or /dynamic/, but this subject
-   is not studied here.)
+  Note that the first argument of =setf=, the symbol =x=, is not evaluated.
+  Otherwise an error would be generated, since the symbol =x= does not yet
+  have a value. After the =(setf ...)= expression has been evaluated, the
+  symbol =x= does have a value, in this case, the list =(4 5 6)=. This value
+  would now be the result of the evaluation of the expression =x=. It can also
+  be obtained with the function [[http://clhs.lisp.se/Body/f_symb_5.htm][=symbol-value=]]. (In this tutorial, we do not
+  study the possible difference between, on the one hand, the simple
+  /evaluation/ of the symbol =x= asked for by the expression ='x'= and the
+  /evaluation/ of =(symbol-value 'x)= on the other. In our elementary examples
+  there is no difference between the two. Possible differences might come from
+  different variable scopes, such as /lexical/ or /dynamic/, but this subject
+  is not studied here.)
    
-   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
-   x
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  x
+  #+END_SRC
 
-   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
-   (symbol-value 'x)
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (symbol-value 'x)
+  #+END_SRC
 
-   Don't forget to quote the symbol! See the following error:
+  Don't forget to quote the symbol! See the following error:
 
-   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
-   (multiple-value-list (ignore-errors (symbol-value x)))
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (multiple-value-list
+   (ignore-errors
+     (symbol-value x)))
+  #+END_SRC
 
-   A symbol can also have a /functional value/. This does not mean that the
-   value we just discussed could be a function (which it could be!). It means
-   that /besides/ the previous value, a symbol can also have an /additional/
-   value, a function, which can be used independently of the "ordinary" value
-   of this symbol. For example the function $n \mapsto 10−n$ could be recorded
-   as the /functional/ value of the same symbol, and this function could then
-   be used as shown below.
+  A symbol can also have a /functional value/. This does not mean that the
+  value we just discussed could be a function (which it could be!). It means
+  that /besides/ the previous value, a symbol can also have an /additional/
+  value, a function, which can be used independently of the "ordinary" value
+  of this symbol. For example the function $n \mapsto 10 - n$ could be recorded
+  as the /functional/ value of the same symbol, and this function could then
+  be used as shown below.
 
-   #+BEGIN_SRC lisp :session pcl :exports both
-   (defun x (n) (- 10 n))
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both
+  (defun x (n) (- 10 n))
+  #+END_SRC
 
-   #+BEGIN_SRC lisp :session pcl :exports both
-   (x 3)
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both
+  (x 3)
+  #+END_SRC
 
-   Both values coexist in the symbol without any interference:
+  Both values coexist in the symbol without any interference:
 
-   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
-   (symbol-value 'x)
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (symbol-value 'x)
+  #+END_SRC
 
-   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
-   (symbol-function 'x)
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (symbol-function 'x)
+  #+END_SRC
 
-   and can be used jointly and independently:
+  and can be used jointly and independently:
 
-   #+BEGIN_SRC lisp :session pcl :exports both
-   (x (first x))
-   #+END_SRC
+  #+BEGIN_SRC lisp :session pcl :exports both
+  (x (first x))
+  #+END_SRC
    
-   You might already suspect that the position of =x= just after a left
-   parenthesis =(x ...)= makes Lisp extract the /functional/ value and not the
-   "ordinary" value. This is correct, but not the subject of this tutorial.
-   Finally, we mention only in passing the following:
+  You might already suspect that the position of =x= just after a left
+  parenthesis =(x ...)= makes Lisp extract the /functional/ value and not the
+  "ordinary" value. This is correct, but not the subject of this tutorial.
+  Finally, we mention only in passing the following:
 
-   1. A symbol can have a functional value while not having an ordinary value.
-   2. An ordinary value can be a functional object, usually then called via
-      =funcall= or =apply=.
-   3. A symbol also contains a property list or =plist=, with many possible
-      uses, but not at all studied here.
+  1. A symbol can have a functional value while not having an ordinary value.
+  2. An ordinary value can be a functional object, usually then called via
+     =funcall= or =apply=.
+  3. A symbol also contains a property list or =plist=, with many possible
+     uses, but not at all studied here.
 
-   The internal structure of the [[http://clhs.lisp.se/Body/t_symbol.htm#symbol][symbol]] =x= might be visualized thus:
+     The internal structure of the [[http://clhs.lisp.se/Body/t_symbol.htm#symbol][symbol]] =x= might be visualized thus:
    
-   #+BEGIN_EXAMPLE
-   +-----------------+
-   | Name          o-|-----> "x"
-   +-----------------+
-   | Value         o-|-----> (4 5 6)
-   +-----------------+
-   | Function      o-|-----> (lambda (n) (- 10 n))
-   +-----------------+
-   | Package       o-|-----> #<PACKAGE "COMMON-LISP-USER">
-   + ----------------+
-   | Property list o-|-----> NIL
-   +-----------------+
-   #+END_EXAMPLE
+     #+BEGIN_EXAMPLE
+     +-----------------+
+     | Name          o-|-----> "x"
+     +-----------------+
+     | Value         o-|-----> (4 5 6)
+     +-----------------+
+     | Function      o-|-----> (lambda (n) (- 10 n))
+     +-----------------+
+     | Package       o-|-----> #<PACKAGE "COMMON-LISP-USER">
+     + ----------------+
+     | Property list o-|-----> NIL
+     +-----------------+
+     #+END_EXAMPLE
 
-** But what the hell is a package?
+* But what the hell is a package?
 
-   Now we attack the heart of our subject.\\
+  Now we attack the heart of our subject.\\
 
-   **Fact 1:** A package $p\in P$ maintains four fundamental lists:
+  **Fact 1:** A package $p\in P$ maintains four fundamental lists:
 
-   - A list $InS(p)$ of its internal symbols.
-   - A list $ExS(p)$ of its external symbols.
-   - A list $ShgS(p)$ of its shadowing symbols.
-   - A list $U(p)$ of its used packages.
+  - A list $InS(p)$ of its internal symbols.
+  - A list $ExS(p)$ of its external symbols.
+  - A list $ShgS(p)$ of its shadowing symbols.
+  - A list $U(p)$ of its used packages.\\
+
+  The first important fact toward understanding the subject is this: the first
+  three lists are lists of /symbols/ or, more precisely, lists of pointers
+  (machine addresses) aimed at the symbols. Every symbol has a /unique/
+  "existence": a symbol is a unique machine object in the environment, but
+  /several/ packages may /see/ the same symbol, that is, include the machine
+  address of this symbol. In particular these lists are not lists of symbol
+  names (strings). There is another mechanism that allows Lisp to reach a
+  symbol given its name. Every symbol can be accessed directly via a suitable
+  package, and several packages can in general play this role for the same
+  symbol at a given moment in a Lisp session. For example, all the
+  [[http://clhs.lisp.se/Front/X_Symbol.htm][standard Lisp symbols]] in the ="COMMON-LISP"= package typically are
+  accessible via any package.
+
+  No duplicate symbol (more precisely, no duplicate pointer) is to be found in
+  each of these lists. Also the relations $InS(p)\cap ExS(p)=\emptyset$ and
+  $ShgS(p)\subset InS(p)\cup ExS(p)$ must be satisfied, for reasons to be
+  studied later.\\
+
+  **Fact 2:** Given the current set of packages, assumed /coherent/, and given
+  the current state of all the fundamental lists of these packages, the
+  function =find-symbol= can unambiguously determine /whether/ a symbol of a
+  given name (some string) is /accessible/ via some package; if so, this
+  symbol is unique.\\
+
+  The importance of the package argument of =find-symbol= could make the
+  reader believe the function =symbol-package= will be useful for various
+  tests. This is not the case: All this function returns is the "birth place"
+  of the symbol, technically called its /home package/, which says almost
+  nothing about the current status of this symbol with respect to any package.
+  All it says is that at least it is /interned/ in this package. In
+  particular, a symbol can be accessible via several packages, possibly
+  different from its home package. Here is a simple illustration:
+
+  #+BEGIN_SRC lisp :session pcl :exports both
+  (symbol-package 'nil)
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (multiple-value-list (find-symbol "NIL" "COMMON-LISP"))
+  #+END_SRC
+   
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (multiple-value-list (find-symbol "NIL" "COMMON-LISP-USER"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (eq (find-symbol "NIL" "COMMON-LISP")
+      (find-symbol "NIL" "COMMON-LISP-USER"))
+  #+END_SRC
+
+  The /home package/ of =nil= is ="COMMON-LISP"=, and this symbol of name
+  ="NIL"= is accessible via ="COMMON-LISP"=, but also via
+  ="COMMON-LISP-USER"=, though not with the same status. It is /external/ in
+  the first case and /inherited/ in the second case, points to be examined
+  later. The value (=T=) of the last expression /proves/ that both symbols,
+  determined by =find-symbol= via different packages, in fact are the same.
+  Fact 2 can be made a little more precise: At any given time during a Lisp
+  session, a set $P$ of packages and a set $Sm$ of symbols are defined. The
+  various lists of symbols $InS(p)$, $ExS(p)$ and $ShgS(p)$, and the list
+  $U(p)$ of packages used by a package $p\in P$ together define without any
+  ambiguity which symbols are accessible via the package $p$. In other words,
+  there is a well defined function $\rho$:
+  $$
+  \rho: P \longrightarrow [St \longrightarrow Sm \cup \{\mathtt{nil}\}]
+  $$
+  We chose the letter $\rho$ for reader, because this function is mainly used
+  by the reader. Our "mathematical" function $\rho$ is nothing but an avatar
+  of the Lisp function =find-symbol=. Let $p\in P$ be a package and
+  $st\in St$ be a string. Then:
+  $$
+  \rho(p)(st) = (\mathtt{find-symbol}\; st\; p)
+  $$
+  The left-hand side uses the standard mathematical functional notation, and
+  the right-hand one uses the Lisp notation. If no symbol is found for a pair
+  $(st, p)$, the symbol (!) =nil= is returned and the second value of
+  =find-symbol=, the symbol =nil= again, tells the user that the symbol search
+  did not return anything. A package $p$ is nothing but a way of defining the
+  function $\rho(p):St\longrightarrow Sm\cup\{\mathtt{nil}\}$. In other words,
+  the four fundamental lists of a package determine what character strings
+  appear as the names of the symbols accessible via this package.
+  This approach is described in detail now.
+
+* Internal symbols.
+
+  The first fundamental list of a package is the list of its /internal
+  symbols/. It is a pity that no standard Lisp function can produce this list,
+  but here is a simple solution to the problem:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (defun package-internal-symbols (package)
+    (let ((rslt))
+      (do-symbols (s package)
+        (when (eq (second
+                   (multiple-value-list
+                    (find-symbol (symbol-name s) package)))
+                  :internal)
+          (push s rslt)))
+      rslt))
+  #+END_SRC
+
+  We can list now all the internal symbols of a package:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (package-internal-symbols "COMMON-LISP-USER")
+  #+END_SRC
+
+  In fact, only the first ten internal symbols are displayed. We see in
+  particular the symbols =package-internal-symbols=, =s= and =rslt= used in
+  the definition of our function. Some are rather esoteric, strictly speaking
+  illegal: at the beginning of a Lisp session, the ="COMMON-LISP-USER"=
+  package should in principle be void of symbols. To make our experiments more
+  understandable it is better to allocate and use toy packages. The
+  [[http://clhs.lisp.se/Body/m_defpkg.htm][=defpackage=]] function (a macro) allocates a package of a given name.
