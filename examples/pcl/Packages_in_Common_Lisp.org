@@ -294,7 +294,177 @@
    several functions for exploring symbols and their properties. Let us
    examine in detail the symbol =x= allocated in the previous section.
 
-   #+BEGIN_SRC lisp :exports both
+   #+BEGIN_SRC lisp :session pcl :exports both
    (symbol-name 'x)
    #+END_SRC
    
+   The [[http://clhs.lisp.se/Body/f_symb_2.htm][=symbol-name=]] function returns the /name/ of a symbol; it is analogous
+   to the =package-name= function for a package. The Lisp function
+   =symbol-name= is crucial for our subject, and we denote it as a mathematical
+   function $sn: Sm \longrightarrow St$, a function which in general is not
+   injective: several symbols may have the same name, this is our main subject.
+
+   Note that in the previous expression the symbol =x= has been quoted ='x= to
+   prevent its evaluation. More precisely, ='x= is an abbreviation for the
+   expression =(quote x)=, where [[http://clhs.lisp.se/Body/s_quote.htm][=quote=]] is a /special/ function which /does
+   not/ evaluate its argument, and it returns this argument as is. Hence, the
+   previous expression is equivalent to:
+
+   #+BEGIN_SRC lisp :session pcl :exports both
+   (symbol-name (quote x))
+   #+END_SRC
+
+   Here, the non-quoted =x= does not generate an error. If instead you do not
+   quote the symbol =x= (implicitly via ='=, or explicitly via =quote=) it will
+   be evaluated before being used and generate an error:
+
+   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+   (multiple-value-list (ignore-errors (symbol-name x)))
+   #+END_SRC
+
+   The package which /owns/ a symbol, its /home package/, can be determined
+   with the function [[http://clhs.lisp.se/Body/f_symb_3.htm][=symbol-package=]].
+
+   #+BEGIN_SRC lisp :session pcl :exports both
+   (symbol-package 'x)
+   #+END_SRC
+
+   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+   (multiple-value-list (find-symbol "X" "COMMON-LISP-USER"))
+   #+END_SRC
+
+   As we have just seen, a symbol produces a name and a package (with the help
+   of =symbol-name= and =symbol-package=). Conversely, given a name and a
+   package, =find-symbol= produces the symbol with this name /via/ this
+   package. The reader might think that there is a correspondence between
+   symbols and pairs of strings and packages:
+   $$Sm \longleftrightarrow St\times P$$
+   However, the situation is more involved: for the beginner, this might be a
+   convenient point of view, but in fact such a point of view is wrong. If you
+   intend to fully understand the complex relationship between strings,
+   packages and symbols, please forget this tempting but terribly misleading
+   correspondence. The goal of the next sections is to establish the correct
+   point of view. For completeness we finish this section with a brief glance
+   at the other data possibly stored in a symbol. A symbol can have a value.
+   You may remember that in our Lisp session the symbol =x= does not (yet) have
+   a value. This can be established by the predicate [[http://clhs.lisp.se/Body/f_boundp.htm][=boundp=]]:
+
+   #+BEGIN_SRC lisp :session pcl :exports both
+   (boundp 'x)
+   #+END_SRC
+
+   The main method to give a symbol a value is the [[http://clhs.lisp.se/Body/m_setf_.htm][=setf=]] function (a macro).
+   In most Common Lisp implementations, the =setf= macro may be used directly,
+   in which case the default status of the argument symbol is /variable/. In
+   strict ANSI implementations such as SBCL here, a =defvar= statement is
+   required to explicitly define this status. Other possible statuses are
+   /constant/ (via =defconstant=) and /parameter/ (via =defparameter=).
+
+   #+BEGIN_SRC lisp :session pcl :exports both
+   (defvar x)
+   #+END_SRC
+   
+   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+   (setf x '(4 5 6))
+   #+END_SRC
+
+   #+BEGIN_SRC lisp :session pcl :exports both
+   (boundp 'x)
+   #+END_SRC
+
+   Note that the first argument of =setf=, the symbol =x=, is not evaluated.
+   Otherwise an error would be generated, since the symbol =x= does not yet
+   have a value. After the =(setf ...)= expression has been evaluated, the
+   symbol =x= does have a value, in this case, the list =(4 5 6)=. This value
+   would now be the result of the evaluation of the expression =x=. It can also
+   be obtained with the function [[http://clhs.lisp.se/Body/f_symb_5.htm][=symbol-value=]]. (In this tutorial, we do not
+   study the possible difference between, on the one hand, the simple
+   /evaluation/ of the symbol =x= asked for by the expression ='x'= and the
+   /evaluation/ of =(symbol-value 'x)= on the other. In our elementary examples
+   there is no difference between the two. Possible differences might come from
+   different variable scopes, such as /lexical/ or /dynamic/, but this subject
+   is not studied here.)
+   
+   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+   x
+   #+END_SRC
+
+   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+   (symbol-value 'x)
+   #+END_SRC
+
+   Don't forget to quote the symbol! See the following error:
+
+   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+   (multiple-value-list (ignore-errors (symbol-value x)))
+   #+END_SRC
+
+   A symbol can also have a /functional value/. This does not mean that the
+   value we just discussed could be a function (which it could be!). It means
+   that /besides/ the previous value, a symbol can also have an /additional/
+   value, a function, which can be used independently of the "ordinary" value
+   of this symbol. For example the function $n \mapsto 10−n$ could be recorded
+   as the /functional/ value of the same symbol, and this function could then
+   be used as shown below.
+
+   #+BEGIN_SRC lisp :session pcl :exports both
+   (defun x (n) (- 10 n))
+   #+END_SRC
+
+   #+BEGIN_SRC lisp :session pcl :exports both
+   (x 3)
+   #+END_SRC
+
+   Both values coexist in the symbol without any interference:
+
+   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+   (symbol-value 'x)
+   #+END_SRC
+
+   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+   (symbol-function 'x)
+   #+END_SRC
+
+   and can be used jointly and independently:
+
+   #+BEGIN_SRC lisp :session pcl :exports both
+   (x (first x))
+   #+END_SRC
+   
+   You might already suspect that the position of =x= just after a left
+   parenthesis =(x ...)= makes Lisp extract the /functional/ value and not the
+   "ordinary" value. This is correct, but not the subject of this tutorial.
+   Finally, we mention only in passing the following:
+
+   1. A symbol can have a functional value while not having an ordinary value.
+   2. An ordinary value can be a functional object, usually then called via
+      =funcall= or =apply=.
+   3. A symbol also contains a property list or =plist=, with many possible
+      uses, but not at all studied here.
+
+   The internal structure of the [[http://clhs.lisp.se/Body/t_symbol.htm#symbol][symbol]] =x= might be visualized thus:
+   
+   #+BEGIN_EXAMPLE
+   +-----------------+
+   | Name          o-|-----> "x"
+   +-----------------+
+   | Value         o-|-----> (4 5 6)
+   +-----------------+
+   | Function      o-|-----> (lambda (n) (- 10 n))
+   +-----------------+
+   | Package       o-|-----> #<PACKAGE "COMMON-LISP-USER">
+   + ----------------+
+   | Property list o-|-----> NIL
+   +-----------------+
+   #+END_EXAMPLE
+
+** But what the hell is a package?
+
+   Now we attack the heart of our subject.\\
+
+   **Fact 1:** A package $p\in P$ maintains four fundamental lists:
+
+   - A list $InS(p)$ of its internal symbols.
+   - A list $ExS(p)$ of its external symbols.
+   - A list $ShgS(p)$ of its shadowing symbols.
+   - A list $U(p)$ of its used packages.
