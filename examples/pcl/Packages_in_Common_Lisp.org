@@ -1,0 +1,300 @@
+#+TITLE: Packages in Common Lisp, a tutorial
+#+AUTHOR: Francis Sergeraert
+#+DATE: January 2014
+
+* Introduction.
+
+  It is not possible to write a serious piece of code without the use of some
+  kind of /identifiers/ or names. Such identifiers are convenient means for the
+  programmer to reference, process and modify data using more or less
+  descriptive names, which represent the data and depend in some way on the
+  context. The standard /modularization/ technology encourages the division of
+  large programs in /modules/. Such modules can be relatively independent of
+  each other, but conversely, they must be able to /communicate/. Most
+  programming languages offer methods for such an organization. For example,
+  the set of identifiers of a module could be divided into two parts, the
+  /private/ identifiers, known only inside this module, and the /public/
+  identifiers, known everywhere.
+
+  In this domain as in many others, Common Lisp is by far the most powerful and
+  flexible programming language. At the expense of considerable complexity,
+  Common Lisp's modular technology requires a good grasp of the corresponding
+  /definitions/ in the language standard. If the ANSI definition of the
+  language is the only available documentation, these definitions are not easy
+  to understand. An identifier in Lisp is a /symbol/ which has a rich internal
+  structure and which has lifetime and visibility during a Lisp session. The
+  modular structure of a Lisp program is defined through the /packaging/
+  system, which allows a programmer to divide a large program into several
+  files, where each file is aware of all the symbols of a certain package,
+  among them the current /default/ package, and only the /external/ (public)
+  symbols of some other packages. A symbol which is not external in a package
+  is /internal/ (private). Also, a package may /import/ (that is, "see") an
+  arbitrary collection of symbols, internal or external to other packages. In
+  the general spirit of Lisp, the whole structure of such an organization, if
+  necessary, can be modified dynamically, even though this is not usually the
+  best course of action.
+
+  In this tutorial, a /mathematical/ definition of this system is provided.
+  This should elucidate the process for many a Lisp programmer and enable her
+  to use it more effectively. A basic but /inexact/ description of the
+  packaging system is the following:
+
+  - A /package/ is a Lisp object in the same way that numbers, lists, and
+    character strings are Lisp objects. In particular, the /type/ of a package
+    object is the system class [[http://clhs.lisp.se/Body/t_pkg.htm][=package=]]. In Common Lisp, packages are first
+    class citizens, which means they can be the value of a symbol, can be
+    passed as an argument to a function, can be returned by a function, etc.
+  - A /symbol/ is a Lisp object whose /type/ is the system class [[http://clhs.lisp.se/Body/t_symbol.htm][=symbol=]]. The
+    comments made about packages apply for symbols. In particular, a symbol can
+    be the value of another symbol, or even of itself.
+  - Symbols are divided into packages.
+  - At any time during a Lisp session, some package is the /default package/
+    and, as a first approximation, only the symbols of this package are
+    /accessible/. The default package can be modified at any time by the user
+    or a program.
+  - If necessary, there are several methods to access the symbols of packages
+    other than the default package. Conversely, a package may make its symbols
+    more or less easily accessible from the other packages.
+
+  This first approximation of the packaging system conveys a general idea of
+  its organization, but general ideas can be deceiving. For example, the idea
+  that the symbols are divided into packages is essentially /false/. More
+  precisely, this division can be made to appear essential (!), via the
+  so-called home package of a symbol, but it plays only a /minor/ role and can
+  be ignored by the programmer risk-free. This notion of a home package is
+  terribly misleading for beginners when they have to design non-trivial
+  packaging structures. In a Lisp environment, one has to deal with two realms,
+  the space of symbols and the space of packages. It is only /inside/ of
+  packages that something can be read, which, as an organization, looks a
+  /little/ like a division of symbols into packages, but the symbols themselves
+  essentially /ignore/ this division. Our subject is to clarify and explain
+  this organization.
+
+  The ANSI definition of the packaging system is a /complete/ description of
+  this organization, and, in a sense, nothing is missing. However, experience
+  shows that it is easily misunderstood, especially, in non-trivial situations,
+  where it can lead to erroneous programming choices and mysterious bugs. The
+  ANSI definition of packaging is complete and it is the perfect /Reference
+  Manual/. However, for a topic of this complexity a reference guide is not
+  sufficient and a /User Guide/ might be useful. And for that matter, an
+  elementary /mathematical/ description of the Common Lisp packaging system
+  might help programmers to understand it, and then to use it with greater ease
+  and also to greater effect. In every domain, when precise mathematical
+  language can be employed and is understood, the state-of-affairs improves.
+
+  We begin with a review of the ANSI definition of the packaging system while
+  adding in parallel a mathematical description of the main concepts. Finally,
+  we give a complete mathematical definition of this system as a set of
+  mathematical formulas.
+
+** Main sets of objects.
+
+   The first part of the packaging system is made of three disjoint sets:
+
+   - The set $St$ of *strings*.
+   - The set $P$ of *packages*.
+   - The set $Sm$ of *symbols*.
+
+   In our description of the packaging system, the statuses of these sets are
+   different. Think of the (infinite) set $St$ of /strings/ as made of /all/
+   the character strings that /can/ be used by a user or a program at any time.
+   Any string can be used at any time, whatever the history of the Lisp session
+   in which we are working may be. In the packaging system, most often, a
+   particular string is used only for a short time, mainly during the
+   read-eval-print loop, when the Lisp reader works. A string is just an
+   intermediary connecting the user and the Lisp session, more precisely the
+   current environment. In contrast, in a given environment, at any time during
+   a Lisp session, some finite set $P$ of /specific/ packages is installed in
+   this environment, and also a finite set $Sm$ of /specific/ symbols is
+   available. Those packages and symbols can /then/ be used, and they are the
+   historical consequence of the current Lisp session. Various Lisp functions
+   allow the user to modify the sets $P$ and $Sm$, and the way they are
+   combined and related to each other. In other words, consider the set of
+   strings $St$ as constant, vast and independent of the environment, while, on
+   the contrary, the sets $P$ and $Sm$ are restricted, they change during a
+   Lisp session, and they are an essential component of the /current/
+   environment.
+
+** Packages
+
+   There is a simple, almost bijective (one-to-one), correspondence between
+   strings and packages, and a convenient place to start our subject. First, at
+   any time during a Lisp session, a /default package/ is defined and it can be
+   discovered via the global symbol [[http://clhs.lisp.se/Body/v_pkg.htm][=*package*=]]:
+
+   #+BEGIN_SRC lisp :session pcl :exports both
+   *package*
+   #+END_SRC
+
+   This is to be read as: the /value/ of the /symbol/ =*package*= is the
+   package whose /name/ is the string ="COMMON-LISP-USER"=. The types =symbol=
+   and =package= are system-defined, disjoint sets of machine objects. A symbol
+   is frequently used as a convenient intermediate object, which allows the
+   user to reach some object of arbitrary nature, its /value/. Here,
+   =*package*= is a symbol, the value of which is the package named
+   ="COMMON-LISP-USER"=. Technically, a symbol contains a pointer to its
+   (possible) value, here a package which happens to be the package used
+   ordinarily in a simple Lisp session. There are no facilities to refer to a
+   package object /directly/. However, one can use its /name/ and the function
+   [[http://clhs.lisp.se/Body/f_find_p.htm][=find-package=]] to obtain a reference:
+
+   #+BEGIN_SRC lisp :session pcl :exports both
+   (find-package "COMMON-LISP-USER")
+   #+END_SRC
+
+   Conversely, given a package, the function [[http://clhs.lisp.se/Body/f_pkg_na.htm][=package-name=]] returns its name:
+
+   #+BEGIN_SRC lisp :session pcl :exports both
+   (package-name (find-package "COMMON-LISP-USER"))
+   #+END_SRC
+
+   The example was given to illustrate that the functions =find-package= and
+   =package-name= are the inverse of each other, defining a 1-1 correspondence
+   between the packages /currently/ defined in the environment and their
+   respective names, some character strings. Because of rules not of interest
+   here, it is common and convenient to use only uppercase character strings to
+   name packages. If a name does not correspond to any current package, the
+   =find-package= function returns the symbol =nil=, usually displayed
+   uppercase:
+
+   #+BEGIN_SRC lisp :session pcl :exports both
+   (find-package "COMMON-LISP-user")
+   #+END_SRC
+
+   which illustrates that a package name is case-sensitive. Frequently, only a
+   few packages are in use, and because of their importance, descriptive names
+   are used. These descriptive names can be a little long, and it is possible
+   to define and use various /nicknames/ for these names. For example, the
+   ="COMMON-LISP-USER"= package usually has the nicknames ="CL-USER"= and
+   ="USER"=. The function [[http://clhs.lisp.se/Body/f_pkg_ni.htm][=package-nicknames=]] can be used to retrieve the list
+   of nicknames (strings) for a package, which doesn't include the name of the
+   package.
+
+   #+BEGIN_SRC lisp :session pcl :exports both
+   (find-package "COMMON-LISP-USER")
+   #+END_SRC
+
+   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+   (package-nicknames (find-package "COMMON-LISP-USER"))
+   #+END_SRC
+
+   If a package is to be unambiguously identified by its name or one of its
+   nicknames, two different packages must have disjoint sets of
+   /name + nicknames/.
+
+** Tracking a symbol.
+
+   The Lisp symbols are very particular when compared to the identifiers of
+   other programming languages. They persist throughout the runtime of an
+   environment and are an important component of the power of Lisp. A package
+   is referenced via its name; the same goes for a symbol, but the process is
+   much more complex. The first and most common method to create or "to
+   /allocate/ a symbol" consists in just writing it down and passing it to the
+   Lisp reader using the standard Lisp conventions. In a Lisp environment,
+   there is a set of "pre-defined" symbols ready to be used. To caution the
+   reader about the complexity of the subject, we begin with a seemingly
+   strange example:
+
+   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+   (multiple-value-list (find-symbol "X" "COMMON-LISP-USER"))
+   #+END_SRC
+
+   #+BEGIN_SRC lisp :session pcl :exports both
+   (multiple-value-list (ignore-errors x))
+   #+END_SRC
+
+   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+   (multiple-value-list (find-symbol "X" "COMMON-LISP-USER"))
+   #+END_SRC
+
+   The function [[http://clhs.lisp.se/Body/f_find_s.htm][=find-symbol=]] is analogous to the function =find-package=:
+   given some /name/, a character string, it looks for a symbol with this name.
+   Remember the correspondence between packages and names? A similar
+   correspondence exists between symbols and names, but it's more involved. In
+   particular, a name is /never sufficient/ to determine a symbol, a
+   /package/ is also necessary. This is why the =find-symbol= function requires
+   /two/ arguments, the name of the symbol and the package with respect to
+   which the search is to be done.
+
+   At the beginning of our story, no symbol with the name ="X"= existed in the
+   default package ="COMMON-LISP-USER"=, and the return value of =find-symbol=
+   is negative, =nil=. (We will explain the second =nil= value in a moment.)
+   Then we pass the Lisp reader the one character expression '=x='. Lisp
+   evaluates it according to its /read-eval-print/ cycle. First, Lisp
+   /reads/ the expression and notices that the symbol =x= is used. It examines
+   the current package ="COMMON-LISP-USER"=, and does /not/ find such a symbol.
+   Before doing anything else, Lisp /allocates/ (creates) this symbol, the
+   right terminology being: "Lisp /interns/ a symbol =x= of name ="X"= in the
+   package ="COMMON-LISP-USER"=." To refer to this symbol, the pair made of
+   /its/ name ="X"= and the (not /its/!!) package ="COMMON-LISP-USER"= are
+   necessary, but it would be cumbersome to have to write the expression
+   =(find-symbol "X" "COMMON-LISP-USER")= every time this symbol is used. To
+   simplify the process of referring to a symbol the designers of Lisp have
+   organized the workspace as follows: if a symbol is read, its character
+   string is capitalized, giving its /name/, and the default package is
+   assumed. In other words, the text ='x'= is roughly  equivalent to the text
+   =(find-symbol "X" "COMMON-LISP-USER")=. How convenient! ('Roughly', because
+   '=x=' may trigger the allocation of a symbol. In contrast, =find-symbol=
+   never allocates a symbol; but see the function =intern= later.) In the
+   second expression of our example, once Lisp has "understood" that the user
+   intends to use the symbol =x=, and observing that such a symbol is not
+   present in the package ="COMMON-LISP-USER"=, it allocates a symbol of name
+   ="X"= and /interns/ it in the package ="COMMON-LISP-USER"=. More
+   specifically, a pointer referring to the just allocated symbol is added to
+   the list $InS(p)$ of the internal symbols of the package $p$.
+
+   Note also that it is common in Lisp to input the symbols in lowercase
+   letters, and Lisp prints them in uppercase. This might be convenient for
+   distinguishing input from output in an interactive session, but requires
+   some clarification. In particular, there is no difference between the
+   symbols =nil= and =NIL=, whereas the strings ="nil"= and ="NIL"= are
+   different.
+
+   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+   (multiple-value-list (find-symbol "nil" "COMMON-LISP-USER"))
+   #+END_SRC
+
+   #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+   (multiple-value-list (find-symbol "NIL" "COMMON-LISP-USER"))
+   #+END_SRC
+
+   The fruitless search for a /symbol/ with the lower-case name ="nil"= (a
+   /string/) returns a double negative answer, but it is the second =NIL= that
+   is meaningful! Compare that with the second expression which has the same
+   first return value, but a different second one. The symbol =NIL= also plays
+   in Lisp the role of the boolean /false/, which creates an ambiguity: if the
+   answer is the symbol =NIL= is that a negative answer or is it a positive
+   answer made of the symbol =NIL=? The ambiguity is resolved by the /second/
+   return value. In the first case, the second =NIL= /confirms/ that the first
+   =NIL= is to be interpreted as the boolean /false/. In the second expression,
+   the second return value =:INHERITED=, not a negative, indicates that the
+   symbol =NIL= has been found, and that its /accessibility/ via the package
+   ="COMMON-LISP-USER"= is /inherited/, a point to be explained later. In other
+   words, the function =find-symbol= returns a genuine symbol /and/ its
+   accessibility via the package argument, or a pair of =nil='s if no symbol is
+   found. The logician can deduce that an accessibility cannot be the symbol
+   =nil=!
+
+   Let us return to the one character expression '=x='. The read part of the
+   read-eval-print loop cycle reads the symbol =x= and interns it in the
+   package ="COMMON-LISP-USER"=. The expression is /read/ and must now be
+   /evaluated/. The evaluation of a symbol consists in looking for a /value/
+   of this symbol. To this end a value pointer in the symbol's internal
+   representation is examined. In this case it is found that, at this time,
+   there is no value for the freshly allocated symbol =x=. Therefore the /eval/
+   step of the /read-eval-print/ cycle generates an error, terminating the
+   cycle with an informative error message. In any case, a symbol of name
+   ="X"= is now present in the package ="COMMON-LISP-USER"=, as confirmed by
+   the value of the last expression. The symbol's accessibility via the
+   ="COMMON-LISP-USER"= package is /internal/, which is to be explained later.
+
+** Examining a symbol.
+
+   A symbol is a Lisp object with a rich internal structure and there are
+   several functions for exploring symbols and their properties. Let us
+   examine in detail the symbol =x= allocated in the previous section.
+
+   #+BEGIN_SRC lisp :exports both
+   (symbol-name 'x)
+   #+END_SRC
+   
