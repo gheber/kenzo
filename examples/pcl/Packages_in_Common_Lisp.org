@@ -613,25 +613,21 @@
   From now on, the default package is ="P1"=. If we write down a symbol then it
   will be understood by the Lisp reader as accessed via the package ="P1"=,
   that is, unless we use a special syntax. Let us create a list of three
-  symbols and assign it to the symbol =list=, and then examine the internal
+  symbols and assign it to the symbol =my-list=, and then examine the internal
   symbols of the package ="P1"=:
 
-  #+BEGIN_SRC lisp :session pcl :exports both :package "P1"
-  (multiple-value-list
-   (ignore-errors 
-     (setf (symbol-value 'list) '(symb1 symb2 symb3))))
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (setf (symbol-value 'my-list) '(symb1 symb2 symb3))
   #+END_SRC
 
   The reader probably would prefer =(defvar list)= followed by
   =(setf list ...)=, which is rejected by some Lisp implementations, in
   particular SBCL, because in principle the symbol =list=, owned by the package
-  ="COMMON-LISP"=, is "locked". It is possible to unlock such a symbol, which
-  is a little technical, but using =(symbol-value 'list)= as above gets the job
-  done.
+  ="COMMON-LISP"=, is "locked". We use the symbol =my-list= instead.
 
-  #+BEGIN_SRC lisp :session pcl :exports both :package "P1"
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
   (multiple-value-list
-   (ignore-errors 
+   (ignore-errors
      (package-internal-symbols "P1")))
   #+END_SRC
 
@@ -656,7 +652,7 @@
 
   #+BEGIN_SRC lisp :session pcl :exports both :package "P1"
   (eq (find-symbol "PACKAGE-INTERNAL-SYMBOLS" "COMMON-LISP-USER")
-    (find-symbol "PACKAGE-INTERNAL-SYMBOLS" "P1"))
+      (find-symbol "PACKAGE-INTERNAL-SYMBOLS" "P1"))
   #+END_SRC
   
   The symbols are different. Compare that with the status of =nil=, where the
@@ -756,3 +752,371 @@
   (package-internal-symbols "P1")
   #+END_SRC
 
+  The Lisp terminology is rather misleading: in fact, it is not at all the
+  symbol which is imported, but the connection /string/ $\mapsto$ /symbol/.
+  More precisely, let $p_1$ and $p_2$ be two packages, $st$ a string and $sm$
+  a symbol. If $\rho(p_1)(st) = sm$ holds before the importation, then, after
+  the importation, both relations
+  $\rho(p_1)(st) = sm$ /and/ $\rho(p_2)(st) = sm$ are satisfied. In particular,
+  the first relation remains valid. It is not really an importation; it is a
+  /copy/ in the package $p_2$ of the connection $st \mapsto sm$, available in
+  the package $p_1$.
+
+  Furthermore, nothing is modified about the symbol itself, except /possibly/,
+  but rarely, its home package, as will be examined later. It is tempting for a
+  beginner to think the home-package of the symbol is being modified. Not at
+  all! Another erroneous interpretation would be to think a /copy/ of the
+  symbol to be imported is made "inside" the target package, with all the
+  corresponding ingredients of the symbol, value, functional value, and so on.
+  Wrong again! A copy is made, but only of a /pointer/ toward our symbol found
+  in $InS(p_1)$ and copied in $InS(p_2)$.
+
+  The [[http://clhs.lisp.se/Body/f_import.htm][=import=]] function has two arguments, the /symbol/ to be imported and the
+  /target package/. The symbol must be well defined, that is, taking account of
+  the current state of the environment. Here, before the import, the symbol is
+  accessible only via ="CL-USER"=, and it is mandatory to use the notation
+  =cl-user::...= (and the symbol must also be quoted to preclude its
+  evaluation). After the import, as can be seen in the example, the symbol can
+  be used functionally from the package ="P1"= without the prefix notation.
+  Although the imported symbol is in the list of the internal symbols of the
+  package ="P1"=, it is not quite the same as before. The next mandatory
+  exercise consists in comparing the original symbol and the imported one.
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (eq 'cl-user::package-internal-symbols
+      'package-internal-symbols)
+  #+END_SRC
+
+  The function =eq= proves that both notations name the same symbol. Here's
+  another proof:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (eq (find-symbol "PACKAGE-INTERNAL-SYMBOLS" "CL-USER")
+      (find-symbol "PACKAGE-INTERNAL-SYMBOLS" "P1"))
+  #+END_SRC
+
+  If you remember the =symbol-package= function, the next test is revealing:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (symbol-package (find-symbol "PACKAGE-INTERNAL-SYMBOLS" "CL-USER"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (symbol-package (find-symbol "PACKAGE-INTERNAL-SYMBOLS" "P1"))
+  #+END_SRC
+  
+  The /unique/ symbol accessed by two different paths has of course a unique
+  home package, namely its /birth place/, the ="CL-USER"= package. Please, do
+  not pay too much attention to this symbol package; it is just an artifact of
+  the session's history and does not have any real interest. You must focus on
+  the chain
+  $\mathit{package}\rightarrow[\mathit{string}\rightarrow \mathit{symbol}]$ and
+  not much else. There is no real reason to be concerned about the map
+  =symbol-package=: $\mathit{symbol}\rightarrow\mathit{package}$.
+
+* Name conflicts.
+
+  If poorly understood, the introduction of Lisp packages to a Lisp project
+  will sooner or later lead to /name conflicts/. There is nothing mysterious
+  about them and there are standard "home remedies" for dealing with them.\\
+
+  *Warning.* A name conflict can only be generated if two /different/ symbols
+  $sm$, $sm' \in Sm$ end up with the same name: $sn(sm) = sn(sm')$. A name
+  conflict occurs if these symbols $sm$ and $sm'$ become accessible via the
+  same package $p$, which is a forbidden situation, since it would introduce
+  ambiguity to the =find-symbol= function. On the other hand, the fact that
+  some symbol (singular) is accessible via /different/ packages never generates
+  a name conflict by itself.
+
+  Lisp constantly is on the lookout for possible name conflicts and stops with
+  an error if the evaluation of an expression causes a name conflict. Some
+  errors are /continuable/, which means that Lisp is able to propose a conflict
+  resolution via =unintern= or =shadowing-import=. Remember the use of
+  =unintern= in the previous section?
+
+  What happens if an imported symbol has the same /name/ as a symbol already
+  accessible in the target package? In mathematical language, let $p_1$ and
+  $p_2$ be two different packages, $st$ some string, and $sm_1$ and $sm_2$ two
+  different symbols, internal in the respective packages $p_1$ and $p_2$, with
+  same name $st$. In other words,  assume $\rho(p_1)(st) = sm_1$ and
+  $\rho(p_2)(st) = sm_2$, $sm_1 \in InS(p_1)$ and $sm_2 \in InS(p_2)$, and
+  $sm_1\neq sm_2$. A situation of this sort could be the following (Remember
+  the current default package is ="P1"=!):
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (defvar cl-user::symb4)
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (setf cl-user::symb4 111)
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (defvar symb4)
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (setf symb4 111)
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (eq 'cl-user::symb4 'symb4)
+  #+END_SRC
+
+  The evaluation of the first expression interns a symbol of name ="SYMB4"= in
+  the package ="CL-USER"= and gives it the value 111, while the second
+  expression interns a /different/ symbol, again of name ="SYMB4"=, in the
+  package ="P1"=, the current default package, and also gives it the value 111.
+  As a result two symbols have been allocated, installed somewhere in the
+  environment, with the same value of 111. Also the connections
+  $\rho(\mathtt{"CL-USER"}): \mathtt{"SYMB4"}\mapsto \mathtt{cl-user::symb4}$
+  and $\rho(\mathtt{"P1"}): \mathtt{"SYMB4"}\mapsto\mathtt{p1::symb4}$ have
+  been installed, that is, the addresses of both symbols have been pushed to
+  the /respective/ lists of /internal/ symbols of the packages ="CL-USER"= and
+  ="P1"=. The =eq= comparison confirms that the symbols just allocated are
+  different. Two symbols with the same name ="SYMB4"= are now present in our
+  environment. This is possible because these symbols are interned in different
+  packages. Each one is accessible via the appropriate package. Both symbols
+  are live and can be freely used:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (setf cl-user::symb4 (+ symb4 cl-user::symb4))
+  #+END_SRC
+
+  What happens if we import =cl-user::symb4= into the package ="P1"=? Let's
+  try!
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (multiple-value-list
+   (ignore-errors
+     (import 'cl-user::symb4 "P1")))
+  #+END_SRC
+
+  The importation is rejected, for it would not be possible anymore to
+  coherently define $\rho(\mathtt{"P1"})(\mathtt{"SYMB4"})$. We will see later
+  that another process called /shadowing/ allows the user to suppress the
+  symbol =symb4= already present in ="P1"= and to authorize the importation of
+  the symbol present in ="CL-USER"=.
+
+* The function =intern=.
+
+  **Fact 3:** Let $p$ be a package and $(sm_1,...,sm_n)$ the list of its
+  internal symbols. If $p$ is the default package, any of these symbols can be
+  directly used without the double colon notation ='::'=. If $p$ is not the
+  default package, these symbols can be used thanks to the notation $p::sm_i$.
+  All these internal symbols have different names. Nothing prevents several
+  packages from having the same symbols in their lists of internal symbols.
+  This is possible thanks to the =import= function which can work only if no
+  name conflict is generated.\\
+
+  To be complete on this matter, we now to consider the Lisp function
+  [[http://clhs.lisp.se/Body/f_intern.htm][=intern=]]. It is used almost exactly as the function =find-symbol= with just a
+  difference: if no symbol is found, then a symbol is allocated and interned in
+  the package referred to in its second argument. Compare the following:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (multiple-value-list (find-symbol "SYMB5" "P1"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (multiple-value-list (intern "SYMB5" "P1"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (multiple-value-list (intern "SYMB5" "P1"))
+  #+END_SRC
+
+  We start without any =symb5= symbol in ="P1"=, which is confirmed by the
+  double negative answer of =find-symbol=. If instead we use the function
+  =intern=, Lisp notices that such a symbol is absent from ="P1"= and therefore
+  allocates a symbol of name ="SYMB5"= and /interns/ it in the package ="P1"=
+  as an internal symbol. The second value =nil= is an indicator of the
+  allocation just made. If we repeat the same expression, which is not an
+  error, then Lisp signals that such a symbol is already present and returns
+  its status, which also informs us of its previous presence. A little weird!
+  This definition of the function =intern= guarantees the coherence of the set
+  of internal symbols of packages. A symbol can be allocated only through this
+  function =intern=. It requires two arguments, a string $st$ and a package
+  $p$. In a sense, the function =intern= first calls =(find-symbol st p)= with
+  the same arguments. If a symbol is found it is returned without modification
+  and no allocation of a new symbol takes place, which otherwise would create
+  a name conflict. On the other hand, if a corresponding symbol is not found,
+  it is allocated and interned in the package explicitly or implicitly quoted,
+  and this new symbol certainly does not generate a name conflict. In this way,
+  the uniqueness of the names of internal symbols of a package is enforced.
+  This does not prevent two different symbols of the environment from having
+  the same name, but the packaging system is organized such that they cannot be
+  accessed via the same package.
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (package-internal-symbols "P1")
+  #+END_SRC
+
+  In practice, the Lisp reader constantly uses the =intern= function, for
+  example when reading an expression. If it detects the presence of a symbol,
+  the colon notation allows it to decide if a package is explicitly given,
+  otherwise it must use the default package. The name of the symbol, alone or
+  package-qualified using the colon notation, then unambiguously determines the
+  symbol. If present, it is used, otherwise it is allocated and then used. This
+  is exactly the role of the =intern= function.
+
+* Moving a symbol between two packages.
+
+  Up until now, we have seen no means of modifying the home package of a
+  symbol. In fact, it is possible but may seem a little contorted. It is almost
+  without any practical interest except as an opportunity to use this as a
+  vehicle to discover other facts. First, it is possible to /unintern/ a
+  symbol. For example, we can unintern the symbol ="SYMB1"= from the package
+  ="P1"=. What happens is precisely that this symbol is removed from the list
+  of the internal symbols of ="P1"=.
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (unintern 'symb1 "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (package-internal-symbols "P1")
+  #+END_SRC
+
+  What is modified is the /list/ of internal symbols in the package ="P1"=. The
+  symbol =symb1= itself has not been modified at all, except possibly its home
+  package. In particular the symbol is not deallocated or destroyed, and
+  therefore always present somewhere in the environment.
+
+  But it's become inaccessible as such, for a symbol most often is accessible
+  only via a package, the default one or some other explicitly given. The
+  symbol =symb1= was interned only in the package ="P1"=, so that it appears
+  now to be unreachable! If a symbol is truly unreachable, the Lisp garbage
+  collector, always silently working in the background, will establish that
+  fact and free the corresponding part of memory for reuse. Except that our
+  symbol remains reachable, for it was the first element of the list assigned
+  to the symbol =my-list=. Let's have a look at its value!
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  my-list
+  #+END_SRC
+
+  Our symbol is still present in the list but in a little different form.
+  To be sure, it is still a symbol:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (type-of (first my-list))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (symbol-package (first my-list))
+  #+END_SRC
+
+  No home package, i.e., our symbol is "homeless"! The prefix ='#:'= indicates
+  that this symbol is homeless. The =unintern= function had this effect because
+  the package argument of =unintern= was the package which /owned/ the symbol.
+  Otherwise the home package would not be modified. Although our symbol has
+  become homeless, it continues to be an ordinary symbol, for example, we can
+  assign it a value:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (set (first my-list) 444)
+  #+END_SRC
+  
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (symbol-value (first my-list))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (eval (first my-list))
+  #+END_SRC
+  
+  Unlike =setf= (macro), the =set= function evaluates its arguments, so that
+  before the assignment, the expression =(first my-list)= is evaluated, which
+  returns our mysterious symbol =#:symb1=. Once that's done, the =set= function
+  assigns (the value of) the second argument to it, as is confirmed by the
+  other expressions. It is even possible to /import/ a homeless symbol in a
+  package, but then the target package becomes the home package of the imported
+  symbol. The importing package can be different from the original home
+  package. As a result our symbol is "moved" into another package. This
+  explains the new form of the value of =my-list=.
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (import (first my-list) "CL-USER")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (symbol-package 'cl-user::symb1)
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  my-list
+  #+END_SRC
+
+  Our symbol could also have been imported in other packages before being
+  uninterned from its home package. The status of our symbol with respect to
+  other packages would not have been modified.
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (import 'symb3 "CL-USER")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (eq 'cl-user::symb3 'symb3)
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (unintern 'symb3 "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (eq 'cl-user::symb3 (third my-list))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (import 'cl-user::symb3 "CL-USER")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (symbol-package 'cl-user::symb3)
+  #+END_SRC
+
+  Here we import =symb3= in the package ="CL-USER"= before uninterning it from
+  the package ="P1"=. The symbol is then accessible via the package ="CL-USER"=
+  or via the list =my-list=. The evaluation of the expression =(eq ...)= proves
+  that both paths lead to the same address. When the first =(import ...)=
+  expression is evaluated, the symbol does have a home package and that it is
+  not changed. When it is uninterned from the package ="P1"=, it becomes
+  homeless. Lisp does not take account of the fact it is internal in other
+  packages. In theory, this would allow it to select one of these packages as
+  an "emergency home" package, but the choice would be quite arbitrary?
+  Furthermore this would force Lisp to examine the list of all other packages
+  and all their accessible symbols, which would be very expensive! Here,
+  despite the symbol being internal and therefore interned in the package
+  ="CL-USER"=, it becomes homeless after evaluating the =(unintern ...)=
+  expression. Finally we import it in the package ="CL-USER"=, where, in fact,
+  it is already present. According to the ANSI standard (see the following
+  note), in such a situation, its status remains unchanged. In particular its
+  home package remains =nil=. A little esoteric, huh? Don’t worry: the home
+  package does not have any real role for the Lisp user.
+
+  -----
+
+  *Note:* The [[http://clhs.lisp.se/Body/f_import.htm#import][passage]] in the [[http://clhs.lisp.se/Front/index.htm][Common Lisp HyperSpec]] reads like this: /"If the
+  symbol is already present in the importing package, import has no effect."/
+  It appears that the behavior of SBCL and some other compilers is different:
+  The output is =#<PACKAGE "COMMON-LISP-USER">= not =NIL=.
+
+  -----
+
+  We will prove later that if a symbol $sm$ has a home package $p$, then $sm$
+  is certainly present in $p$, that is, internal or external in this package.
+  The "converse" is false: a symbol may be present in several packages
+  $p_1,\ldots , p_k$ while not having a home package. This might sound a little
+  weird, but you shouldn't lose much sleep over it: except for the internal
+  efficiency of the Lisp interpeter or compiler, the notion of a home-package
+  is almost useless for the programmer.
+
+* External symbols and used packages.
+
+  The analysis of this notion of an internal symbol was a little lengthy, but,
+  in this way, the general structure of the packaging system is now very clear,
+  and it will be a lot easier to understand the other concepts. Two fundamental
+  lists maintained in the packages play a "dual" role in the packaging system,
+  the list of /external/ symbols and the list of /used/ packages. The following
+  function gives the list of the external symbols of a package.
