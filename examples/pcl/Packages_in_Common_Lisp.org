@@ -1120,3 +1120,215 @@
   lists maintained in the packages play a "dual" role in the packaging system,
   the list of /external/ symbols and the list of /used/ packages. The following
   function gives the list of the external symbols of a package.
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  *package*
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (defun package-external-symbols (package)
+      (let ((rslt nil))
+           (do-external-symbols (s package)
+               (push s rslt))
+           rslt))
+  #+END_SRC
+
+  The evaluation of the first expression is just to confirm that the default
+  package remains ="P1"=. Let us see what the lists of external symbols of the
+  packages ="P1"=, ="CL-USER"= and ="COMMON-LISP"= are:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (package-external-symbols "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (package-external-symbols "CL-USER")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (subseq (package-external-symbols "COMMON-LISP") 0 10)
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (length (package-external-symbols "COMMON-LISP"))
+  #+END_SRC
+
+  There are no external symbols in ="P1"= and ="CL-USER"=, but 978 such symbols
+  in the package ="COMMON-LISP"=. (Only the first ten are being displayed.) A
+  point of concern might be the following: these symbols are accessible via the
+  package ="COMMON-LISP"= and yet the double-colon notation
+  =common-lisp::simple-error= was not used. The explanation has two "dual"
+  parts:
+
+  1. The symbol =simple-error= is external in the package ="COMMON-LISP"=.
+  2. The package ="COMMON-LISP"= is in the =package-use-list= of the package
+     ="P1"=:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (multiple-value-list (find-symbol "SIMPLE-ERROR" "COMMON-LISP"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (package-use-list "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (package-nicknames (find-package "COMMON-LISP"))
+  #+END_SRC
+
+  ="CL"= is the nickname of the package whose official name is ="COMMON-LISP"=,
+  and which is not to be confused with ="COMMON-LISP-USER"=.
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (eq (find-package "CL")
+      (find-package "COMMON-LISP"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (eq (print (find-package "CL"))
+      (print (find-package "CL-USER")))
+  #+END_SRC
+
+  Applied to a package $p$, the Lisp function [[http://clhs.lisp.se/Body/f_pkg_us.htm][=package-use-list=]] returns the
+  list of all the packages used by $p$. If $p_1$ uses $p_2$, then it is said
+  that $p_2$ is used by $p_1$. Whether this relation is reflexive can be
+  doubted (What does "$p$ uses $p$" mean?), and it is neither symmetric
+  ("$p_1$ uses $p_2$" does not imply "$p_2$ uses $p_1$") nor transitive
+  ("$p_1$ uses $p_2$" and "$p_2$ uses $p_3$” does not imply
+  "$p_1$ uses $p_3$"). The oriented graph of the /use/ relation is totally
+  arbitrary.
+
+* First toy examples.
+
+  Let's start over with two "fresh" packages ="P1"= and ="P2"=.
+
+  #+BEGIN_SRC lisp :session pcl :exports both :package "P1" :results value verbatim
+  (in-package "CL-USER")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (delete-package (find-package "P1"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (defpackage "P1" (:use "CL"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (defpackage "P2" (:use "CL"))
+  #+END_SRC
+
+  We switch the default package to ="P1"=:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (in-package "P1")
+  #+END_SRC
+
+  and we assume that, /in this environment/, we define the functions
+  =package-internal-symbols= and =package-external-symbols= as explained
+  before.
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (defun package-internal-symbols (package)
+      (let ((rslt))
+           (do-symbols (s package)
+               (when (eq (second
+                          (multiple-value-list
+                           (find-symbol (symbol-name s) package)))
+                         :internal)
+                   (push s rslt)))
+           rslt))
+  #+END_SRC
+
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (defun package-external-symbols (package)
+      (let ((rslt))
+           (do-external-symbols (s package)
+               (push s rslt))
+           rslt))
+  #+END_SRC
+
+  What about the internal symbols of ="P1"=?
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (package-internal-symbols "P1")
+  #+END_SRC
+  
+  We see the symbols naming our functions and also the symbols =rslt= and =s=
+  used to define them. All the other symbols used in their definitions are in
+  fact external in ="COMMON-LISP"= and absent here. We move now to the package
+  ="P2"= from where we cannot access the symbol =package-internal-symbols=
+  directly.
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (in-package "P2")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
+  (multiple-value-list (find-symbol "PACKAGE-INTERNAL-SYMBOLS" "P2"))
+  #+END_SRC
+
+  We have already seen the use of the ='::'= notation to make reference to the
+  symbol at once. We can also /import/ the symbol, in which case it becomes
+  directly accessible from ="P2"= permanently:
+
+  #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
+  (import 'p1::package-internal-symbols "P2")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
+  (package-internal-symbols "P2")
+  #+END_SRC
+
+  Another solution requires /two/ steps:
+
+  1. Make the symbol =external= in some package, which is the role of the Lisp
+     function [[http://clhs.lisp.se/Body/f_export.htm][=export=]].
+  2. Declare that the current package /uses/ the package where the symbol is
+     external.
+
+  Let us use this method to make the symbol =package-external-symbols= directly
+  visible from ="P2"=.
+
+  #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
+  (export 'p1::package-external-symbols "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
+  (use-package "P1" "P2")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
+  (package-external-symbols "P2")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
+  (package-external-symbols "P1")
+  #+END_SRC
+  
+  An =export= expression has the same form as an =import= one:
+  =(export= $sm$ $st$ =)=, where $sm$ is a symbol and $st$ is a string naming a
+  package. The symbol $sm$ must be readable from the current default package,
+  for us ="P2"=, which explains the (required) prefix ='p1::'=. The argument
+  $st$ is a string naming the package where the symbol $sm$ is to become
+  external. Again, the terminology is somewhat misleading: the function
+  =export= does not export anything. All it does is to make some connection
+  $st \rightarrow sm$ "exportable" to other packages via =use-package=
+  expressions. The 978 external symbols of ="COMMON-LISP"= contain all the
+  standard Lisp constants, variables and functions. Because an allocated
+  package is always initialized with the package ="COMMON-LISP"= in its
+  =package-use-list=, these basic Lisp objects will be accessible from any
+  package. If we remove ="COMMON-LISP"= from the =use-package-list= of the
+  current default package, via =unuse-package=, the situation becomes a little
+  tricky.
+
+  #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
+  (common-lisp::import
+   '(common-lisp::progn common-lisp::ignore-errors common-lisp::multiple-value-list common-lisp::+)
+   "P2")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
+  (unuse-package "COMMON-LISP" "P2")
+  #+END_SRC
