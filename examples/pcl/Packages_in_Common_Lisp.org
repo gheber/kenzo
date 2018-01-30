@@ -1323,29 +1323,101 @@
   current default package, via =unuse-package=, the situation becomes a little
   tricky.
 
+  -----
+
+  **Note:** Before setting the saw to the branch on which we are sitting,
+  we have to take one precaution: We can't let go of =LET=. Otherwise the
+  interaction between Emacs and SLIME will stop functioning.
+
   #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
-  (common-lisp::import 'common-lisp::let "P2")
+  (cl::import 'cl::let "P2")
   #+END_SRC
+
+  -----
 
   #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
   (unuse-package "COMMON-LISP" "P2")
   #+END_SRC
 
   #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
-  (common-lisp::multiple-value-list
-   (common-lisp::ignore-errors
+  (cl::multiple-value-list
+   (cl::ignore-errors
      (+ 2 2)))
   #+END_SRC
 
   The notation for the external symbol =t= in the package ="COMMON-LISP"= has
-  become =common-lisp:t=, for ="COMMON-LISP"= is no longer used by ="P2"=.
-  Since the symbol =t= is external in ="COMMON-LISP"=, the simple colon
+  become =COMMON-LISP:T=, for ="COMMON-LISP"= is no longer used by ="P2"=.
+  Since the symbol =T= is external in ="COMMON-LISP"=, the simple colon
   notation is sufficient. However, the most elementary operations are not
   easily accessible anymore, for example, the addition function ='+'=. This is
   not a good position to be in. Let us go back to the previous environment!
 
   #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
-  (common-lisp::multiple-value-list
-   (common-lisp::ignore-errors
+  (cl::multiple-value-list
+   (cl::ignore-errors
      (use-package "COMMON-LISP" "P2")))
   #+END_SRC
+
+  This does not work since the symbol =use-package= can't be reached easily
+  either, and we /must/ use the prefix notation.
+
+  #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
+  (cl::multiple-value-list
+   (cl::ignore-errors
+     (cl::use-package "COMMON-LISP" "P2")))
+  #+END_SRC
+
+  But here is a new problem: earlier, when when we tried to use the symbol
+  ='+'= from ="P2"=, Lisp detected that this symbol is not accessible from
+  ="P2"= and therefore interned a fresh symbol of name ="+"= in ="P2"=. This
+  was legitimate then, but it is now incompatible with ="COMMON-LISP"= having a
+  different symbol with the same name ="+"=, if ="P2"= were to use
+  ="COMMON-LISP"=. The same goes for =use-package=. We must unintern these
+  symbols from ="P2"= to resolve the conflict. Let's not forget to use the
+  colon notation for =unintern=, which is otherwise unreachable!
+
+  #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
+  (cl::unintern '+ "P2")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
+  (cl::unintern 'use-package "P2")
+  #+END_SRC
+
+  -----
+
+  **Note:** The following is necessary to keep interaction between Emacs and
+  SLIME going. Otherwise, this would be another conflicting symbol.
+  
+  #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
+  (cl::unintern '*default-pathname-defaults* "P2")
+  #+END_SRC
+
+  -----
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (cl::use-package "COMMON-LISP" "P2")
+  #+END_SRC
+
+  Phew, we are back in a state where Lisp is usable!
+
+* Importing an external symbol.
+
+  Recall that a symbol $sm$ is /accessible/ from a package $p$ if
+  $\rho(p)(st) = sm$ for $st = \mathtt{symbol-name}(sm)$. In that case, the
+  possible return values from =find-symbol= are as follows:
+
+  1. If $sm$ is one of the internal symbols of $p$ the second value returned by
+     =find-symbol= is =:internal=.
+  2. If $sm$ is one of the external symbols of $p$ the second value returned by
+     =find-symbol= is =:external=.
+  3. If $sm$ is an external symbol of a package $p'$ used by the package $p$
+     the second value returned by =find-symbol= is =:inherited=.
+
+  We have seen how to import a symbol from a package $p'$ into a package $p$.
+  The example given used a symbol $sm$ internal in the package $p'$, which then
+  became also an internal symbol of the package $p$ . This also works if $sm$
+  is external in the package $p'$, regardless of $p$ using or not using $p'$.
+  (... assuming that no name conflict is generated.)
+
+  Let's continue our journey in ="P1"=!
