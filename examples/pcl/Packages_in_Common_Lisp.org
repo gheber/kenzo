@@ -1325,9 +1325,9 @@
 
   -----
 
-  **Note:** Before setting the saw to the branch on which we are sitting,
+  *Note:* Before setting the saw to the branch on which we are sitting,
   we have to take one precaution: We can't let go of =LET=. Otherwise the
-  interaction between Emacs and SLIME will stop functioning.
+  interaction between Emacs and SLIME will cease to function.
 
   #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
   (cl::import 'cl::let "P2")
@@ -1386,8 +1386,8 @@
 
   -----
 
-  **Note:** The following is necessary to keep interaction between Emacs and
-  SLIME going. Otherwise, this would be another conflicting symbol.
+  *Note:* The following is necessary to keep the interaction between Emacs
+  and SLIME going. Otherwise, this would be another conflicting symbol.
   
   #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
   (cl::unintern '*default-pathname-defaults* "P2")
