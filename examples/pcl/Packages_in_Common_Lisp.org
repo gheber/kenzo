@@ -1324,11 +1324,28 @@
   tricky.
 
   #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
-  (common-lisp::import
-   '(common-lisp::progn common-lisp::ignore-errors common-lisp::multiple-value-list common-lisp::+)
-   "P2")
+  (common-lisp::import 'common-lisp::let "P2")
   #+END_SRC
 
   #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
   (unuse-package "COMMON-LISP" "P2")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
+  (common-lisp::multiple-value-list
+   (common-lisp::ignore-errors
+     (+ 2 2)))
+  #+END_SRC
+
+  The notation for the external symbol =t= in the package ="COMMON-LISP"= has
+  become =common-lisp:t=, for ="COMMON-LISP"= is no longer used by ="P2"=.
+  Since the symbol =t= is external in ="COMMON-LISP"=, the simple colon
+  notation is sufficient. However, the most elementary operations are not
+  easily accessible anymore, for example, the addition function ='+'=. This is
+  not a good position to be in. Let us go back to the previous environment!
+
+  #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
+  (common-lisp::multiple-value-list
+   (common-lisp::ignore-errors
+     (use-package "COMMON-LISP" "P2")))
   #+END_SRC
