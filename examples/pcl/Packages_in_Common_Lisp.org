@@ -1421,3 +1421,206 @@
   (... assuming that no name conflict is generated.)
 
   Let's continue our journey in ="P1"=!
+
+  #+BEGIN_SRC lisp :session pcl :package "P2" :exports both :results value verbatim
+  (in-package "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (export (intern "SYMB1" "P2") "P2")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list (find-symbol "SYMB1" "P2"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list (find-symbol "SYMB1" "P1"))
+  #+END_SRC
+
+  We intern a symbol =p2::symb1= in ="P2"= and make it external immediately. As
+  it stands this symbol is not accessible via ="P1"=. The fact that it is
+  external in ="P2"= does not prevent us from importing it in ="P1"=.
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (import 'p2:symb1 "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list (find-symbol "SYMB1" "P1"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list (find-symbol "SYMB1" "P2"))
+  #+END_SRC
+
+  Once the importation is done, the symbol is accessible via ="P1"= with the
+  status /internal/. The /external/ status with respect to ="P2"= is unchanged,
+  which underlines that the status of a symbol does not depend on anything in
+  the symbol itself. It is the /package/ which must be examined to determine
+  the status of a symbol /with respect to this package/.
+
+  Curiously, the last =find-symbol= returns the symbol =symb1=, without the
+  prefix ='p2:'=. Lisp prints a symbol according to the following rule:
+
+  #+BEGIN_QUOTE
+  First, Lisp determines whether a symbol is accessible via the current default
+  package, in which case it is printed without using the colon notation.
+  Otherwise, Lisp examines the home package, where the symbol is certainly
+  internal or external, and it is printed with the double or simple colon
+  notation. The only exception to this rule appears to be a /keyword/, that is,
+  a symbol of the package ="KEYWORD"=. (Though the ANSI definition is somewhat
+  incomplete for the ="KEYWORD"= package, we can assume that it is forbidden to
+  change anything about the scope of keywords.) Keywords are printed simply as
+  =':xxx'=, without any prefix. Finally, if the symbol is homeless, it is
+  printed as =#:xxx=.
+  #+END_QUOTE
+  
+  The take-home message here is that an importation does not change anything
+  for the relevant symbol; it is just a matter of updating a list of internal
+  symbols in some package, that is, a list of respective pointers toward these
+  symbols. Installing a new signpost in San Francisco that reads "New York"
+  does not change anything in New York. Once more:
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+   (eq (find-symbol "SYMB1" "P1")
+       (find-symbol "SYMB1" "P2"))
+  #+END_SRC
+
+  A novice could believe that adding ="P2"= to the =package-use-list= of ="P1"=
+  could generate a name conflict, because the symbols =p1::symb1= and
+  =p2::symb1= would become both accessible via ="P1"=. This is not the case:
+  both notations represent one and the same symbol, and there is no ambiguity.
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (use-package "P2" "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list (find-symbol "SYMB1" "P1"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list (find-symbol "SYMB1" "P2"))
+  #+END_SRC
+
+  Note that because our symbol is internal in ="P1"=, the function
+  =find-symbol= reports its status as =:internal=. This is in a sense preferred
+  to the status =:inherited=, which after all would be possible. A name
+  conflict occurs only if two /different/ symbols with the same name could be
+  accessible via the same package, possibly via another package used by the
+  first one. Two symmetrical illustrations:
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (export (intern "SYMB2" "P2") "P2")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list (intern "SYMB2" "P1") )
+  #+END_SRC
+
+  This is not an error: The second =intern= /does not/ allocate a new symbol, a
+  symbol of name ="SYMB2"= being already accessible via ="P1"=, which uses
+  ="P2"=. In particular the second =intern= does not import the pre-existing
+  symbol.
+
+  We have to come up with something else to really allocate a new symbol.
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list
+   (ignore-errors
+     (import (make-symbol "SYMB2") "P1")))
+  #+END_SRC
+
+  The function [[http://clhs.lisp.se/Body/f_mk_sym.htm][=make-symbol=]] allocates a /homeless/ symbol of a given name,
+  that's its definition. A homeless symbol cannot cause a name conflict,
+  because it is /not/ accessible via any package. Nothing prevents us from
+  trying to =import= this symbol in ="P1"=, but this generates a name conflict
+  between two different symbols: the freshly allocated =#:symb2= and the symbol
+  external in ="P2"= accessible via ="P1"= which uses ="P2"=.
+
+  Here's another way to cause a name conflict:
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list (intern "SYMB3" "P1"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list (intern "SYMB3" "P2"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list
+   (ignore-errors
+     (export 'p2::symb3 "P2")))
+  #+END_SRC
+
+  The package ="P1"= uses the package ="P2"=, but this does not prevent them
+  from having two different internal symbols with the same name ="SYMB3"=, for
+  ="P1"= does not see the symbol internal in ="P2"=. If we try to make this
+  symbol external in ="P2"=, a name conflict arises. 
+
+  Another sort of name conflict can occur between two used packages:
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (export (intern "SYMB4" "P2") "P2")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (export (intern "SYMB4" (defpackage :p3)) "P3")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list
+   (ignore-errors
+     (use-package "P3" "P1")))
+  #+END_SRC
+
+  Compare that with:
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (export (intern "SYMB5" "P2") "P2")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (export (import 'p2:symb5 "P3"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (unexport 'p3:symb4 "P3")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (use-package "P3" "P1")
+  #+END_SRC
+  
+  Two symbols of name ="SYMB5"= are external in ="P2"= and ="P3"=, but the
+  second one is in fact the same as the first one: it has been imported and
+  immediately made external in ="P3"=.
+
+  This time the =use-package=, which makes the external symbols of ="P2"= /and/
+  ="P3"= visible from ="P1"=, does not generate a name conflict, since we are
+  dealing with two different paths which lead to the same /symbol/. This works
+  as long as we do not forget to first =unexport= the symbol ="SYMB4"= of
+  ="P3"=, i.e., to downgrade its status from /external/ to /internal/.
+
+* A symbol can shadow another symbol.
+
+  In the matter of name conflicts, the Lisp creators could have adopted another
+  strategy and decided that the symbols /present/ in a package, that is,
+  /internal/ or /external/ in this package, have precedence over /inherited/,
+  possibly different, symbols. However, they reasoned that this could easily
+  generate true programming errors because of possible perverse collisions of
+  identifiers, and turn into a source of obscure bugs. Nevertheless, in line
+  with the general spirit of Lisp, if a programmer really wants to use such a
+  strategy, she can do it on a case-by-case basis and explicitly describe the
+  intended exemptions. This is the role of the [[http://clhs.lisp.se/Body/f_pkg_sh.htm][=package-shadowing-symbols=]]
+  list, which is maintained in every package $p$ and denoted by $ShgS(p)$.
+  This list is empty initially. $ShgS(p)$ can contain symbols present in the
+  concerned package, internal or external. These symbols will automatically
+  /shadow/ any other competing symbol, such as symbols exported in other used
+  packages and with the same =symbol-name=.
+
+  The function [[http://clhs.lisp.se/Body/f_shadow.htm][=shadow=]] takes a symbol name (or a list of symbol names) and a
+  package name, allocates a symbol with this name if it is not /present/ in
+  this package, and records it in the shadowing list of the package.
