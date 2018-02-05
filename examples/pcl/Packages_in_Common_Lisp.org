@@ -2045,3 +2045,346 @@
    following toy example. We start a new Lisp session, allocate a package
    ="P"= and experiment with symbols named ="A"= and ="B"= in the packages
    ="CL-USER"= and ="P"=.
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (in-package "CL-USER")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (defpackage "P" (:use :cl))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (setf my-list '(a b p::a p::b))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (shadow 'p::a "CL-USER")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (shadowing-import 'p::b "CL-USER")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (package-shadowing-symbols "CL-USER")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (eq 'a 'p::a)
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (eq 'b 'p::b)
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  my-list
+  #+END_SRC
+
+  If we =shadow= the symbol =p::a= in ="CL-USER"=, the symbol =a= remains
+  different from the symbol =p::a=. In contrast, if we =shadowing-import= the
+  symbol =p::b= in ="CL-USER"=, then the symbols =b= and =p::b= are equal. In
+  a sense, the expression =(shadow ’p::a "CL-USER")= is cheating because the
+  presence of ='p::'= has no role whatsoever, for only the name of the symbol
+  =p::a= is used and this name is the same as the name ="A"= of =a=, that is,
+  because of the default package, =cl-user::a=. The symbol defined by ="A"= via
+  the package ="CL-USER"= remains unchanged, in particular, it remains
+  different from the symbol =p::a=.
+
+  In contrast, if =shadowing-import= is used, an =import= operation is induced,
+  so that the symbol =p::b= becomes directly accessible via ="CL-USER"=. The
+  previous symbol $\rho:($="CL-USER"=$)($="B"=$)$ has therefore been
+  /uninterned/ and is now unreachable by =find-symbol=. However, it is still
+  visible in the list named =list= as the homeless symbol =#:B=.
+
+  The conclusion of our test is this:
+
+  - The symbol =cl-user::a= is unchanged but added to $ShgS($ ="USER"= $)$.
+  - The symbol =cl-user::b= is almost unchanged, but no longer accessible via
+    ="CL-USER"=. The only change is its =symbol-package= becomes =nil=, because
+    the symbol has been uninterned from its home-package.
+  - The symbol =p::a= remains unchanged; only its name has been used for
+    something which does not really concern it.
+  - The symbol =p::b= remains unchanged, except that it is now directly
+    accessible via ="CL-USER"= and now printed as =B= in the value of =list=.
+
+** (use-package $q$ $p$)
+
+   Unless $q$ is already in $U(p)$, the package $q$ is added to the
+   =package-use-list= of $p.$
+
+   Lisp checks beforehand for possible name conflicts. A symbol
+   $sm \in PrS(p)$ could collide with a /different/ symbol $sm'\in ExS(q)$ if
+   they have the same name $sn(sm) =sn(sm')$. If $sm = sm'$, no name conflict
+   is generated. One cannot resolve such a name conflict by adding $sm'$ to
+   $ShgS(q)$, hoping to give the precedence to the new inherited symbol:
+   shadowing operates in a uni-directional manner, from a using package toward
+   a used package. If one does so by a =shadowing-import= of $sm'$ into $p$,
+   the symbol $sm$ would be coherently uninterned, erased from $PrS(p)$, and
+   in a sense replaced by $sm'$. One can prepare the precedence of $sm$ over
+   $sm'$ before the =use-package= by previously =shadow=ing $sm$ in $p.$ Also
+   Lisp on its own can propose to /unintern/ the symbol $sm$ in a /continuable/
+   error in order to resolve such an observed name conflict.
+
+   Another type of name conflict could be raised if another package $q'$ is
+   already used by $p.$ It is then possible that two /different/ symbols
+   $sm \neq sm'$ with the same name $st$ are external, respectively in $q$ and
+   $q'$, in which case $\rho(p)(st)$ is ambiguous. If so, evaluating the
+   =use-package= expression would generate an error. On the other hand, the
+   intersection $ExS(q) \cap ExS(q')$ may be non-empty: a symbol external in
+   both packages does not generate any ambiguity via $p$. As usual, it is
+   always important to remember the lists such as $ExS(q)$ and $ExS(q')$ are
+   lists of /symbols/, not strings. A name conflict can be generated only by
+   /different/ symbols having the same =symbol-name=.
+
+   If no name conflict is detected, the package $q$ is added to $U(p)$ so that
+   the new set of accessible symbols via $p$ is:
+
+   $$
+   \mathrm{new-}AccS(p) = \mathrm{old-}AccS(p) \cup (ExS(q) − ShdS(q, p))
+   $$
+
+** (unuse-package $q$ $p$)
+
+   If the package $q$ is in $U(p)$, it is removed from this list.
+
+** A bug in package-internal-symbols?
+
+   While preparing these notes, the author thought for a moment to have
+   encountered a mysterious bug. The minimal model for this bug goes as
+   follows:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (unuse-package "P2" "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (unuse-package "P1" "P2")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (delete-package "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (delete-package "P2")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (defpackage "P1" (:use :cl))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (defpackage "P2" (:use :cl))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (use-package "P2" "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (export 'p2::a "P2")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (import 'p2::a "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (package-internal-symbols "P1")
+  #+END_SRC
+  
+  The point is that the standard Lisp function =do-symbols= runs through all
+  the symbols /accessible/ via ="P1"=, but it does not check for possible
+  duplicates. Really? It seems possible that a symbol can appear more than once
+  in $AccS($="P1"=$)$!? This does not seem compatible with the exclusion of
+  duplicates in general in $InS(p)$ and $ExS(p)$, and also the rule
+  $InS(p) \cap ExS(p) = \emptyset$. Yes, but a – one !– symbol can be
+  simultaneously in $InS(p)$ and $ExS(q)$ for a package $q$ used by $p$, which
+  is the case here for our symbol =p1::a= = =p2:a=.
+
+  The evaluation of =(do-symbols (s p) ...)= makes =s= run through all the
+  internal symbols of $p$, then through all the external symbols of $p$, and
+  finally through all the external symbols of $q$ for every package $q$ used
+  by $p$. It happens that our symbol is in $InS($="P1"=$)$ because it was
+  imported there, and also in $ExS($="P2"=$)$ where it was initially defined.
+  Didn't the programmer of =package-internal-symbols= check the status of the
+  symbol, so that the (fake) second symbol should have been rejected? No, not
+  really, and it is interesting to see the path followed by Lisp: only the
+  symbol-name and the examined package are used, so that when Lisp computes
+  =(find-symbol (symbol-name s) package)=, it obtains /the/ symbol, in fact
+  the only one in this story, together with its status with respect to the
+  =package= argument. In our case that is the package ="P1"= and the symbol's
+  status (with respect to ="P1"=) is =:internal=, even if at the same time
+  $s \in ExS($ ="P2"= $)$.
+
+  This illustrates some of the hidden traps and pitfalls that one might
+  encounter as a result of different packages seeing the same symbol in various
+  ways. Remember: no name conflict can be caused by one symbol alone. A name
+  conflict happens only if /two/ different symbols with the same name are
+  "visible" by the same package. Nothing of this sort happened here, where
+  /one/ symbol is visible by several packages.
+
+  To overcome this weakness in the implementation of
+  =package-internal-symbols=, using the Lisp function =delete-duplicates= is
+  sufficient.
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (defun package-internal-symbols-dedup (package)
+      (let ((rslt))
+           (do-symbols (s package)
+               (when (eq (second
+                          (multiple-value-list
+                           (find-symbol (symbol-name s) package)))
+                         :internal)
+                   (push s rslt)))
+           (delete-duplicates rslt)))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results value verbatim
+  (package-internal-symbols-dedup "P1")
+  #+END_SRC
+
+** Symbol-package revisited.
+
+   Throughout this tutorial, we kept insisting that this function is not really
+   interesting. To be complete, we prove that a symbol
+   $sm \in PrS($ =(symbol-package = $sm$ =)= $).$ In other words, if the symbol
+   -package of the symbol $sm$ is $p$, then $sm$ is present in $p$, either
+   internal or external. When a symbol is allocated (necessarily via =intern=),
+   it is in particular interned in the package which is the second argument of
+   =intern= so that it becomes a member of $InS(p)$. It may be exported in this
+   package, which would make it a member of $ExS(p)$, but it remains present.
+   The symbol can be added to $InS(q)$ for other packages $q$ via =import= or
+   =shadowing-import=. It can also then be "upgraded" to $ExS(q)$ in those
+   packages, but the membership in the initial package $PrS(p)$ remains
+   unaffected.
+
+   The only way to change this situation is using =unintern= with the package
+   argument being $p.$ Then the symbol becomes homeless.
+   In turn, this can be changed with =import= and =shadowing-import=, in which
+   case the symbol is interned in a possibly new package, and the story
+   continues along similar lines. Finally, unless a symbol is homeless, it is
+   always present in its home-package.
+
+   This also shows that, as was mentioned in the introduction, the
+   =symbol-package= qualifier of a symbol does divide the set of /interned/
+   symbols into packages. It is impossible to have two different interned
+   symbols with the same symbol-name and also the same symbol-package, for they
+   would be interned in the same package, with the same name, and then the set
+   of packages would not be /coherent/.
+
+   An interned symbol is internal or external in its symbol-package, and
+   certainly visible via this package. However, it may be visible from many
+   other packages, and this information is not stored in the internal
+   representation of the symbol. If it is external, it is accessible via the
+   packages which use its package. The list of these packages can be determined
+   by the standard Lisp function =package-used-by-list=. But a symbol can also
+   be imported by other packages, which in turn may decide to make (the pointer
+   to) this symbol external, and so visible from other packages.
+
+   *Exercise:* Try to define a function =symbol-accessible-from= with one
+   argument, a symbol, that returns the list of all packages where this symbol
+   is accessible. Do not forget the contorted particular case of
+   =common-lisp:nil=! Hint: Have a look at the standard Lisp function
+   [[http://clhs.lisp.se/Body/f_list_a.htm#list-all-packages][=list-all-packages=]].
+
+   An arbitrary number of homeless symbols may have the same name, as
+   illustrated by:
+
+  #+BEGIN_SRC lisp :session pcl :exports both :results output
+   (eq (print (make-symbol "Z"))
+       (print (make-symbol "Z")))
+  #+END_SRC
+
+  When =make-symbol= is called, Lisp allocates a /new/ homeless symbol with the
+  prescribed name, even if another one with the same name has been already
+  allocated. You see /both/ homeless symbols allocated above are printed in the
+  same way, yet they are /different/.
+
+**  Practical uses of the packaging system.
+
+   Many of the somewhat esoteric technicalities detailed in this tutorial have
+   no direct use in concrete programming. On the other hand, they can help to
+   understand and demystify the behaviour of your Lisp system.
+
+   A particularly irritating fact exhibited by some systems is the following:
+   When you merely install, not load, a source file in the editor of your Lisp
+   IDE, these systems immediately scan for symbols appearing in these files and
+   intern them in a separate package. Sometimes this is the package indicated
+   in an inital =(in-package "XXX")= of the file, or still more
+   inappropriately, the standard ="CL-USER"= package, or also the current
+   default package, even if the initial =in-package= references another
+   package. Often this later leads to symbol collisions which are sometimes
+   hard to identify. A developer who meets this kind of mysterious symbol
+   collisions is advised to search first in this direction. In this case, you
+   should make independent micro-experiments to study the actual behavior of
+   your IDE when you install a file in your development environment. Probably
+   in the early days of Lisp, this was done to improve the efficiency, but on
+   modern systems, it is difficult to see compelling reasons to justify such a
+   strategy.
+
+   Most symbols of a Lisp file in fact are symbols with lexical scope, a scope
+   limited to a small part of the code, typically /inside/ a function, a =let=
+   form, a =do= form and so on. These references are converted by the compiler
+   into raw machine addresses, and these symbols have no real life at runtime.
+
+   The most important symbols that have a real life at runtime are those that
+   name functions, those defined through a =defun= form and the like. If a
+   large program is divided in several files, then some decisions must be taken
+   about the status of such a symbol.
+
+   Usually, a correspondence "file $\leftrightarrow$ package" is maintained.
+   Several Lisp systems require that a file begins with an appropriate
+   =(in-package ...)= expression, declaring that all the symbols used in this
+   file are to be understood as present in this package, except when something
+   else is a consequence of decisions taken outside this file or even in this
+   file.
+
+   In the ANSI definition of [[http://clhs.lisp.se/Body/m_in_pkg.htm][=in-package=]], the referenced package must already
+   exist in the environment. Beginning a file by:
+
+   #+BEGIN_EXAMPLE
+   (defpackage "MY-PACKAGE")
+   (in-package "MY-PACKAGE")
+   #+END_EXAMPLE
+
+   is tempting but does not obey the requirement about the first instruction of
+   a file being the appropriate =(in-package ...)=.
+
+   The solution is to have a separate file in the project which is called aptly
+   =packages.lisp= and which contains all the necessary =(defpackage ...)=
+   expressions for the project. The =defpackage= form is flexible and can
+   contain also all the main information about a package, in particular the
+   list of its external symbols and its used packages. (See the ANSI definition
+   of [[http://clhs.lisp.se/Body/m_defpkg.htm#defpackage][=defpackage=]].) This file is a good foundation for structuring the
+   "public" documentation, explaining the role of these packages and their
+   external symbols.
+
+   Along the same lines, it might be worthwhile to have an ="EXTERNAL"= package
+   which contains all the external symbols of the application. In this way, the
+   other packages may use this package systematically, giving to this package a
+   status similar to the status of the ="COMMON-LISP"= package. This does not
+   prevent another package to import some symbols of other packages, symbols
+   whose role is too specific to justify to make them "globally" external.
+
+** Shortcuts.
+
+   There are several ways for the developer to shorten the Lisp expressions
+   dealing with the packaging system.
+
+   To be rigorous in our explanations and close to the deep structure of Lisp,
+   in this tutorial, we used a string identifier everywhere for a package. A
+   symbol could be used instead, its name then being used as the intended
+   string. For example, =(defpackage :my-package)= is equivalent to
+   =(defpackage "MY-PACKAGE")=, for the name of the keyword =:my-package= is
+   used, and because of the capitalization rule of the symbols applied by the
+   Lisp reader. The name of =:my-package= is ="MY-PACKAGE"=, which through the
+   =defpackage= expression becomes a package-name by following the standard
+   rule which asks for an uppercase name.
+
+   Also, each time a package argument is needed, frequently the second one, it
+   can be omitted if this package is the current default package, which
+   justifies this terminology. When using these shortcuts, do not forget about
+   maintaining maximum readability of the source code!
