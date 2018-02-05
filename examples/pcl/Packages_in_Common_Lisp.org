@@ -1624,3 +1624,424 @@
   The function [[http://clhs.lisp.se/Body/f_shadow.htm][=shadow=]] takes a symbol name (or a list of symbol names) and a
   package name, allocates a symbol with this name if it is not /present/ in
   this package, and records it in the shadowing list of the package.
+  
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (shadow "SYMB6" "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (package-shadowing-symbols "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (export (intern "SYMB6" "P2") "P2")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (eq 'symb6 'p2:symb6)
+  #+END_SRC
+
+  Once the symbol =p1::symb6= is on the shadowing-list of ="P1"= the existence
+  of a different external symbol with the same name in the used package ="P2"=
+  does not generate a name conflict. The last =eq=-test proves both symbols are
+  really different. Along the same lines, the function [[http://clhs.lisp.se/Body/f_shdw_i.htm][=shadowing-import=]], as
+  clearly indicated in its name, imports a symbol and immediately adds it to
+  the shadowing list, which could resolve a possible name conflict. For example
+  the *different* symbols =p2:symb4= (external in ="P2"=) and =p3::symb4=
+  (internal in ="P3"=) are in our environment; the package ="P1"= uses both
+  packages ="P2"= and ="P3"=, but =p3::symb4= is internal in ="P3"= and
+  therefore not in conflict with =p2::symb4=. Remember also the current default
+  package is ="P1"=. A simple importation of =p3::symb4= in ="P1"= generates a
+  conflict, while a =shadowing-import= adds the imported symbol to the
+  shadowing list, shadowing the symbol =p2:symb4= and resolving the name
+  conflict.
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list (find-symbol "SYMB4" "P2"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list (find-symbol "SYMB4" "P3"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list
+   (ignore-errors
+    (import 'p3::symb4 "P1")))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (shadowing-import 'p3::symb4 "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (package-shadowing-symbols "P1")
+  #+END_SRC
+
+  If necessary, =p2:symb4=, shadowed by the internal =symb4= in ="P1"=, remains
+  accessible via the colon notation. The evaluations of the following
+  expressions assign the same symbol value to both symbols as is confirmed by
+  the subsequent '=' form.  Evaluating the next =eq= expression proves that
+  both /symbols/ are different. In contrast, because =p1::symb4= was imported
+  from ="P3"=, the last =eq=-test is affirmative.
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (defvar symb4)
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (defvar p2:symb4)
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (setf symb4 (setf p2:symb4 111))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (= symb4 p2:symb4)
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (eq 'symb4 'p2:symb4)
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (eq 'symb4 'p3::symb4)
+  #+END_SRC
+
+  It is even possible to add an /inherited/ symbol to the shadowing list, maybe
+  to declare a precedence with respect to another future competing symbol in
+  another package intended to be used later. This experiment assumes three
+  different packages, where one of them is not yet used. We first "detach" for
+  example the package ="P3"= from ="P1"=, leaving ="P2"= used by ="P1"=.
+  (Remember ="P1"= is the current default package.)
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (unuse-package "P3" "P1")
+  #+END_SRC
+
+  We then install two new external symbols with the same name in ="P2"= and
+  ="P3"=:
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (export (intern "SYMB7" "P2") "P2")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (export (intern "SYMB7" "P3") "P3")
+  #+END_SRC
+
+  As we have seen already with essentially the same example, if ="P1"= now
+  decides to use ="P3"=, the two ="SYMB7"= symbols collide:
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list
+   (ignore-errors
+     (use-package "P3" "P1")))
+  #+END_SRC
+
+  In some context, it could happen that ="P1"= has no reason to use =p3:symb7=
+  directly, and instead would like to give precedence to =p2:symb7=. This can
+  be achieved with a shadowing import.
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list (find-symbol "SYMB7" "P1") )
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (shadowing-import 'symb7 "P1")
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (use-package "P3" "P1")
+  #+END_SRC
+
+  The =shadowing-import= refers to =p2:symb7= implicitly, which is external in
+  a package used by ="P1"= and therefore inherited by ="P1"=. We see how the
+  use of =shadowing-import= solves the name conflict, which otherwise would be
+  raised by =use-package=. Let us review our symbols as seen now from our three
+  packages:
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list (find-symbol "SYMB7" "P1"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list (find-symbol "SYMB7" "P2"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (eq 'symb7 'p2:symb7)
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (multiple-value-list (find-symbol "SYMB7" "P3"))
+  #+END_SRC
+
+  #+BEGIN_SRC lisp :session pcl :package "P1" :exports both :results value verbatim
+  (package-use-list "P1")
+  #+END_SRC
+
+  The statuses of =symb7= have not changed in ="P2"= and ="P3"=, but seen from
+  ="P1"=, the symbol is now /internal/. This is to satisfy the rule that any
+  shadowing symbol in a package must be internal or external in this package,
+  and also a consequence of the implied importation.
+
+* A mathematical definition of the packaging system.
+
+  We recall that there are three general sets we must study:
+
+  - The set $St$ of /strings/
+  - The set $P$ of /packages/
+  - The set $Sm$ of /symbols/
+
+  There is one important difference: the set $St$ is the /infinite/ set of all
+  the possible strings, while $P$ and $Sm$ are /finite/ sets made of the
+  packages and symbols previously /allocated/ in the current Lisp session.
+
+  We use the notations $pn$ to denote the function =package-name=
+  $pn: P \rightarrow St$ and $sn$ to denote the function =symbol-name=
+  $sn: Sm\rightarrow St$.
+
+  The map $pn$ is /injective/ for the packages; the function
+  $pn: P \rightarrow pn(P)$ defines a 1-1 correspondence between the packages and their respective names. Here, we ignore the potential nicknames of a package, which is not essential for our discussion.
+
+  Every package $P$ contains four /fundamental/ lists:
+
+  - The list $InS(P)$ of its internal symbols
+  - The list $ExS(P)$ of its external symbols
+  - The list $ShgS(P)$ of its shadowing symbols
+  - The list $U(P)$ of its used packages
+
+  More precisely, these lists are lists of /pointers/ to the mentioned objects,
+  or, if you prefer, of the machine addresses of these objects. It is important
+  to understand these lists are made of (pointers to) /symbols/, not of their
+  names. Each of these lists is /without any duplicates/.
+
+  The fundamental lists defined in a package are the source of a relatively
+  extensive terminology, which is detailed now. The set of symbols /present/ in
+  a package $p$, denoted by $PrS(p)$, is defined as the union
+  $PrS(p) := InS(p) \cup ExS(p)$: a symbol is present in a package if it is
+  internal or external in this package. This union is /disjoint/, the
+  intersection $InS(p) \cap ExS(p)$ must be empty. Also the relation
+  $ShgS(P) \subset Pr(P)$ is required. A shadowing symbol of the package $p$
+  must be internal or external in this package, i.e., a shadowing symbol is
+  present.
+
+  Let $q$ be a package used by the package $p$. The symbols of $q$ /shadowed/
+  by a symbol of $p$ are:
+  $$
+  ShdS(q, p) = \{sm \in ExS(q)\;\mathbf{\underline{st}}\;\exists sm' \in ShgS(p)\;\mathbf{\underline{st}}\; sn(sm) = sn(sm')\}
+  $$
+
+  In other words, a /precedence/ relation is defined by the list $ShgS(p)$: if
+  ever a symbol $sm' \in ShgS(p)$ and a symbol $sm\in ExS(q)$ have the same
+  name, then, with respect to the package $p$, $sm'$ takes precedence over
+  $sm$, which means $sm$ is /shadowed/. If $sm'$ is present in $p$ but not
+  shadowing, with $sm'\neq sm$ and $sn(sm') = sn(sm)$, then a name conflict
+  would be raised, which is forbidden.
+
+  The inherited symbols of a package $p$, denoted by $InhS(p)$, are defined as:
+  $$
+  InhS(p) := \Big\{ \bigcup_{q\in U(P)}(ExS(q) − ShdS(q,p)) \Big\} − PrS(P)
+  $$
+
+  A symbol is inherited in a package $p$ if it is external in a /used/ package
+  $q$, not shadowed by a shadowing symbol of $p$, and not present in $p$. The
+  union in the preceding formula is not necessarily disjoint: a symbol can be
+  external in several packages simultaneously, and without causing a name
+  conflict. A symbol could be simultaneously present in $p$ and external in a
+  package $q$ used by $p$. That is why the the last term, $−PrS(P)$, is
+  necessary to define unambiguously what an inherited symbol is.
+
+  Finally the accessible symbols $AccS(p) := PrS(p) \cup InhS(p)$ are the
+  symbols which are present or inherited. The very definition of $InhS(p)$
+  implies that this union is disjoint. In this way, the /status/ of a symbol
+  with respect to a package $p$ via which it is accessible is unambiguously
+  defined as a keyword =:internal=, =:external= or =:inherited=. For a package
+  $q\neq p$ there is no relation whatsoever between the status of some symbol
+  $sm$ with respect to $p$ and its status with respect to $q$.
+  *Exercise:* Show that the sixteen pairs of possible status combinations can
+  be realized!
+
+  It is important to be clear about possible intersections (overlaps) between
+  the lists defined above. Let $p$ be some package and $q$ another package used
+  by $p.$ If $sm\in ExS(q)$ is an external symbol of $q$, the symbol $sm$ /may/
+  also be present in $p$, in which case its status is internal or external, but
+  not inherited. In particular, this does not generate a name conflict, because
+  it is the same symbol which is visible in two different packages via the same
+  name, and a symbol has only /one/ name! Nevertheless its status /with respect
+  to/ $p$ is not inherited. The status of a symbol is so defined
+  deterministically, even if it is present in two interacting packages by one
+  using the other. Of course the same symbol has status external in $q$.
+
+  Following the same logic, if $q,q'\in U(p)$, the intersection
+  $ExS(q)\cap ExS(q')$ is not necessarily empty.
+
+  The Lisp system maintains the /coherence/ of these lists, which is defined as
+  follows:
+
+  *Definition.* A set of packages is /coherent/ if, for every package $p$, the
+  function =symbol-name= defines a 1-1 correspondence
+  $sn: AccS(p) \rightarrow sn(AccS(p))$.
+
+  This map is by definition surjective; it is injective if two different
+  symbols accessible via $p$ have different names. In this way the function
+  =find-symbol= is free of ambiguity. It searches first in the present symbols,
+  and finally in the external symbols of the used packages. It is not necessary
+  to compute the list of shadowed symbols since a shadow/ing/ symbol, which is
+  also a present symbol, is found first. The main purpose of the coherence rule
+  is to prevent users from designing too contorted situations in name scopes,
+  wich are frequently the source of subtle and difficult to find bugs.
+
+  Several symbols with the same name may coexist in an environment. The most
+  common way to access a symbol consists in using its /name/, but /different/
+  symbols may have the /same/ name. In fact, its symbol name is not sufficient
+  to access a symbol, a package must also be specified. This can be the default
+  package, in which case the direct notation without any colons is possible, or
+  the package name can be explicitly used to prefix the symbol name using the
+  one- or two-colon notation. Of course, the symbol so accessed must be defined
+  in a /deterministic/ manner. The definition just given says that a /unique/
+  symbol of some name is accessible from some package.
+
+  The main function in the packaging organization is a map:
+  $$
+  \rho:P \rightarrow [St \rightarrow ((Sm\cup\mathtt{nil})\times Stt)]
+  $$
+  where $Stt$ is a constant set of four symbols, the Lisp symbol =nil=, and
+  three keywords, the possible statuses of an accessible symbol:
+  $$
+  Stt = \{\mathtt{nil}, \mathtt{:internal}, \mathtt{:external}, \mathtt{:inherited}\}
+  $$
+  Because of the assumed coherence of the package configuration, the function
+  $\rho$, an avatar of the function =find-symbol= of a package $p$ and a string
+  $st$, determines a /unique/ symbol named $st$ and accessible via $p$, and
+  also its status. It is possible that the search fails, in which case the
+  function returns the pair =(nil,nil)=. (More precisely =(values nil nil)=.)
+  The second =nil= is a kind of a null status: "There is nothing accessible via
+  $p$ under the name $st$." The relation
+  $\rho(p)(s) = \mathtt{(find-symbol}\;p\;st\mathtt{)}$ is always satisfied.
+
+  It is now relatively simple to understand the various Lisp functions for
+  handling packages and symbols, in particular what name conflicts might be
+  generated.
+
+** (intern $st\;p$)
+
+   This function first evaluates =(find-symbol= $st\; p$=)=. If a symbol is
+   found, /both/ values of =(find-symbol ...)= are returned.
+
+   If no symbol is found, then Lisp /allocates/ (creates in memory) a new
+   symbol without any value or function value. The =symbol-package= is
+   initialized to $p$ and this symbol is added to $InS(p)$. In this case,
+   =(values= $sm$ =nil)= is returned, the second value =nil= being a code for
+   saying a new symbol has just been allocated.
+
+   No name conflict can be created this way.
+
+   This function is used implicitly by the Lisp reader when it encounters a
+   symbol in an expression. If the colon syntax is not used, the default
+   package is used for $p.$ Otherwise the (capitalized) package name of $p$
+   preceding the colon(s) is read, followed by the (capitalized) =symbol-name=
+   $st$ after the colon(s). Finally, =(intern= $st\; p$=)= is evaluated, which
+   yields the symbol so /read/ by the Lisp reader. In this way, the symbol can
+   be either a pre-existing one or one freshly allocated as a consequence of
+   this reading.
+
+
+** (unintern $sm\;p$)
+
+   A symbol $sm$ is /interned/ in a package $p$ if it is present in this
+   package. It is /present/ in package $p$ if
+   $sm\in PrS(p) = InS(p) \cup ExS(p).$ Uninterning a symbol asks for this
+   membership to be "revoked."
+
+   If $sm\notin PrS(p)$, nothing is changed and =nil= is returned. Otherwise
+   $sm$ is removed from $InS(p)$ or $ExS(p)$, and also from $Shg(p)$ if $sm$
+   was shadowing with respect to $p$; in this case, =unintern= returns =t=. In
+   the last case, when uninterning a shadowing symbol, a name conflict can be
+   generated: it is possible for symbols $sm'\in ExS(q)$ and $sm''\in ExS(q')$
+   to have the same name while being /different/ symbols in the respective
+   packages $q$ and $q'$ used by $p$, and that this collision was resolved by
+   the symbol $sm$ shadowing both. If this happens, the =unintern= request is
+   rejected.
+
+   Also, if a symbol $sm$ is uninterned from a package $p$ and $p$ is the home
+   package of $sm$, then the home package of $sm$ is modified and becomes
+   =nil=, that is, the symbol becomes homeless. This is the only case where the
+   symbol itself is modified by =unintern=. The same symbol could be external
+   in another package used by $p$, in which case the symbol /remains/
+   accessible via $p$. Otherwise, if the home package was =nil= or another
+   package, it is not modified.
+
+** (import $sm\; p$)
+
+   This is a request for the symbol $sm$ to be added to $InS(p)$. Lisp first
+   looks for a possible name conflict. This happens only if a /different/
+   symbol $sm'\neq sm$ with the same name ($sn(sm) = sn(sm')$) is already
+   accessible via $p$. If so, the importation is rejected.
+
+   If no name conflict is detected, Lisp proceeds as follows: If the symbol is
+   already /present/, it is left /unchanged/ in $InS(p)$ or $ExS(p)$. Else, if
+   the symbol is /inherited/ because of a package $q$ used by $p$, $ExS(q)$ is
+   left unchanged and $sm$ is added to $InS(p)$ (not $ExS(p)$!). If $sm$ is not
+   accessible via $p$, it is simply added to $InS(p)$.
+
+   In the specific case of an imported homeless symbol, the =symbol-package= of
+   the symbol is updated to $p$. This is the only case where a symbol object is
+   modified by an importation. If the imported symbol is already owned by a
+   package, whatever its home package, it is not modified.
+
+   If the importation succeeds, the symbol will always be /present/ in the
+   target package, even if it was previously accessible only via a used
+   package.
+
+** (export $sm\; p$)
+
+   The terminology "export" is not really appropriate, "externalize" would be
+   more precise. The user of an =export= expression asks Lisp to record the
+   symbol $sm$ in $ExS(p).$ This is allowed only if $sm$ is accessible from
+   $p.$ In other words, the =export= function cannot /add/ an accessible symbol
+   to $p.$ In view of the rule $InS(p)\cap ExS(p) = \emptyset$, if present in
+   $InS(p)$, the symbol $sm$ is also erased from that list. If $sm$ is external
+   in a package $q$ used by $p$, its status in $q$ remains unchanged, but $sm$
+   is nevertheless added to $ExS(p)$.
+
+   Remember that the =use-package= relation is not transitive. The fact that
+   $sm\in ExS(q)$ makes $sm$ accessible via $p$ using $q$ but not via $p'$
+   using $p$. If it is desired that $sm$ be accessible via $p'$, it is possible
+   to make it external in $p$ by an =export= expression. Another solution would
+   be to import $sm$ in $p'$, an operation which doesn't involve $p$.
+
+   After exporting it, the symbol $sm$ becomes accessible from any package $q$
+   using $p$, that is, if $p\in U(q)$. This can generate a name conflict with
+   a possible /different/ symbol $sm'$ of the same name, which is present in
+   $q$ or accessible via $q$ in another package $p'\in U(p)$, that is, if
+   $sm'\in ExS(p')$. If this happens, the /export/ request is rejected.
+
+** (unexport $sm\; p$)
+
+   The symbol $sm$ must be accesible via the package $p.$ If the status of
+   $sm$ is /external/, it is downgraded to /internal/. Otherwise it remains
+   unchanged, even if it is /inherited/.
+
+** (shadow {$sm$ or $st$} $p$)
+
+   It is intended to /import/ the symbol $sm$ in $p$, to record it in the
+   shadowing list $Shg(p)$ of the package $p$, and also to /resolve/ any name
+   conflict possibly raised by the importation.
+
+   This time the first argument must be a /symbol/, a pre-existing one or a
+   symbol just allocated because of its presence in the source statement. The
+   symbol is imported (See the function =import=.) and added to the shadowing
+   list $Shg(p)$ of $p$ if not yet present in this list. This addition to the
+   shadowing list solves the possible name conflicts with symbols inherited
+   from packages used by $p.$  It is possible that a /different/ symbol /sm'/
+   with the same name was /present/ in $p$ beforehand. If so, such a symbol is
+   /uninterned/ from $p$, that is, erased from the lists $InS(p)$, $ExS(p)$ and
+   $Shg(p)$.
+
+   The difference between =shadow= and =shadowing-import= is clarified by the
+   following toy example. We start a new Lisp session, allocate a package
+   ="P"= and experiment with symbols named ="A"= and ="B"= in the packages
+   ="CL-USER"= and ="P"=.
