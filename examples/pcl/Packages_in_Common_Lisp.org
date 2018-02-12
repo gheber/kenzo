@@ -95,25 +95,25 @@
   - The set $P$ of *packages*.
   - The set $Sm$ of *symbols*.
 
-   In our description of the packaging system, the statuses of these sets are
-   different. Think of the (infinite) set $St$ of /strings/ as made of /all/
-   the character strings that /can/ be used by a user or a program at any time.
-   Any string can be used at any time, whatever the history of the Lisp session
-   in which we are working may be. In the packaging system, most often, a
-   particular string is used only for a short time, mainly during the
-   read-eval-print loop, when the Lisp reader works. A string is just an
-   intermediary connecting the user and the Lisp session, more precisely the
-   current environment. In contrast, in a given environment, at any time during
-   a Lisp session, some finite set $P$ of /specific/ packages is installed in
-   this environment, and also a finite set $Sm$ of /specific/ symbols is
-   available. Those packages and symbols can /then/ be used, and they are the
-   historical consequence of the current Lisp session. Various Lisp functions
-   allow the user to modify the sets $P$ and $Sm$, and the way they are
-   combined and related to each other. In other words, consider the set of
-   strings $St$ as constant, vast and independent of the environment, while, on
-   the contrary, the sets $P$ and $Sm$ are restricted, they change during a
-   Lisp session, and they are an essential component of the /current/
-   environment.
+  In our description of the packaging system, the statuses of these sets are
+  different. Think of the (infinite) set $St$ of /strings/ as made of /all/
+  the character strings that /can/ be used by a user or a program at any time.
+  Any string can be used at any time, whatever the history of the Lisp session
+  in which we are working may be. In the packaging system, most often, a
+  particular string is used only for a short time, mainly during the
+  read-eval-print loop, when the Lisp reader works. A string is just an
+  intermediary connecting the user and the Lisp session, more precisely the
+  current environment. In contrast, in a given environment, at any time during
+  a Lisp session, some finite set $P$ of /specific/ packages is installed in
+  this environment, and also a finite set $Sm$ of /specific/ symbols is
+  available. Those packages and symbols can /then/ be used, and they are the
+  historical consequence of the current Lisp session. Various Lisp functions
+  allow the user to modify the sets $P$ and $Sm$, and the way they are
+  combined and related to each other. In other words, consider the set of
+  strings $St$ as constant, vast and independent of the environment, while, on
+  the contrary, the sets $P$ and $Sm$ are restricted, they change during a
+  Lisp session, and they are an essential component of the /current/
+  environment.
 
 * Packages
 
@@ -2303,7 +2303,7 @@
   allocated. You see /both/ homeless symbols allocated above are printed in the
   same way, yet they are /different/.
 
-**  Practical uses of the packaging system.
+*  Practical uses of the packaging system.
 
    Many of the somewhat esoteric technicalities detailed in this tutorial have
    no direct use in concrete programming. On the other hand, they can help to
@@ -2369,7 +2369,7 @@
    prevent another package to import some symbols of other packages, symbols
    whose role is too specific to justify to make them "globally" external.
 
-** Shortcuts.
+* Shortcuts.
 
    There are several ways for the developer to shorten the Lisp expressions
    dealing with the packaging system.
