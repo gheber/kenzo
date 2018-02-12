@@ -1,6 +1,7 @@
 #+TITLE: Packages in Common Lisp, a tutorial
 #+AUTHOR: Francis Sergeraert
 #+DATE: January 2014
+#+OPTIONS: toc:nil
 
 * Introduction.
 
@@ -1843,7 +1844,7 @@
 
   The inherited symbols of a package $p$, denoted by $InhS(p)$, are defined as:
   $$
-  InhS(p) := \Big\{ \bigcup_{q\in U(P)}(ExS(q) − ShdS(q,p)) \Big\} − PrS(P)
+  InhS(p) := \Big\{ \bigcup_{q\in U(P)}(ExS(q) - ShdS(q,p)) \Big\} - PrS(P)
   $$
 
   A symbol is inherited in a package $p$ if it is external in a /used/ package
@@ -1851,7 +1852,7 @@
   union in the preceding formula is not necessarily disjoint: a symbol can be
   external in several packages simultaneously, and without causing a name
   conflict. A symbol could be simultaneously present in $p$ and external in a
-  package $q$ used by $p$. That is why the the last term, $−PrS(P)$, is
+  package $q$ used by $p$. That is why the the last term, $-PrS(P)$, is
   necessary to define unambiguously what an inherited symbol is.
 
   Finally the accessible symbols $AccS(p) := PrS(p) \cup InhS(p)$ are the
@@ -2142,7 +2143,7 @@
    the new set of accessible symbols via $p$ is:
 
    $$
-   \mathrm{new-}AccS(p) = \mathrm{old-}AccS(p) \cup (ExS(q) − ShdS(q, p))
+   \mathrm{new-}AccS(p) = \mathrm{old-}AccS(p) \cup (ExS(q) - ShdS(q, p))
    $$
 
 ** (unuse-package $q$ $p$)
@@ -2303,7 +2304,7 @@
   allocated. You see /both/ homeless symbols allocated above are printed in the
   same way, yet they are /different/.
 
-*  Practical uses of the packaging system.
+* Practical uses of the packaging system.
 
    Many of the somewhat esoteric technicalities detailed in this tutorial have
    no direct use in concrete programming. On the other hand, they can help to
