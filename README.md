@@ -11,8 +11,8 @@ Have a look at the [overview](https://lisp.style/) to get a
 sense for what's there for you to discover.
 
 It is also a remarkable piece of LISP code, albeit in need of a little touch-up.
-This repository contains a repackaged version of the Kenzo program by Francis Sergeraert
-and collaborators. The original version of the program can be found
+This repository contains a repackaged version of the Kenzo program by Francis
+Sergeraert and collaborators. The original version of the program can be found
 at http://www-fourier.ujf-grenoble.fr/~sergerar/Kenzo/ .
 This version aims to update its infrastructure by providing the following:
 
@@ -46,7 +46,8 @@ Then in your Lisp (e.g., in ECL) type
 
 ### Quicklisp
 
-Assuming you have [Quicklisp](http://www.quicklisp.org/beta/), there isn't really much to say here:
+Assuming you have [Quicklisp](http://www.quicklisp.org/beta/), there isn't
+really much to say here:
 
 ```
 * (ql:quickload :kenzo)
@@ -65,7 +66,8 @@ To load "kenzo":
 *
 ```
 
-Verify that you're good to go by loading and running the Kenzo regression test suite. For example, in an SBCL prompt you should see something like this:
+Verify that you're good to go by loading and running the Kenzo regression test
+suite. For example, in an SBCL prompt you should see something like this:
 ```
 * (ql:quickload :kenzo-test)
 To load "kenzo-test":
@@ -74,16 +76,28 @@ To load "kenzo-test":
 ; Loading "kenzo-test"
 .
 (:KENZO-TEST)
-* (fiveam:run!)
+* (fiveam:run! :kenzo)
 
 Running test suite KENZO
  Running test F-CMPR ..........
  Running test L-CMPR ..........
  Running test S-CMPR .....
  ...
+
+ Running test BINOMIAL-N-P ......
+ Running test BINOMIAL-P-Q ......
+ Running test <A-B< .
+ Running test <A-B> .
+ Running test >A-B< .
+ Running test >A-B> .
+ Running test V<A-B> .
+ Running test SRANDOM ....................
+ Running test Z-WHITEHEAD-SINTR
+---done---.
+ Running test Z2-WHITEHEAD-SINTR
 ---done---
-Did 1482 checks.
-    Pass: 1482 (100%)
+ Did 1501 checks.
+    Pass: 1501 (100%)
     Skip: 0 ( 0%)
     Fail: 0 ( 0%)
 ```

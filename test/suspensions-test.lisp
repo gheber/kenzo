@@ -29,7 +29,6 @@
         (funcall intr (cat:cmbn 3 66 7))))
 
 
-#|
 (test suspension
       (cat:cat-init)
       (let* ((cc (cat:deltab))
@@ -40,15 +39,8 @@
         (cat:? scc 3 11)
         (setf scc (cat:suspension cc 2))
         (cat:? scc 4 11)))
-|#
-
-(test suspension-intr-cprd
-      (cat:suspension-intr-cprd (cat:cmbn 0))
-      (cat:suspension-intr-cprd (cat:cmbn 0 5 :s-bsgn))
-      (cat:suspension-intr-cprd (cat:cmbn 3 4 7 5 11)))
 
 
-#|
 (test coal
       (cat:cat-init)
       (let* ((coal (cat:deltab))
@@ -56,7 +48,7 @@
         (setf scoal (cat:suspension coal))
         (cat:? scoal 3 7)
         (cat:cprd scoal 3 7)))
-|#
+
 
 (test suspension-face
       (cat:cat-init)
@@ -82,7 +74,6 @@
         ))
 
 
-#|
 (test suspension1
       (cat:cat-init)
       (let* ((d (cat:deltab))
@@ -97,21 +88,8 @@
         (cat:homology sm 0 5)
         (setf ssm (cat:suspension sm))
         (cat:homology ssm 0 6)))
-|#
 
-(test suspension-intr
-      (cat:cat-init)
-      (let* ((f (cat:idnt-mrph (cat:deltab)))
-             (sf (cat:suspension-intr f))
-             (d (cat:dffr (cat:deltab)))
-             (sd (cat:suspension-intr d)))
-        (funcall sf (cat:cmbn 0 3 :s-bsgn))
-        (funcall sf (cat:cmbn 2 4 3))
-        (funcall sd (cat:cmbn 0 3 :s-bsgn))
-        (funcall sd (cat:cmbn 2 4 3))
-        (funcall sd (cat:cmbn 3 4 7))))
 
-#|
 (test suspension2
       (cat:cat-init)
       (let* ((f (cat:idnt-mrph (cat:deltab)))
@@ -142,4 +120,3 @@
       (cat:cat-init)
       (let ((sk (cat:suspension (cat:k-z 2))))
         (cat:homology sk 0 10)))
-|#
