@@ -4,7 +4,7 @@
 
 (IN-PACKAGE "COMMON-LISP-USER")
 
-(PROVIDE "special-smsts")
+(IN-PACKAGE #:cat-8)
 
 ;;; GMSM-FACES-INFO = (gmsm (simple-vector absm) . bndr)
 ;;;                         faces
@@ -808,4 +808,3 @@
 
 
   
-    

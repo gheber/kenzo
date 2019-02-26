@@ -6,7 +6,7 @@
 ;;;  MAC-LANE signs (p. 306)
 ;;;
 
-(IN-PACKAGE "COMMON-LISP-USER")
+(IN-PACKAGE #:cat-9)
 
 (PROVIDE "bar")
 
@@ -943,4 +943,3 @@
 (check-rdct)
 |#
 
-           

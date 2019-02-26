@@ -2,7 +2,7 @@
 ;;;  SIMPLICIAL-GROUPS  SIMPLICIAL-GROUPS  SIMPLICIAL-GROUPS
 ;;;  SIMPLICIAL-GROUPS  SIMPLICIAL-GROUPS  SIMPLICIAL-GROUPS
 
-(IN-PACKAGE "COMMON-LISP-USER")
+(IN-PACKAGE #:cat-8)
 
 (PROVIDE "simplicial-groups")
 
@@ -209,4 +209,3 @@
 	(type simplicial-mrph grml))
       (cmps grml eml))))
 
-       

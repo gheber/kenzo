@@ -2,7 +2,7 @@
 ;;;  WHITEHEAD  WHITEHEAD  WHITEHEAD  WHITEHEAD  WHITEHEAD  WHITEHEAD  WHITEHEAD
 ;;;  WHITEHEAD  WHITEHEAD  WHITEHEAD  WHITEHEAD  WHITEHEAD  WHITEHEAD  WHITEHEAD
 
-(IN-PACKAGE "COMMON-LISP-USER")
+(IN-PACKAGE #:cat-9)
 
 (provide "whitehead")
 
@@ -337,4 +337,3 @@
 (setf mt (fibration-total mf))
 (homology mt 0 10)
 |#
-         

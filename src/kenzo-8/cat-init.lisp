@@ -2,7 +2,7 @@
 ;;;  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES
 ;;;  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES  FILES
 
-(IN-PACKAGE "COMMON-LISP-USER")
+(IN-PACKAGE #:cat-8)
 
 ;;; (DEFUN common-graphics-user::npppp ()
 ;;;   (in-package :user))
@@ -10,7 +10,7 @@
 (DEFUN KENZO-VERSION ()
   (format t "~%*** Kenzo-Version 8 ***~2%")
   (values))
-
+#|
 (PROCLAIM '(OPTIMIZE (speed 3) (safety 1) (space 0) (debug 0)))
 
 (DEFCONSTANT +FILE-LIST+
@@ -73,10 +73,10 @@
    (mapc #'(lambda (file-name)
              (load (concatenate 'string file-name "." +source-extension+)))
     +file-list+))
-
+|#
 (DEFVAR *CMBN-CONTROL*)
 (SETF *CMBN-CONTROL* T)
-
+#|
 (DEFUN COMPILE-FILES ()
   (format t "~%*CMBN-CONTROL*  = ~A~2%" *cmbn-control*)
   (mapc #'(lambda (file-name)
@@ -89,3 +89,4 @@
    (mapc #'(lambda (file-name)
              (load (concatenate 'string file-name "." +compiled-extension+)))
     +file-list+))
+|#

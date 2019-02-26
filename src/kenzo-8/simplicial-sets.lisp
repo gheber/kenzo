@@ -4,7 +4,7 @@
 
 (IN-PACKAGE "COMMON-LISP-USER")
 
-(PROVIDE "simplicial-sets")
+(IN-PACKAGE #:cat-8)
 
 
 (DEFVAR *SMST-LIST*)

@@ -2,7 +2,7 @@
 ;;;  SUSPENSIONS  SUSPENSIONS  SUSPENSIONS  SUSPENSIONS
 ;;;  SUSPENSIONS  SUSPENSIONS  SUSPENSIONS  SUSPENSIONS
 
-(IN-PACKAGE "COMMON-LISP-USER")
+(IN-PACKAGE #:cat-9)
 
 (PROVIDE "suspensions")
 
@@ -320,4 +320,3 @@
   (setf sk (suspension (k-z 2)))
   (homology sk 0 10)
 |#
-  

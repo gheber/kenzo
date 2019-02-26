@@ -2,7 +2,7 @@
 ;;;  SIMPLICIAL-GROUPS  SIMPLICIAL-GROUPS  SIMPLICIAL-GROUPS
 ;;;  SIMPLICIAL-GROUPS  SIMPLICIAL-GROUPS  SIMPLICIAL-GROUPS
 
-(IN-PACKAGE "COMMON-LISP-USER")
+(IN-PACKAGE #:cat-9)
 
 (DEFVAR *SMGR-LIST*)
 (SETF *SMGR-LIST* +empty-list+)
@@ -187,4 +187,3 @@
 	(type simplicial-mrph grml))
       (cmps grml eml))))
 
-       

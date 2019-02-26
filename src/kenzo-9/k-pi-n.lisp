@@ -2,7 +2,7 @@
 ;;;  K-PI-1  K-PI-1  K-PI-1  K-PI-1  K-PI-1  K-PI-1  K-PI-1
 ;;;  K-PI-1  K-PI-1  K-PI-1  K-PI-1  K-PI-1  K-PI-1  K-PI-1
 
-(IN-PACKAGE "COMMON-LISP-USER")
+(IN-PACKAGE #:cat-9)
 
 (PROVIDE "k-pi-1")
 

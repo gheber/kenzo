@@ -6,7 +6,7 @@
 ;;;  MAC-LANE signs (p. 306)
 ;;;
 
-(IN-PACKAGE "COMMON-LISP-USER")
+(IN-PACKAGE #:cat-8)
 
 (PROVIDE "bar")
 
