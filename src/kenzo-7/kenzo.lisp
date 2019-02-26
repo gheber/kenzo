@@ -2,7 +2,7 @@
 
 ;;;; kenzo.lisp
 
-(IN-PACKAGE #:cat)
+(IN-PACKAGE #:cat-7)
 
 (DEFUN KENZO-VERSION ()
   (format t "~%*** Kenzo-Version 1.1.7 ***~2%")

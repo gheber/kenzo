@@ -4,7 +4,7 @@
 ;;;  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN
 ;;;  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN  KAN
 
-(IN-PACKAGE #:cat)
+(IN-PACKAGE #:cat-7)
 
 (provide "kan")
 

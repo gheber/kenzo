@@ -4,7 +4,7 @@
 ;;;  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES
 ;;;  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES  CLASSES
 
-(IN-PACKAGE #:cat)
+(IN-PACKAGE #:cat-7)
 
 (PROVIDE "classes")
 
@@ -571,7 +571,7 @@ A T-MAT (= Terme de Matrice) has five components:
 (DEFTYPE GMSM () 'gnrt)
 
 ;;  DLOP = DeL OPerator
-(DEFTYPE DLOP () 'dgop) 
+(DEFTYPE DLOP () 'dgop)
 
 ;; IABSM = Internal ABstract SiMplex
 (DEFUN IABSM-P (object)

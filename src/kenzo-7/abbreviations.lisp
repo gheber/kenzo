@@ -1,6 +1,6 @@
 ;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
 
-(IN-PACKAGE #:cat)
+(IN-PACKAGE #:cat-7)
 
 (PROVIDE "abbreviations")
 

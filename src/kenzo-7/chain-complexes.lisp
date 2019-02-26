@@ -4,7 +4,7 @@
 ;;;  CHAIN-COMPLEXES  CHAIN-COMPLEXES  CHAIN-COMPLEXES  CHAIN-COMPLEXES
 ;;;  CHAIN-COMPLEXES  CHAIN-COMPLEXES  CHAIN-COMPLEXES  CHAIN-COMPLEXES
 
-(IN-PACKAGE #:cat)
+(IN-PACKAGE #:cat-7)
 
 (PROVIDE "chain-complexes")
 
@@ -532,7 +532,7 @@ MAKE-INSTANCE.
 
 (DEFUN PROFILER-OFF (mrph)
   (declare (type morphism mrph))
-  (let ((time-spent 
+  (let ((time-spent
          (- (get-internal-run-time) (pop *profiler-stack*))))
     (declare (integer time-spent))
     (mapl #'(lambda (mark)

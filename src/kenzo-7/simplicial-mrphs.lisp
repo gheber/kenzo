@@ -4,7 +4,7 @@
 ;;;  SIMPLICIAL-MRPHS  SIMPLICIAL-MRPHS  SIMPLICIAL-MRPHS
 ;;;  SIMPLICIAL-MRPHS  SIMPLICIAL-MRPHS  SIMPLICIAL-MRPHS
 
-(IN-PACKAGE #:cat)
+(IN-PACKAGE #:cat-7)
 
 (PROVIDE "simplicial-mrphs")
 
@@ -20,7 +20,7 @@
                   (declare (type absm gmsm-smmr))
                   (ndgnr dgop gmsm-smmr))))
     (otherwise
-     (funcall (sintr smmr) dmns absm-or-gmsm))))  
+     (funcall (sintr smmr) dmns absm-or-gmsm))))
 
 
 #+clisp(eval-when (:compile-toplevel :load-toplevel :execute)

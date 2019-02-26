@@ -8,7 +8,7 @@
 ;;;  MAC-LANE signs (p. 306)
 ;;;
 
-(IN-PACKAGE #:cat)
+(IN-PACKAGE #:cat-7)
 
 (PROVIDE "bar")
 

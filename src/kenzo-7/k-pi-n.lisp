@@ -4,7 +4,7 @@
 ;;;  K-PI-1  K-PI-1  K-PI-1  K-PI-1  K-PI-1  K-PI-1  K-PI-1
 ;;;  K-PI-1  K-PI-1  K-PI-1  K-PI-1  K-PI-1  K-PI-1  K-PI-1
 
-(IN-PACKAGE #:cat)
+(IN-PACKAGE #:cat-7)
 
 (PROVIDE "k-pi-1")
 
