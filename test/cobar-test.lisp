@@ -132,7 +132,9 @@
 
 
 (test mrph-vrtc-cobar-intr
-      (let* ((cc (cat:build-chcm :cmpr #'cat:f-cmpr :strt :cmbn))
+      (let* ((cc (cat:build-chcm :cmpr #'cat:f-cmpr
+                                 :basis :locally-effective
+                                 :intr-dffr #'identity :strt :cmbn))
              (m (cat:build-mrph :sorc cc :trgt cc :degr 0 :intr
                                 #'(lambda (degr gnrt)
                                     (cat:cmbn degr 2 gnrt 3 (1+ gnrt)))
