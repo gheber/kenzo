@@ -12,7 +12,7 @@
 
 (DEFTYPE ANY () t)
 
-;;; 
+;;;
 ;;;  COMBINATIONS
 ;;;
 
@@ -147,7 +147,7 @@
      ;; ORiGiN
      (orgn :type list :initarg :orgn :reader orgn)))
 
-(DEFSTRUCT RESULT 
+(DEFSTRUCT RESULT
   (gnrt #+allegro :type #+allegro gnrt)
   (value #+allegro :type #+allegro cmbn)
   (clnm 0 :type fixnum)
@@ -329,7 +329,7 @@
 (DEFTYPE GMSM () 'gnrt)
 
 ;;  DLOP = DeL OPerator
-(DEFTYPE DLOP () 'dgop) 
+(DEFTYPE DLOP () 'dgop)
 
 #|
 ;; IABSM = Internal ABstract SiMplex
@@ -338,7 +338,7 @@
   (the boolean
      (and (consp object)
 	  (typep (car object) 'dgop)
-	  (typep (cdr object) 'gmsm))))	   
+	  (typep (cdr object) 'gmsm))))
 
 (DEFTYPE IABSM () '(satisfies iabsm-p))
 |#
@@ -387,9 +387,7 @@
 (DEFUN SOFT-DLOP-P (object)
    (declare (type any object))
    (the boolean
-      (and (consp object)
-           (eq :delt (car object))
-           (typep (cdr object) 'dgop))))
+      (delta-p object)))
 
 (DEFTYPE SOFT-DLOP () '(satisfies soft-dlop-p))
 
@@ -513,4 +511,3 @@
 (DEFSTRUCT GBAR
   (dmns #+allegro :type #+allegro fixnum)
   (list #+allegro :type #+allegro list))
-
