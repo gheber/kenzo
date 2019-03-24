@@ -51,18 +51,19 @@
                                3 (cat:d (cat:mask 5))))))
 
 
-(test vrtc-cobar
-      (cat:cat-init)
-      (let ((v (cat:vrtc-cobar (cat:soft-delta-infinity))))
-        (dotimes (i 10) (print (random-allp 5)))
-        (dotimes (i 10)
-          (let ((allp (random-allp 3)))
-            (print allp)
-            (print (cat:? v (apply #'+ (mapcar #'car (cat:allp-list allp)))
-                          allp))
-            (print (cat:? v (cat:? v (apply #'+ (mapcar #'car
-                                                        (cat:allp-list allp)))
-                                   allp)))))))
+(when (string= (package-name (find-package 'cat)) "CAT-7")
+  (test vrtc-cobar
+        (cat:cat-init)
+        (let ((v (cat:vrtc-cobar (cat:soft-delta-infinity))))
+          (dotimes (i 10) (print (random-allp 5)))
+          (dotimes (i 10)
+            (let ((allp (random-allp 3)))
+              (print allp)
+              (print (cat:? v (apply #'+ (mapcar #'car (cat:allp-list allp)))
+                            allp))
+              (print (cat:? v (cat:? v (apply #'+ (mapcar #'car
+                                                          (cat:allp-list allp)))
+                                     allp))))))))
 
 
 (test cobar-intr-hrzn-dffr
@@ -142,13 +143,13 @@
              (r (cat:mrph-vrtc-cobar-intr m)))
         (funcall r 4 (cat:allp 2 3 2 4))))
 
-
-(test vrtc-cobar
-      (cat:cat-init)
-      (let* ((f (cat:aw (cat:soft-delta-infinity) (cat:soft-delta-infinity)))
-             (cf (cat:vrtc-cobar f)))
-        (cat:? cf 2 (cat:allp 1 (cat:crpr 0 (cat:d 7) 0 (cat:d 7))
-                              1 (cat:crpr 0 (cat:d 56) 0 (cat:d 56))))))
+(when (string= (package-name (find-package 'cat)) "CAT-7")
+  (test vrtc-cobar
+        (cat:cat-init)
+        (let* ((f (cat:aw (cat:soft-delta-infinity) (cat:soft-delta-infinity)))
+               (cf (cat:vrtc-cobar f)))
+          (cat:? cf 2 (cat:allp 1 (cat:crpr 0 (cat:d 7) 0 (cat:d 7))
+                                1 (cat:crpr 0 (cat:d 56) 0 (cat:d 56)))))))
 
 
 (test hmtp-vrtc-cobar-intr
