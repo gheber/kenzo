@@ -28,7 +28,7 @@
 #|
 (d 7)
 |#
-    
+
 
 (DEFUN SOFT-DELTA-CMPR (gmsm1 gmsm2)
    (f-cmpr (delta-cdr gmsm1) (delta-cdr gmsm2)))
@@ -37,7 +37,7 @@
 ()
 (soft-delta-cmpr (d 2 3) (d 2 3))
 |#
-   
+
 (DEFUN DELTA-FACE (indx dmns gmsm)
    (declare
       (fixnum indx gmsm)
@@ -53,10 +53,11 @@
                (return-from delta-face (absm 0 (logxor gmsm pmark))))))))
 
 (DEFUN SOFT-DELTA-FACE (indx dmns gmsm)
-   (declare
-      (fixnum indx dmns)
-      (type soft-dlop gmsm))
-   (absm 0 (d (gmsm (delta-face indx dmns (delta-cdr gmsm))))))
+  (declare
+   (fixnum indx dmns)
+   (type soft-dlop gmsm))
+  (absm 0 (make-delta
+           :cdr (gmsm (delta-face indx dmns (delta-cdr gmsm))))))
 
 #|
 ()
@@ -90,15 +91,15 @@
                        (setf sign (- sign))))))))
 
 (DEFUN SOFT-DELTA-BNDR (dmns gmsm)
-   (declare
-      (fixnum dmns)
-      (type soft-dlop gmsm))
-   (make-cmbn
-      :degr (1- dmns)
-      :list (mapcar #'(lambda (term)
-                         (with-term (cffc gmsm) term
-                            (term cffc (d gmsm))))
-               (cmbn-list (delta-bndr dmns (delta-cdr gmsm))))))
+  (declare
+   (fixnum dmns)
+   (type soft-dlop gmsm))
+  (make-cmbn
+   :degr (1- dmns)
+   :list (mapcar #'(lambda (term)
+                     (with-term (cffc gmsm) term
+                                (term cffc (make-delta :cdr gmsm))))
+                 (cmbn-list (delta-bndr dmns (delta-cdr gmsm))))))
 
 #|
 ()
@@ -132,17 +133,18 @@
                         (return rslt)))))))
 
 (DEFUN SOFT-DELTA-DGNL (dmns gmsm)
-   (declare
-      (fixnum dmns)
-      (type soft-dlop gmsm))
-   (make-cmbn :degr dmns
-      :list (mapcar
-               #'(lambda (term)
-                    (with-term (cffc tnpr) term
-                       (with-tnpr (degr1 gmsm1 degr2 gmsm2) tnpr
-                          (term cffc
-                             (tnpr degr1 (d gmsm1) degr2 (d gmsm2))))))
-               (cmbn-list (delta-dgnl dmns (delta-cdr gmsm))))))
+  (declare
+   (fixnum dmns)
+   (type soft-dlop gmsm))
+  (make-cmbn :degr dmns
+             :list (mapcar
+                    #'(lambda (term)
+                        (with-term (cffc tnpr) term
+                                   (with-tnpr (degr1 gmsm1 degr2 gmsm2) tnpr
+                                              (term cffc
+                                                    (tnpr degr1 (make-delta :cdr gmsm1)
+                                                          degr2 (make-delta :cdr gmsm2))))))
+                    (cmbn-list (delta-dgnl dmns (delta-cdr gmsm))))))
 
 #|
 ()
@@ -151,7 +153,7 @@
 (soft-delta-dgnl 3 (d (dlop-ext-int '(1 3 5 7))))
 (delta-dgnl 0 64)
 |#
-                                        
+
 (DEFUN DELTA-INFINITY ()
    (the simplicial-set
       (build-smst
@@ -228,7 +230,7 @@
                    (push (d gmsm) rslt)
                    (decf count)))))
       (the basis #'rslt)))
-      
+
 
 #|
 ()
@@ -238,7 +240,7 @@
   (print (funcall basis i)))
 (dotimes (i 5)
   (print (funcall soft-basis i)))
-|#   
+|#
 
 (DEFUN DELTA (dmns)
    (declare (fixnum dmns))
@@ -297,7 +299,7 @@
 (display-finite-ss d3 4)
 (display-finite-ss d31 4)
 |#
-          
+
 (DEFUN SOFT-DELTA (dmns)
   (declare (fixnum dmns))
   (the simplicial-set
@@ -309,7 +311,7 @@
      :intr-dgnl #'soft-delta-dgnl :dgnl-strt :gnrt
      :intr-bndr #'soft-delta-bndr :bndr-strt :gnrt
      :orgn `(soft-delta ,dmns))))
-      
+
 #|
 ()
 (cat-init)
@@ -322,7 +324,7 @@
 |#
 
 #| For comparison with EAT.
-   In 
+   In
   (setf delta (delta-infinity))
   (setf d (bndr delta))
   (setf s14 (mask 15))
@@ -415,7 +417,7 @@
   (unless (eql i 1)
     (print (deltab2-dgnl i (mask (1+ i))))))
 |#
-  
+
 
 (DEFUN DELTAB2-BNDR (dmns gmsm)
    (declare (fixnum dmns gmsm))
