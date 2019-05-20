@@ -7,7 +7,7 @@
 (DEFUN KENZO-VERSION ()
   (format t "~%*** Kenzo-Version 9 ***~2%")
   (values))
-
+#|
 (DECLAIM (OPTIMIZE (speed 3) (safety 1) (space 0) (debug 0)))
 
 #+SBCL
@@ -63,7 +63,7 @@
   #-(or allegro sbcl)
     (error "Not an Allegro or Sbcl environment."))
 
-(DEFCONSTANT +COMPILED-EXTENSION+ 
+(DEFCONSTANT +COMPILED-EXTENSION+
     #+allegro "afasl"
     #+sbcl "sfasl")
 
@@ -71,10 +71,10 @@
    (mapc #'(lambda (file-name)
              (load (concatenate 'string file-name "." +source-extension+)))
     +file-list+))
-
+|#
 (DEFVAR *CMBN-CONTROL*)
 (SETF *CMBN-CONTROL* T)
-
+#|
 (DEFUN COMPILE-FILES ()
   (format t "~%*CMBN-CONTROL*  = ~A~2%" *cmbn-control*)
   (mapc #'(lambda (file-name)
@@ -89,4 +89,4 @@
     +file-list+))
 
 (KENZO-VERSION)
-
+|#

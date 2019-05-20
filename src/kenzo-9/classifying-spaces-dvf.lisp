@@ -2,6 +2,9 @@
 ;;;  SIMPLICIAL-GROUPS-VF  SIMPLICIAL-GROUPS-V  SIMPLICIAL-GROUPS-V  SIMPLICIAL-GROUPS-VF
 ;;;  SIMPLICIAL-GROUPS-VF  SIMPLICIAL-GROUPS-V  SIMPLICIAL-GROUPS-V  SIMPLICIAL-GROUPS-VF
 
+(IN-PACKAGE #:cat-9)
+
+(provide "classifying-spaces-dvf")
 
 ;; The vector field of a classifying space.
 ;; Comments not yet written.
@@ -339,7 +342,7 @@
       (etypecase smgr-efhm
         (chain-complex rdct-BG-AG)
         (reduction (cmps (bar smgr-efhm) rdct-BG-AG))))))
-                   
+
 
 (DEFMETHOD SEARCH-EFHM (classifying-space (orgn (eql 'classifying-space)))
   (declare (type simplicial-set classifying-space))

@@ -4,6 +4,8 @@
 
 (IN-PACKAGE #:cat-9)
 
+(PROVIDE "chain-complexes-dvf")
+
 (DEFTYPE STTS () '(member :sorc :trgt :crtc))
 
 ;; A vctr (= vector) is a triple stts (status) valu (value) incd (incidence number)
@@ -78,7 +80,7 @@
                                    #'(lambda (term)
                                        (declare (type term term))
                                        (the boolean
-                                         (eq stts 
+                                         (eq stts
                                              (stts (funcall vf degr (gnrt term)))))))
                                   list)))))
 
@@ -646,7 +648,7 @@
       (when (slot-boundp bcc 'bsgn)
         (setf (slot-value new-bcc 'bsgn) (bsgn bcc)))
       ;; ?? (slot-makunbound new-chcm 'bsgn))
-      (setf (slot-value new-bcc 'grmd) (grmd bcc))                   
+      (setf (slot-value new-bcc 'grmd) (grmd bcc))
       (build-rdct
        :f (chcm-vf-reduction-f chcm vf new-bcc isof)
        :g (chcm-vf-reduction-g chcm vf new-bcc isog)
@@ -664,14 +666,14 @@
 (pre-check-rdct rdct)
 (check-rdct)
 |#
-           
+
 
 ;; The next functions are used to *deduce* a vector field
 ;; from a *given* reduction. See Section 2.7 in the paper.
 
 (DEFUN COMMON-FACE (rdct dmns gmsm &aux
                          (smst (tcc rdct))
-                         (hmtp (h rdct))                                    
+                         (hmtp (h rdct))
                          (face (face smst))
                          (cmpr (cmpr smst)))
   (declare (type reduction rdct)
@@ -938,7 +940,7 @@
   (the gmsm
     (let ((ggnrt (g rdct degr gnrt))
           (rslt nil)
-          (flag nil))      
+          (flag nil))
       (declare (type cmbn ggnrt)
                (type list rslt)
                (type boolean flag))
@@ -977,4 +979,3 @@
 (find-crtc r 3 (allp 1 7 2 15))
 (find-crtc r 3 (allp 2 15 1 7))
 |#
-
