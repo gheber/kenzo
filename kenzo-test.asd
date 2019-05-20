@@ -11,7 +11,7 @@
     :components ((:file "package")
                  (:file "common")
                  ;; === test files ===
-                 ;;(:file "bar-test")
+                 (:file "bar-test")
                  (:file "bicones-test")
                  (:file "cartesian-products-test")
                  (:file "ccn")
