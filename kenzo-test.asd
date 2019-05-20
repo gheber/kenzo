@@ -15,7 +15,7 @@
                  (:file "bicones-test")
                  (:file "cartesian-products-test")
                  (:file "ccn")
-                 ;;(:file "chain-complexes-test")
+                 (:file "chain-complexes-test")
                  (:file "chcm-elementary-op-test")
                  (:file "circle")
                  ;;(:file "cl-space-efhm-test")
