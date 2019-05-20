@@ -48,7 +48,7 @@
 		;; to be done before change-class
 		(rslt-rslt (tnsr-prdc rslt rslt)))
             (declare (type chain-complex rslt rslt-rslt))
-            (change-class rslt 'algebra)  
+            (change-class rslt 'algebra)
             (setf (slot-value rslt 'aprd)
                   (build-mrph :sorc rslt-rslt :trgt rslt :degr 0
                         :intr intr-aprd :strt aprd-strt
@@ -70,4 +70,3 @@
    (declare (type fixnum idnm))
    (the (or hopf-algebra null)
       (find idnm *hopf-list* :key #'idnm)))
-
