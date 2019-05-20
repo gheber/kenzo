@@ -4,6 +4,7 @@
 
 (in-suite :kenzo)
 
+
 (test cs-hat-u-t
       (cat:cat-init)
       (let ((c (cat:cs-hat-u-t (cat:k-z-1)))
@@ -144,6 +145,8 @@
               (is (cat:cmbn-zero-p (cat:? c (cat:? c (+ 4 abar-degr)
                                                    gnrt)))))))))
 |#
+
+
 
 (test cs-pre-left-hmeq-left-reduction
       (cat:cat-init)

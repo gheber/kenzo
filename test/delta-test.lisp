@@ -12,6 +12,81 @@
    (cat:gmsm
     (cat:delta-face i 3 (cat:dlop-ext-int lst)))))
 
+
+(if (string= (package-name (find-package 'cat)) "CAT-7")
+    (test soft-delta-infinity
+          (progn
+            (cat:cat-init)
+            (cat:cmpr (cat:soft-delta-infinity) (cat:d 2) (cat:d 4))
+            (cat:face (cat:soft-delta-infinity) 1 2
+                      (cat:d (cat:dlop-ext-int '(1 3 5))))
+            (cat:cprd (cat:soft-delta-infinity) 3 (cat:d 15))
+            (cat:dgnl (cat:soft-delta-infinity) 3 (cat:d 15))
+            (cat:? (cat:soft-delta-infinity) 2
+                   (cat:d (cat:dlop-ext-int '(0 2 4))))))
+    (test soft-delta-infinity
+          (progn
+            (cat:cat-init)
+            (cat:cmpr (cat:soft-delta-infinity)
+                      (cat::make-delta :cdr 2)
+                      (cat::make-delta :cdr 4))
+            (cat:face (cat:soft-delta-infinity) 1 2
+                      (cat::make-delta :cdr (cat:dlop-ext-int '(1 3 5))))
+            (cat:cprd (cat:soft-delta-infinity) 3 (cat::make-delta :cdr 15))
+            (cat:dgnl (cat:soft-delta-infinity) 3 (cat::make-delta :cdr 15))
+            (cat:? (cat:soft-delta-infinity) 2
+                   (cat::make-delta :cdr (cat:dlop-ext-int '(0 2 4)))))))
+
+
+(if (string= (package-name (find-package 'cat)) "CAT-7")
+    (test soft-delta
+          (progn
+            (cat:cat-init)
+            (let ((d3 (cat:soft-delta 3)))
+              (cat:cmpr d3 (cat:d 2) (cat:d 4))
+              (cat:basis d3 1)
+              (cat:dgnl d3 3 (cat:d 15))
+              (cat:face d3 1 2 (cat:d 21))
+              (cat:? d3 2 (cat:d 13)))))
+    (test soft-delta
+          (progn
+            (cat:cat-init)
+            (let ((d3 (cat:soft-delta 3)))
+              (cat:cmpr d3 (cat::make-delta :cdr 2) (cat::make-delta :cdr 4))
+              (cat:basis d3 1)
+              (cat:dgnl d3 3 (cat::make-delta :cdr 15))
+              (cat:face d3 1 2 (cat::make-delta :cdr 21))
+              (cat:? d3 2 (cat::make-delta :cdr 13))))))
+
+
+
+(test delta-dgnl
+      (is (cat:cmbn-non-zero-p (cat:delta-dgnl 3 15)))
+      (is (cat:cmbn-non-zero-p (cat:delta-dgnl 3 170)))
+      (if (string= (package-name (find-package 'cat)) "CAT-7")
+          (is (cat:cmbn-non-zero-p
+               (cat:soft-delta-dgnl 3 (cat:d (cat:dlop-ext-int '(1 3 5 7))))))
+          (is (cat:cmbn-non-zero-p
+               (cat:soft-delta-dgnl 3
+                                    (cat::make-delta
+                                     :cdr (cat:dlop-ext-int '(1 3 5 7)))))))
+      (is (cat:cmbn-non-zero-p (cat:delta-dgnl 0 64))))
+
+
+(test delta-bndr
+      (is (cat:cmbn-zero-p (cat:delta-bndr 0 4)))
+      (is (cat:cmbn-non-zero-p (cat:delta-bndr 1 3)))
+      (is (cat:cmbn-non-zero-p (cat:delta-bndr 1 5)))
+      (is (cat:cmbn-non-zero-p (cat:delta-bndr 1 10)))
+      (is (cat:cmbn-non-zero-p (cat:delta-bndr 5 63)))
+      (if (string= (package-name (find-package 'cat)) "CAT-7")
+          (is (cat:cmbn-non-zero-p (cat:soft-delta-bndr 5
+                                                        (cat:d (cat:mask 6)))))
+          (is (cat:cmbn-non-zero-p (cat:soft-delta-bndr 5
+                                                        (cat::make-delta
+                                                         :cdr (cat:mask 6)))))))
+
+
 (test delta-face
       (is (equal '(1 2 3) (faces 0 '(0 1 2 3))))
       (is (equal '(0 2 3) (faces 1 '(0 1 2 3))))
@@ -22,28 +97,18 @@
       (is (equal '(0 2 6) (faces 2 '(0 2 4 6))))
       (is (equal '(0 2 4) (faces 3 '(0 2 4 6))))
 
-      (dotimes (i 4)
-        (print (cat:soft-delta-face i 3 (cat:d (cat:mask 4)))))
-
-      (dotimes (i 4)
-        (print (cat:soft-delta-face i 3 (cat:d
-                                         (cat:dlop-ext-int '(0 2 4 6)))))))
-
-
-(test delta-bndr
-      (is (cat:cmbn-zero-p (cat:delta-bndr 0 4)))
-      (is (cat:cmbn-non-zero-p (cat:delta-bndr 1 3)))
-      (is (cat:cmbn-non-zero-p (cat:delta-bndr 1 5)))
-      (is (cat:cmbn-non-zero-p (cat:delta-bndr 1 10)))
-      (is (cat:cmbn-non-zero-p (cat:delta-bndr 5 63)))
-      (is (cat:cmbn-non-zero-p (cat:soft-delta-bndr 5 (cat:d (cat:mask 6))))))
-
-(test delta-dgnl
-      (is (cat:cmbn-non-zero-p (cat:delta-dgnl 3 15)))
-      (is (cat:cmbn-non-zero-p (cat:delta-dgnl 3 170)))
-      (is (cat:cmbn-non-zero-p
-           (cat:soft-delta-dgnl 3 (cat:d (cat:dlop-ext-int '(1 3 5 7))))))
-      (is (cat:cmbn-non-zero-p (cat:delta-dgnl 0 64))))
+      (if (string= (package-name (find-package 'cat)) "CAT-7")
+          (progn
+            (dotimes (i 4)
+              (print (cat:soft-delta-face i 3 (cat:d (cat:mask 4)))))
+            (dotimes (i 4)
+              (print (cat:soft-delta-face i 3 (cat:d (cat:dlop-ext-int '(0 2 4 6)))))))
+          (progn
+            (dotimes (i 4)
+              (print (cat:soft-delta-face i 3 (cat::make-delta :cdr (cat:mask 4)))))
+            (dotimes (i 4)
+              (print (cat:soft-delta-face i 3 (cat::make-delta
+                                               :cdr (cat:dlop-ext-int '(0 2 4 6)))))))))
 
 
 (test delta-infinity
@@ -56,17 +121,6 @@
       (cat:dgnl (cat:delta-infinity) 3 15)
       (is (cat:cmbn-non-zero-p (cat:? (cat:delta-infinity) 2 21))))
 
-
-(test soft-delta-infinity
-      (progn
-        (cat:cat-init)
-        (cat:cmpr (cat:soft-delta-infinity) (cat:d 2) (cat:d 4))
-        (cat:face (cat:soft-delta-infinity) 1 2
-                  (cat:d (cat:dlop-ext-int '(1 3 5))))
-        (cat:cprd (cat:soft-delta-infinity) 3 (cat:d 15))
-        (cat:dgnl (cat:soft-delta-infinity) 3 (cat:d 15))
-        (cat:? (cat:soft-delta-infinity) 2
-               (cat:d (cat:dlop-ext-int '(0 2 4))))))
 
 (test basis
       (let ((basis (cat:delta-n-basis 3))
@@ -91,15 +145,6 @@
           (setf d (cat:delta-infinity))
           (cat:basis d))))
 
-(test soft-delta
-      (progn
-        (cat:cat-init)
-        (let ((d3 (cat:soft-delta 3)))
-          (cat:cmpr d3 (cat:d 2) (cat:d 4))
-          (cat:basis d3 1)
-          (cat:dgnl d3 3 (cat:d 15))
-          (cat:face d3 1 2 (cat:d 21))
-          (cat:? d3 2 (cat:d 13)))))
 
 (test eat
       (let* ((delta (cat:delta-infinity))

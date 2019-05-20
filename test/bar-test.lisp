@@ -155,14 +155,26 @@
         (funcall r 4 (cat:abar 2 3 2 4))))
 
 
-(test vrtc-bar
-      (progn
-        (cat:cat-init)
-        (let* ((f (cat:aw (cat:soft-delta-infinity)
-                          (cat:soft-delta-infinity)))
-               (cf (cat:vrtc-bar f)))
-          (cat:? cf 6 (cat:abar 3 (cat:crpr 0 (cat:d 7) 0 (cat:d 7)) 3
-                                (cat:crpr 0 (cat:d 56) 0 (cat:d 56)))))))
+(if (string= (package-name (find-package 'cat)) "CAT-7")
+  (test vrtc-bar
+        (progn
+          (cat:cat-init)
+          (let* ((f (cat:aw (cat:soft-delta-infinity)
+                            (cat:soft-delta-infinity)))
+                 (cf (cat:vrtc-bar f)))
+            (cat:? cf 6 (cat:abar 3 (cat:crpr 0 (cat:d 7) 0 (cat:d 7)) 3
+                                  (cat:crpr 0 (cat:d 56) 0 (cat:d 56)))))))
+  (test vrtc-bar
+        (progn
+          (cat:cat-init)
+          (let* ((f (cat:aw (cat:soft-delta-infinity)
+                            (cat:soft-delta-infinity)))
+                 (cf (cat:vrtc-bar f)))
+            (cat:? cf 6 (cat:abar 3 (cat:crpr 0 (cat::make-delta :cdr 7)
+                                              0 (cat::make-delta :cdr 7))
+                                  3
+                                  (cat:crpr 0 (cat::make-delta :cdr 56)
+                                            0 (cat::make-delta :cdr 56))))))))
 
 
 (test hmtp-vrtc-bar-intr

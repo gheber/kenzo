@@ -24,6 +24,7 @@
         (cat:vertex-i (cat:absm 0 7) 1)
         (cat:vertex-i (cat:absm 0 7) 2)))
 
+
 (test absm-int-ext
       (cat:absm-ext-int '(0 0 0 1 2 3 3 3))
       (cat:absm-ext-int '(0 1 1 1 2))

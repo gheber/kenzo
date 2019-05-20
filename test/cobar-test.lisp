@@ -132,7 +132,9 @@
 
 
 (test mrph-vrtc-cobar-intr
-      (let* ((cc (cat:build-chcm :cmpr #'cat:f-cmpr :strt :cmbn))
+      (let* ((cc (cat:build-chcm :cmpr #'cat:f-cmpr
+                                 :basis :locally-effective
+                                 :intr-dffr #'identity :strt :cmbn))
              (m (cat:build-mrph :sorc cc :trgt cc :degr 0 :intr
                                 #'(lambda (degr gnrt)
                                     (cat:cmbn degr 2 gnrt 3 (1+ gnrt)))
@@ -140,13 +142,21 @@
              (r (cat:mrph-vrtc-cobar-intr m)))
         (funcall r 4 (cat:allp 2 3 2 4))))
 
-
-(test vrtc-cobar
-      (cat:cat-init)
-      (let* ((f (cat:aw (cat:soft-delta-infinity) (cat:soft-delta-infinity)))
-             (cf (cat:vrtc-cobar f)))
-        (cat:? cf 2 (cat:allp 1 (cat:crpr 0 (cat:d 7) 0 (cat:d 7))
-                              1 (cat:crpr 0 (cat:d 56) 0 (cat:d 56))))))
+(if (string= (package-name (find-package 'cat)) "CAT-7")
+    (test vrtc-cobar
+          (cat:cat-init)
+          (let* ((f (cat:aw (cat:soft-delta-infinity) (cat:soft-delta-infinity)))
+                 (cf (cat:vrtc-cobar f)))
+            (cat:? cf 2 (cat:allp 1 (cat:crpr 0 (cat:d 7) 0 (cat:d 7))
+                                  1 (cat:crpr 0 (cat:d 56) 0 (cat:d 56))))))
+    (test vrtc-cobar
+          (cat:cat-init)
+          (let* ((f (cat:aw (cat:soft-delta-infinity) (cat:soft-delta-infinity)))
+                 (cf (cat:vrtc-cobar f)))
+            (cat:? cf 2 (cat:allp 1 (cat:crpr 0 (cat::make-delta :cdr 7)
+                                              0 (cat::make-delta :cdr 7))
+                                  1 (cat:crpr 0 (cat::make-delta :cdr 56)
+                                              0 (cat::make-delta :cdr 56)))))))
 
 
 (test hmtp-vrtc-cobar-intr
