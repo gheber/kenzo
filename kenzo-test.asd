@@ -43,7 +43,7 @@
                  (:file "simplicial-mrphs-test")
                  (:file "simplicial-sets-test")
                  ;;(:file "smith-test")
-                 ;;(:file "special-smsts-test")
+                 (:file "special-smsts-test")
                  (:file "suspensions-test")
                  (:file "tensor-products-test")
                  (:file "various-test")
