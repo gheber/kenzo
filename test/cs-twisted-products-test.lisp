@@ -4,7 +4,9 @@
 
 (in-suite :kenzo)
 
-(test smgr-fibration
+(when (or (string= (package-name (find-package 'cat)) "CAT-7")
+          (string= (package-name (find-package 'cat)) "CAT-8"))
+  (test smgr-fibration
       (cat:cat-init)
       (let* ((k1 (cat:k-z-1))
              (tw (cat:smgr-fibration k1))
@@ -21,8 +23,6 @@
                                              0 '(100000) 0 '())
                                  0 '()))))
 
-(when (or (string= (package-name (find-package 'cat)) "CAT-7")
-          (string= (package-name (find-package 'cat)) "CAT-8"))
   (test smgr-crts-contraction
         (cat:cat-init)
         (let* ((chi (cat:smgr-crts-contraction (cat:k-z-1)))

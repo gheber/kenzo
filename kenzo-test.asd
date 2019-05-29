@@ -23,7 +23,7 @@
                  (:file "cobar-test")
                  (:file "combinations-test")
                  (:file "cones-test")
-                 ;;(:file "cs-twisted-products-test")
+                 (:file "cs-twisted-products-test")
                  (:file "delta-test")
                  (:file "diabolo")
                  ;;(:file "disk-pasting-test")
