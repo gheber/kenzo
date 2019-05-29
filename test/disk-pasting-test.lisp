@@ -98,52 +98,54 @@
         (cat:homology s2 0 4)))
 
 
-(test hmeq-disk-pasting
-      (cat:cat-init)
-      (let* ((tcc (cat:build-chcm
-                   :cmpr #'cat:s-cmpr
-                   :basis #'(lambda (degr)
-                              (case degr
-                                (0 (list 'a))
-                                (1 (list 'b))
-                                (otherwise nil)))
-                   :intr-dffr #'(lambda (degr gnrt)
-                                  (if (= 1 degr)
-                                      (cat:cmbn 0 1 'a)
-                                      (cat:zero-cmbn (1- degr))))
-                   :strt :gnrt
-                   :orgn '(z-z)))
-             (bcc (cat:build-chcm
-                   :cmpr #'cat:s-cmpr
-                   :basis #'(lambda (degr) nil)
-                   :intr-dffr #'(lambda (degr gnrt) (error "Impossible."))
-                   :strt :gnrt
-                   :orgn '(zero)))
-             (rh (cat:build-mrph
-                  :sorc tcc :trgt tcc :degr +1
-                  :intr #'(lambda (degr gnrt)
-                            (if (zerop degr)
-                                (cat:cmbn 1 1 'b)
-                                (cat:zero-cmbn 2)))
-                  :strt :gnrt
-                  :orgn '(rh)))
-             (hmeq (cat:build-hmeq
-                    :lrdct (cat:trivial-rdct tcc)
-                    :rrdct (cat:build-rdct
-                            :f (cat:zero-mrph tcc bcc 0)
-                            :g (cat:zero-mrph bcc tcc 0)
-                            :h rh
-                            :orgn '(rrdct))))
-             (nhmeq (cat:hmeq-disk-pasting hmeq 1 'new (cat:cmbn 0 1 'a))))
-        (cat:pre-check-rdct (cat:lrdct nhmeq))
-        (setf cat:*tc* (cat:cmbn 0 1 'a))
-        (setf cat:*bc* cat:*tc*)
-        (check-rdct)
-        (setf cat:*tc* (cat:cmbn 1 1 'new 10 'b))
-        (setf cat:*bc* cat:*tc*)
-        (check-rdct)
-        (cat:pre-check-rdct (cat:rrdct nhmeq))
-        (setf cat:*bc* (cat:zero-cmbn 0))
-        (check-rdct)
-        (setf cat:*tc* (cat:cmbn 0 1 'a))
-        (check-rdct)))
+(when (or (string= (package-name (find-package 'cat)) "CAT-7")
+          (string= (package-name (find-package 'cat)) "CAT-8"))
+  (test hmeq-disk-pasting
+        (cat:cat-init)
+        (let* ((tcc (cat:build-chcm
+                     :cmpr #'cat:s-cmpr
+                     :basis #'(lambda (degr)
+                                (case degr
+                                  (0 (list 'a))
+                                  (1 (list 'b))
+                                  (otherwise nil)))
+                     :intr-dffr #'(lambda (degr gnrt)
+                                    (if (= 1 degr)
+                                        (cat:cmbn 0 1 'a)
+                                        (cat:zero-cmbn (1- degr))))
+                     :strt :gnrt
+                     :orgn '(z-z)))
+               (bcc (cat:build-chcm
+                     :cmpr #'cat:s-cmpr
+                     :basis #'(lambda (degr) nil)
+                     :intr-dffr #'(lambda (degr gnrt) (error "Impossible."))
+                     :strt :gnrt
+                     :orgn '(zero)))
+               (rh (cat:build-mrph
+                    :sorc tcc :trgt tcc :degr +1
+                    :intr #'(lambda (degr gnrt)
+                              (if (zerop degr)
+                                  (cat:cmbn 1 1 'b)
+                                  (cat:zero-cmbn 2)))
+                    :strt :gnrt
+                    :orgn '(rh)))
+               (hmeq (cat:build-hmeq
+                      :lrdct (cat:trivial-rdct tcc)
+                      :rrdct (cat:build-rdct
+                              :f (cat:zero-mrph tcc bcc 0)
+                              :g (cat:zero-mrph bcc tcc 0)
+                              :h rh
+                              :orgn '(rrdct))))
+               (nhmeq (cat:hmeq-disk-pasting hmeq 1 'new (cat:cmbn 0 1 'a))))
+          (cat:pre-check-rdct (cat:lrdct nhmeq))
+          (setf cat:*tc* (cat:cmbn 0 1 'a))
+          (setf cat:*bc* cat:*tc*)
+          (check-rdct)
+          (setf cat:*tc* (cat:cmbn 1 1 'new 10 'b))
+          (setf cat:*bc* cat:*tc*)
+          (check-rdct)
+          (cat:pre-check-rdct (cat:rrdct nhmeq))
+          (setf cat:*bc* (cat:zero-cmbn 0))
+          (check-rdct)
+          (setf cat:*tc* (cat:cmbn 0 1 'a))
+          (check-rdct))))

@@ -26,7 +26,7 @@
                  (:file "cs-twisted-products-test")
                  (:file "delta-test")
                  (:file "diabolo")
-                 ;;(:file "disk-pasting-test")
+                 (:file "disk-pasting-test")
                  ;;(:file "eilenberg-zilber-test")
                  (:file "effective-homology-test")
                  (:file "fibrations-test")
