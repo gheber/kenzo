@@ -27,7 +27,7 @@
                  (:file "delta-test")
                  (:file "diabolo")
                  (:file "disk-pasting-test")
-                 ;;(:file "eilenberg-zilber-test")
+                 (:file "eilenberg-zilber-test")
                  (:file "effective-homology-test")
                  (:file "fibrations-test")
                  (:file "homology-groups-test")

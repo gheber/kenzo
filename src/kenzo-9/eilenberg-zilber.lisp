@@ -21,7 +21,7 @@
 #|
 (dotimes (i 30)
   (format t "~%~A => ~@D" (hyphenize-list (dlop-int-ext i)) (shuffle-sign i)))
-|#       
+|#
 
 (DEFUN INTR-EML (cmbn)
    (declare (type cmbn cmbn))
@@ -76,7 +76,7 @@
   (intr-eml (cmbn 3 10 (tnpr 1 'c 2 'd) 1 (tnpr 2 'a 1 'b) 100 (tnpr 2 'aa 1 'bb)))
   (intr-eml (cmbn 3 10 (tnpr 1 'c 2 'd) 100 (tnpr 1 'cc 2 'dd) 1 (tnpr 2 'a 1 'b)))
 |#
-                                                    
+
 (DEFUN EML (smst1 smst2)
    (build-mrph
       :sorc (tnsr-prdc smst1 smst2)
@@ -93,7 +93,7 @@
   (? eml (cmbn 3 1 (tnpr 0 1 3 30) 10 (tnpr 1 3 2 28) 100 (tnpr 2 7 1 24) 1000 (tnpr 3 15 0 16)))
 |#
 
-#| Change -> DVF 
+#| Change -> DVF
 (DEFUN INTR-PHI (smst1 smst2
                    &aux (crts-prdc (crts-prdc smst1 smst2))
                         (cmpr (cmpr crts-prdc))
@@ -249,7 +249,7 @@
                    ((> dgop1 mask)
                     (push (make-cmbn
                              :degr n+1
-                             :list (rest cmbn-i)) 
+                             :list (rest cmbn-i))
                        cmbn-list))
                   (declare (type fixnum dgop1))
                   (let ((p (- n+1 (logcount dgop1)))
@@ -270,7 +270,7 @@
                                                 (list (term (* sign cffc)
                                                          (crpr
                                                             (+ dgop1 dgop1-ashed) gmsm1
-                                                            (+ dgop2 dgop2-ashed) 
+                                                            (+ dgop2 dgop2-ashed)
                                                             gmsm2))))))))))))))
          (if cmbn-list
             (apply #'ncmbn-add cmpr cmbn-list)
@@ -490,3 +490,10 @@
   (setf k2 (crts-prdc k k))
   (homology k2 0 10)
 |#
+
+(DEFMETHOD CMPS ((eqvl equivalence) (rdct reduction) &optional dummy)
+  (declare (ignore dummy))
+  (assert (eq (rbcc eqvl) (tcc rdct)))
+  (the equivalence
+       (build-hmeq :lrdct (lrdct eqvl)
+                   :rrdct (cmps rdct (rrdct eqvl)))))

@@ -36,14 +36,16 @@
                              1000 (cat:tnpr 3 15 0 16)))))
 
 
-(test intr-phi
-      (cat:cat-init)
-      (let* ((d (cat:delta-infinity))
-             (rslt (cat:intr-phi d d)))
-        (funcall rslt (cat:cmbn 3 1 (cat:crpr 0 15 0 15)))
-        (funcall rslt (cat:cmbn 2 1 (cat:crpr 0 7 0 7)))
-        (funcall rslt (cat:cmbn 1 1 (cat:crpr 0 3 0 3)))
-        (funcall rslt (cat:cmbn 0 1 (cat:crpr 0 1 0 1)))))
+(when (or (string= (package-name (find-package 'cat)) "CAT-7")
+          (string= (package-name (find-package 'cat)) "CAT-8"))
+  (test intr-phi
+        (cat:cat-init)
+        (let* ((d (cat:delta-infinity))
+               (rslt (cat:intr-phi d d)))
+          (funcall rslt (cat:cmbn 3 1 (cat:crpr 0 15 0 15)))
+          (funcall rslt (cat:cmbn 2 1 (cat:crpr 0 7 0 7)))
+          (funcall rslt (cat:cmbn 1 1 (cat:crpr 0 3 0 3)))
+          (funcall rslt (cat:cmbn 0 1 (cat:crpr 0 1 0 1))))))
 
 
 (test phi
