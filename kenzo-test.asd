@@ -18,7 +18,7 @@
                  (:file "chain-complexes-test")
                  (:file "chcm-elementary-op-test")
                  (:file "circle")
-                 ;;(:file "cl-space-efhm-test")
+                 (:file "cl-space-efhm-test")
                  (:file "classifying-spaces-test")
                  (:file "cobar-test")
                  (:file "combinations-test")
