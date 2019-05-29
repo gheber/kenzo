@@ -38,7 +38,7 @@
                  (:file "ls-twisted-products-test")
                  (:file "macros-test")
                  (:file "searching-homology-test")
-                 ;;(:file "serre-test")
+                 (:file "serre-test")
                  (:file "simplicial-groups-test")
                  (:file "simplicial-mrphs-test")
                  (:file "simplicial-sets-test")
