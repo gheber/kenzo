@@ -47,5 +47,5 @@
                  (:file "suspensions-test")
                  (:file "tensor-products-test")
                  (:file "various-test")
-                 ;;(:file "whitehead-test")
+                 (:file "whitehead-test")
                  ))

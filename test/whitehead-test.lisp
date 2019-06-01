@@ -10,13 +10,16 @@
       (let* ((k (cat:k-z 2))
              (ecc (cat:echcm k))
              (chml-clss
-              (cat:build-mrph
-               :sorc ecc :trgt (cat:z-chcm) :degr 2
-               :intr #'(lambda (degr gnrt)
-                         (if (= degr 2)
-                             (cat:term-cmbn 0 1 :z-gnrt)
-                             (cat:zero-cmbn (- degr 2))))
-               :strt :gnrt :orgn '(fundamental-class k-z-2)))
+              (if (or (string= (package-name (find-package 'cat)) "CAT-7")
+                      (string= (package-name (find-package 'cat)) "CAT-8"))
+                  (cat:build-mrph
+                   :sorc ecc :trgt (cat:z-chcm) :degr 2
+                   :intr #'(lambda (degr gnrt)
+                             (if (= degr 2)
+                                 (cat:term-cmbn 0 1 :z-gnrt)
+                                 (cat:zero-cmbn (- degr 2))))
+                   :strt :gnrt :orgn '(fundamental-class k-z-2))
+                  (cat:chml-clss k 2)))
              (tw (cat:z-whitehead-sintr k 2 chml-clss)))
         (cat:tw-a-sintr3 tw 1 (cat:absm 1 cat:+null-gbar+) '())
         (cat:tw-a-sintr3 tw 2 (cat:absm 3 cat:+null-gbar+) '())
@@ -26,13 +29,16 @@
         (setf k (cat:k-z 3))
         (setf ecc (cat:echcm k))
         (setf chml-clss
-              (cat:build-mrph
-               :sorc ecc :trgt (cat:z-chcm) :degr 3
-               :intr #'(lambda (degr gnrt)
-                         (if (= degr 3)
-                             (cat:term-cmbn 0 -1 :z-gnrt)
-                             (cat:zero-cmbn (- degr 3))))
-               :strt :gnrt :orgn '(fundamental-class k-z-3)))
+              (if (or (string= (package-name (find-package 'cat)) "CAT-7")
+                      (string= (package-name (find-package 'cat)) "CAT-8"))
+                  (cat:build-mrph
+                   :sorc ecc :trgt (cat:z-chcm) :degr 3
+                   :intr #'(lambda (degr gnrt)
+                             (if (= degr 3)
+                                 (cat:term-cmbn 0 -1 :z-gnrt)
+                                 (cat:zero-cmbn (- degr 3))))
+                   :strt :gnrt :orgn '(fundamental-class k-z-3))
+                  (cat:chml-clss k 3)))
         (setf tw (cat:z-whitehead-sintr k 3 chml-clss))
         (cat:tw-a-sintr3 tw 1 (cat:absm 1 cat:+null-gbar+) cat:+null-gbar+)
         (cat:tw-a-sintr3 tw 2 (cat:absm 3 cat:+null-gbar+) cat:+null-gbar+)
@@ -51,13 +57,16 @@
       (let* ((k (cat:k-z2 2))
              (ecc (cat:echcm k))
              (chml-clss
-              (cat:build-mrph
-               :sorc ecc :trgt (cat:z-chcm) :degr 2
-               :intr #'(lambda (degr gnrt)
-                         (if (= degr 2)
-                             (cat:term-cmbn 0 1 :z-gnrt)
-                             (cat:zero-cmbn (- degr 2))))
-               :strt :gnrt :orgn '(fundamental-class k-z-2)))
+              (if (or (string= (package-name (find-package 'cat)) "CAT-7")
+                      (string= (package-name (find-package 'cat)) "CAT-8"))
+                  (cat:build-mrph
+                   :sorc ecc :trgt (cat:z-chcm) :degr 2
+                   :intr #'(lambda (degr gnrt)
+                             (if (= degr 2)
+                                 (cat:term-cmbn 0 1 :z-gnrt)
+                                 (cat:zero-cmbn (- degr 2))))
+                   :strt :gnrt :orgn '(fundamental-class k-z-2))
+                  (cat:chml-clss k 2)))
              (tw (cat:Z2-whitehead-sintr k 2 chml-clss)))
         (cat:tw-a-sintr3 tw 1 (cat:absm 1 cat:+null-gbar+) 0)
         (cat:tw-a-sintr3 tw 2 (cat:absm 3 cat:+null-gbar+) 0)
@@ -72,13 +81,16 @@
         (setf k (cat:k-z2 3))
         (setf ecc (cat:echcm k))
         (setf chml-clss
-              (cat:build-mrph
-               :sorc ecc :trgt (cat:z-chcm) :degr 3
-               :intr #'(lambda (degr gnrt)
-                         (if (= degr 3)
-                             (cat:term-cmbn 0 -1 :z-gnrt)
-                             (cat:zero-cmbn (- degr 3))))
-               :strt :gnrt :orgn '(fundamental-class k-z-3)))
+              (if (or (string= (package-name (find-package 'cat)) "CAT-7")
+                      (string= (package-name (find-package 'cat)) "CAT-8"))
+                  (cat:build-mrph
+                   :sorc ecc :trgt (cat:z-chcm) :degr 3
+                   :intr #'(lambda (degr gnrt)
+                             (if (= degr 3)
+                                 (cat:term-cmbn 0 -1 :z-gnrt)
+                                 (cat:zero-cmbn (- degr 3))))
+                   :strt :gnrt :orgn '(fundamental-class k-z-3))
+                  (cat:chml-clss k 3)))
         (setf tw (cat:Z2-whitehead-sintr k 3 chml-clss))
         (cat:tw-a-sintr3 tw 1 (cat:absm 1 cat:+null-gbar+) 0)
         (cat:tw-a-sintr3 tw 2 (cat:absm 3 cat:+null-gbar+) 0)
