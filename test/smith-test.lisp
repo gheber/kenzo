@@ -4,32 +4,27 @@
 
 (in-suite :kenzo)
 
-(test random-matrix
-      (cat:random-matrix 2 3 10))
 
+(when (or (string= (package-name (find-package 'cat)) "CAT-7")
+        (string= (package-name (find-package 'cat)) "CAT-8"))
+    (test random-matrix
+          (cat:random-matrix 2 3 10))
 
-(test idnt-mtrx
-      (cat:idnt-mtrx 3))
+    (test copy-mtrx
+          (let ((m (cat:random-matrix 3 4 10)))
+            (is (equalp m (cat:copy-mtrx m)))))
 
+    (test left-submatrix
+          (let ((m (cat:random-matrix 3 4 10)))
+            (cat:left-submatrix m 2)))
 
-(test copy-mtrx
-      (let ((m (cat:random-matrix 3 4 10)))
-        (is (equalp m (cat:copy-mtrx m)))))
+    (test mtrx-prdc
+          (let ((m1 (cat:random-matrix 2 3 10))
+                (m2 (cat:random-matrix 3 2 10)))
+            (cat:mtrx-prdc m1 m2)
+            (cat:mtrx-prdc m2 m1)))
 
-
-(test left-submatrix
-      (let ((m (cat:random-matrix 3 4 10)))
-        (cat:left-submatrix m 2)))
-
-
-(test mtrx-prdc
-      (let ((m1 (cat:random-matrix 2 3 10))
-            (m2 (cat:random-matrix 3 2 10)))
-        (cat:mtrx-prdc m1 m2)
-        (cat:mtrx-prdc m2 m1)))
-
-
-(test chcm-mtrx
+    (test chcm-mtrx
       (cat:cat-init)
       (let ((d (cat:delta 5))
             (m (cat:moore 2 2)))
@@ -39,122 +34,310 @@
         (dotimes (i 6)
           (print (array-dimensions (cat:chcm-mtrx m i))))))
 
+    (test line-op
+          (let ((m (cat:random-matrix 3 4 10)))
+            (cat:line-op m 1 3 2 0)))
 
-(test line-op
-      (let ((m (cat:random-matrix 3 4 10)))
-        (cat:line-op m 1 3 2 0)))
-
-;; mtrx-list = (P P^-1 M Q Q^-1)
-
-(test line-op-5
-      (let* ((p (cat:idnt-mtrx 4))
-             (p-1 (cat:idnt-mtrx 4))
-             (m (cat:random-matrix 4 5 10))
-             (q (cat:idnt-mtrx 5) )
-             (q-1 (cat:idnt-mtrx 5))
-             (list (list p p-1 m q q-1))
-             (t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
-        (cat:line-op-5 list 0 3 1 3)
-        (is (equalp t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
-        (cat:mtrx-prdc p p-1)))
+    (test line-op-5
+          (let* ((p (cat:idnt-mtrx 4))
+                 (p-1 (cat:idnt-mtrx 4))
+                 (m (cat:random-matrix 4 5 10))
+                 (q (cat:idnt-mtrx 5) )
+                 (q-1 (cat:idnt-mtrx 5))
+                 (list (list p p-1 m q q-1))
+                 (t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
+            (cat:line-op-5 list 0 3 1 3)
+            (is (equalp t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
+            (cat:mtrx-prdc p p-1)))
 
 
-(test column-op
-      (let ((m (cat:random-matrix 3 4 10)))
-        (cat:column-op m 1 3 2 0)))
+    (test column-op
+          (let ((m (cat:random-matrix 3 4 10)))
+            (cat:column-op m 1 3 2 0)))
+
+    ;; mtrx-list = (P P^-1 M Q Q^-1)
+
+    (test line-op-5
+          (let* ((p (cat:idnt-mtrx 4))
+                 (p-1 (cat:idnt-mtrx 4))
+                 (m (cat:random-matrix 4 5 10))
+                 (q (cat:idnt-mtrx 5) )
+                 (q-1 (cat:idnt-mtrx 5))
+                 (list (list p p-1 m q q-1))
+                 (t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
+            (cat:line-op-5 list 0 3 1 3)
+            (is (equalp t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
+            (cat:mtrx-prdc p p-1)))
 
 
-(test column-op-5
-      (let* ((p (cat:idnt-mtrx 4))
-             (p-1 (cat:idnt-mtrx 4))
-             (m (cat:random-matrix 4 5 10))
-             (q (cat:idnt-mtrx 5))
-             (q-1 (cat:idnt-mtrx 5))
-             (list (list p p-1 m q q-1))
-             (t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
-        (cat:column-op-5 list 0 3 1 3)
-        (is (equalp t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
-        (cat:mtrx-prdc p p-1)
-        (cat:mtrx-prdc q q-1)))
+    (test column-op
+          (let ((m (cat:random-matrix 3 4 10)))
+            (cat:column-op m 1 3 2 0)))
 
 
-(test line-swap
-      (let ((m (cat:random-matrix 3 4 10)))
-        (cat:line-swap m 1 0 2)))
+    (test column-op-5
+          (let* ((p (cat:idnt-mtrx 4))
+                 (p-1 (cat:idnt-mtrx 4))
+                 (m (cat:random-matrix 4 5 10))
+                 (q (cat:idnt-mtrx 5))
+                 (q-1 (cat:idnt-mtrx 5))
+                 (list (list p p-1 m q q-1))
+                 (t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
+            (cat:column-op-5 list 0 3 1 3)
+            (is (equalp t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
+            (cat:mtrx-prdc p p-1)
+            (cat:mtrx-prdc q q-1)))
 
 
-(test line-swap-5
-      (let* ((p (cat:idnt-mtrx 4))
-             (p-1 (cat:idnt-mtrx 4))
-             (m (cat:random-matrix 4 5 10))
-             (q (cat:idnt-mtrx 5))
-             (q-1 (cat:idnt-mtrx 5))
-             (list (list p p-1 m q q-1))
-             (t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
-        (cat:line-swap-5 list 0 1 3)
-        (is (equalp t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
-        (cat:mtrx-prdc p p-1)
-        (cat:mtrx-prdc q q-1)))
+    (test line-swap
+          (let ((m (cat:random-matrix 3 4 10)))
+            (cat:line-swap m 1 0 2)))
 
 
-(test column-swap
-      (let ((m (cat:random-matrix 3 4 10)))
-        (cat:column-swap m 1 0 2)))
+    (test line-swap-5
+          (let* ((p (cat:idnt-mtrx 4))
+                 (p-1 (cat:idnt-mtrx 4))
+                 (m (cat:random-matrix 4 5 10))
+                 (q (cat:idnt-mtrx 5))
+                 (q-1 (cat:idnt-mtrx 5))
+                 (list (list p p-1 m q q-1))
+                 (t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
+            (cat:line-swap-5 list 0 1 3)
+            (is (equalp t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
+            (cat:mtrx-prdc p p-1)
+            (cat:mtrx-prdc q q-1)))
 
+    (test column-swap
+          (let ((m (cat:random-matrix 3 4 10)))
+            (cat:column-swap m 1 0 2)))
 
-(test column-swap-5
-      (let* ((p (cat:idnt-mtrx 4))
-             (p-1 (cat:idnt-mtrx 4))
-             (m (cat:random-matrix 4 5 10))
-             (q (cat:idnt-mtrx 5))
-             (q-1 (cat:idnt-mtrx 5))
-             (list (list p p-1 m q q-1))
-             (t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
-        (cat:column-swap-5 list 0 1 3)
-        (is (equalp t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
-        (cat:mtrx-prdc p p-1)
-        (cat:mtrx-prdc q q-1)))
+    (test column-swap-5
+          (let* ((p (cat:idnt-mtrx 4))
+                 (p-1 (cat:idnt-mtrx 4))
+                 (m (cat:random-matrix 4 5 10))
+                 (q (cat:idnt-mtrx 5))
+                 (q-1 (cat:idnt-mtrx 5))
+                 (list (list p p-1 m q q-1))
+                 (t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
+            (cat:column-swap-5 list 0 1 3)
+            (is (equalp t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
+            (cat:mtrx-prdc p p-1)
+            (cat:mtrx-prdc q q-1)))
 
+    (test column-minus
+          (let ((m (cat:random-matrix 3 4 10)))
+            (cat:line-minus m 1 2)
+            (cat:column-minus m 1 2)))
 
-(test column-minus
-      (let ((m (cat:random-matrix 3 4 10)))
-        (cat:line-minus m 1 2)
-        (cat:column-minus m 1 2)))
+    (test column-minus-5
+          (let* ((p (cat:idnt-mtrx 4))
+                 (p-1 (cat:idnt-mtrx 4))
+                 (m (cat:random-matrix 4 5 10))
+                 (q (cat:idnt-mtrx 5))
+                 (q-1 (cat:idnt-mtrx 5))
+                 (list (list p p-1 m q q-1))
+                 (t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
+            (cat:line-minus-5 list 0 3)
+            (is (equalp t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
+            (cat:mtrx-prdc p p-1)
+            (cat:mtrx-prdc q q-1)
+            (cat:column-minus-5 list 0 2)
+            (is (equalp t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
+            (cat:mtrx-prdc p p-1)
+            (cat:mtrx-prdc q q-1)))
 
-
-(test column-minus-5
-      (let* ((p (cat:idnt-mtrx 4))
-             (p-1 (cat:idnt-mtrx 4))
-             (m (cat:random-matrix 4 5 10))
-             (q (cat:idnt-mtrx 5))
-             (q-1 (cat:idnt-mtrx 5))
-             (list (list p p-1 m q q-1))
-             (t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
-        (cat:line-minus-5 list 0 3)
-        (is (equalp t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
-        (cat:mtrx-prdc p p-1)
-        (cat:mtrx-prdc q q-1)
-        (cat:column-minus-5 list 0 2)
-        (is (equalp t1 (cat:mtrx-prdc p (cat:mtrx-prdc m q-1))))
-        (cat:mtrx-prdc p p-1)
-        (cat:mtrx-prdc q q-1)))
-
-
-(test minimal-term
+    (test minimal-term
       (let ((m (cat:random-matrix 4 5 10)))
         (cat:minimal-term m 1)))
 
+    #|
+    ;; potential divide by 0
+    (test minimal-rest-1
+    (let ((m (cat:random-matrix 4 5 10)))
+    (cat:minimal-rest-1 m 1)))
+
+    (test minimal-rest-2
+    (let ((m (cat:random-matrix 4 5 10)))
+    (cat:minimal-rest-2 m 1)))
+    |#
+
+
+
+    )
+
+
+(test idnt-mtrx
+      (cat:idnt-mtrx 3))
+
+(test gnrt-name-basis
+      (cat:gnrt-name 4)
+      (cat:gnrt-name-basis 4))
+
+
+
+
+(unless (or (string= (package-name (find-package 'cat)) "CAT-7")
+            (string= (package-name (find-package 'cat)) "CAT-8"))
+    (test random-matrix
+          (cat:random-matrix 5 10 .2 100))
+
+    (test copy-mtrx
+          (let ((m (cat:random-matrix 3 4 .4 10)))
+            (cat:copy-mtrx m)))
+
+    (test left-submatrix
+          (let ((m (cat:random-matrix 5 10 .6 10)))
+            (cat:left-submatrix m 5)
+            (cat:left-submatrix m 10)
+            (cat:left-submatrix m 0)
+            (setf m (cat::creer-matrice 5 10))
+            (cat:left-submatrix m 5)))
+
+    (test mtrx-prdc
+          (let ((m (cat:random-matrix 1 1 1 10))
+                (m1 (cat:random-matrix 1 1 1 10))
+                (m2 (cat:random-matrix 1 1 1 10)))
+            (cat:mtrx-prdc m m)
+            (setf m1 (cat:random-matrix 2 3 .8 5))
+            (setf m2 (cat:random-matrix 3 2 .8 5))
+            (cat:mtrx-prdc m1 m2)
+            (setf m1 (cat:random-matrix 3 5 .8 2))
+            (setf m2 (cat:random-matrix 5 1 .8 2))
+            (cat:mtrx-prdc m1 m2)
+            (setf m1 (cat::creer-matrice 3 5))
+            (setf m2 (cat:random-matrix 5 4 .8 10))
+            (cat:mtrx-prdc m1 m2)
+            (setf m1 (cat::creer-matrice 3 5))
+            (setf m2 (cat:random-matrix 6 3 .8 10))
+            (cat:mtrx-prdc m2 m1)
+            (setf m1 (cat::creer-matrice 3 5))
+            (setf m2 (cat::creer-matrice 5 4))
+            (cat:mtrx-prdc m1 m2)
+            (setf m1 (cat:random-matrix 1 2 2 10))
+            (setf m2 (cat::creer-matrice 2 1))
+            (cat::inserer-terme (cat::baselig m2 1)
+                                (cat::basecol m2 1)
+                                (cat::val (cat::up (cat::basecol m1 2))))
+            ;;(cat::inserer-terme (cat::baselig m2 2) (cat::basecol m2 1) (- (cat::val (cat::up (cat::basecol m1 1)))))
+            m2
+            (cat:mtrx-prdc m1 m2)))
+
+
+    (test chcm-mtrx
+          (cat:cat-init)
+          (let ((d (cat:delta 5))
+                (m (cat:moore 2 2)))
+            (cat:chcm-mtrx d 3)
+            (dotimes (i 5)
+              (print (cat:chcm-mtrx m i)))
+            (dotimes (i 6)
+              (print (list (length (cat::leftcol (cat:chcm-mtrx m i)))
+               (length (cat::uplig (cat:chcm-mtrx m i))))))))
+
+    (test extract-line
+          (let ((m (cat:random-matrix 4 10 1 10)))
+            (cat:extract-line m 3)))
+
+    (test extract-column
+          (let ((m (cat:random-matrix 4 10 1 10)))
+            (cat:extract-column m 3)))
+
+    (test extract-term
+          (let ((m (cat:random-matrix 2 3 1 10)))
+            (dotimes (il 2)
+              (dotimes (ic 3)
+                (print (list il ic (cat:extract-term m (1+ il) (1+ ic))))))))
+
+    (test new-line
+          (let ((m (cat:random-matrix 5 10 1 10)))
+            (cat:new-line m 3 nil)
+            (setf m (cat:random-matrix 5 10 1 10))
+            (cat:new-line m 3 '((2 5) (10 10)))))
+
+    (test new-column
+          (let ((m (cat:random-matrix 5 10 1 10)))
+            (cat:new-column m 3 nil)
+            (setf m (cat:random-matrix 5 10 1 10))
+            (cat:new-column m 3 '((2 5) (5 10)))))
+
+    (test safe-*
+          (is (= 536848900 (cat:safe-* 23170 23170)))
+          (is (= 536872070 (cat:safe-* 23170 23171))))
+
+    (test safe-+
+          (is (= 536870911 (cat:safe-+ 268435456 268435455)))
+          (is (= 536870912 (cat:safe-+ 268435456 268435456))))
+
+    (test line-op
+          (let ((m (cat:random-matrix 5 10 1 10)))
+            (cat:line-op m 2 3 4)))
+
+    (test column-op
+          (let ((m (cat:random-matrix 5 10 1 10)))
+            (cat:column-op m 2 3 4)))
+
+
+    (test equal-matrix
+          (let ((m1 (cat::creer-matrice 2 3))
+                (m2 (cat::creer-matrice 3 3)))
+            (cat:equal-matrix m1 m2)
+            (setf m1 (cat::creer-matrice 2 3))
+            (setf m2 (cat::creer-matrice 2 4))
+            (cat:equal-matrix m1 m2)
+            (setf m1 (cat::creer-matrice 1 1))
+            (setf m2 (cat::creer-matrice 1 1))
+            (cat:new-line m2 1 '((1 1)))
+            (cat:equal-matrix m1 m2)
+            (cat:new-line m1 1 '((1 1)))
+            (cat:new-line m2 1 nil)
+            (cat:equal-matrix m1 m2)
+            (setf m1 (cat::creer-matrice 1 2))
+            (setf m2 (cat::creer-matrice 1 2))
+            (cat:new-line m1 1 '((2 1)))
+            (cat:new-line m2 1 '((1 1)))
+            (cat:equal-matrix m1 m2)
+            (cat:new-line m2 1 '((2 2)))
+            (cat:equal-matrix m1 m2)
+            (cat:new-line m2 1 '((2 1)))
+            (cat:equal-matrix m1 m2)
+            (setf m1 (cat:random-matrix 5 10 1 10))
+            (setf m2 (cat::copier-matrice m1))
+            (cat:equal-matrix m1 m2)))
+
+    (test line-swap
+          (let ((m (cat:random-matrix 3 4 1 10)))
+            (cat:line-swap m 1 2)))
+
+    (test column-swap
+          (let ((m (cat:random-matrix 3 4 1 10)))
+            (cat:column-swap m 3 2)))
+
+    (test safe--
+          (is (= 536870911 (cat:safe-- -536870911)))
+          (is (= 536870912 (cat:safe-- -536870912))))
+
+    (test column-minus
+          (let ((m (cat:random-matrix 3 4 1 10)))
+            (cat:line-minus m 2)
+            (cat:column-minus m 1)))
+
+    (test minimal-term
+          (let ((m (cat:random-matrix 4 5 1 10)))
+            (cat:minimal-term m 1)
+            (setf m (cat::creer-matrice 3 5))
+            (cat:minimal-term m 1)
+            (setf m (cat:random-matrix 4 5 1 10))
+            (setf m2 (cat::copier-matrice m))
+            (cat:minimal-term m 1)
+            (cat:minimal-term m 2)
+            (cat:minimal-term m 3)
+            (cat:minimal-term m 4)
+            (cat:minimal-term m 5)))
+
+    )
+
 
 #|
-;; potential divide by 0
-(test minimal-rest-1
-      (let ((m (cat:random-matrix 4 5 10)))
-        (cat:minimal-rest-1 m 1)))
-
-(test minimal-rest-2
-      (let ((m (cat:random-matrix 4 5 10)))
-        (cat:minimal-rest-2 m 1)))
-|#
 
 
 (test minimal-term-top-left
@@ -198,10 +381,6 @@
         (cat:mtrx-prdc p p-1)
         (cat:mtrx-prdc q q-1)))
 
-
-(test gnrt-name-basis
-      (cat:gnrt-name 4)
-      (cat:gnrt-name-basis 4))
 
 
 (test echcm-kill-epi-f-intr
@@ -359,3 +538,4 @@
         (setf s3-5-fibration (cat:z2-whitehead s3-5 s3-5-chml-clss))
         (setf s3-6 (cat:fibration-total s3-5-fibration))
         (cat:homology s3-6 0 7)))
+|#
