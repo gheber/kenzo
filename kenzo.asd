@@ -9,17 +9,17 @@
 
 (asdf:defsystem #:kenzo
   :description "A Symbolic Software for Effective Homology Computation by Francis Sergeraert"
-  :version "1.1.7"
+  :version "1.1.9"
   :author "Francis Sergeraert <Francis.Sergeraert@ujf-grenoble.fr>"
   :license "GPLv3"
   :serial t
   :components
-  ((:file "package")
-   (:module "src"
+  ((:module "src"
             :components
             ((:module "kenzo-7"
                       :components
-                      ((:file "kenzo")
+                      ((:file "package")
+                       (:file "kenzo")
                        (:file "abbreviations")
                        (:file "macros")
                        (:file "various")
@@ -60,7 +60,8 @@
                        (:file "smith")))
              (:module "kenzo-8"
                       :components
-                      ((:file "cat-init")
+                      ((:file "package")
+                       (:file "cat-init")
                        (:file "macros")
                        (:file "various")
                        (:file "classes")
@@ -100,7 +101,8 @@
                        (:file "smith")))
              (:module "kenzo-9"
                       :components
-                      ((:file "cat-init")
+                      ((:file "package")
+                       (:file "cat-init")
                        (:file "macros")
                        (:file "various")
                        (:file "classes")
