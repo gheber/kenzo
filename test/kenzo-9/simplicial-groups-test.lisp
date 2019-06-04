@@ -2,10 +2,10 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 (test check-kan
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((k (cat-9:k-z-1))
              (rslt '(1 10 100))
              (hat (mapcar #'(lambda (i) (cat-9:face k i 3 rslt))

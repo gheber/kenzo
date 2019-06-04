@@ -2,7 +2,7 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 
 (test absm-loopabsm
@@ -35,7 +35,7 @@
 
 
 (test twisted-crts-prdc
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((p (cat-9:r-proj-space 3))
              (tw (cat-9:twisted-crts-prdc p))
              (cmpr (cat-9:cmpr tw))
@@ -45,7 +45,7 @@
 
 
 (test dtau-d-intr
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((d (cat-9:deltab))
              (p (cat-9:crts-prdc d (cat-9:loop-space d)))
              (tw (cat-9:twisted-crts-prdc d))
@@ -60,7 +60,7 @@
 
 
 (test szczarba
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((rdct (cat-9:szczarba (cat-9:deltab)))
             bcc)
         (cat-9:pre-check-rdct rdct)
@@ -93,7 +93,7 @@
 
 
 (test crts-contraction-intr
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((delta (cat-9:deltab))
              (tw (cat-9:twisted-crts-prdc delta))
              (d (cat-9:bndr tw))
@@ -135,7 +135,7 @@
 
 
 (test crts-contraction
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((p (cat-9:r-proj-space 3))
              (tw (cat-9:twisted-crts-prdc p))
              (cmpr (cat-9:cmpr tw))
@@ -169,7 +169,7 @@
 
 
 (test tnpr-contraction
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((delta (cat-9:deltab))
              (sz (cat-9:szczarba (cat-9:deltab)))
              (tw (cat-9:bcc sz))

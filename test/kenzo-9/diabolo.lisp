@@ -2,7 +2,7 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 (defun diabolo-basis (dmn)
   (case dmn
@@ -30,7 +30,7 @@
 
 (test diabolo
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let ((diabolo (cat-9:build-chcm :cmpr #'cat-9:s-cmpr
                                        :basis #'diabolo-basis
                                        :bsgn 's0

@@ -2,10 +2,10 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 (test suspension-cmpr
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((cc (cat-9:deltab))
              (cmpr (cat-9:suspension-cmpr (cat-9:cmpr cc))))
         (is (equal :equal (funcall cmpr :s-bsgn :s-bsgn)))
@@ -13,7 +13,7 @@
 
 
 (test suspension-basis
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((cc (cat-9:sphere 2))
              (basis (cat-9:suspension-basis (cat-9:basis cc))))
         (dotimes (i 6)
@@ -22,7 +22,7 @@
 
 
 (test suspension-intr-dffr
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((cc (cat-9:deltab))
              (intr (cat-9:suspension-intr-dffr (cat-9:dffr cc))))
         (funcall intr (cat-9:cmbn 0 3 :s-bsgn))
@@ -30,7 +30,7 @@
 
 
 (test suspension
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((cc (cat-9:deltab))
              (scc (cat-9:suspension cc)))
         (cat-9:cmpr scc 7 11)
@@ -48,7 +48,7 @@
 
 
 (test coal
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((coal (cat-9:deltab))
              (scoal (cat-9:suspension coal)))
         (setf scoal (cat-9:suspension coal))
@@ -57,7 +57,7 @@
 
 
 (test suspension-face
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((ss (cat-9:deltab))
              (face (cat-9:suspension-face (cat-9:face ss)))
              (m (cat-9:moore 2 3)))
@@ -81,7 +81,7 @@
 
 
 (test suspension1
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((d (cat-9:deltab))
              (sd (cat-9:suspension d))
              (m (cat-9:moore 2 1))
@@ -97,7 +97,7 @@
 
 
 (test suspension-intr
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((f (cat-9:idnt-mrph (cat-9:deltab)))
              (sf (cat-9:suspension-intr f))
              (d (cat-9:dffr (cat-9:deltab)))
@@ -110,7 +110,7 @@
 
 
 (test suspension2
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((f (cat-9:idnt-mrph (cat-9:deltab)))
              (sf (cat-9:suspension f))
              (d (cat-9:dffr (cat-9:deltab)))
@@ -123,7 +123,7 @@
 
 
 (test suspension3
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((rdct (cat-9:ez (cat-9:deltab) (cat-9:deltab)))
              (srdct (cat-9:suspension rdct)))
         (cat-9:pre-check-rdct srdct)
@@ -136,6 +136,6 @@
 
 
 (test suspension4
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((sk (cat-9:suspension (cat-9:k-z 2))))
         (cat-9:homology sk 0 10)))

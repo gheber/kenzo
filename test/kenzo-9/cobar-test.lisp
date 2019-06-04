@@ -2,7 +2,7 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 (test allp
       (cat-9:allp )
@@ -52,7 +52,7 @@
 
 
 (test vrtc-cobar
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((v (cat-9:vrtc-cobar (cat-9:soft-delta-infinity))))
         (dotimes (i 10) (print (random-allp 5)))
         (dotimes (i 10)
@@ -77,7 +77,7 @@
 
 #|
 (test cobar-hrzn-dffr
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((h (cat-9:cobar-hrzn-dffr (cat-9:soft-delta-infinity)))
             (allp (random-allp 4)))
         (dotimes (i 10) (print (random-allp 5)))
@@ -106,7 +106,7 @@
 
 #|
 (test cobar
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((c (cat-9:cobar (cat-9:deltab)))
             (allp (random-allp1 4)))
         (dotimes (i 10) (print (random-allp1 5)))
@@ -142,25 +142,17 @@
              (r (cat-9:mrph-vrtc-cobar-intr m)))
         (funcall r 4 (cat-9:allp 2 3 2 4))))
 
-(if (string= (package-name (find-package 'cat)) "CAT-7")
-    (test vrtc-cobar
-          (cat-9:cat-9-init)
-          (let* ((f (cat-9:aw (cat-9:soft-delta-infinity) (cat-9:soft-delta-infinity)))
-                 (cf (cat-9:vrtc-cobar f)))
-            (cat-9:? cf 2 (cat-9:allp 1 (cat-9:crpr 0 (cat-9:d 7) 0 (cat-9:d 7))
-                                  1 (cat-9:crpr 0 (cat-9:d 56) 0 (cat-9:d 56))))))
-    (test vrtc-cobar
-          (cat-9:cat-9-init)
-          (let* ((f (cat-9:aw (cat-9:soft-delta-infinity) (cat-9:soft-delta-infinity)))
-                 (cf (cat-9:vrtc-cobar f)))
-            (cat-9:? cf 2 (cat-9:allp 1 (cat-9:crpr 0 (cat-9::make-delta :cdr 7)
-                                              0 (cat-9::make-delta :cdr 7))
+(test vrtc-cobar
+      (cat-9:cat-init)
+      (let* ((f (cat-9:aw (cat-9:soft-delta-infinity) (cat-9:soft-delta-infinity)))
+             (cf (cat-9:vrtc-cobar f)))
+        (cat-9:? cf 2 (cat-9:allp 1 (cat-9:crpr 0 (cat-9::make-delta :cdr 7)
+                                                0 (cat-9::make-delta :cdr 7))
                                   1 (cat-9:crpr 0 (cat-9::make-delta :cdr 56)
-                                              0 (cat-9::make-delta :cdr 56)))))))
-
+                                                0 (cat-9::make-delta :cdr 56))))))
 
 (test hmtp-vrtc-cobar-intr
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((ez (cat-9:ez (cat-9:delta-infinity) (cat-9:delta-infinity)))
              (h (cat-9:h ez))
              (gf (cat-9:cmps (cat-9:g ez) (cat-9:f ez)))
@@ -172,7 +164,7 @@
 
 #|
 (test rdct
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((tcc (cat-9:build-chcm
                    :cmpr #'cat-9:s-cmpr
                    :basis #'(lambda (degr) '(a b c d))
@@ -295,7 +287,7 @@
 
 #|
 (test left-hmeq
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((h (cat-9:left-hmeq (cat-9:sphere 3)))
              (c (cat-9:cobar h)))
         (inspect c)))

@@ -2,11 +2,11 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 
 (test ls-hat-t-u
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((c (cat-9:ls-hat-t-u (cat-9:deltab)))
             allp allp-degr gnrt)
         (dotimes (i 10)
@@ -36,7 +36,7 @@
 
 
 (test ls-hat-u-t
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((c (cat-9:ls-hat-u-t (cat-9:deltab)))
             allp allp-degr gnrt)
         (dotimes (i 10)
@@ -66,7 +66,7 @@
 
 
 (test ls-left-hmeq-hat
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((c (cat-9:ls-left-hmeq-hat (cat-9:deltab)))
             allp allp-degr gnrt)
         (dotimes (i 10)
@@ -109,7 +109,7 @@
 
 
 (test ls-pre-left-hmeq-left-reduction-h-intr
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((r (cat-9:ls-pre-left-hmeq-left-reduction-h-intr (cat-9:deltab))))
         (setf cat-9:*tnpr-with-degrees* t)
         (funcall r (cat-9:cmbn 10 1 (cat-9:tnpr 3 (cat-9:allp 2 'a 1 'b)
@@ -128,7 +128,7 @@
 
 #|
 (test ls-pre-left-hmeq-left-reduction
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((rdct (cat-9:ls-pre-left-hmeq-left-reduction (cat-9:deltab)))
              (allp (random-allp 3))
              (allp-degr (apply #'+ (mapcar #'car (cat-9:allp-list allp))))
@@ -160,7 +160,7 @@
 
 
 (test ls-left-hmeq-left-reduction
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((rdct (cat-9:ls-left-hmeq-left-reduction (cat-9:deltab2))))
         (cat-9:pre-check-rdct rdct)
         #|
@@ -184,7 +184,7 @@
 
 
 (test ls-pre-left-hmeq-right-reduction
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((r (cat-9:ls-pre-left-hmeq-right-reduction (cat-9:deltab2))))
         (cat-9:pre-check-rdct r)
         (setf cat-9:*tc* (cat-9:cmbn 0 1 (cat-9:bsgn (cat-9:tcc r))))
@@ -211,7 +211,7 @@
 
 
 (test ls-left-hmeq-right-reduction
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((r (cat-9:ls-left-hmeq-right-reduction (cat-9:deltab2))))
         (cat-9:pre-check-rdct r)
         (setf cat-9:*tc* (cat-9:cmbn 0 1 (cat-9:bsgn (cat-9:tcc r))))
@@ -238,7 +238,7 @@
 
 #|
 (test ls-left-hmeq
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((h (cat-9:ls-left-hmeq (cat-9:deltab2)))
              (loop (cat-9:loop3 0 (cat-9:mask 5) 2))
              (allp (cat-9:allp 2 (cat-9:mask 4) 3 (cat-9:mask 5)))
@@ -255,7 +255,7 @@
 |#
 
 (test loop-space
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((l (cat-9:loop-space (cat-9:sphere 2)))
             (oos3 (cat-9:loop-space (cat-9:loop-space (cat-9:sphere 3))))
             (ooos4 (cat-9:loop-space (cat-9:loop-space (cat-9:loop-space

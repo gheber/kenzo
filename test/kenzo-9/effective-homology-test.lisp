@@ -2,11 +2,11 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 (test cdelta
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((cc (cdelta 5))
                (hmeq (cat-9:trivial-hmeq cc)))
           (declare (ignore hmeq))
@@ -20,7 +20,7 @@
 
 (test make-rdct
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let ((rdct (make-rdct 6 3)))
           (is (equal (cat-9:orgn rdct) '(REDUCTION DELTA 6 3)))
           (cat-9:pre-check-rdct rdct)
@@ -32,7 +32,7 @@
 
 (test cmps
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((trdct (make-rdct 6 4))
                (brdct (make-rdct 4 3))
                (rdct (cat-9:cmps brdct trdct)))
@@ -45,7 +45,7 @@
 
 (test zero-mrph
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((rdct (make-rdct 6 3))
                (perturb (cat-9:zero-mrph (cdelta 6) (cdelta 6) -1))
                (new-rdct (cat-9:add rdct perturb)))
@@ -57,7 +57,7 @@
 
 (test opps
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((rdct (make-rdct 6 3))
                (perturb (cat-9:opps (cat-9:dffr (cat-9:tcc rdct))))
                (new-rdct (cat-9:add rdct perturb)))
@@ -70,7 +70,7 @@
 ;; an absurd reduction ; just to test bpl-*-sigma
 (test bpl-*-sigma
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((tcc (cat-9:build-chcm
                      :cmpr #'cat-9:l-cmpr
                      :basis :locally-effective
@@ -105,7 +105,7 @@
 
 (test trivial-hmeq
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let ((hmeq (cat-9:trivial-hmeq (cdelta 4))))
           (cat-9:add (cat-9:lrdct hmeq) (cat-9:opps (cat-9:dffr (cdelta 4))))
           (setf hmeq (cat-9:add hmeq (cat-9:opps (cat-9:dffr (cdelta 4)))))

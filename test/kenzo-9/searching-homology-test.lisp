@@ -2,10 +2,10 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 (test homology
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let ((d (cat-9:delta 3)))
           (princ (cat-9:homology d 0)))))

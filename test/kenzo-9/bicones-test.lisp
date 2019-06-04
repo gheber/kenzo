@@ -2,7 +2,7 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 (test bicn-cmbn
       (let* ((comb-bic (cat-9:cmbn 3 2 (cat-9:bcnb 'b1) 4 (cat-9:bcnb 'b2)
@@ -63,7 +63,7 @@
 
 (test bicone
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let ((delta3 (cdelta1 3))
               (bic (cat-9:bicone (make-rdct1 3 2) (make-rdct1 4 2))))
           #|
@@ -88,7 +88,7 @@
 
 (test cmps
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((c (cat-9:build-chcm
                    :cmpr #'cat-9:s-cmpr
                    :basis #'(lambda (dmns) '(a))

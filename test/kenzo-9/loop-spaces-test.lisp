@@ -2,7 +2,7 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 
 (test normalize-loop
@@ -51,7 +51,7 @@
 
 
 (test apowr-face4
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((face (cat-9:face (cat-9:delta-infinity))))
         (cat-9:apowr-face4 face 3 4 (cat-9:apowr 1 31 5))
         (setf face (cat-9:face (cat-9:sphere 5)))
@@ -60,7 +60,7 @@
 
 
 (test apowr-lastface4
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((cmpr #'cat-9:f-cmpr)
             (face (cat-9:face (cat-9:delta-infinity))))
         (cat-9:apowr-lastface4 cmpr face 4 (cat-9:apowr 0 63 1))
@@ -87,7 +87,7 @@
 
 
 (test loop-space-face
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((cmpr #'cat-9:f-cmpr)
              (face (cat-9:face (cat-9:delta-infinity)))
              (rslt (cat-9:loop-space-face cmpr face)))
@@ -114,7 +114,7 @@
 
 
 (test loop-space
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((g (cat-9:gdeltab))
             basis cmbn cmbn2 dd echcm efhm hat loop-list rslt x)
         (is (equal :equal (cat-9:cmpr g (cat-9:loop3 0 3 2) (cat-9:loop3 0 3 2))))
@@ -181,7 +181,7 @@
 
 
 (test loop-space2
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((p (cat-9:r-proj-space 3))
              (op (cat-9:loop-space p))
              cmpr c)

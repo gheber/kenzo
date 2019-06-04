@@ -2,8 +2,7 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
-
+(in-suite :kenzo-9)
 
 (test tnpr
       (cat-9:tnpr 2 'a 3 'b)
@@ -58,7 +57,7 @@
 
 
 (test tnsr-prdc-intr-dffr
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((chcm (cat-9:build-chcm :cmpr #'cat-9:s-cmpr
                                    :basis :locally-effective
                                    :intr-dffr #'cat-9:zero-mrph
@@ -88,7 +87,7 @@
 
 
 (test tnsr-prdc-intr
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((chcm (cat-9:build-chcm :cmpr #'cat-9:s-cmpr
                                    :basis :locally-effective
                                    :intr-dffr #'cat-9:zero-mrph
@@ -118,7 +117,7 @@
 
 
 (test tnsr-prdc
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((d (cat-9:dffr (cat-9:delta-infinity)))
              (dd (cat-9:tnsr-prdc d d))
              (ddd (cat-9:cmps dd dd)))
@@ -133,7 +132,7 @@
 
 
 (test tnsr-prdc1
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((r (cat-9:ez (cat-9:delta-infinity) (cat-9:delta-infinity)))
              (r2 (cat-9:tnsr-prdc r r)))
         (setf cat-9:*bc* (cat-9:cmbn 4 1 (cat-9:tnpr 2 (cat-9:tnpr 1 3 1 3) 2
@@ -145,7 +144,7 @@
 
 
 (test tnsr-prdc2
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((k (cat-9:k-z 2))
              (k2 (cat-9:tnsr-prdc k k)))
         (cat-9:homology k2 0 10)))

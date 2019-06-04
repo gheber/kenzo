@@ -2,7 +2,7 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 (test k-z-1-cmpr
       (is (equal :less (cat-9:k-z-1-cmpr '(1 1 2) '(1 2 2))))
@@ -101,7 +101,7 @@
 
 
 (test kz1-rdct
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (cat-9:pre-check-rdct (cat-9:kz1-rdct))
       (setf cat-9:*tc* (cat-9:cmbn 0 1 '()))
       (setf cat-9:*bc* (cat-9:cmbn 0 1 '*))
@@ -117,7 +117,7 @@
 
 
 (test k-z-1-homology
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (cat-9:homology (cat-9:k-z-1) 1))
 
 
@@ -153,7 +153,7 @@
 
 
 (test gmsm-cocycle
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((d (cat-9:delta 10))
              (chml-clss (cat-9:build-mrph :sorc d :trgt (cat-9:z-chcm) :degr -2
                                         :intr #'(lambda (dmns gmsm)
@@ -171,7 +171,7 @@
         (cat-9:gmsm-cocycle (cat-9:face d) 1 4 31 chml-clss)))
 
 (test z-cocycle-gbar
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((d (cat-9:delta 10))
              (chml-clss (cat-9:build-mrph :sorc d :trgt (cat-9:z-chcm) :degr -1
                                         :intr #'(lambda (dmns gmsm)
@@ -221,7 +221,7 @@
 
 
 (test z-cocycle-gbar-head
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((d (cat-9:delta 10))
              (chml-clss
               (cat-9:build-mrph :sorc d :trgt (cat-9:z-chcm) :degr -1
@@ -279,7 +279,7 @@
 
 
 (test z2-cocycle-gbar
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((d (cat-9:delta 10))
              (chml-clss
               (cat-9:build-mrph :sorc d :trgt (cat-9:z-chcm) :degr -1
@@ -315,7 +315,7 @@
 
 
 (test z2-cocycle-gbar-head
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((d (cat-9:delta 10))
              (chml-clss
               (cat-9:build-mrph :sorc d :trgt (cat-9:z-chcm) :degr -1
@@ -357,7 +357,7 @@
 
 
 (test k-z-fundamental-class
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((c1 (cat-9:k-z-fundamental-class 1))
             (c3 (cat-9:k-z-fundamental-class 3)))
         (cat-9:? c1 1 '(34))
@@ -366,7 +366,7 @@
 
 
 (test k-z2-fundamental-class
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((c1 (cat-9:k-z2-fundamental-class 1))
             (c3 (cat-9:k-z2-fundamental-class 3)))
         (cat-9:? c1 1 1)

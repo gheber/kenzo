@@ -2,7 +2,7 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 (test do-control
       (let ((comb (cat-9:do-control #'cat-9:s-cmpr (cat-9:cmbn 0 1 'a 1 'b -1 'c))))
@@ -27,7 +27,7 @@
 
 (test gnrt-?
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((cc (cat-9:build-chcm :cmpr #'cat-9:f-cmpr
                                    :basis :locally-effective
                                    :bsgn 0
@@ -53,7 +53,7 @@
 (test cmbn-?
       (progn
         (compile 'ff)
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((cc (cat-9:build-chcm :cmpr #'cat-9:f-cmpr
                                    :basis :locally-effective
                                    :bsgn 0

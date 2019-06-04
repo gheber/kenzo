@@ -2,7 +2,7 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 
 (test shuffle-sign
@@ -27,7 +27,7 @@
 
 
 (test eml
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((d (cat-9:delta-infinity))
              (eml (cat-9:eml d d)))
         (cat-9:? eml (cat-9:cmbn 3 1 (cat-9:tnpr 0 1 3 30)
@@ -36,26 +36,14 @@
                              1000 (cat-9:tnpr 3 15 0 16)))))
 
 
-(when (or (string= (package-name (find-package 'cat)) "CAT-7")
-          (string= (package-name (find-package 'cat)) "CAT-8"))
-  (test intr-phi
-        (cat-9:cat-9-init)
-        (let* ((d (cat-9:delta-infinity))
-               (rslt (cat-9:intr-phi d d)))
-          (funcall rslt (cat-9:cmbn 3 1 (cat-9:crpr 0 15 0 15)))
-          (funcall rslt (cat-9:cmbn 2 1 (cat-9:crpr 0 7 0 7)))
-          (funcall rslt (cat-9:cmbn 1 1 (cat-9:crpr 0 3 0 3)))
-          (funcall rslt (cat-9:cmbn 0 1 (cat-9:crpr 0 1 0 1))))))
-
-
 (test phi
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((phi (cat-9:phi (cat-9:delta-infinity) (cat-9:delta-infinity))))
         (cat-9:? phi 3 (cat-9:crpr 0 15 0 15))))
 
 
 (test eat
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((s (cat-9:sphere 5))
              (p (cat-9:crts-prdc s s))
              (b (cat-9:basis p 8))
@@ -69,7 +57,7 @@
 
 
 (test intr-aw
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((r (cat-9:intr-aw #'cat-9:delta-face #'cat-9:delta-face))
              (s (cat-9:sphere 3))
              (f (cat-9:face s)))
@@ -79,14 +67,14 @@
 
 
 (test aw
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((aw (cat-9:aw (cat-9:delta-infinity) (cat-9:delta-infinity))))
         (cat-9:? aw (cat-9:cmbn 3 1 (cat-9:crpr 0 15 0 30)
                             -1 (cat-9:crpr 0 23 0 29)))))
 
 
 (test ez
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((ez (cat-9:ez (cat-9:delta-infinity) (cat-9:delta-infinity))))
         (setf cat-9:*bc* (cat-9:cmbn 3 1 (cat-9:tnpr 0 1 3 30)
                                  10 (cat-9:tnpr 1 96 2 896)
@@ -101,7 +89,7 @@
 
 
 (test eat1
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((s (cat-9:sphere 5))
              (ez (cat-9:ez s s))
              (b (cat-9:basis (cat-9:tcc ez) 8))
@@ -117,7 +105,7 @@
 
 
 (test crts-prdc
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((k (cat-9:k-z 2))
              (k2 (cat-9:crts-prdc k k)))
         (cat-9:homology k2 0 10)))

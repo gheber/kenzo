@@ -2,7 +2,7 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 (defun ccn ()
   (the cat-9:chain-complex
@@ -21,7 +21,7 @@
 
 (test ccn
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((ccn (ccn))
                (upper-shift (cat-9:build-mrph
                              :sorc ccn :trgt ccn :strt :gnrt :degr 1

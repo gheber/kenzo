@@ -2,12 +2,12 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 
 #|
 (test fibration-total-face
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((h (cat-9:hopf 1))
              (sf (cat-9:serre-face h)))
         (funcall sf 0 2 (cat-9:crpr 0 's2 0 '(2 4)))
@@ -18,7 +18,7 @@
 
 
 (test fibration-total
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((s2 (cat-9:sphere 2))
              (k (cat-9:k-z-1))
              (tw (cat-9:build-smmr
@@ -34,7 +34,7 @@
 
 
 (test fibration-total1
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((s2 (cat-9:sphere 2))
              (k (cat-9:k-z2-1))
              (tw (cat-9:build-smmr
@@ -50,7 +50,7 @@
 
 #|
 (test fibration-total2
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((tw (cat-9:kdivide-z2-twist opr opr-chml-clss))
              (pr-4 (cat-9:fibration-total tw))
              (absm (cat-9:absm 0 (cat-9:crpr 0 (cat-9:loop3 0 5 2) 0 4)))
@@ -62,7 +62,7 @@
 
 
 (test fibration-total3
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((os3-fibration os3-fibration)
              (total (cat-9:fibration-total os3-fibration))
              (absm (cat-9:absm 1 (cat-9:crpr 0 (cat-9:loop3 1 's3 1 2 's3 -2)

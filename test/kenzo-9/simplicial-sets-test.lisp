@@ -2,7 +2,7 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 (test dgop-ext-int
       (is (= 0 (cat-9:dgop-ext-int '())))

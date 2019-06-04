@@ -5,8 +5,8 @@
 (require 'asdf)
 
 (asdf:operate 'asdf:load-op :kenzo-test)
-(fiveam:run! :kenzo-7)
-(fiveam:run! :kenzo-8)
+;;(fiveam:run! :kenzo-7)
+;;(fiveam:run! :kenzo-8)
 (fiveam:run! :kenzo-9)
 
 #+(or ecl ccl) (quit)

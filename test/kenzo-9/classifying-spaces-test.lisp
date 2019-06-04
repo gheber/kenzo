@@ -2,7 +2,7 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 
 (test normalize-gbar
@@ -86,7 +86,7 @@
 
 
 (test classifying-space-basis
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((k (cat-9:k-z2-1))
              (b (cat-9:classifying-space-basis (cat-9:basis k))))
         (funcall b 0)
@@ -106,7 +106,7 @@
 
 
 (test classifying-space
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((c (cat-9:classifying-space (cat-9:k-z2-1))))
         (cat-9:orgn c)
         (first (cat-9:basis c 4))
@@ -135,7 +135,7 @@
 
 
 (test classifying-space1
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let* ((k-z-1 (cat-9:k-z-1))
              (k-z-2 (cat-9:classifying-space k-z-1))
              (k-z-3 (cat-9:classifying-space k-z-2))

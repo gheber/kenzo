@@ -2,7 +2,7 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 (test f-cmpr
       (is (equal (cat-9:f-cmpr 1 2) :less))

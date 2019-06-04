@@ -2,7 +2,7 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 (test binomial-n-p
       (let ((rslt '(1 5 10 10 5 1)))

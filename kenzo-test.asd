@@ -98,8 +98,7 @@
                       :components ((:file "package")
                                    (:file "common")
                                    ;; === test files ===
-                                   (:file "bar-test")
-                                   #|
+                                   ;;(:file "bar-test")
                                    (:file "bicones-test")
                                    (:file "cartesian-products-test")
                                    (:file "ccn")
@@ -121,7 +120,7 @@
                                    (:file "homology-groups-test")
                                    (:file "k-pi-n-test")
                                    (:file "kan-test")
-                                   (:file "loop-spaces-test")
+                                   ;;(:file "loop-spaces-test")
                                    (:file "lp-space-efhm-test")
                                    (:file "ls-twisted-products-test")
                                    (:file "macros-test")
@@ -136,5 +135,4 @@
                                    (:file "tensor-products-test")
                                    (:file "various-test")
                                    (:file "whitehead-test")
-                                   |#
                                    ))))))

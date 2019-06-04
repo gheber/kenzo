@@ -2,7 +2,7 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 (test con-test
       (cat-9:con0 'a)
@@ -71,7 +71,7 @@
 
 (test cone
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((k (cat-9:k-z 1))
                (u (cat-9:idnt-mrph k))
                (c (cat-9:cone u))
@@ -96,7 +96,7 @@
 
 (test cone-3mrph-triangle
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((d (cat-9:delta 4))
                (df (cat-9:dffr (cat-9:delta 4)))
                (n (cat-9:idnt-mrph d))

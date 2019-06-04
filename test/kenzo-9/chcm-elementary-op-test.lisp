@@ -2,11 +2,11 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 (test zero-mrph
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((z (cat-9:zero-mrph (cat-9:Z-chcm) (cat-9:Z-chcm) 2))
                (z2 (cat-9:zero-mrph (cat-9:Z-chcm) (cat-9:Z-chcm) 2))
                (z3 (cat-9:zero-mrph (cat-9:Z-chcm) (cat-9:Z-chcm) 3))
@@ -25,7 +25,7 @@
 
 (test idnt-mrph
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((zi (cat-9:idnt-mrph (cat-9:Z-chcm)))
                (comb (cat-9:gnrt-? zi 0 :z-gnrt))
                (zi2 (cat-9:idnt-mrph (cat-9:Z-chcm))))
@@ -36,7 +36,7 @@
 
 (test opps
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((-zi (cat-9:opps (cat-9:idnt-mrph (cat-9:Z-chcm))))
                (comb (cat-9:gnrt-? -zi 0 :z-gnrt))
                (-zi2 (cat-9:opps (cat-9:idnt-mrph (cat-9:Z-chcm)))))
@@ -49,7 +49,7 @@
 
 (test cmps
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((cc (cat-9:build-chcm :cmpr #'cat-9:f-cmpr
                                    :basis :locally-effective
                                    :bsgn 0
@@ -90,7 +90,7 @@
 
 (test n-mrph
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((s3 (cat-9:sphere 3))
                (ch3 (cat-9:chml-clss s3 3))
                (2ch3 (cat-9:n-mrph 2 ch3))
@@ -110,7 +110,7 @@
 (setf cat-9:+too-much-time+ -1)
 (test add
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((cc (cat-9:build-chcm :cmpr #'cat-9:f-cmpr
                                    :basis :locally-effective
                                    :bsgn 0
@@ -144,7 +144,7 @@
 
 (test sbtr
       (progn
-        (cat-9:cat-9-init)
+        (cat-9:cat-init)
         (let* ((cc (cat-9:build-chcm :cmpr #'cat-9:f-cmpr
                                    :basis :locally-effective
                                    :bsgn 0

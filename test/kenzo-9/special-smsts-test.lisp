@@ -2,7 +2,7 @@
 
 (in-package :kenzo-test-9)
 
-(in-suite :kenzo)
+(in-suite :kenzo-9)
 
 (test finite-ss-pre-table
       (let ((p (cat-9:finite-ss-pre-table '(0 v0 v1 v2))))
@@ -40,7 +40,7 @@
 TR is NIL. Why?
 
 (test build-finite-ss
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let (tr (cat-9:build-finite-ss '(s0 s1 s2
                                       1 s01 (s1 s0) s02 (s2 s0) s12 (s2 s1)
                                       2 s012 (s12 s02 s01))))
@@ -58,7 +58,7 @@ TR is NIL. Why?
 |#
 
 (test sphere
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((s3 (cat-9:sphere 3))
             d)
         (funcall (cat-9:cmpr s3) 's3 's3)
@@ -73,7 +73,7 @@ TR is NIL. Why?
 
 
 (test sphere-wedge
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((w (cat-9:sphere-wedge 3 2 3)))
         (funcall (cat-9:cmpr w) 's3-1 's3-2)
         (dotimes (i 5) (print (funcall (cat-9:basis w) i)))
@@ -82,7 +82,7 @@ TR is NIL. Why?
 
 
 (test moore
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((m4 (cat-9:moore 2 4)))
         (cat-9:cmpr m4 'n5 'n5)
         (dotimes (i 7)
@@ -104,7 +104,7 @@ TR is NIL. Why?
 
 
 (test R-proj-space
-      (cat-9:cat-9-init)
+      (cat-9:cat-init)
       (let ((p (cat-9:R-proj-space)))
         (cat-9:basis p 4)
         (dotimes (i 5)
@@ -124,41 +124,3 @@ TR is NIL. Why?
         (setf dd (cat-9:cmps p p))
         (dotimes (i 7)
           (print (cat-9:? dd i i)))))
-
-(when (or (string= (package-name (find-package 'cat)) "CAT-7")
-          (string= (package-name (find-package 'cat)) "CAT-8"))
-  (test gmsms-subsmst
-        (cat-9:cat-9-init)
-        (let* ((k (cat-9:k-z 2))
-               (efhm (cat-9:efhm k))
-               g cmbn kf incl cone s2 cl2 f2 s3
-
-               )
-          (setf cat-9:*homology-verbose* nil)
-          (setf g (first (cat-9:chcm-homology-gen (cat-9:rbcc efhm) 4)))
-          (setf cmbn (cat-9:lf efhm (cat-9:rg efhm g)))
-          (multiple-value-setq (kf incl) (cat-9:gmsms-subsmst k cmbn))
-          (setf cone (cat-9:cone incl))
-          (cat-9:efhm cone)
-          (cat-9:homology kf 0 5)
-          (cat-9:homology (cat-9:cone incl) 0 6)
-
-          (setf g (first (cat-9:chcm-homology-gen (cat-9:rbcc efhm) 8)))
-          (setf cmbn (cat-9:lf efhm (cat-9:rg efhm g)))
-          (multiple-value-setq (kf incl) (cat-9:gmsms-subsmst k cmbn))
-          (setf cone (cat-9:cone incl))
-          (cat-9:efhm cone)
-          (cat-9:homology kf 0 9)
-          (cat-9:homology (cat-9:cone incl) 0 10)
-          (dotimes (i 9) (print (length (cat-9:basis kf i))))
-
-          (setf s2 (cat-9:sphere 2))
-          (setf cl2 (cat-9:chml-clss s2 2))
-          (setf f2 (cat-9:z-whitehead s2 cl2))
-          (setf s3 (cat-9:fibration-total f2))
-          (setf efhm (cat-9:efhm s3))
-          (cat-9:basis (cat-9:rbcc efhm) 3)
-          (setf cmbn (cat-9:lf efhm (cat-9:rg efhm 3 (first (cat-9:basis
-                                                         (cat-9:rbcc efhm) 3)))))
-          (setf kf (cat-9:gmsms-subsmst s3 cmbn))
-          (cat-9:homology kf 0 4))))
