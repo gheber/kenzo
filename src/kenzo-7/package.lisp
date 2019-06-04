@@ -1,7 +1,7 @@
 ;;;; -*- Mode: Lisp; Syntax: ANSI-Common-Lisp; Base: 10 -*
 
 (defpackage #:cat-7
-  (:nicknames "CAT")
+  (:nicknames "CAT" "KENZO")
   (:use #:cl)
   (:export #:KENZO-VERSION
 
