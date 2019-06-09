@@ -76,7 +76,7 @@
 	(when found
 	  (push (k idnm) k-list))))
     (mapc #'kd (nreverse (mapcar #'idnm k-list)))))
-    
+
 
 (DEFVAR *CHCM-LIST*)
 (SETF *CHCM-LIST* +empty-list+)
@@ -352,7 +352,7 @@
                                  (/ runtime internal-time-units-per-second))))
                            (declare (single-float rntm))
                            (incf *results-cmlt-tm* rntm)
-                           rntm)))                     
+                           rntm)))
                 (mapl #'(lambda (mark)
                           (declare (cons mark))
                           (incf (car mark) runtime))
@@ -371,7 +371,7 @@
                (:less (setf right middle))
               (:greater (setf left middle)))))))
 
-	   
+
 (DEFUN MRPH-CMBN (scmpr2 tcmpr2 intr cmbn strt memory)
   ;;; called only in case of :gnrt or :rcrs strategy.
   (declare (type intr-mrph intr)
@@ -399,16 +399,18 @@
    (declare
       (type cmprf cmpr)
       (type cmbn cmbn))
-   (let ((list (cmbn-list cmbn)))
-      (declare (list list))
-      (do ((mark1 (rest list) (cdr mark1))
-	   (mark2 list mark1))
-	  ((endp mark1))
-	 (declare (list mark1 mark2))
-	 (unless (eq :less (funcall cmpr (-gnrt mark2) (-gnrt mark1)))
-	    (setf *wrong-cmbn* cmbn)
-	    (error "In the combination located by *WRONG-CMBN*, the generators:~@
-                    ~A and ~A are in a wrong order." (cdar mark2) (cdar mark1)))))
+   (when *cmbn-control*
+     (let ((list (cmbn-list cmbn)))
+       (declare (list list))
+       (do ((mark1 (rest list) (cdr mark1))
+            (mark2 list mark1))
+           ((endp mark1))
+         (declare (list mark1 mark2))
+         (unless (eq :less (funcall cmpr (-gnrt mark2) (-gnrt mark1)))
+           (setf *wrong-cmbn* cmbn)
+           (error "In the combination located by *WRONG-CMBN*, the generators:~@
+                    ~A and ~A are in a wrong order." (cdar mark2)
+                    (cdar mark1))))))
    cmbn)
 
 #|
@@ -436,7 +438,7 @@
 
 (DEFUN PROFILER-OFF (mrph)
    (declare (type morphism mrph))
-   (let ((time-spent 
+   (let ((time-spent
           (- (get-internal-run-time) (pop *profiler-stack*))))
       (declare (integer time-spent))
       (mapl #'(lambda (mark)

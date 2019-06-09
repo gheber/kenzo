@@ -320,3 +320,4 @@
   (setf sk (suspension (k-z 2)))
   (homology sk 0 10)
 |#
+  

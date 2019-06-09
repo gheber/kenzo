@@ -12,7 +12,7 @@
 
 (DEFTYPE ANY () t)
 
-;;; 
+;;;
 ;;;  COMBINATIONS
 ;;;
 
@@ -201,7 +201,7 @@
     (result-gnrt result) (result-value result)
     (result-clnm result) (result-rntm result))
   result)
-  
+
 #|
 (make-result :gnrt 'a :value '(a a) :clnm 23 :rntm 2.345)
 |#
@@ -419,7 +419,7 @@
                    (format stream "[~D ~A]" degr gnrt)))
       (format stream ">>")
       abar)))
-  
+
 
 
 ;;;
@@ -433,7 +433,7 @@
 (DEFTYPE GMSM () 'gnrt)
 
 ;;  DLOP = DeL OPerator
-(DEFTYPE DLOP () 'dgop) 
+(DEFTYPE DLOP () 'dgop)
 
 #|
 ;; IABSM = Internal ABstract SiMplex
@@ -442,7 +442,7 @@
   (the boolean
      (and (consp object)
 	  (typep (car object) 'dgop)
-	  (typep (cdr object) 'gmsm))))	   
+	  (typep (cdr object) 'gmsm))))
 
 (DEFTYPE IABSM () '(satisfies iabsm-p))
 |#
@@ -490,9 +490,7 @@
 (DEFUN SOFT-DLOP-P (object)
    (declare (type any object))
    (the boolean
-      (and (consp object)
-           (eq :delt (car object))
-           (typep (cdr object) 'dgop))))
+        (delta-p object)))
 
 (DEFTYPE SOFT-DLOP () '(satisfies soft-dlop-p))
 
@@ -604,7 +602,7 @@
 (DEFUN DGOP-EXT-INT (ext-dgop)
    (declare (list ext-dgop))
           ;; (list fixnum)
-   (when ext-dgop   
+   (when ext-dgop
       (unless (apply #'> ext-dgop)
          (error "In DGOP-EXT-INT, the external dgop ~A is not decreasing." ext-dgop)))
    (the fixnum

@@ -4,6 +4,8 @@
 
 (IN-PACKAGE #:cat-9)
 
+(PROVIDE "fibrations-dvf")
+
 (DEFUN TWISTED-EZ
     (twisted-product &aux
                      (base-space (sorc (second (orgn twisted-product))))

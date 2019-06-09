@@ -21,7 +21,7 @@
             (cond ((typep item 'fixnum)
                    (let ((found (assoc item pre-rslt)))
                       (declare (list found))
-                      (setf dmns-mark 
+                      (setf dmns-mark
                             (or found
                                 (car (push (list item) pre-rslt)))
                             gmsm-mark nil)))
@@ -37,7 +37,7 @@
                    (nconc gmsm-mark item)
                    (setf gmsm-mark nil))
                   (t
-                     (error "In BUILD-FINITE-SS, the argument ~A does not make sense." item))))         
+                     (error "In BUILD-FINITE-SS, the argument ~A does not make sense." item))))
          (do ((mark1 pre-rslt (cdr mark1)))
              ((endp mark1))
              (declare (list mark1))
@@ -56,7 +56,7 @@
 (finite-ss-pre-table '(0 v0 v0 v2))
 (setf p (finite-ss-pre-table '(0 v0 v1 1 e0 e1 e2)))
 (finite-ss-pre-table '(0 v0 v1 1 e0 e1 v1))
-(setf p (finite-ss-pre-table '(0 v0 (v0 v0))))	
+(setf p (finite-ss-pre-table '(0 v0 (v0 v0))))
 (setf p (finite-ss-pre-table '(0 v0 v1 v2 0 v3)))
 (finite-ss-pre-table '(0 v0 (v0 v0) (v1 v1)))
 (finite-ss-pre-table '(0 (v0 v0) (v1 v1)))
@@ -92,7 +92,7 @@
          (declare (type (or cons null) found))
          (when found
             (return-from finite-ss-find-gmsm dmns)))))
- 
+
 (DEFUN FINITE-SS-FINISH-TABLE (table bspn)
    (declare (simple-vector table))
    (dotimes (dmns (length table))
@@ -634,43 +634,46 @@
 (setf d3 (delta 3))
 (display-finite-ss d3 4)
 |#
-            
-                                 
-                
-                      
-        
-      
+
+(defun absm-ext-int (vlist)
+  (do ((dgop nil)
+       (gmsm (list (first vlist)))
+       (mark (rest vlist) (cdr mark))
+       (idgop 0 (1+ idgop)))
+      ((endp mark) (absm (dgop-ext-int dgop)
+                         (dgop-ext-int gmsm)))
+    (if (= (first gmsm) (car mark))
+        (push idgop dgop)
+        (push (car mark) gmsm))))
 
 
+(defun absm-int-ext (absm)
+  (with-absm
+      (dgop gmsm) absm
+      (do ((dgop (nreverse (dgop-int-ext dgop)))
+           (gmsm (rest (dlop-int-ext gmsm)))
+           (i 0 (1+ i))
+           (rslt (list (first (dlop-int-ext gmsm)))))
+          ((and (endp dgop) (endp gmsm)) (nreverse rslt))
+        (if dgop
+            (if (= i (car dgop))
+                (progn
+                  (pop dgop)
+                  (push (first rslt) rslt))
+                (push (pop gmsm) rslt))
+            (return (nreconc rslt gmsm))))))
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
+(defun vertex-i (absm i)
+  (with-absm
+      (dgop gmsm) absm
+      (let ((dgop (nreverse (dgop-int-ext dgop)))
+            (gmsm (dlop-int-ext gmsm)))
+        (do ((dgop-mark dgop)
+             (gmsm-mark gmsm)
+             (ii 0 (1+ ii)))
+            ((= i ii) (car gmsm-mark))
+          (if (and dgop-mark
+                   (= ii (car dgop-mark)))
+              (pop dgop-mark)
+              (pop gmsm-mark))))))
