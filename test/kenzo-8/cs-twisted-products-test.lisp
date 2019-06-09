@@ -22,6 +22,7 @@
                                                    0 '(100000) 0 '())
                                      0 '()))))
 
+#|
 (test smgr-crts-contraction
       (cat-8:cat-init)
       (let* ((chi (cat-8:smgr-crts-contraction (cat-8:k-z-1)))
@@ -93,3 +94,4 @@
                                                      0 '())))
         (cat-8:? chi cat-8:*tc*)
         (check-rdct)))
+|#
