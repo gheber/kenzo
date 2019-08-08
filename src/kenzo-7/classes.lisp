@@ -129,7 +129,7 @@ the symbol :LOCALLY-EFFECTIVE.
 
 
 ;; INTR-MRPH = INTeRnal-MoRPHism
-(DEFTYPE INTR-MRPH () '(or function morphism #+(or ccl ecl) null))
+(DEFTYPE INTR-MRPH () '(or function null))
 ;; (or (function (degr gnrt) cmbn)  ;; if :gnrt strategy
 ;;     (function (cmbn) (cmbn))     ;; if :cmbn strategy
 
