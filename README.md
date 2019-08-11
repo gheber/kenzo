@@ -28,3 +28,5 @@ Please consult the [Wiki](https://github.com/gheber/kenzo/wiki) for
 *news*, different installation methods, and other Kenzo topics.
 
 Enjoy!
+
+![Overview](https://github.com/gheber/kenzo/blob/master/misc/Overview.png)
