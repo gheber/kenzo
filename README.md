@@ -25,6 +25,6 @@ first time you try to access the
 site, you will be prompted to authenticate via GitHub.
 
 Please consult the [Wiki](https://github.com/gheber/kenzo/wiki) for
-different installation methods and other Kenzo topics.
+*news*, different installation methods and other Kenzo topics.
 
 Enjoy!
