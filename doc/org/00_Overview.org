@@ -1,24 +1,28 @@
-#+BEGIN_SRC lisp :session 00 :exports none :results silent
+#+TITLE: Overview
+#+OPTIONS: toc:nil num:t
+#+PROPERTY: header-args :eval never-export :exports both :tangle yes
+
+#+BEGIN_SRC lisp :exports none :results silent
 (ql:quickload "kenzo")
 (use-package :cat)
 #+END_SRC
 
-
-* Overview
-
-Let us begin by the space $\mathrm{Moore}(\mathbb{Z}/2\mathbb{Z}, 3)$ described
-as a simplicial set having only three non-degenerate simplices, namely in
-dimension $0$, $3$ and $4$. In the  representation created by the software,
-the 0-simplex (base point), the 3-simplex and the 4-simplex are respectively
-labelled =*=, =M3= and =N4=. The faces 0 and 2 of the 4-simplex =N4= are
+Let us begin by the space $\mathrm{Moore}(\mathbb{Z}/2\mathbb{Z}, 3)$
+described as a simplicial set having only three non-degenerate simplices,
+namely in dimension $0$, $3$ and $4$. In the representation created by the
+software, the 0-simplex (base point), the 3-simplex and the 4-simplex are
+respectively labelled =*=, =M3= and =N4=. The faces 0 and 2 of the 4-simplex =N4= are
 identified with (pasted to) the 3-simplex =M3=, the others being contracted on
 the base point. To create the simplicial set one types simply:
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar m23)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+RESULTS:
+: M23
+
+#+BEGIN_SRC lisp
 (setf m23 (moore 2 3))
 #+END_SRC
 
@@ -28,7 +32,7 @@ the base point. To create the simplicial set one types simply:
 The system answers that a Kenzo object has been created, with number 1 and
 type =SIMPLICIAL SET=. This object may be referenced by the symbol =m23=.
 
-#+BEGIN_SRC lisp :session 00
+#+BEGIN_SRC lisp :exports none
 m23
 #+END_SRC
 
@@ -40,7 +44,7 @@ complex induced by the simplicial set description. Here we compute the $H_i$
 from 0 to 4 included. When in the answer the component part is void, it means
 that the corresponding homology group is null.
 
-#+BEGIN_SRC lisp :session 00 :results output
+#+BEGIN_SRC lisp :results output
 (homology m23 0 5)
 #+END_SRC
 
@@ -51,9 +55,9 @@ Computing boundary-matrix in dimension 0.
 Rank of the source-module : 1.
 
 
-;; Clock -> 2017-12-28, 0h 13m 32s.
+;; Clock -> 2019-12-15, 22h 27m 55s.
 Computing the boundary of the generator 1/1 (dimension 0) :
-,* 
+,*
 End of computing.
 
 
@@ -71,7 +75,7 @@ Component Z
 
 ---done---
 
-;; Clock -> 2017-12-28, 0h 13m 32s.
+;; Clock -> 2019-12-15, 22h 27m 55s.
 
 
 Computing boundary-matrix in dimension 1.
@@ -90,7 +94,7 @@ Homology in dimension 1 :
 
 ---done---
 
-;; Clock -> 2017-12-28, 0h 13m 32s.
+;; Clock -> 2019-12-15, 22h 27m 55s.
 
 
 Computing boundary-matrix in dimension 2.
@@ -101,9 +105,9 @@ Computing boundary-matrix in dimension 3.
 Rank of the source-module : 1.
 
 
-;; Clock -> 2017-12-28, 0h 13m 32s.
+;; Clock -> 2019-12-15, 22h 27m 55s.
 Computing the boundary of the generator 1/1 (dimension 3) :
-M3 
+M3
 End of computing.
 
 
@@ -115,16 +119,16 @@ Homology in dimension 2 :
 
 ---done---
 
-;; Clock -> 2017-12-28, 0h 13m 32s.
+;; Clock -> 2019-12-15, 22h 27m 55s.
 
 
 Computing boundary-matrix in dimension 3.
 Rank of the source-module : 1.
 
 
-;; Clock -> 2017-12-28, 0h 13m 32s.
+;; Clock -> 2019-12-15, 22h 27m 55s.
 Computing the boundary of the generator 1/1 (dimension 3) :
-M3 
+M3
 End of computing.
 
 
@@ -132,9 +136,9 @@ Computing boundary-matrix in dimension 4.
 Rank of the source-module : 1.
 
 
-;; Clock -> 2017-12-28, 0h 13m 32s.
+;; Clock -> 2019-12-15, 22h 27m 55s.
 Computing the boundary of the generator 1/1 (dimension 4) :
-N4 
+N4
 End of computing.
 
 
@@ -148,16 +152,16 @@ Component Z/2Z
 
 ---done---
 
-;; Clock -> 2017-12-28, 0h 13m 32s.
+;; Clock -> 2019-12-15, 22h 27m 55s.
 
 
 Computing boundary-matrix in dimension 4.
 Rank of the source-module : 1.
 
 
-;; Clock -> 2017-12-28, 0h 13m 32s.
+;; Clock -> 2019-12-15, 22h 27m 55s.
 Computing the boundary of the generator 1/1 (dimension 4) :
-N4 
+N4
 End of computing.
 
 
@@ -173,7 +177,7 @@ Homology in dimension 4 :
 
 ---done---
 
-;; Clock -> 2017-12-28, 0h 13m 32s.
+;; Clock -> 2019-12-15, 22h 27m 55s.
 
 #+end_example
 
@@ -185,11 +189,14 @@ As =m23= is a simplicial set, it is possible to create the cartesian product
 =m23xm23= by the function =crts-prdc= (= CaRTeSian PRoDuCt). This is a new
 simplicial set.
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar m23xm23)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+RESULTS:
+: M23XM23
+
+#+BEGIN_SRC lisp
 (setf m23xm23 (crts-prdc m23 m23))
 #+END_SRC
 
@@ -199,14 +206,14 @@ simplicial set.
 Being a simplicial set, =m23xm23= is also a chain complex object and we may for
 instance ask for the basis in dimension 6.
 
-#+BEGIN_SRC lisp :session 00 :exports both :results verbatim
+#+BEGIN_SRC lisp :results verbatim
 (basis m23xm23 6)
 #+END_SRC
 
 #+RESULTS:
 : (<CrPr 1-0 N4 3-2 N4> <CrPr 1-0 N4 4-2 N4> <CrPr 1-0 N4 4-3 N4> <CrPr 1-0 N4 4-3-2 M3> <CrPr 1-0 N4 5-2 N4> <CrPr 1-0 N4 5-3 N4> <CrPr 1-0 N4 5-3-2 M3> <CrPr 1-0 N4 5-4 N4> <CrPr 1-0 N4 5-4-2 M3> <CrPr 1-0 N4 5-4-3 M3> ...)
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+BEGIN_SRC lisp
 (length (basis m23xm23 6))
 #+END_SRC
 
@@ -214,29 +221,32 @@ instance ask for the basis in dimension 6.
 : 230
 
 As shown by the last command, the number of elements of the basis is quite
-large (230). The user will note that the basis elements are in this particular
-case formed by cartesian products of /degenerated simplices/. In the list, an
-element like =<CrPr 1-0 N4 5-3-2 M3>= means
+large (230). The user will note that the basis elements are in this
+particular case formed by cartesian products of /degenerated simplices/. In the
+list, an element like =<CrPr 1-0 N4 5-3-2 M3>= means
 $\eta_1\eta_0\mathrm{N4}\times\eta_5\eta_3\eta_2\mathrm{M3}$.
 
-We may construct also the tensor product $\mathrm{m23}\otimes\mathrm{m23}$ from
-the underlying chain complex of the simplicial set =m23=. The tensor product of
-two simplicial sets do not make sense, and Kenzo understands to work on the
-underlying chain complex =m23=. This tensor product is a new chain complex and
-we see that the basis in dimension 6 has only one element:
+We may construct also the tensor product $\mathrm{m23}\otimes\mathrm{m23}$
+from the underlying chain complex of the simplicial set =m23=. The tensor
+product of two simplicial sets do not make sense, and Kenzo understands to
+work on the underlying chain complex =m23=. This tensor product is a new chain
+complex and we see that the basis in dimension 6 has only one element:
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar t2m23)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+RESULTS:
+: T2M23
+
+#+BEGIN_SRC lisp
 (setf t2m23 (tnsr-prdc m23 m23))
 #+END_SRC
 
 #+RESULTS:
 : [K3 Chain-Complex]
 
-#+BEGIN_SRC lisp :session 00 :exports both :results verbatim
+#+BEGIN_SRC lisp :results verbatim
 (basis t2m23 6)
 #+END_SRC
 
@@ -248,7 +258,7 @@ cartesian product space: as chain complexes, =m23xm23= and =t2m23= have the
 same homology groups, but the computations using the tensor product are
 considerably faster. The user can check Künneth's theorem.
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+BEGIN_SRC lisp :results output
 (homology m23xm23 0 8)
 #+END_SRC
 
@@ -259,9 +269,9 @@ Computing boundary-matrix in dimension 0.
 Rank of the source-module : 1.
 
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 1/1 (dimension 0) :
-<TnPr * *> 
+<TnPr * *>
 End of computing.
 
 
@@ -279,7 +289,7 @@ Component Z
 
 ---done---
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 
 
 Computing boundary-matrix in dimension 1.
@@ -298,7 +308,7 @@ Homology in dimension 1 :
 
 ---done---
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 
 
 Computing boundary-matrix in dimension 2.
@@ -309,15 +319,15 @@ Computing boundary-matrix in dimension 3.
 Rank of the source-module : 2.
 
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 1/2 (dimension 3) :
-<TnPr * M3> 
+<TnPr * M3>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 2/2 (dimension 3) :
-<TnPr M3 *> 
+<TnPr M3 *>
 End of computing.
 
 
@@ -329,22 +339,22 @@ Homology in dimension 2 :
 
 ---done---
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 
 
 Computing boundary-matrix in dimension 3.
 Rank of the source-module : 2.
 
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 1/2 (dimension 3) :
-<TnPr * M3> 
+<TnPr * M3>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 2/2 (dimension 3) :
-<TnPr M3 *> 
+<TnPr M3 *>
 End of computing.
 
 
@@ -352,15 +362,15 @@ Computing boundary-matrix in dimension 4.
 Rank of the source-module : 2.
 
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 1/2 (dimension 4) :
-<TnPr * N4> 
+<TnPr * N4>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 2/2 (dimension 4) :
-<TnPr N4 *> 
+<TnPr N4 *>
 End of computing.
 
 
@@ -376,22 +386,22 @@ Component Z/2Z
 
 ---done---
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 
 
 Computing boundary-matrix in dimension 4.
 Rank of the source-module : 2.
 
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 1/2 (dimension 4) :
-<TnPr * N4> 
+<TnPr * N4>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 2/2 (dimension 4) :
-<TnPr N4 *> 
+<TnPr N4 *>
 End of computing.
 
 
@@ -407,7 +417,7 @@ Homology in dimension 4 :
 
 ---done---
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 
 
 Computing boundary-matrix in dimension 5.
@@ -418,9 +428,9 @@ Computing boundary-matrix in dimension 6.
 Rank of the source-module : 1.
 
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 1/1 (dimension 6) :
-<TnPr M3 M3> 
+<TnPr M3 M3>
 End of computing.
 
 
@@ -432,16 +442,16 @@ Homology in dimension 5 :
 
 ---done---
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 
 
 Computing boundary-matrix in dimension 6.
 Rank of the source-module : 1.
 
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 1/1 (dimension 6) :
-<TnPr M3 M3> 
+<TnPr M3 M3>
 End of computing.
 
 
@@ -449,15 +459,15 @@ Computing boundary-matrix in dimension 7.
 Rank of the source-module : 2.
 
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 1/2 (dimension 7) :
-<TnPr M3 N4> 
+<TnPr M3 N4>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 2/2 (dimension 7) :
-<TnPr N4 M3> 
+<TnPr N4 M3>
 End of computing.
 
 
@@ -471,22 +481,22 @@ Component Z/2Z
 
 ---done---
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 
 
 Computing boundary-matrix in dimension 7.
 Rank of the source-module : 2.
 
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 1/2 (dimension 7) :
-<TnPr M3 N4> 
+<TnPr M3 N4>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 2/2 (dimension 7) :
-<TnPr N4 M3> 
+<TnPr N4 M3>
 End of computing.
 
 
@@ -494,9 +504,9 @@ Computing boundary-matrix in dimension 8.
 Rank of the source-module : 1.
 
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 1/1 (dimension 8) :
-<TnPr N4 N4> 
+<TnPr N4 N4>
 End of computing.
 
 
@@ -510,7 +520,7 @@ Component Z/2Z
 
 ---done---
 
-;; Clock -> 2017-12-27, 14h 20m 39s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 
 #+end_example
 
@@ -523,11 +533,14 @@ In =Kenzo=, a non-degenerate simplex of $\mathrm{K}(\mathbb{Z}, 1)$ in
 dimension $n$ will be simply a list of $n$ non-null integers, for instance:
 =(2 3 4 5)=. In dimension 0, the only simplex is =NIL= (the base point).
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar kz1)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+RESULTS:
+: KZ1
+
+#+BEGIN_SRC lisp
 (setf kz1 (k-z 1))
 #+END_SRC
 
@@ -535,14 +548,14 @@ dimension $n$ will be simply a list of $n$ non-null integers, for instance:
 : [K38 Abelian-Simplicial-Group]
 
 But this object is also a /coalgebra/ and an /algebra/, and we may see the
-effect of the respective induced /coproduct/ and /product/: 
+effect of the respective induced /coproduct/ and /product/:
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+BEGIN_SRC lisp :results output
 (princ (cprd kz1 4 '(2 3 4 5)))
 #+END_SRC
 
 #+RESULTS:
-: 
+:
 : ----------------------------------------------------------------------{CMBN 4}
 : <1 * <TnPr NIL (2 3 4 5)>>
 : <1 * <TnPr (2) (3 4 5)>>
@@ -551,7 +564,7 @@ effect of the respective induced /coproduct/ and /product/:
 : <1 * <TnPr (2 3 4 5) NIL>>
 : ------------------------------------------------------------------------------
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+BEGIN_SRC lisp :results output
 (princ (aprd kz1 6 (tnpr 2 '(1 2) 4 '(3 4 5 6))))
 #+END_SRC
 
@@ -574,25 +587,28 @@ effect of the respective induced /coproduct/ and /product/:
 #+end_example
 
 The printed results are the printed representation of /combinations/, i.e.,
-integer linear combinations of generators resulting from the application of the
-morphisms. The degree of the combination is indicated by the information:
-=CMBN n=. 
+integer linear combinations of generators resulting from the application of
+the morphisms. The degree of the combination is indicated by the information:
+=CMBN n=.
 
 In the same way, we may create the Abelian simplicial groups
 $\mathrm{K}(\mathbb{Z}/2\mathbb{Z}, n)$:
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar k-z2-2)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+RESULTS:
+: K-Z2-2
+
+#+BEGIN_SRC lisp
 (setf k-z2-2 (k-z2 2))
 #+END_SRC
 
 #+RESULTS:
 : [K64 Abelian-Simplicial-Group]
 
-#+BEGIN_SRC lisp :exports both :results output
+#+BEGIN_SRC lisp :results output
 (homology k-z2-2 4)
 #+END_SRC
 
@@ -603,15 +619,15 @@ Computing boundary-matrix in dimension 4.
 Rank of the source-module : 2.
 
 
-;; Clock -> 2017-12-27, 14h 34m 52s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 1/2 (dimension 4) :
-<<Abar[4 3]>> 
+<<Abar[4 3]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 34m 52s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 2/2 (dimension 4) :
-<<Abar[2 1][2 1]>> 
+<<Abar[2 1][2 1]>>
 End of computing.
 
 
@@ -619,21 +635,21 @@ Computing boundary-matrix in dimension 5.
 Rank of the source-module : 3.
 
 
-;; Clock -> 2017-12-27, 14h 34m 52s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 1/3 (dimension 5) :
-<<Abar[5 4]>> 
+<<Abar[5 4]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 34m 52s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 2/3 (dimension 5) :
-<<Abar[2 1][3 2]>> 
+<<Abar[2 1][3 2]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 34m 52s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 Computing the boundary of the generator 3/3 (dimension 5) :
-<<Abar[3 2][2 1]>> 
+<<Abar[3 2][2 1]>>
 End of computing.
 
 
@@ -647,7 +663,7 @@ Component Z/4Z
 
 ---done---
 
-;; Clock -> 2017-12-27, 14h 34m 52s.
+;; Clock -> 2019-12-15, 22h 27m 56s.
 
 #+end_example
 
@@ -655,29 +671,35 @@ Let us play now with the sphere $S^3$ and its loop spaces. $S^3$ and
 $\Omega^2 S^3$ are created by respective calls to the functions =sphere= and
 =loop-space=. Then we compute the $H_4$ and $H_5$ of $\Omega^2 S^3$:
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar s3)
 #+END_SRC
 
-#+BEGIN_SRC lisp :ession cat :exports both
+#+RESULTS:
+: S3
+
+#+BEGIN_SRC lisp
 (setf s3 (sphere 3))
 #+END_SRC
 
 #+RESULTS:
 : [K174 Simplicial-Set]
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar o2s3)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+RESULTS:
+: O2S3
+
+#+BEGIN_SRC lisp
 (setf o2s3 (loop-space s3 2))
 #+END_SRC
 
 #+RESULTS:
 : [K191 Simplicial-Group]
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+BEGIN_SRC lisp :results output
 (homology o2s3 4 6)
 #+END_SRC
 
@@ -688,21 +710,21 @@ Computing boundary-matrix in dimension 4.
 Rank of the source-module : 3.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 1/3 (dimension 4) :
-<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 2/3 (dimension 4) :
-<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 3/3 (dimension 4) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
@@ -710,33 +732,33 @@ Computing boundary-matrix in dimension 5.
 Rank of the source-module : 5.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 1/5 (dimension 5) :
-<<AlLp[5 <<AlLp[2 S3][2 S3][2 S3]>>]>> 
+<<AlLp[5 <<AlLp[2 S3][2 S3][2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 2/5 (dimension 5) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 3/5 (dimension 5) :
-<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 4/5 (dimension 5) :
-<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 5/5 (dimension 5) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
@@ -752,40 +774,40 @@ Component Z/2Z
 
 ---done---
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 
 
 Computing boundary-matrix in dimension 5.
 Rank of the source-module : 5.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 1/5 (dimension 5) :
-<<AlLp[5 <<AlLp[2 S3][2 S3][2 S3]>>]>> 
+<<AlLp[5 <<AlLp[2 S3][2 S3][2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 2/5 (dimension 5) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 3/5 (dimension 5) :
-<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 4/5 (dimension 5) :
-<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 5/5 (dimension 5) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
@@ -793,51 +815,51 @@ Computing boundary-matrix in dimension 6.
 Rank of the source-module : 8.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 1/8 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][5 <<AlLp[2 S3][2 S3][2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][5 <<AlLp[2 S3][2 S3][2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 2/8 (dimension 6) :
-<<AlLp[3 <<AlLp[2 S3][2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 3/8 (dimension 6) :
-<<AlLp[5 <<AlLp[2 S3][2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[5 <<AlLp[2 S3][2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 4/8 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 5/8 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 6/8 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 7/8 (dimension 6) :
-<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 Computing the boundary of the generator 8/8 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
@@ -853,17 +875,20 @@ Component Z/2Z
 
 ---done---
 
-;; Clock -> 2017-12-27, 14h 40m 26s.
+;; Clock -> 2019-12-15, 22h 27m 57s.
 
 #+end_example
 
 Let us take now the first loop space $\Omega^1 S^3$
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar os3)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+RESULTS:
+: OS3
+
+#+BEGIN_SRC lisp
 (setf os3 (loop-space s3))
 #+END_SRC
 
@@ -872,15 +897,18 @@ Let us take now the first loop space $\Omega^1 S^3$
 
 In the following instruction, we locate in the symbol =L1= the canonical
 generator of $\pi_2 (\Omega^1S^3)$, that is the 2-simplex coming from the
-original sphere. In fact, the object created by the command
-$\texttt{(loop3 0 's3 1)}$ is the "word" $S3^1$ belonging to the Kan simplicial
-version $G(S^3)$ (a simplicial group) of the loop space $\Omega S^3$.
+original sphere. In fact, the object created by the command $\texttt{(loop3 0
+'s3 1)}$ is the "word" $S3^1$ belonging to the Kan simplicial version
+$G(S^3)$ (a simplicial group) of the loop space $\Omega S^3$.
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar L1)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+RESULTS:
+: L1
+
+#+BEGIN_SRC lisp :results output
 (princ (setf L1 (loop3 0 's3 1)))
 #+END_SRC
 
@@ -889,32 +917,37 @@ version $G(S^3)$ (a simplicial group) of the loop space $\Omega S^3$.
 
 Let us consider also the 2-degeneracy of the base point of the loop space. In
 the printed result, the user will recognize the degeneracy $\eta_1\eta_0$ of
-the null loop, base point of $\Omega^1 S^3$: 
+the null loop, base point of $\Omega^1 S^3$:
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar null-simp)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+RESULTS:
+: NULL-SIMP
+
+#+BEGIN_SRC lisp :results output
 (princ (setf null-simp (absm 3 +null-loop+)))
 #+END_SRC
 
 #+RESULTS:
-: 
-: <AbSm 1-0 <<Loop>>> 
+: <AbSm 1-0 <<Loop>>>
 
-We may  build now a new space by pasting a disk $D3$ as indicated by the
-following call. It means that we "paste" to the space =os3= a 3-simplex named
-=D3=, the attaching map being described by the list of its faces in dimension
-2. The faces 0 and 2 of =D3= are pasted to =L1=, the faces 1 and 3 are
-collapsed on the base point; in this way the attaching map
-$(S^2 \rightarrow \Omega S^3)$ has degree 2.
+We may build now a new space by pasting a disk $D3$ as indicated by the
+following call. It means that we "paste" to the space =os3= a 3-simplex named =D3=,
+the attaching map being described by the list of its faces in dimension 2. The
+faces 0 and 2 of =D3= are pasted to =L1=, the faces 1 and 3 are collapsed on the
+base point; in this way the attaching map $(S^2 \rightarrow \Omega S^3)$ has
+degree 2.
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar dos3)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+RESULTS:
+: DOS3
+
+#+BEGIN_SRC lisp
 (setf dos3 (disk-pasting os3 3 '<D3> (list L1 null-simp L1 null-simp)))
 #+END_SRC
 
@@ -923,7 +956,7 @@ $(S^2 \rightarrow \Omega S^3)$ has degree 2.
 
 Let us compute a few homology groups of the new space =dos3=:
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+BEGIN_SRC lisp :results output
 (homology dos3 2 4)
 #+END_SRC
 
@@ -934,9 +967,9 @@ Computing boundary-matrix in dimension 2.
 Rank of the source-module : 1.
 
 
-;; Clock -> 2017-12-27, 14h 50m 23s.
+;; Clock -> 2019-12-15, 22h 27m 58s.
 Computing the boundary of the generator 1/1 (dimension 2) :
-<<AlLp[2 S3]>> 
+<<AlLp[2 S3]>>
 End of computing.
 
 
@@ -944,9 +977,9 @@ Computing boundary-matrix in dimension 3.
 Rank of the source-module : 1.
 
 
-;; Clock -> 2017-12-27, 14h 50m 23s.
+;; Clock -> 2019-12-15, 22h 27m 58s.
 Computing the boundary of the generator 1/1 (dimension 3) :
-<D3> 
+<D3>
 End of computing.
 
 
@@ -960,16 +993,16 @@ Component Z/2Z
 
 ---done---
 
-;; Clock -> 2017-12-27, 14h 50m 23s.
+;; Clock -> 2019-12-15, 22h 27m 58s.
 
 
 Computing boundary-matrix in dimension 3.
 Rank of the source-module : 1.
 
 
-;; Clock -> 2017-12-27, 14h 50m 23s.
+;; Clock -> 2019-12-15, 22h 27m 58s.
 Computing the boundary of the generator 1/1 (dimension 3) :
-<D3> 
+<D3>
 End of computing.
 
 
@@ -977,9 +1010,9 @@ Computing boundary-matrix in dimension 4.
 Rank of the source-module : 1.
 
 
-;; Clock -> 2017-12-27, 14h 50m 23s.
+;; Clock -> 2019-12-15, 22h 27m 58s.
 Computing the boundary of the generator 1/1 (dimension 4) :
-<<AlLp[2 S3][2 S3]>> 
+<<AlLp[2 S3][2 S3]>>
 End of computing.
 
 
@@ -991,25 +1024,28 @@ Homology in dimension 3 :
 
 ---done---
 
-;; Clock -> 2017-12-27, 14h 50m 23s.
+;; Clock -> 2019-12-15, 22h 27m 58s.
 
 #+end_example
 
 But more interesting, let us build the loop space of the object =dos3= and let
 us compute the homology in dimension 5:
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar odos3)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+RESULTS:
+: ODOS3
+
+#+BEGIN_SRC lisp
 (setf odos3 (loop-space dos3))
 #+END_SRC
 
 #+RESULTS:
-: [K471 Simplicial-Group]
+: [K453 Simplicial-Group]
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+BEGIN_SRC lisp :results output
 (homology odos3 5)
 #+END_SRC
 
@@ -1020,87 +1056,87 @@ Computing boundary-matrix in dimension 5.
 Rank of the source-module : 14.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 1/14 (dimension 5) :
-<<AlLp[5 <<AlLp[2 S3][2 S3][2 S3]>>]>> 
+<<AlLp[5 <<AlLp[2 S3][2 S3][2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 2/14 (dimension 5) :
-<<AlLp[2 <D3>][3 <<AlLp[2 S3][2 S3]>>]>> 
+<<AlLp[2 <D3>][3 <<AlLp[2 S3][2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 3/14 (dimension 5) :
-<<AlLp[3 <<AlLp[2 S3][2 S3]>>][2 <D3>]>> 
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][2 <D3>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 4/14 (dimension 5) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 5/14 (dimension 5) :
-<<AlLp[1 <<AlLp[2 S3]>>][2 <D3>][2 <D3>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][2 <D3>][2 <D3>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 6/14 (dimension 5) :
-<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 7/14 (dimension 5) :
-<<AlLp[2 <D3>][1 <<AlLp[2 S3]>>][2 <D3>]>> 
+<<AlLp[2 <D3>][1 <<AlLp[2 S3]>>][2 <D3>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 8/14 (dimension 5) :
-<<AlLp[2 <D3>][2 <D3>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[2 <D3>][2 <D3>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 9/14 (dimension 5) :
-<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 10/14 (dimension 5) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][2 <D3>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][2 <D3>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 11/14 (dimension 5) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][2 <D3>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][2 <D3>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 12/14 (dimension 5) :
-<<AlLp[1 <<AlLp[2 S3]>>][2 <D3>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][2 <D3>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 13/14 (dimension 5) :
-<<AlLp[2 <D3>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[2 <D3>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 14/14 (dimension 5) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
@@ -1108,159 +1144,159 @@ Computing boundary-matrix in dimension 6.
 Rank of the source-module : 26.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 1/26 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][5 <<AlLp[2 S3][2 S3][2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][5 <<AlLp[2 S3][2 S3][2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 2/26 (dimension 6) :
-<<AlLp[3 <<AlLp[2 S3][2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 3/26 (dimension 6) :
-<<AlLp[5 <<AlLp[2 S3][2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[5 <<AlLp[2 S3][2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 4/26 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][2 <D3>][3 <<AlLp[2 S3][2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][2 <D3>][3 <<AlLp[2 S3][2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 5/26 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][2 <D3>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][2 <D3>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 6/26 (dimension 6) :
-<<AlLp[2 <D3>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+<<AlLp[2 <D3>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 7/26 (dimension 6) :
-<<AlLp[2 <D3>][2 <D3>][2 <D3>]>> 
+<<AlLp[2 <D3>][2 <D3>][2 <D3>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 8/26 (dimension 6) :
-<<AlLp[2 <D3>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[2 <D3>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 9/26 (dimension 6) :
-<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][2 <D3>]>> 
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][2 <D3>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 10/26 (dimension 6) :
-<<AlLp[3 <<AlLp[2 S3][2 S3]>>][2 <D3>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][2 <D3>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 11/26 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 12/26 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][2 <D3>][2 <D3>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][2 <D3>][2 <D3>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 14s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 13/26 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 15s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 14/26 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][2 <D3>][1 <<AlLp[2 S3]>>][2 <D3>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][2 <D3>][1 <<AlLp[2 S3]>>][2 <D3>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 15s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 15/26 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][2 <D3>][2 <D3>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][2 <D3>][2 <D3>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 15s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 16/26 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 15s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 17/26 (dimension 6) :
-<<AlLp[2 <D3>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][2 <D3>]>> 
+<<AlLp[2 <D3>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][2 <D3>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 15s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 18/26 (dimension 6) :
-<<AlLp[2 <D3>][1 <<AlLp[2 S3]>>][2 <D3>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[2 <D3>][1 <<AlLp[2 S3]>>][2 <D3>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 15s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 19/26 (dimension 6) :
-<<AlLp[2 <D3>][2 <D3>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[2 <D3>][2 <D3>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 15s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 20/26 (dimension 6) :
-<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[3 <<AlLp[2 S3][2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 15s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 21/26 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][2 <D3>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][2 <D3>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 15s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 22/26 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][2 <D3>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][2 <D3>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 15s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 23/26 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][2 <D3>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][2 <D3>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 15s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 24/26 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][2 <D3>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][2 <D3>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 15s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 25/26 (dimension 6) :
-<<AlLp[2 <D3>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[2 <D3>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 2m 15s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 Computing the boundary of the generator 26/26 (dimension 6) :
-<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>> 
+<<AlLp[1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>][1 <<AlLp[2 S3]>>]>>
 End of computing.
 
 
@@ -1286,66 +1322,72 @@ Component Z
 
 ---done---
 
-;; Clock -> 2017-12-27, 15h 2m 15s.
+;; Clock -> 2019-12-15, 22h 27m 59s.
 
 #+end_example
 
-Let us continue with the Kan theory. First, we check that $S^3$ is not of type
-Kan and that $\Omega S^3$ is indeed of type Kan and a non-Abelian simplicial
-group.
+Let us continue with the Kan theory. First, we check that $S^3$ is not of
+type Kan and that $\Omega S^3$ is indeed of type Kan and a non-Abelian
+simplicial group.
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+BEGIN_SRC lisp
 (typep s3 'kan)
 #+END_SRC
 
 #+RESULTS:
 : NIL
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+BEGIN_SRC lisp
 (typep os3 'kan)
 #+END_SRC
 
 #+RESULTS:
 : T
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+BEGIN_SRC lisp
 (typep os3 'simplicial-group)
 #+END_SRC
 
 #+RESULTS:
 : T
 
-#+BEGIN_SRC lisp :ession cat exports both
+#+BEGIN_SRC lisp
 (typep os3 'ab-simplicial-group)
 #+END_SRC
 
 #+RESULTS:
 : NIL
 
-Let us create the word $L2=(S3)^2$, i.e an object belonging to $\Omega S^3$ and
-let us apply the product of the underlying algebra upon $L2 \otimes L2$:
+Let us create the word $L2=(S3)^2$, i.e an object belonging to $\Omega S^3$
+and let us apply the product of the underlying algebra upon $L2 \otimes L2$:
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar L2)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+RESULTS:
+: L2
+
+#+BEGIN_SRC lisp :results output
 (princ (setf L2 (loop3 0 's3 2)))
 #+END_SRC
 
 #+RESULTS:
 : <<Loop[S3\2]>>
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar square)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+RESULTS:
+: SQUARE
+
+#+BEGIN_SRC lisp :results output
 (princ (setf square (aprd os3 4 (tnpr 2 L2 2 L2))))
 #+END_SRC
 
 #+RESULTS:
-: 
+:
 : ----------------------------------------------------------------------{CMBN 4}
 : <1 * <<Loop[1-0 S3\2][3-2 S3\2]>>>
 : <-1 * <<Loop[2-0 S3\2][3-1 S3\2]>>>
@@ -1359,93 +1401,100 @@ We see that the result is a linear combination of words composed from
 degeneracies of =L2=. The following instruction selects the generator part of
 the second element of the previous combination.
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar L4)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+RESULTS:
+: L4
+
+#+BEGIN_SRC lisp :results output
 (princ (setf L4 (gnrt (second (cmbn-list square)))))
 #+END_SRC
 
 #+RESULTS:
-: 
-: <<Loop[2-0 S3\2][3-1 S3\2]>> 
+: <<Loop[2-0 S3\2][3-1 S3\2]>>
 
 Let us use the lisp function =mapcar= (one among the various iteration
-functions of Lisp) to create the list of the faces 1, 2, 3 and 4 of the object
-=L4=, this list is a "Kan horn".
+functions of Lisp) to create the list of the faces 1, 2, 3 and 4 of the
+object =L4=, this list is a "Kan horn".
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar horn)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+RESULTS:
+: HORN
+
+#+BEGIN_SRC lisp :results output
 (princ (setf horn (mapcar #'(lambda (i) (face os3 i 4 l4)) '(1 2 3 4))))
 #+END_SRC
 
 #+RESULTS:
-: 
-: (<AbSm - <<Loop[1 S3\2][2 S3\2]>>> <AbSm - <<Loop[0 S3\2][2 S3\2]>>> <AbSm - <<Loop[0 S3\2][1 S3\2]>>> <AbSm 1 <<Loop[S3\2]>>>) 
+: (<AbSm - <<Loop[1 S3\2][2 S3\2]>>> <AbSm - <<Loop[0 S3\2][2 S3\2]>>> <AbSm - <<Loop[0 S3\2][1 S3\2]>>> <AbSm 1 <<Loop[S3\2]>>>)
 
 The function =kfll= tries to find a filling of this "Kan horn", and we see that
 the face 2 of the resulting simplex (which is very different from =L4=) is the
 same as the face 2 of =L4=.
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar kan-simplex)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+RESULTS:
+: KAN-SIMPLEX
+
+#+BEGIN_SRC lisp :results output
 (princ (setf kan-simplex (kfll os3 0 4 horn)))
 #+END_SRC
 
 #+RESULTS:
-: 
-: <AbSm - <<Loop[3-1 S3\2][2-1 S3\-2][2-0 S3\2][1-0 S3\-2][2-1 S3\2][3-1 S3\-2][1-0 S3\2][3-1 S3\2][3-0 S3\-2][1-0 S3\-2][3-0 S3\2][2-0 S3\-2][1-0 S3\2][3-0 S3\-2][2-0 S3\2][3-0 S3\2]>>> 
+: <AbSm - <<Loop[3-1 S3\2][2-1 S3\-2][2-0 S3\2][1-0 S3\-2][2-1 S3\2][3-1 S3\-2][1-0 S3\2][3-1 S3\2][3-0 S3\-2][1-0 S3\-2][3-0 S3\2][2-0 S3\-2][1-0 S3\2][3-0 S3\-2][2-0 S3\2][3-0 S3\2]>>>
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+BEGIN_SRC lisp :results output
 (princ (face os3 2 4 kan-simplex))
 #+END_SRC
 
 #+RESULTS:
-: 
-: <AbSm - <<Loop[0 S3\2][2 S3\2]>>> 
+: <AbSm - <<Loop[0 S3\2][2 S3\2]>>>
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+BEGIN_SRC lisp :results output
 (princ (second horn))
 #+END_SRC
 
 #+RESULTS:
-: 
-: <AbSm - <<Loop[0 S3\2][2 S3\2]>>> 
+: <AbSm - <<Loop[0 S3\2][2 S3\2]>>>
 
 Let ${\cal G}$ be a simplicial group 0-reduced. $\Omega S^3$ is such a group.
 The program =Kenzo= allows the construction of the universal bundle
-$\mathcal{WG}$ and in particular of its base space
-$\overline{\mathcal{W}} \mathcal{G}$, i.e. the classifying space of
-${\cal G}$. In our case, as $\Omega S^3$ in non-Abelian, the result is not a
-simplicial group but only a simplicial set. We verify that the $H_4$, which in
-principle should be isomorphic to $H_4 S^3 = 0$, is really null.
+$\mathcal{WG}$ and in particular of its base space $\overline{\mathcal{W}}
+\mathcal{G}$, i.e. the classifying space of ${\cal G}$. In our case, as
+$\Omega S^3$ in non-Abelian, the result is not a simplicial group but only a
+simplicial set. We verify that the $H_4$, which in principle should be
+isomorphic to $H_4 S^3 = 0$, is really null.
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar cls-os3)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+RESULTS:
+: CLS-OS3
+
+#+BEGIN_SRC lisp
 (setf cls-os3 (classifying-space os3))
 #+END_SRC
 
 #+RESULTS:
-: [K938 Simplicial-Set]
+: [K598 Simplicial-Set]
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+BEGIN_SRC lisp
 (typep cls-os3 'simplicial-group)
 #+END_SRC
 
 #+RESULTS:
 : NIL
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+BEGIN_SRC lisp :results output
 (homology cls-os3 4)
 #+END_SRC
 
@@ -1460,9 +1509,9 @@ Computing boundary-matrix in dimension 5.
 Rank of the source-module : 1.
 
 
-;; Clock -> 2017-12-27, 15h 17m 56s.
+;; Clock -> 2019-12-15, 22h 28m 3s.
 Computing the boundary of the generator 1/1 (dimension 5) :
-<<Abar[5 <<AlLp[2 S3][2 S3]>>]>> 
+<<Abar[5 <<AlLp[2 S3][2 S3]>>]>>
 End of computing.
 
 
@@ -1474,7 +1523,7 @@ Homology in dimension 4 :
 
 ---done---
 
-;; Clock -> 2017-12-27, 15h 17m 56s.
+;; Clock -> 2019-12-15, 22h 28m 3s.
 
 #+end_example
 
@@ -1491,48 +1540,57 @@ We take again $\mathrm{Moore}(\mathbb{Z}/2\mathbb{Z}, 3)$ whose $H_3$ is
 $\mathbb{Z}/2\mathbb{Z}$. First the fundamental cohomology class is
 constructed:
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar ch3)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+RESULTS:
+: CH3
+
+#+BEGIN_SRC lisp
 (setf ch3 (chml-clss m23 3))
 #+END_SRC
 
 #+RESULTS:
-: [K1230 Cohomology-Class on K1 of degree 3]
+: [K729 Cohomology-Class on K1 of degree 3]
 
 Then the function =z2-whitehead= is called to build a fibration over the
 simplicial set =m23= canonically associated to the cohomology class =ch3=.
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar f3)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+RESULTS:
+: F3
+
+#+BEGIN_SRC lisp
 (setf f3 (z2-whitehead m23 ch3))
 #+END_SRC
 
 #+RESULTS:
-: [K1231 Fibration K1 -> K64]
+: [K730 Fibration K1 -> K64]
 
 Then the total space of the fibration is built:
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar x4)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+RESULTS:
+: X4
+
+#+BEGIN_SRC lisp
 (setf x4 (fibration-total f3))
 #+END_SRC
 
 #+RESULTS:
-: [K1237 Simplicial-Set]
+: [K736 Simplicial-Set]
 
 The $H_4$ of this total space is the $\pi_4$ of
 $\mathrm{Moore}(\mathbb{Z}/2\mathbb{Z})$:
 
-#+BEGIN_SRC lisp :session 00 :exports both :results output
+#+BEGIN_SRC lisp :results output
 (homology x4 3 5)
 #+END_SRC
 
@@ -1543,15 +1601,15 @@ Computing boundary-matrix in dimension 3.
 Rank of the source-module : 2.
 
 
-;; Clock -> 2017-12-27, 15h 22m 48s.
+;; Clock -> 2019-12-15, 22h 28m 5s.
 Computing the boundary of the generator 1/2 (dimension 3) :
-<TnPr * <<Abar[3 2]>>> 
+<TnPr * <<Abar[3 2]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 22m 48s.
+;; Clock -> 2019-12-15, 22h 28m 5s.
 Computing the boundary of the generator 2/2 (dimension 3) :
-<TnPr M3 <<Abar>>> 
+<TnPr M3 <<Abar>>>
 End of computing.
 
 
@@ -1559,21 +1617,21 @@ Computing boundary-matrix in dimension 4.
 Rank of the source-module : 3.
 
 
-;; Clock -> 2017-12-27, 15h 22m 48s.
+;; Clock -> 2019-12-15, 22h 28m 5s.
 Computing the boundary of the generator 1/3 (dimension 4) :
-<TnPr * <<Abar[4 3]>>> 
+<TnPr * <<Abar[4 3]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 22m 48s.
+;; Clock -> 2019-12-15, 22h 28m 5s.
 Computing the boundary of the generator 2/3 (dimension 4) :
-<TnPr * <<Abar[2 1][2 1]>>> 
+<TnPr * <<Abar[2 1][2 1]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 22m 48s.
+;; Clock -> 2019-12-15, 22h 28m 5s.
 Computing the boundary of the generator 3/3 (dimension 4) :
-<TnPr N4 <<Abar>>> 
+<TnPr N4 <<Abar>>>
 End of computing.
 
 
@@ -1585,28 +1643,28 @@ Homology in dimension 3 :
 
 ---done---
 
-;; Clock -> 2017-12-27, 15h 22m 48s.
+;; Clock -> 2019-12-15, 22h 28m 5s.
 
 
 Computing boundary-matrix in dimension 4.
 Rank of the source-module : 3.
 
 
-;; Clock -> 2017-12-27, 15h 22m 48s.
+;; Clock -> 2019-12-15, 22h 28m 5s.
 Computing the boundary of the generator 1/3 (dimension 4) :
-<TnPr * <<Abar[4 3]>>> 
+<TnPr * <<Abar[4 3]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 22m 48s.
+;; Clock -> 2019-12-15, 22h 28m 5s.
 Computing the boundary of the generator 2/3 (dimension 4) :
-<TnPr * <<Abar[2 1][2 1]>>> 
+<TnPr * <<Abar[2 1][2 1]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 22m 48s.
+;; Clock -> 2019-12-15, 22h 28m 5s.
 Computing the boundary of the generator 3/3 (dimension 4) :
-<TnPr N4 <<Abar>>> 
+<TnPr N4 <<Abar>>>
 End of computing.
 
 
@@ -1614,27 +1672,27 @@ Computing boundary-matrix in dimension 5.
 Rank of the source-module : 4.
 
 
-;; Clock -> 2017-12-27, 15h 22m 48s.
+;; Clock -> 2019-12-15, 22h 28m 5s.
 Computing the boundary of the generator 1/4 (dimension 5) :
-<TnPr * <<Abar[5 4]>>> 
+<TnPr * <<Abar[5 4]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 22m 48s.
+;; Clock -> 2019-12-15, 22h 28m 5s.
 Computing the boundary of the generator 2/4 (dimension 5) :
-<TnPr * <<Abar[2 1][3 2]>>> 
+<TnPr * <<Abar[2 1][3 2]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 22m 48s.
+;; Clock -> 2019-12-15, 22h 28m 5s.
 Computing the boundary of the generator 3/4 (dimension 5) :
-<TnPr * <<Abar[3 2][2 1]>>> 
+<TnPr * <<Abar[3 2][2 1]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 22m 48s.
+;; Clock -> 2019-12-15, 22h 28m 5s.
 Computing the boundary of the generator 4/4 (dimension 5) :
-<TnPr M3 <<Abar[2 1]>>> 
+<TnPr M3 <<Abar[2 1]>>>
 End of computing.
 
 
@@ -1648,47 +1706,56 @@ Component Z/2Z
 
 ---done---
 
-;; Clock -> 2017-12-27, 15h 22m 48s.
+;; Clock -> 2019-12-15, 22h 28m 5s.
 
 #+end_example
 
 We may now iterate the process, to compute the $\pi_5$ of
 $\mathrm{Moore}(\mathbb{Z}/2\mathbb{Z})$:
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar ch4)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+RESULTS:
+: CH4
+
+#+BEGIN_SRC lisp
 (setf ch4 (chml-clss x4 4))
 #+END_SRC
 
 #+RESULTS:
-: [K1318 Cohomology-Class on K1303 of degree 4]
+: [K817 Cohomology-Class on K802 of degree 4]
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar f4)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session 00 :exports both
+#+RESULTS:
+: F4
+
+#+BEGIN_SRC lisp
 (setf f4 (z2-whitehead x4 ch4))
 #+END_SRC
 
 #+RESULTS:
-: [K1333 Fibration K1237 -> K1319]
+: [K832 Fibration K736 -> K818]
 
-#+BEGIN_SRC lisp :session 00 :exports none
+#+BEGIN_SRC lisp :exports none
 (defvar x5)
 #+END_SRC
 
-#+BEGIN_SRC lisp :session lisp :exports both
+#+RESULTS:
+: X5
+
+#+BEGIN_SRC lisp
 (setf x5 (fibration-total f4))
 #+END_SRC
 
 #+RESULTS:
-: [K1339 Simplicial-Set]
+: [K838 Simplicial-Set]
 
-#+BEGIN_SRC lisp :exports both :results output
+#+BEGIN_SRC lisp :results output
 (homology x5 4 6)
 #+END_SRC
 
@@ -1699,27 +1766,27 @@ Computing boundary-matrix in dimension 4.
 Rank of the source-module : 4.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 1/4 (dimension 4) :
-<TnPr <TnPr * <<Abar>>> <<Abar[4 <<Abar[3 2]>>]>>> 
+<TnPr <TnPr * <<Abar>>> <<Abar[4 <<Abar[3 2]>>]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 2/4 (dimension 4) :
-<TnPr <TnPr * <<Abar[4 3]>>> <<Abar>>> 
+<TnPr <TnPr * <<Abar[4 3]>>> <<Abar>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 3/4 (dimension 4) :
-<TnPr <TnPr * <<Abar[2 1][2 1]>>> <<Abar>>> 
+<TnPr <TnPr * <<Abar[2 1][2 1]>>> <<Abar>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 4/4 (dimension 4) :
-<TnPr <TnPr N4 <<Abar>>> <<Abar>>> 
+<TnPr <TnPr N4 <<Abar>>> <<Abar>>>
 End of computing.
 
 
@@ -1727,45 +1794,45 @@ Computing boundary-matrix in dimension 5.
 Rank of the source-module : 7.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 1/7 (dimension 5) :
-<TnPr <TnPr * <<Abar>>> <<Abar[5 <<Abar[4 3]>>]>>> 
+<TnPr <TnPr * <<Abar>>> <<Abar[5 <<Abar[4 3]>>]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 2/7 (dimension 5) :
-<TnPr <TnPr * <<Abar>>> <<Abar[5 <<Abar[2 1][2 1]>>]>>> 
+<TnPr <TnPr * <<Abar>>> <<Abar[5 <<Abar[2 1][2 1]>>]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 3/7 (dimension 5) :
-<TnPr <TnPr * <<Abar[2 1]>>> <<Abar[3 <<Abar[2 1]>>]>>> 
+<TnPr <TnPr * <<Abar[2 1]>>> <<Abar[3 <<Abar[2 1]>>]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 4/7 (dimension 5) :
-<TnPr <TnPr * <<Abar[5 4]>>> <<Abar>>> 
+<TnPr <TnPr * <<Abar[5 4]>>> <<Abar>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 5/7 (dimension 5) :
-<TnPr <TnPr * <<Abar[2 1][3 2]>>> <<Abar>>> 
+<TnPr <TnPr * <<Abar[2 1][3 2]>>> <<Abar>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 6/7 (dimension 5) :
-<TnPr <TnPr * <<Abar[3 2][2 1]>>> <<Abar>>> 
+<TnPr <TnPr * <<Abar[3 2][2 1]>>> <<Abar>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 7/7 (dimension 5) :
-<TnPr <TnPr M3 <<Abar[2 1]>>> <<Abar>>> 
+<TnPr <TnPr M3 <<Abar[2 1]>>> <<Abar>>>
 End of computing.
 
 
@@ -1777,52 +1844,52 @@ Homology in dimension 4 :
 
 ---done---
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 
 
 Computing boundary-matrix in dimension 5.
 Rank of the source-module : 7.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 1/7 (dimension 5) :
-<TnPr <TnPr * <<Abar>>> <<Abar[5 <<Abar[4 3]>>]>>> 
+<TnPr <TnPr * <<Abar>>> <<Abar[5 <<Abar[4 3]>>]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 2/7 (dimension 5) :
-<TnPr <TnPr * <<Abar>>> <<Abar[5 <<Abar[2 1][2 1]>>]>>> 
+<TnPr <TnPr * <<Abar>>> <<Abar[5 <<Abar[2 1][2 1]>>]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 3/7 (dimension 5) :
-<TnPr <TnPr * <<Abar[2 1]>>> <<Abar[3 <<Abar[2 1]>>]>>> 
+<TnPr <TnPr * <<Abar[2 1]>>> <<Abar[3 <<Abar[2 1]>>]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 4/7 (dimension 5) :
-<TnPr <TnPr * <<Abar[5 4]>>> <<Abar>>> 
+<TnPr <TnPr * <<Abar[5 4]>>> <<Abar>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 5/7 (dimension 5) :
-<TnPr <TnPr * <<Abar[2 1][3 2]>>> <<Abar>>> 
+<TnPr <TnPr * <<Abar[2 1][3 2]>>> <<Abar>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 6/7 (dimension 5) :
-<TnPr <TnPr * <<Abar[3 2][2 1]>>> <<Abar>>> 
+<TnPr <TnPr * <<Abar[3 2][2 1]>>> <<Abar>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 7/7 (dimension 5) :
-<TnPr <TnPr M3 <<Abar[2 1]>>> <<Abar>>> 
+<TnPr <TnPr M3 <<Abar[2 1]>>> <<Abar>>>
 End of computing.
 
 
@@ -1830,87 +1897,87 @@ Computing boundary-matrix in dimension 6.
 Rank of the source-module : 14.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 1/14 (dimension 6) :
-<TnPr <TnPr * <<Abar>>> <<Abar[6 <<Abar[5 4]>>]>>> 
+<TnPr <TnPr * <<Abar>>> <<Abar[6 <<Abar[5 4]>>]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 2/14 (dimension 6) :
-<TnPr <TnPr * <<Abar>>> <<Abar[6 <<Abar[2 1][3 2]>>]>>> 
+<TnPr <TnPr * <<Abar>>> <<Abar[6 <<Abar[2 1][3 2]>>]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 3/14 (dimension 6) :
-<TnPr <TnPr * <<Abar>>> <<Abar[6 <<Abar[3 2][2 1]>>]>>> 
+<TnPr <TnPr * <<Abar>>> <<Abar[6 <<Abar[3 2][2 1]>>]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 4/14 (dimension 6) :
-<TnPr <TnPr * <<Abar>>> <<Abar[3 <<Abar[2 1]>>][3 <<Abar[2 1]>>]>>> 
+<TnPr <TnPr * <<Abar>>> <<Abar[3 <<Abar[2 1]>>][3 <<Abar[2 1]>>]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 5/14 (dimension 6) :
-<TnPr <TnPr * <<Abar[2 1]>>> <<Abar[4 <<Abar[3 2]>>]>>> 
+<TnPr <TnPr * <<Abar[2 1]>>> <<Abar[4 <<Abar[3 2]>>]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 6/14 (dimension 6) :
-<TnPr <TnPr * <<Abar[3 2]>>> <<Abar[3 <<Abar[2 1]>>]>>> 
+<TnPr <TnPr * <<Abar[3 2]>>> <<Abar[3 <<Abar[2 1]>>]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 7/14 (dimension 6) :
-<TnPr <TnPr M3 <<Abar>>> <<Abar[3 <<Abar[2 1]>>]>>> 
+<TnPr <TnPr M3 <<Abar>>> <<Abar[3 <<Abar[2 1]>>]>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 8/14 (dimension 6) :
-<TnPr <TnPr * <<Abar[6 5]>>> <<Abar>>> 
+<TnPr <TnPr * <<Abar[6 5]>>> <<Abar>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 9/14 (dimension 6) :
-<TnPr <TnPr * <<Abar[2 1][4 3]>>> <<Abar>>> 
+<TnPr <TnPr * <<Abar[2 1][4 3]>>> <<Abar>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 10/14 (dimension 6) :
-<TnPr <TnPr * <<Abar[3 2][3 2]>>> <<Abar>>> 
+<TnPr <TnPr * <<Abar[3 2][3 2]>>> <<Abar>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 11/14 (dimension 6) :
-<TnPr <TnPr * <<Abar[4 3][2 1]>>> <<Abar>>> 
+<TnPr <TnPr * <<Abar[4 3][2 1]>>> <<Abar>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 12/14 (dimension 6) :
-<TnPr <TnPr * <<Abar[2 1][2 1][2 1]>>> <<Abar>>> 
+<TnPr <TnPr * <<Abar[2 1][2 1][2 1]>>> <<Abar>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 13/14 (dimension 6) :
-<TnPr <TnPr M3 <<Abar[3 2]>>> <<Abar>>> 
+<TnPr <TnPr M3 <<Abar[3 2]>>> <<Abar>>>
 End of computing.
 
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 Computing the boundary of the generator 14/14 (dimension 6) :
-<TnPr <TnPr N4 <<Abar[2 1]>>> <<Abar>>> 
+<TnPr <TnPr N4 <<Abar[2 1]>>> <<Abar>>>
 End of computing.
 
 
@@ -1924,8 +1991,9 @@ Component Z/4Z
 
 ---done---
 
-;; Clock -> 2017-12-27, 15h 25m 8s.
+;; Clock -> 2019-12-15, 22h 28m 7s.
 
 #+end_example
 
-So $\pi_5(\mathrm{Moore}(\mathbb{Z}/2\mathbb{Z}))$ is $\mathbb{Z}/4\mathbb{Z}$.
+So $\pi_5(\mathrm{Moore}(\mathbb{Z}/2\mathbb{Z}))$ is
+$\mathbb{Z}/4\mathbb{Z}$.
