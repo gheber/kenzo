@@ -266,6 +266,8 @@
 (check-rdct)
 |#
 
+;;; To be removed.
+
 #|
 (cat-init)
 (setf k1 (k-z 1))
@@ -332,6 +334,8 @@
 
 |#
 
+;;; End to be removed.
+
 (DEFUN CLASSIFYING-SPACE-EFHM (smgr)
   (declare (type simplicial-group smgr))
   (the reduction
@@ -346,7 +350,12 @@
 
 (DEFMETHOD SEARCH-EFHM (classifying-space (orgn (eql 'classifying-space)))
   (declare (type simplicial-set classifying-space))
-  (classifying-space-efhm (second (orgn classifying-space))))
+  (etypecase classifying-space
+    (ab-simplicial-group
+     (classifying-space-efhm (second (orgn classifying-space))))
+    (chain-complex
+     (print (list :AAAAA))
+     (classifying-space-efhm-2 (second (orgn classifying-space))))))
 
 #|
 (cat-init)

@@ -138,5 +138,8 @@
                        (:file "classifying-spaces")
                        (:file "classifying-spaces-dvf")
                        (:file "k-pi-n")
+                       (:file "serre")
+                       (:file "cs-twisted-products")
+                       (:file "cl-space-efhm")
                        (:file "whitehead")
                        (:file "new-smith")))))))

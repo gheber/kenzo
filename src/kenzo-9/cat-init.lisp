@@ -7,6 +7,7 @@
 (DEFUN KENZO-VERSION ()
   (format t "~%*** Kenzo-Version 9 ***~2%")
   (values))
+
 #|
 (DECLAIM (OPTIMIZE (speed 3) (safety 1) (space 0) (debug 0)))
 
@@ -49,6 +50,9 @@
       "classifying-spaces"
       "classifying-spaces-dvf"
       "k-pi-n"
+      "serre"
+      "cs-twisted-products"
+      "cl-space-efhm"
       "whitehead"
       "new-smith"
       ))
@@ -70,10 +74,13 @@
 (DEFUN LOAD-SFILES ()
    (mapc #'(lambda (file-name)
              (load (concatenate 'string file-name "." +source-extension+)))
-    +file-list+))
+         +file-list+))
+
 |#
+
 (DEFVAR *CMBN-CONTROL*)
 (SETF *CMBN-CONTROL* T)
+
 #|
 (DEFUN COMPILE-FILES ()
   (format t "~%*CMBN-CONTROL*  = ~A~2%" *cmbn-control*)
