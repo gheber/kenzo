@@ -1,168 +1,256 @@
-#+BEGIN_SRC lisp :session 01 :exports none :results silent
+#+TITLE: Chain Complexes
+#+OPTIONS: toc:nil num:nil
+#+PROPERTY: header-args :eval never-export :exports both :tangle yes  :results value verbatim
+
+#+BEGIN_SRC lisp :exports none :results silent
 (ql:quickload "kenzo")
 (use-package :cat)
 #+END_SRC
 
-* Chain Complexes
+* Introduction
 
-** Introduction
+  A /chain complex/[fn:1] $(C_p, d_p)$ is a collection of free
+  \(\mathbb{Z}\)-modules $(C_p)$, one for each \(p\in\mathbb{Z}\), together
+  with a homomorphism $d_p : C_p \rightarrow C_{p-1}$, such that, for all $p$,
+  $d_{p-1} \circ d_p = 0$.
 
-In the Kenzo program, a /chain complex/[fn:1]$(C_p, d_p)$ is a collection of free
-\(\mathbb{Z}\)-modules $(C_p)$, one for each \(p\in\mathbb{Z}\), together with
-a homomorphism $d_p : C_p \rightarrow C_{p-1}$, such that, for all
-$p$, $d_{p-1} \circ d_p = 0$.
+  *In the Kenzo program*, a /morphism/ $f=(f_p)$, of degree $k$, from a chain
+  complex $(C_p, d_p)$ to another $(C'_p, d'_p)$ is a collection of
+  homomorphisms
+  \begin{equation*}
+  f_p : C_p \rightarrow C'_{p+k}.
+  \end{equation*}
 
-*In the Kenzo program*, a /morphism/ $f=(f_p)$, of degree $k$, from a chain
-complex $(C_p, d_p)$ to another $(C'_p, d'_p)$ is a collection of homomorphisms
+  This is expressed by the following diagram, generally *not assumed commutative.*
+  \begin{equation*}
+  \begin{aligned}
+  \cdots & \leftarrow & C_{p-1} & \quad\xleftarrow{d_p} & C_p & \quad\xleftarrow{d_{p+1}} & C_{p+1}  & \quad\leftarrow & \cdots \\
+         &    & f_{p-1} \Bigg\downarrow &    & f_p \Bigg\downarrow &    & f_{p+1} \Bigg\downarrow \\
+  \cdots & \leftarrow & C'_{p+k-1} & \quad\xleftarrow{d'_{p+k}} & C'_{p+k} &
+         \quad\xleftarrow{d'_{p+k+1}} & C'_{p+k+1} & \quad\leftarrow & \cdots
+  \end{aligned}
+  \end{equation*}
 
-$$f_p : C_p \rightarrow C'_{p+k}.$$
+  Three types of morphisms are most generally considered.
 
-This is expressed by the following diagram, generally not assumed commutative.
+  1. $k=0$. If the commutativity relation $d'_p\circ f_p=f_{p-1}\circ d_p$
+     holds for every $p$, then the morphism $f$ is an ordinary chain complex
+     morphism or /chain map/.
+  2. $k=-1$. If $(C_p,d_p)=(C'_p,d'_p)$ and $f_p=d_p$, then $f$ is the
+     /differential/ of the chain complex $(C_p,d_p)$ and, in fact, this
+     differential is implemented in the =Kenzo= program as a morphism of degree
+     $-1$. Also, if $d_p \neq f_p$ and $(d_{p-1}+f_{p-1})(d_p+f_p) = 0$ for
+     every $p$, then $f_\ast$ is a perturbation of the differential $d_\ast$.
+  3. $k=+1$. In this case, $f$ is usually a /homotopy operator/, that is, some
+     relation $$d'_{p+1}\circ f_p+f_{p-1}\circ d_p=g_p-g'_p$$ is satisfied for
+     two (ordinary) chain complex morphisms $g_\ast$ and $g'_\ast$, and $f_\ast$
+     is a homotopy between $g_\ast$ and $g'_\ast$.
 
-#+BEGIN_EXPORT latex
-\[
-\begin{aligned}
-\cdots & \leftarrow & C_{p-1} & \quad\xleftarrow{d_p} & C_p & \quad\xleftarrow{d_{p+1}} & C_{p+1}  & \quad\leftarrow & \cdots \\
-       &    & f_{p-1} \Bigg\downarrow &    & f_p \Bigg\downarrow &    & f_{p+1} \Bigg\downarrow \\
-\cdots & \leftarrow & C'_{p+k-1} & \quad\xleftarrow{d'_{p+k}} & C'_{p+k} &
-       \quad\xleftarrow{d'_{p+k+1}} & C'_{p+k+1} & \quad\leftarrow & \cdots
-\end{aligned}
-\]
+  For technical reasons, these three types of morphisms have been implemented
+  in the =Kenzo= program in a unique type.
 
-#+END_EXPORT
+* Generators, terms, and combinations
 
-Three types of   morphisms are most generally considered.
+  To become familiar with the Lisp functions implementing the chain complexes,
+  the best is to begin with an example. /Simplicial complexes/ are good
+  candidates for this purpose, and we shall take as a typical example the
+  following simplicial complex.
 
-1. $k=0$. If the commutativity relation $d'_p\circ f_p=f_{p-1}\circ d_p$ holds
-   for every $p$, then the morphism $f$ is an ordinary chain complex morphism
-   or /chain map/.
-2. $k=-1$. If $(C_p,d_p)=(C'_p,d'_p)$ and $f_p=d_p$, then $f$ is the
-   /differential/ of the chain complex $(C_p,d_p)$ and, in fact, this
-   differential is implemented in the =Kenzo= program as a morphism of
-   degree $-1$. Also, if $d_p \neq f_p$ and $(d_{p-1}+f_{p-1})(d_p+f_p) = 0$
-   for every $p$, then $f_\ast$ is a perturbation of the differential $d_\ast$.
-3. $k=+1$. In this case, $f$ is usually a /homotopy operator/, that is, some
-   relation $$d'_{p+1}\circ f_p+f_{p-1}\circ d_p=g_p-g'_p$$ is satisfied for
-   two (ordinary) chain complex morphisms $g_\ast$ and $g'_\ast$, and $f_\ast$
-   is a homotopy between $g_\ast$ and $g'_\ast$.
+  [[./img/diabolo.png]]
 
-For technical reasons, these three types of morphisms have been implemented in
-the =Kenzo= program in a unique type.
+  In this simplicial complex, called here /diabolo/, there are 3 non-null chain
+  groups.
 
-[fn:1] *P.J. Giblin* in /Graph, Surface and Homology/, Chapman and Hall Math.
-series, 1981.
+  - $C_0$, the free \(\mathbb{Z}\)-module on the set of vertices
+    $\{s_0,s_1,s_2,s_3,s_4,s_5\}$
+  - $C_1$, the free \(\mathbb{Z}\)-module on the set of edges
+    $\{s_{01},s_{02},s_{12},s_{23},s_{34},s_{35}, s_{45}\}$
+  - $C_2$, the free \(\mathbb{Z}\)-module on the set of triangles (here a
+    singleton) $\{s_{345}\}$
 
-** Generators, terms, and combinations
+  The elements of either of those groups $C_p$ are linear integer combinations
+  of the corresponding basis $\beta_p$, i.e., elements of the form:
 
-To become familiar with the Lisp functions implementing the chain complexes,
-the best is to begin with an example. /Simplicial complexes/ are good
-candidates for this purpose, and we shall take as a typical example the
-following simplicial complex.
+  \begin{equation*}
+  \sum_{b \in \beta_p} \lambda_b b.
+  \end{equation*}
 
-[[./diabolo.pdf]]
+  For example $2 s_{02} - 3 s_{34} \in C_1$. An element $b$ of the basis
+  $\beta_p$ of $C_p$ is called a /generator/ of $C_p$ and in our specific case
+  this generator will be represented by a Lisp symbol. For instance, $s_{45}$
+  will be translated into =s45=. However, the user should be aware that in more
+  realistic usage of the software, generators may be of any type. A product
+  such as $\lambda_i\sigma_i$ is called a /term/ and a sum of terms, a
+  /combination/.
 
-In this simplicial complex, called here /diabolo/, there are 3 non-null chain
-groups.
+** Representation of a combination
 
-- $C_0$, the free \(\mathbb{Z}\)-module on the set of vertices
-  $\{s_0,s_1,s_2,s_3,s_4,s_5\}$
-- $C_1$, the free \(\mathbb{Z}\)-module on the set of edges
-  $\{s_{01},s_{02},s_{12},s_{23},s_{34},s_{35}, s_{45}\}$
-- $C_2$, the free \(\mathbb{Z}\)-module on the set of triangles (here a
-  singleton) $\{s_{345}\}$
+   A combination is represented internally in the system by a structure having
+   the following general form:
 
-The elements of either of those groups $C_p$ are linear integer combinations of
-the corresponding basis $\beta_p$, i.e. elements of the form:
-$$
-\sum_{b \in \beta_p} \lambda_b b.
-$$
-For example $2 s_{02} - 3 s_{34} \in C_1$. An element $b$ of the basis
-$\beta_p$ of $C_p$ is called a /generator/ of $C_p$ and in our specific case
-this generator will be represented by a Lisp symbol. For instance, $s_{45}$
-will be translated into =s45=. However, the user should be aware that in more
-realistic usage of the software, generators may be of any type. A product such
-as $\lambda_i\sigma_i$ is called a /term/ and a sum of terms, a /combination/.
+  \begin{equation*}
+  \#\texttt{S(CMBN}\quad\texttt{DEGREE P}\quad\texttt{LIST (}\texttt{(}
+  \lambda_1\cdot\sigma_1\texttt{)}\dots\texttt{(}\lambda_k\cdot\sigma_k
+  \texttt{)))}
+  \end{equation*}
+
+   and containing
+
+   1. The degree of the combination corresponding to the index
+      \(p\in\mathbb{Z}\) of the group $C_p$ to which this combination belongs.
+   2. The list of the internal representation of the terms, namely the list of
+      pairs $(\lambda_i\cdot\sigma_i)$.
+
+   This choice of representation implies that only homogeneous combinations
+   will be considered. The type =CMBN= and a printing method are provided with
+   this internal representation. The external form of a combination is shown in
+   the examples.
+
+** Ordering the generators
+
+   In order to speed up the execution of algorithms involving combinations, the
+   list of pairs $(\lambda_i.\sigma_i)$ is ordered by an adequate ordering
+   function (e.g., the lexicographical ordering on the symbols). For
+   programming convenience, an enumerated type =CMPR= has been defined:
+
+   #+BEGIN_EXAMPLE
+   (deftype cmpr() '(member :less :equal :greater))
+   #+END_EXAMPLE
+
+   A number of macros, functions and methods have been defined on usual sets
+   (symbols, numbers, lists, etc.) taking their value in the set
+   =[:less, :equal, :greater]=. Of course, the user may define its own function
+   for a particular case. There exist functions to compare various couples of
+   usual items:
+
+   - =f-cmpr= /n1 n2/ [Function] :: Return =:less=, =:equal=, =:greater=, according to
+     the result of the canonical comparison of both integers /n1/ and /n2/.
+   - =s-cmpr= /symbol1 symbol2/ [Function] :: Return =:less=, =:equal=, =:greater=,
+     according to the result of the Lisp comparison functions on the strings
+     =(symbol-name= /symbol1/ =)= and =(symbol-name= /symbol2/ =)=
+   - =l-cmpr= /list1/ /list2/ [Function] :: Return =:less=, =:equal=, =:greater=,
+     according to the lexicographical ordering of the two lists /list1/ and
+     /list2/, making sense only if /list1/ and /list2/ are lists made of integers,
+     symbols and/or lists; in the last case, the qualifier /list/ is to be
+     understood recursively.
+
+*** Examples
+
+    #+BEGIN_SRC lisp
+    (f-cmpr 123 789)
+    #+END_SRC
+
+    #+RESULTS:
+    : :LESS
+
+    #+BEGIN_SRC lisp
+    (s-cmpr 'circulation 'circular)
+    #+END_SRC
+
+    #+RESULTS:
+    : :GREATER
+
+    #+BEGIN_SRC lisp
+    (s-cmpr 'qwerty 'qwerty)
+    #+END_SRC
+
+    #+RESULTS:
+    : :EQUAL
+
+    #+BEGIN_SRC lisp
+    (l-cmpr '(1 a b) '(1 a))
+    #+END_SRC
+
+    #+RESULTS:
+    : :GREATER
+
+** Functions handling combinations
+
+   The software provides a set of functions, methods, and macros to create or
+   modify combinations.
+
+   - =term-cmbn= /dgr cf gnr/ *[Macro]* :: Construct the combination of degree /dgr/
+     with unique term /cf/ \ast /gnr/.
+   - =cmbn= /dgr cf1 gnr1 cf2 gnr2 ... cfn gnrn/ *[Function]* :: Construct a
+     combination of degree /dgr/, sum of the terms $cf_i * gnr_i$. The sequence
+     of pairs $\lbrace cf_i\ gnr_i\rbrace$ has an indefinite length and may be
+     void. In this case, the combination is a null combination of degree /dgr/.
+     It is the responsability of the user to properly order the terms of the
+     combination, otherwise later calculations with this combination could work
+     erroneously. This point can be checked by the =do-control= function. **[I
+     suggest to insert here two appropriate examples.]**
+   - =cmbn-p= /object/ *[Function]* :: Test if /object/ is a legal combination.
+   - =cmbn-degr= /cmbn/ *[Macro]* :: Get the degree (an integer) of the combination
+     /cmbn/.
+   - =cmbn-list= /cmbn/ *[Macro]* :: Get the list of the terms of the combination
+     /cmbn/. Beware: a term is not a structure object, it is a simple =cons=
+     =(cffc . gnrt)=, a pair coefficient - generator. Given a term, one may
+     select the coefficient (an integer) or the generator - a =Kenzo= object -
+     respectively by the macros =cffc= and =gnrt=.
+   - =zero-cmbn= /dgr/ *[Function]* :: Create an instance of a null combination in
+     the degree /dgr/.
+   - =cmbn-zero-p= /cmbn/ *[Macro]* :: Test if /cmbn/ is a null combination in any
+     degree.
+   - =cmbn-non-zero-p= /cmbn/ *[Macro]* :: Test if /cmbn/ is a non-null combination
+     in any degree.
+   - =cmbn-opps= /cmbn/ *[Function]* :: Create a combination opposite to /cmbn/.
+   - =n-cmbn= /n cmbn/ *[Function]* :: Create a combination multiple of /cmbn/ by
+     the factor /n/.
+   - =2cmbn-add= /cmpr cmbn1 cmbn2/ *[Function]* :: Create a combination, sum of both
+     combinations /cmbn1/ and /cmbn2/. The first argument, /cmpr/, must be the
+     comparison function available in the slot /cmpr/ of the underlying chain
+     complex, required to properly merge the terms of both combinations.
+   - =ncmbn-add= /cmpr cmbn1 cmbn2 ... cmbnk/ *[Function]* :: Create a combination,
+     sum of the indefinite number of combinations $cmbn_i$. As to the first
+     argument, /cmpr/, see the function =2cmbn-add=.
+   - =2n-2cmbn= /cmpr n1 cmbn1 n2 cmbn2/ *[Function]* :: Build the combination /n1 *
+     cmbn1 + n2 * cmbn2/. Both integers /n1/ and /n2/ must be non null. As to the
+     first argument, /cmpr/, see the function =2cmbn-add=.
+   - =2cmbn-sbtr= /cmpr cmbn1 cmbn2/ *[Function]* :: Create a combination, difference
+     of /cmbn1/ and /cmbn2/. As to the first argument, /cmpr/, see the function
+     =2cmbn-add=.
+
+*** Examples
+
+    #+BEGIN_SRC lisp
+    (def comb1 (cmbn 1 1 'u 2 'v 3 'w 4 'z))
+    #+END_SRC
+
+    #+RESULTS:
+    :
+    : ----------------------------------------------------------------------{CMBN 1}
+    : <1 * U>
+    : <2 * V>
+    : <3 * W>
+    : <4 * Z>
+    : ------------------------------------------------------------------------------
+
+    #+BEGIN_SRC lisp
+    (cmbn-non-zero-p comb1)
+    #+END_SRC
+
+    #+RESULTS:
+    : T
+
+    #+BEGIN_SRC lisp
+    (cmbn-list comb1)
+    #+END_SRC
+
+    #+RESULTS:
+    : ((1 . U) (2 . V) (3 . W) (4 . Z))
+
+    #+BEGIN_SRC lisp
+    (def term3 (third (cmbn-list comb1)))  ;; a simple cons!
+    #+END_SRC
+
+    #+RESULTS:
+    : (3 . W)
 
 
-*** Representation of a combination
 
-A combination is represented internally in the system by a structure having the
-following general form:
 
-$$\#\texttt{S(CMBN}\quad\texttt{DEGREE P}\quad\texttt{LIST (}\texttt{(}
-\lambda_1\cdot\sigma_1\texttt{)}\dots\texttt{(}\lambda_k\cdot\sigma_k
-\texttt{)))}$$
 
-and containing
 
-1. The degree of the combination corresponding to the index \(p\in\mathbb{Z}\)
-   of the group $C_p$ to which this combination belongs.
-2. The list of the internal representation of the terms, namely the list of
-   pairs $(\lambda_i\cdot\sigma_i)$.
 
-This choice of representation implies that only homogeneous combinations will
-be considered. The type =CMBN= and a printing method are provided with this
-internal representation. The external form of a combination is shown in the
-examples.
 
-*** Ordering the generators
-
-In order to speed up the execution of algorithms involving combinations, the
-list of pairs $(\lambda_i.\sigma_i)$ is ordered by an adequate ordering
-function (e.g., the lexicographical ordering on the symbols). For programming
-convenience, an enumerated type =CMPR= has been defined:
-
-#+BEGIN_EXAMPLE
-(deftype cmpr() '(member :less :equal :greater))
-#+END_EXAMPLE
-
-A number of macros, functions and methods have been defined on usual sets
-(symbols, numbers, lists, etc.) taking their value in the set
-=[:less, :equal, :greater]=. Of course, the user may define its own function
-for a particular case. There exists functions to compare various couples of
-usual items:
-
-=f-cmpr= /n1 n2/ | /[Function]/
-+ Return =:less=, =:equal=, =:greater=, according to the result of the
-  canonical comparison of both integers /n1/ and /n2/.
-
-=s-cmpr= /symbol1 symbol2/ | /[Function]/ 
-+ Return  =:less=, =:equal=, =:greater=, according to the result of the Lisp
-  comparison functions on the strings =(symbol-name= /symbol1/ =)= and
-  =(symbol-name= /symbol2/ =)=
-
-=l-cmpr= /list1 list2/ | /[Function]/ 
-+ Return =:less=, =:equal=, =:greater=, according to the lexicographical
-  ordering of the two lists /list1/ and /list2/, making sense only if /list1/
-  and /list2/ are lists made of integers, symbols and/or lists; in the last
-  case, the qualifier /list/ is to be understood recursively.
-
-**** Examples
-
-#+BEGIN_SRC lisp :session 01 :exports both
-(f-cmpr 123 789)
-#+END_SRC
-
-#+RESULTS:
-: :LESS
-
-#+BEGIN_SRC lisp :session 01 :exports both
-(s-cmpr 'circulation 'circular)
-#+END_SRC
-
-#+RESULTS:
-: :GREATER
-
-#+BEGIN_SRC lisp :session 02 :exports both
-(s-cmpr 'qwerty 'qwerty)
-#+END_SRC
-
-#+RESULTS:
-: :EQUAL
-
-#+BEGIN_SRC lisp :session 02 :exports both
-(l-cmpr '(1 a b) '(1 a))
-#+END_SRC
-
-#+RESULTS:
-: :GREATER
+[fn:1] *P.J. Giblin* in /Graph, Surface and Homology/, Chapman and Hall Math. series, 1981.
