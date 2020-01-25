@@ -4,29 +4,29 @@
 
 \section{Introduction}
 
-A\index{chain complex} {\em chain complex}\footnote{{\bf P.J. Giblin} in 
+A\index{chain complex} {\em chain complex}\footnote{{\bf P.J. Giblin} in
 {\em Graph, Surface and Homology}, Chapman and Hall Math. series, 1981.}
 ($C_p, d_p$) is a collection of free $\Z$--modules ($C_p$), one for each
 $p \in \Z$, together with a homomorphism $d_p : C_p \rightarrow C_{p-1}$, such
-that, for all $p$, $d_{p-1} \circ d_p = 0$. 
+that, for all $p$, $d_{p-1} \circ d_p = 0$.
 \par
-{\bf In the Kenzo program}, a  {\em  morphism}\index{morphisms! in {\tt Kenzo}} $f=(f_p)$, of degree $k$, 
+{\bf In the Kenzo program}, a  {\em  morphism}\index{morphisms! in {\tt Kenzo}} $f=(f_p)$, of degree $k$,
 from a chain complex ($C_p, d_p$) to another ($C'_p, d'_p$) is a
-collection of homomorphisms 
+collection of homomorphisms
 $$f_p : C_p \rightarrow C'_{p+k}.$$
 This is expressed by the following  diagram, generally {\bf not assumed commutative}.
 
 $$\diagram{
-\cdots & \leftarrow & C_{p-1} & \buildrel {d_p} \over \longleftarrow 
-                     & C_p     & \buildrel {d_{p+1}} \over \longleftarrow 
-                     & C_{p+1} 
+\cdots & \leftarrow & C_{p-1} & \buildrel {d_p} \over \longleftarrow
+                     & C_p     & \buildrel {d_{p+1}} \over \longleftarrow
+                     & C_{p+1}
        & \leftarrow & \cdots \cr
-       &             & \vfl {\displaystyle {f_{p-1}}}{} 
-       &             & \vfl {\displaystyle {f_p}}{} 
+       &             & \vfl {\displaystyle {f_{p-1}}}{}
+       &             & \vfl {\displaystyle {f_p}}{}
        &             & \vfl {\displaystyle {f_{p+1}}}{} \cr
-\cdots & \leftarrow & C'_{p+k-1} & \buildrel {d'_{p+k}} \over \longleftarrow 
-                     & C'_{p+k}     & \buildrel {d'_{p+k+1}} \over \longleftarrow 
-                     & C'_{p+k+1} 
+\cdots & \leftarrow & C'_{p+k-1} & \buildrel {d'_{p+k}} \over \longleftarrow
+                     & C'_{p+k}     & \buildrel {d'_{p+k+1}} \over \longleftarrow
+                     & C'_{p+k+1}
        & \leftarrow & \cdots \cr }
 $$
 
@@ -35,7 +35,7 @@ Three types of   morphisms are most generally considered.
 \begin{enumerate}
 \item $k=0$. If the commutativity relation $d'_p\circ f_p=f_{p-1}\circ d_p$ holds for every $p$, then the morphism
 $f$ is an ordinary chain complex morphism or {\em chain map}\index{chain map}.
-\item $k=-1$. If $(C_p,d_p)=(C'_p,d'_p)$ and $f_p=d_p$, then $f$ is the 
+\item $k=-1$. If $(C_p,d_p)=(C'_p,d'_p)$ and $f_p=d_p$, then $f$ is the
 {\em differential}\index{chain complex!differential} of the chain complex
 $(C_p,d_p)$ and, in fact, this differential is implemented in the {\tt Kenzo} program as a morphism of degree $-1$.
 \item $k=+1$. In this case, $f$ is usually a {\em homotopy operator}\index{homotopy operator}, that is, some relation
@@ -60,7 +60,7 @@ complex.
 In this simplicial complex, called here {\em diabolo}, there are $3$ associated chain groups.
 \begin{itemize}
 \item $C_0$, the free $\Z$--module on the set of vertices $\{s_0,s_1,s_2,s_3,s_4,s_5 \}$.
-\item $C_1$, the free $\Z$--module on the set of  edges 
+\item $C_1$, the free $\Z$--module on the set of  edges
    $\{ s_{01}, s_{02}, s_{12}, s_{23}, s_{34}, s_{35}, s_{45} \}$.
 \item $C_2$, the free $\Z$--module on the set of  triangles (here a singleton)
    $\{ s_{345} \}$.
@@ -77,21 +77,21 @@ a {\em term}\index{term} and a sum of terms, a {\em combination}\index{combinati
 
 \subsection {Representation of a combination}
 
-A combination\index{combination!representation} is represented internally in the system by a  list 
+A combination\index{combination!representation} is represented internally in the system by a  list
 having the general following form:
 \begin{center}
 {\tt (:cmbn {\em degree} $(\lambda_1.\sigma_1)$ ... $(\lambda_k.\sigma_k)$)}
 \end{center}
 and containing
 \begin{enumerate}
-\item The degree of the combination  corresponding to the index $p \in \Z$  of the group 
+\item The degree of the combination  corresponding to the index $p \in \Z$  of the group
 $C_p$ to which this combination belongs.
 \item The  list of the internal representation of the terms, namely the list of pairs $(\lambda_i.\sigma_i)$.
 \end{enumerate}
 This choice of representation implies that only homogeneous combinations
-will be considered. A type {\tt CMBN} and 
+will be considered. A type {\tt CMBN} and
 a printing method have been associated to this internal representation. The external
-form of a combination is shown in the  examples. 
+form of a combination is shown in the  examples.
 
 \subsection {Ordering the generators}
 
@@ -107,21 +107,21 @@ on usual sets (symbols, numbers, lists, ...) taking their value in the set
 There exists functions to compare various couples of usual items:
 \vskip 0.45cm
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt f-cmpr} {\em n1 n2}\hfill {\em [Function]} \par}
-{\leftskip=12mm 
+{\leftskip=12mm
 Return {\tt :less}, {\tt :equal}, {\tt :greater}, according to the result of
 the canonical comparison of both integers {\em n1} and {\em n2}. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt s-cmpr} {\em symbol1 symbol2} \hfill {\em [Function]}\par}
-{\leftskip=12mm 
+{\leftskip=12mm
 Return  {\tt :less}, {\tt :equal}, {\tt :greater}, according to the result of
 the lisp comparison functions on the strings {\tt (symbol-name {\em symbol1})}
 and {\tt (symbol-name {\em symbol2})} \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt l-cmpr} {\em list1 list2}\hfill {\em [Function]} \par}
-{\leftskip=12mm 
-Return  {\tt :less}, {\tt :equal}, {\tt :greater}, according to the 
+{\leftskip=12mm
+Return  {\tt :less}, {\tt :equal}, {\tt :greater}, according to the
 lexicographical ordering of the two lists  {\em list1}
 and {\em list2} representing legal generators in this implementation. \par}
 }
@@ -149,81 +149,81 @@ and {\em list2} representing legal generators in this implementation. \par}
 
 \subsection {Functions handling  combinations}
 
-The software provides a set of functions, methods or macros to create or modify 
-combinations\index{combination!handling}. 
+The software provides a set of functions, methods or macros to create or modify
+combinations\index{combination!handling}.
 \vskip 0.45cm
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt term-cmbn} {\em dgr cf gnr} \hfill {\em [Macro]}\par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Construct the combination of degree {\em dgr} with unique term $cf * gnr$ \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cmbn} {\em dgr cf1 gnr1 cf2 gnr2 ... cfn gnrn}\hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Construct a combination of degree {\em dgr}, sum of the terms $cf_i *  gnr_i$. The sequence of pairs
 $\lbrace cf_i\  gnr_i \rbrace$ has an undefinite length and  may be void. In this case,  the combination
 is a null combination of degree {\em dgr}.  \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cmbn-p} {\em object} \hfill {\em [Function]}\par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Test is {\em object} is a legal combination. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cmbn-degr} {\em cmbn}   \hfill {\em [Macro]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Get the degree (an integer) of the combination {\em cmbn}. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cmbn-list} {\em cmbn}   \hfill {\em [Macro]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Get the list of the terms  of the combination {\em cmbn}. Beware: a term is not a {\tt Kenzo} object.
-One may select the coefficient (an integer) or the generator -- a {\tt Kenzo} object -- 
+One may select the coefficient (an integer) or the generator -- a {\tt Kenzo} object --
 respectively by the macros {\tt cffc} and {\tt gnrt}. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt zero-cmbn} {\em dgr}   \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Create an instance of a null combination in the degree {\em dgr}. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt zero-pure-dffr} {\em cmbn} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Create  a null combination of degree $degr(cmbn) - 1$. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cmbn-zero-p} {\em cmbn} \hfill {\em [Macro]}\par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Test if {\em cmbn} is a null combination in any degree. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cmbn-non-zero-p} {\em cmbn} \hfill {\em [Macro]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Test if {\em cmbn} is a non-null combination in any degree. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cmbn-opps} {\em cmbn} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Create a  combination opposite to {\em cmbn}. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt n-cmbn} {\em n cmbn} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Create a  combination multiple of  {\em cmbn} by the factor $n$. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt 2cmbn-add} {\em cmpr cmbn1 cmbn2} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Create a combination, sum of both combinations {\em cmbn1} and {\em cmbn2}. The first
 argument, {\em cmpr}, must be a function or macro relevant to compare the generators of the
 involved combinations, in order to return an ordered combination. \par}
 }
 \newpage
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt ncmbn-add} {\em cmpr cmbn1 cmbn2 ... cmbnk} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Create a combination, sum of the indefinite number of combinations $cmbn_i$. As to the first
 argument, {\em cmpr}, see the function {\tt 2cmbn-add}. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt 2n-2cmbn} {\em cmpr n1 cmbn1 n2 cmbn2} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Build the combination $n1 * cmbn1 + n2 * cmbn2$. Both integers $n1$ and $n2$ must be
 non null. As to the first argument, {\em cmpr}, see the function {\tt 2cmbn-add}. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt 2cmbn-sbtr} {\em cmpr cmbn1 cmbn2} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
-Create a combination, difference of {\em cmbn1} and {\em cmbn2}. 
+{\leftskip=15mm
+Create a combination, difference of {\em cmbn1} and {\em cmbn2}.
 As to the first argument, {\em cmpr}, see the function {\tt 2cmbn-add}. \par}
 }
 \subsection* {Examples}
@@ -295,7 +295,7 @@ W
 <-40 * Z>
 ------------------------------------------------------------------------------
 
-(ncmbn-add #'s-cmpr 
+(ncmbn-add #'s-cmpr
            comb1 comb2 comb1 comb2 comb1 comb2 comb1 comb2  comb1 comb2)  ==>
 
 ----------------------------------------------------------------------{CMBN 1}
@@ -310,7 +310,7 @@ W
 
 \section {Representation of a chain complex}
 
-A chain complex\index{chain complex!representation} is implemented as an instance of a {\tt CLOS} class, 
+A chain complex\index{chain complex!representation} is implemented as an instance of a {\tt CLOS} class,
 the class {\tt CHAIN-COMPLEX}\index{class!{\tt CHAIN-COMPLEX}}, whose definition is
 {\footnotesize\begin{verbatim}
 (DEFCLASS CHAIN-COMPLEX ()
@@ -336,7 +336,7 @@ This class has $8$ slots:
 \par
 It is very important to note that the generators to be compared are assumed to be
 of the {\em same degree}, i.e. they must belong to the same group $C_p$. As an exception with
-the general policy of the software, this degree is not explicitly precised. 
+the general policy of the software, this degree is not explicitly precised.
 The implementor has chosen to avoid additional tests because in real problems the program spends
 a lot of time comparing generators.
 \item {\tt basis}, a lisp function giving the distinguished {\bf ordered} basis of the free $\Z$--modules\footnote{
@@ -345,9 +345,9 @@ some  components of the chain complex  are not finitely generated, we say that t
 is {\em locally effective}. In this case the value of this slot must be the keyword
 {\tt locally-effective}.
 \item {\tt bsgn}, a lisp object of any type representing a distinguished generator in dimension $0$, the
-base generator. 
+base generator.
 \item {\tt dffr}, the differential morphism, instance of the class {\tt MORPHISM}, defined hereafter.
-The pure lisp function corresponding to the differential homomorphism 
+The pure lisp function corresponding to the differential homomorphism
 for each $p$ ($d_p : C_p \rightarrow C_{p-1}$) is defined in the instance morphism  object and
 not directly in the instance chain complex object.
 \item {\tt idnm}, an integer, number plate for this object. This is generated by
@@ -356,12 +356,12 @@ the system in a sequential way, each time a new {\tt Kenzo} object is created.
 the object. This comment must be chosen with care because, when the user creates a new chain complex instance,
 the  system {\tt Kenzo} uses the comment list information to search
 in a specific list (here {\tt *chcm-list*}) if the object has not been already built. So, one avoids
-the  duplication of instances of the same object. 
+the  duplication of instances of the same object.
 \end{enumerate}
 The two slots {\tt grmd} and {\tt efhm} will be explained later.
 The accessors of the slots are the functions whose name appears after the specifier {\tt:reader} in
-the class definition. A printing method has been associated to the class {\tt CHAIN-COMPLEX} 
-and the external representation of a chain complex instance is a string like {\tt [K{\em n} Chain-Complex]}, 
+the class definition. A printing method has been associated to the class {\tt CHAIN-COMPLEX}
+and the external representation of a chain complex instance is a string like {\tt [K{\em n} Chain-Complex]},
 where $n$ is the number plate of this {\tt Kenzo} object.
 
 \subsection {The function build-chcm}
@@ -371,10 +371,10 @@ the standard constructor {\tt make-instance}, the software provides the function
 \vskip 0.35cm
 {\tt build-chcm :cmpr} {\em cmpr} {\tt :basis} {\em basis} {\tt :bsgn} {\em bsgn} {\tt :intr-dffr} {\em intr-dffr} \par
 \hspace*{22.5mm}{\tt :strt} {\em strt} {\tt :orgn} {\em orgn}
-\vskip 0.35cm 
+\vskip 0.35cm
 defined with keyword parameters. The returned value is an instance of the class {\tt CHAIN-COMPLEX}.
 In particular, this function frees the user to build himself
-the   instance of the class {\tt MORPHISM} corresponding to the differential homomorphism. 
+the   instance of the class {\tt MORPHISM} corresponding to the differential homomorphism.
 The keyword arguments of {\tt build-chcm} are:
 \begin{itemize}
 \item [--] {\em cmpr}, the comparison function for generators.
@@ -382,14 +382,14 @@ The keyword arguments of {\tt build-chcm} are:
 $\Z$--modules $C_p$ or the keyword {\tt :locally-effective}.
 \item [--] {\em bsgn}, a generator, the base point of the underlying set.
 \item [--] {\em intr-dffr}, a {\bf lisp function} defining the differential homomorphism for each $p$
-($d_p : C_p \rightarrow C_{p-1}$). 
-\item [--] {\em strt}, one of the two values: {\tt :gnrt} or {\tt :cmbn}, defining the 
-mapping {\em strategy} of the differential homomorphism, either by generator or by combination. 
+($d_p : C_p \rightarrow C_{p-1}$).
+\item [--] {\em strt}, one of the two values: {\tt :gnrt} or {\tt :cmbn}, defining the
+mapping {\em strategy} of the differential homomorphism, either by generator or by combination.
 The default is {\tt :gnrt}. The real connection between the  arguments {\em intr-dffr} and {\em strt}
 will be detailed hereafter through typical examples. The general idea is the following: if the
 strategy is  {\tt :gnrt}, the {\tt :intr-dffr} argument function  uses two arguments, namely
-a degree and a generator of this degree and computes the boundary combination of this generator. 
-If the strategy is  {\tt :cmbn}, the {\tt :intr-dffr} argument function uses a combination as argument 
+a degree and a generator of this degree and computes the boundary combination of this generator.
+If the strategy is  {\tt :cmbn}, the {\tt :intr-dffr} argument function uses a combination as argument
 and computes the boundary combination of this argument. We recall that a combination contains
 its own degree.
 \item [--] {\em orgn}, a list containing  a relevant and carefully chosen  comment
@@ -406,22 +406,22 @@ object in the list of already created chain complexes {\tt *chcm-list*}.
 
 \subsection* {A first example of chain complex}
 
-Let us consider our small example {\em diabolo}. We shall give the same name to  
-the corresponding chain complex  instance. 
-Let us define, one by one, the values of the key parameters, 
-though it is possible to put them directly in the {\tt build-chcm} call. 
+Let us consider our small example {\em diabolo}. We shall give the same name to
+the corresponding chain complex  instance.
+Let us define, one by one, the values of the key parameters,
+though it is possible to put them directly in the {\tt build-chcm} call.
 First,  the function {\tt s-cmpr}, already seen above, is  the natural choice to compare
 generators, which are here, lisp symbols:
 {\footnotesize\begin{verbatim}
-(setf diabolo-cmpr #'s-cmpr)   
+(setf diabolo-cmpr #'s-cmpr)
 \end{verbatim}}
 
 The function for the basis consists  in enumerating the distinguished basis as lisp lists
 according to the degree:
 {\footnotesize\begin{verbatim}
-(setf diabolo-basis #'(lambda (dmn)                         
-                        (case dmn                           
-                          (0 '(s0 s1 s2 s3 s4 s5))          
+(setf diabolo-basis #'(lambda (dmn)
+                        (case dmn
+                          (0 '(s0 s1 s2 s3 s4 s5))
                           (1 '(s01 s02 s12 s23 s34 s35 s45))
                           (2 '(s345))
                           (otherwise nil ))))
@@ -435,16 +435,16 @@ computes the boundary of each generator, in this case,  according to the classic
 $$ {\bf d}[{s_0s_1\ldots s_n}] = \sum_{i=0}^n{(-1)^is_0s_1\ldots\widehat{s_i}\ldots s_n}.$$
 It must be noted that our differential uses a predefined choice for the order of the vertices.
 {\footnotesize\begin{verbatim}
-(setf diabolo-pure-dffr 
-     #'(lambda (dmn gnr)                    
+(setf diabolo-pure-dffr
+     #'(lambda (dmn gnr)
         (unless (<= 0 dmn 2)
           (error "Non-correct dimension for diabolo-dp."))
         (case dmn
            (0 (cmbn -1)) ; Note the null combination of degree -1
            (1 (case gnr
-                (s01 (cmbn  0 -1 's0 1 's1))    
-                (s02 (cmbn  0 -1 's0 1 's2))    
-                (s12 (cmbn  0 -1 's1 1 's2))    
+                (s01 (cmbn  0 -1 's0 1 's1))
+                (s02 (cmbn  0 -1 's0 1 's2))
+                (s12 (cmbn  0 -1 's1 1 's2))
                 (s23 (cmbn  0 -1 's2 1 's3))
                 (s34 (cmbn  0 -1 's3 1 's4))
                 (s35 (cmbn  0 -1 's3 1 's5))
@@ -456,11 +456,11 @@ It must be noted that our differential uses a predefined choice for the order of
 \end{verbatim}}
 The  strategy is by generator and the comment recalls the name of the problem:
 {\footnotesize\begin{verbatim}
-(setf diabolo-strt :GNRT)        
+(setf diabolo-strt :GNRT)
 
-(setf diabolo-orgn '(diabolo-for-example))  
+(setf diabolo-orgn '(diabolo-for-example))
 \end{verbatim}}
-The effective call to {\tt build-chcm} is now reduced to: 
+The effective call to {\tt build-chcm} is now reduced to:
 {\footnotesize\begin{verbatim}
 (setf diabolo (build-chcm :cmpr diabolo-cmpr :basis diabolo-basis
                           :bsgn diabolo-bspn :intr-dffr diabolo-pure-dffr
@@ -470,7 +470,7 @@ The effective call to {\tt build-chcm} is now reduced to:
 \end{verbatim}}
 The value of the symbol {\tt diabolo} is the {\tt CHAIN-COMPLEX}  instance which is here the first
 created {\tt Kenzo} object. The string {\tt [K1 Chain-Complex]}
-is printed by the printing method associated to the class. 
+is printed by the printing method associated to the class.
 
 \subsection {Simple functions handling chain complexes}
 
@@ -480,7 +480,7 @@ is printed by the printing method associated to the class.
 {\tt cat-init} \hfill {\em [Function]} \par}
 {\leftskip=15mm
 Clear among others, the list {\tt *chcm-list*}, list of user created chain complexes  and reset
-the global counter to $1$. The existing objects and in particular here the chain complexes, 
+the global counter to $1$. The existing objects and in particular here the chain complexes,
 are not destroyed but they will not enter any more in account during the search process for duplicated
 objects. This remark is general for the other types of objects saved in specific lists.   \par}
 {\leftskip=5mm
@@ -496,12 +496,12 @@ Apply the comparison function associated to the chain complex {\em object} to th
 {\leftskip=5mm
 {\tt basis} {\em object n} {\tt :dgnr} \hfill {\em [Macro]} \par}
 {\leftskip=15mm
-With only one argument ({\em object}), get the  function attached to the slot {\tt basis} of the chain complex object. 
-With two arguments, 
-get the distinguished basis of the group of degree {\em n} in the chain complex {\em object}. 
+With only one argument ({\em object}), get the  function attached to the slot {\tt basis} of the chain complex object.
+With two arguments,
+get the distinguished basis of the group of degree {\em n} in the chain complex {\em object}.
 If the chain complex is locally effective,
-this function returns an error because, in some degrees, the corresponding set of generators is 
-probably infinite. With a third argument, the keyword {\tt :dgnr},  get also the {\em degenerate} 
+this function returns an error because, in some degrees, the corresponding set of generators is
+probably infinite. With a third argument, the keyword {\tt :dgnr},  get also the {\em degenerate}
 elements of the basis in degree {\em n}.\par}
 {\leftskip=5mm
 {\tt dffr} {\em chcm} {\tt \&rest} \hfill {\em [Macro]} \par}
@@ -569,8 +569,8 @@ NIL
 
 \subsubsection{An important trivial case: the unit chain complex, $\Z$}
 
-The unit chain complex\index{chain complex!unit}, has a unique non null component, 
-namely a $\Z$--module of degree $0$ generated by a unique generator, 
+The unit chain complex\index{chain complex!unit}, has a unique non null component,
+namely a $\Z$--module of degree $0$ generated by a unique generator,
 called here {\tt :Z-gnrt}. It is defined by the following call to {\tt build-chcm}:
 {\footnotesize\begin{verbatim}
  (setf ZCC
@@ -591,18 +591,18 @@ In this definition,
 \begin{enumerate}
 \item The {\tt :cmpr} keyword   argument is a function  returning {\tt :equal} on any pair
 on generators (because there is a unique generator!).
-\item The {\tt :basis} keyword argument is a lisp function returning the null basis  
-(the constant {\tt +empty-list+ = ()}) for $p \not= 0$ and 
+\item The {\tt :basis} keyword argument is a lisp function returning the null basis
+(the constant {\tt +empty-list+ = ()}) for $p \not= 0$ and
 the list {\tt (:Z-gnrt)}, for $p=0$.
 \item The base generator is of course {\tt Z-gnrt}.
-\item The {\tt :intr-dffr} keyword argument is a lisp function defining the differential  which, 
+\item The {\tt :intr-dffr} keyword argument is a lisp function defining the differential  which,
 to any combination of degre $p$
-of the chain complex, returns a {\em null combination} of degree $p-1$. This simple lisp function 
+of the chain complex, returns a {\em null combination} of degree $p-1$. This simple lisp function
 is also provided in {\tt Kenzo} and is called {\tt zero-intr-dffr}.
 \item The {\tt :strt} keyword argument is the combination strategy ({\tt :cmbn}).
 \item The {\tt :orgn} keyword argument is the comment list {\tt (zcc-constant)}.
 \end{enumerate}
-In the software {\tt Kenzo}, the chain complex instance {\tt ZCC} may be built, when needed, 
+In the software {\tt Kenzo}, the chain complex instance {\tt ZCC} may be built, when needed,
 by the lisp statement: {\tt (z-chcm)}. This statement may be used freely each time
 one needs this chain complex, since the system  recognizes if it has already been
 created.
@@ -631,7 +631,7 @@ having the same homology as the circle.
 
 \section {Morphisms}
 
-Algebraic  Topology uses  morphisms\index{morphisms} between chain complexes and 
+Algebraic  Topology uses  morphisms\index{morphisms} between chain complexes and
 the dif\-fe\-ren\-ti\-al homomorphism may be considered as a particular
 case of  morphism. A morphism is implemented in the system as an instance
 of the class {\tt MORPHISM}\index{class!{\tt MORPHISM}}, whose definition is:
@@ -668,8 +668,8 @@ target chain complex. For instance, the differential homomorphism is of degree $
 \item {\tt intr}, a {\bf pure lisp function} implementing the mathematical algorithm of the morphism and
 taking in account the strategy\index{morphisms!strategy for applying} ({\tt strt}).
 \item {\tt strt}, one of the two symbols {\tt :gnrt}, {\tt :cmbn}. What has already been  said about
-the strategy of the differential morphism is generalized to any morphism: according 
-to the value of the argument, {\tt :gnrt} or {\tt :cmbn}, the lisp function attached to the keyword just above, 
+the strategy of the differential morphism is generalized to any morphism: according
+to the value of the argument, {\tt :gnrt} or {\tt :cmbn}, the lisp function attached to the keyword just above,
 works respectively with $2$ arguments (a degree and a generator) or
 only one (a combination) and must return a combination, image of the generator or the combination argument.
 \item {\tt ???-clnm}, an integer updated by the system for statistics (number of times the
@@ -684,12 +684,12 @@ the system.
 \end{enumerate}
 The accessors of the slots are the functions whose name appears after the specifier {\tt :reader}
 or after the specifier {\tt :accessor} in the class definition.
-A printing method has been associated to the class {\tt MORPHISM} 
-and the external representation of  an instance is a string like 
+A printing method has been associated to the class {\tt MORPHISM}
+and the external representation of  an instance is a string like
 {\tt [K{\em n} Morphism (degree {\em d}): K{\em p} -> K{\em q}]}
-or {\tt [K{\em n} Cohomology-Class (degree {\em d})]} 
-when the chain complex target is the unit ${\Z}$. In this
-string,  $n$ is the number plate of the {\tt Kenzo} object, {\em d} is the degree of the morphism, 
+or {\tt [K{\em n} Cohomology-Class (degree {\em d})]}
+when the chain complex target is the unit $\mathbb{Z}$. In this
+string,  $n$ is the number plate of the {\tt Kenzo} object, {\em d} is the degree of the morphism,
 {\tt K{\em p}} is the {\tt Kenzo} object source of the morphism and {\tt K{\em q}} the target.
 In all the  examples of this manual, the last part of the string will not be necessarily printed.
 
@@ -714,13 +714,13 @@ The keyword arguments of {\tt build-mrph} are:
 \item [--] {\em orgn}, a relevant comment list.
 \end{itemize}
 
-After a call to {\tt build-mrph}, the morphism instance 
+After a call to {\tt build-mrph}, the morphism instance
 is added to a list of previously constructed  ones ({\tt *mrph-list*}).
 
 \subsubsection {The differential homomorphism in a chain complex instance}
 
-In a  chain complex instance, the differential homomorphism is defined as a morphism 
-with identical source and target, and degree $-1$. The user must know that the  function {\tt build-chcm} 
+In a  chain complex instance, the differential homomorphism is defined as a morphism
+with identical source and target, and degree $-1$. The user must know that the  function {\tt build-chcm}
 calls internally the function {\tt build-mrph} and passes it the keyword argument
 {\tt pure-dffr}. The function {\tt build-mrph} builds
 the  morphism instance which will be then inserted into the slot {\tt :dffr} of the chain complex instance
@@ -739,7 +739,7 @@ and an {\em identity--morphism} (degree $0$)  between  the {\em unit chain compl
                                 :trgt ZCC
                                 :degr -1
                                 :intr #'(lambda(comb)
-                                           (cmbn (1- (degr comb)))) 
+                                           (cmbn (1- (degr comb))))
                                 :strt :cmbn
                                 :orgn '(zero morphism on ZCC) ))
 
@@ -757,14 +757,14 @@ and an {\em identity--morphism} (degree $0$)  between  the {\em unit chain compl
 [K4 Cohomology-Class (degree 0)]
 \end{verbatim}}
 On the first morphism, we see that the  {\tt :intr} keyword argument is a lisp function
-taking any combination of degree $p$ of the  unit chain complex and generating a null 
-combination of degree $p-1$ of the same chain complex. The second morphism uses the lisp 
+taking any combination of degree $p$ of the  unit chain complex and generating a null
+combination of degree $p-1$ of the same chain complex. The second morphism uses the lisp
 function {\tt identity}.
 
 \subsection{Applying morphisms}
 
-To apply\index{morphisms!applying} an already constructed morphism on a generator, 
-one uses the function  {\tt gnrt-?}, 
+To apply\index{morphisms!applying} an already constructed morphism on a generator,
+one uses the function  {\tt gnrt-?},
 the usage of which is described hereafter. On a similar way, to apply a morphism on a combination,
 one uses the function {\tt cmbn-?}.
 It is very important to note that these functions
@@ -788,7 +788,7 @@ Apply the morphism {\em mrph} on the combination  {\em cmbn}. \par}
 {\leftskip=15mm
 Versatile macro for applying a morphism  in both cases above, i.e. indifferently
 as {\tt (? {\em mrph degr gnrt})} or  {\tt (? {\em mrph cmbn})}. If the first argument
-is a chain complex object, as in  {\tt (? {\em chcm degr gnrt})} or in  {\tt (? {\em chcm cmbn})}, then 
+is a chain complex object, as in  {\tt (? {\em chcm degr gnrt})} or in  {\tt (? {\em chcm cmbn})}, then
 the differential morphism of the chain complex {\em chcm} is applied to the arguments. \par}
 }
 
@@ -856,7 +856,7 @@ i.e. $mrph_1 \circ d_2$. \par}
 {\leftskip=5mm
 {\tt i-cmps} {\em mrph1 mrph2 ... mrphk} \hfill{\em [Macro]}\par }
 {\leftskip=15mm
-Construct the  composite of the morphisms, i.e. $mrph_1 \circ\, mrph2 \circ\, \cdots\, \circ\, mrph_k$. 
+Construct the  composite of the morphisms, i.e. $mrph_1 \circ\, mrph2 \circ\, \cdots\, \circ\, mrph_k$.
 Of course, the target of $mrph_i$ must be the same as the source of $mrph_{i-1}$, otherwise the
 system signals an error. The new instance  inherits
 its source slot from $mrph_k$ and its target slot from $mrph_1$. This function optimizes
@@ -866,7 +866,7 @@ the compositions in which appear zero morphisms or identity morphisms. \par}
 {\leftskip=15mm
 Construct a morphism, sum  of the  morphisms $mrph_1$ and  $mrph_2$.  The result of the mapping
 of the morphism sum is the sum of the results of the mappings of the morphisms.
-The respective definitions of the morphisms $mrph_1$ and  $mrph_2$  must be coherent, 
+The respective definitions of the morphisms $mrph_1$ and  $mrph_2$  must be coherent,
 in particular they must have the same  source, target and degree. The user may impose
 its strategy, otherwise it is defined in the program according to the respective
 strategy of the arguments.\par}
@@ -875,13 +875,13 @@ strategy of the arguments.\par}
 {\leftskip=15mm
 Construct a morphism, sum  of the  morphism $mrph_1$,  $mrph_2$, $\ldots$, $mrph_k$.  The result of the mapping
 of the morphism sum is the sum of the results of the mappings of the $mrph_i$.
-The respective definitions of $mrph_i$ must be coherent, in particular they must have the same 
+The respective definitions of $mrph_i$ must be coherent, in particular they must have the same
 source, target and degree. The macro {\tt i-add} has an undefinite number of arguments.
 With one argument, the macro returns that argument.\par}
 {\leftskip=5mm
 {\tt sbtr} {\em mrph1 mrph2 {\tt \&optional} strt}\hfill {\em [Method]}  \par }
 {\leftskip=15mm
-Construct a morphism, difference  of the  morphisms $mrph_1$ and  $mrph_2$. The conditions of validity are 
+Construct a morphism, difference  of the  morphisms $mrph_1$ and  $mrph_2$. The conditions of validity are
 similar to those of the method {\tt add}. \par}
 {\leftskip=5mm
 {\tt i-sbtr} {\em mrph1 mrph2 ... mrphk}\hfill {\em [Macro]}  \par }
@@ -892,23 +892,23 @@ $mrph_1 -  mrph_2 - \cdots - mrph_k$. The conditions of validity are similar to 
 }
 \newpage
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt change-sorc-trgt} {\em mrph} {\tt \&key} {\em sorc trgt} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Build from the morphism {\em mrph} a new morphism inheriting from
-{\em mrph} the slots {\tt :degr} (degree), {\tt :intr} (mapping) and 
+{\em mrph} the slots {\tt :degr} (degree), {\tt :intr} (mapping) and
 {\tt :strt} (strategy). The source  and target slots of this new morphism are given
-by the key parameters {\em sorc} and {\em trgt}. If any 
+by the key parameters {\em sorc} and {\em trgt}. If any
 key parameter is omitted, the corresponding slot is
 inherited from {\em mrph} (default value). \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt dstr-change-sorc-trgt} {\em mrph {\tt \&key}  sorc trgt} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Modify {\bf destructively} the morphism {\em mrph}. The source  and target slots of the first argument
 are replaced respectively by the key parameters {\em sorc} and {\em trgt}. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt add} {\em chcm perturbation {\tt \&optional} strt}\hfill {\em [Method]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Create from the chain complex {\em chcm} a new chain complex inheriting
 from {\em chcm} the slots {\tt cmpr} and {\tt basis}. The boundary morphism
 attached to this new chain complex  is the sum of the boundary morphism $d$
@@ -924,7 +924,7 @@ does not create a morphism but a chain complex.\par}
 
 In the following examples, we first construct a chain complex instance {\tt ccn}
 where the groups $C_p$ are freely generated by numerical basis taken formally.
-These basis are sets of $10$ numbers or {\em decades} produced by the fonction {\tt <a-b<}. 
+These basis are sets of $10$ numbers or {\em decades} produced by the fonction {\tt <a-b<}.
 For instance, in dimension $0$, the basis is $\lbrace 0,1,2,3,4,5,6,7,8,9 \rbrace$,
 in dimension $1$, $\lbrace 10,11,\ldots,19 \rbrace$ and so on.
 The differential is defined as follows: for an even dimension $p$ of the group,
@@ -950,15 +950,15 @@ The generators being integers,  the comparative function is of course {\tt f-cmp
 
 [K3 Chain-Complex]
 
-(setf upper-shift (build-mrph 
-                      :sorc ccn :trgt ccn :strt :gnrt :degr +1 
+(setf upper-shift (build-mrph
+                      :sorc ccn :trgt ccn :strt :gnrt :degr +1
                       :intr #'(lambda(d gn) (cmbn (1+ d) 1 (+ gn 10)))
                       :orgn '(ccn shift +10) ))  ==>
 
 [K5 Morphism (degree 1)]
 
-(setf lower-shift (build-mrph 
-                      :sorc ccn :trgt ccn :strt :gnrt :degr -1 
+(setf lower-shift (build-mrph
+                      :sorc ccn :trgt ccn :strt :gnrt :degr -1
                       :intr #'(lambda(d gn) (cmbn (1- d) 1 (- gn 10)))
                       :orgn '(ccn shift -10) ))  ==>
 
@@ -1012,7 +1012,7 @@ Then, let us test the morphisms on generators and combinations.
 ------------------------------------------------------------------------------
 \end{verbatim}}
 We may iterate the mapping  upon the previous result (symbol *).
-Note that now, though {\tt lower-shift} has been constructed with 
+Note that now, though {\tt lower-shift} has been constructed with
 the strategy {\tt :gnrt}, its works also on a combination.
 {\footnotesize\begin{verbatim}
 (? lower-shift *)   ==>
@@ -1105,7 +1105,7 @@ Adding {\tt upper-shift} with itself gives a very different result:
 \end{verbatim}}
 Let us compose {\tt upper-shift} and the differential in both ways.
 Recall that the differential is a morphism structure, and
-may be obtained from the {\tt dffr} slot  of the chain complex {\tt ccn} 
+may be obtained from the {\tt dffr} slot  of the chain complex {\tt ccn}
 by the reader accessor function {\tt dffr1}. This morphism has
 been built by {\tt build-chcm} from the lisp function {\tt ccn-boundary}. One can
 see that the operators do not commute.
@@ -1166,8 +1166,8 @@ see that the operators do not commute.
 Up\index{accessing {\tt Kenzo} objects} to now, we have seen two kinds of {\tt Kenzo} objects stored in specific lists
 and retrievable by a number, namely the chain complexes and the morphisms. The retrieval functions
 are specific to the object: {\tt chcm} for a chain complex, {\tt mrph} for a morphism.
-The same scheme will be applied for others kinds of objects: reductions, homotopy equivalences, 
-coalgebras, algebras, simplicial morphism, etc, each having its specific list. 
+The same scheme will be applied for others kinds of objects: reductions, homotopy equivalences,
+coalgebras, algebras, simplicial morphism, etc, each having its specific list.
 But, in fact the numbering is independent
 of the type of the object and is incremented each time an object is created. Three general
 functions are at the disposal of the user to get information about
@@ -1228,13 +1228,13 @@ Object: [K5 Chain-Complex]
 (kd 9)  ==>
 
 Object: [K9 Morphism (degree 0): K5 -> K5]
-   Origin: (2MRPH-CMPS [K7 Morphism (degree 1): K5 -> K5] 
+   Origin: (2MRPH-CMPS [K7 Morphism (degree 1): K5 -> K5]
                        [K8 Morphism (degree -1): K5 -> K5] GNRT)
 
 (kd2 9)  ==>
 
 Object: [K9 Morphism (degree 0): K5 -> K5]
-   Origin: (2MRPH-CMPS [K7 Morphism (degree 1): K5 -> K5] 
+   Origin: (2MRPH-CMPS [K7 Morphism (degree 1): K5 -> K5]
                        [K8 Morphism (degree -1): K5 -> K5] GNRT)
 
 

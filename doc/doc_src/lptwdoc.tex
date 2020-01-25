@@ -1,20 +1,20 @@
-\chapter {Loop spaces fibrations} 
+\chapter {Loop spaces fibrations}
 
 \section{The canonical loop space fibration}
 
 Let $X$ be a  simplicial set. The software {\tt Kenzo} implements the
-{\bf canonical} twisted cartesian product\index{twisted cartesian product} of $X$ by its loop space $GX$, 
+{\bf canonical} twisted cartesian product\index{twisted cartesian product} of $X$ by its loop space $GX$,
 denoted $X \times_\tau GX$, giving the Kan\footnote {{\bf Daniel M. Kan}. {\em A combinatorial definition of
 homotopy groups}, Ann. of Math., 1958, vol. 67, pp 282--312.} model of the contractible
 path space of $X$.
 The {\em canonical fibration}
-$$ GX\quad \hookrightarrow\quad X \times_\tau GX  \hskip 1.2em \longrightarrow \hskip -1.2em \longrightarrow  
+$$ GX\quad \hookrightarrow\quad X \times_\tau GX  \hskip 1.2em \longrightarrow \hskip -1.2em \longrightarrow
    \quad X,$$
 is defined by the trivial application $\tau$, where $\tau(x)$ is the  {\em letter} $x$ in $GX$.
 This twisted cartesian product has the same simplices as the non-twisted one.
 So both associated chain complexes
 are equal as graded modules. The essential difference  resides in the differential morphism.
-More precisely, the face operator $\partial_n$ behaves differently in the twisted cartesian product. 
+More precisely, the face operator $\partial_n$ behaves differently in the twisted cartesian product.
 Let $(x,g) \in X \times_\tau GX$, the rule for the face operators are:
 \begin{eqnarray*}
 \partial_i(x,g) & =  & (\partial_i x, \partial_i g), \qquad i<n, \\
@@ -28,7 +28,7 @@ associated to the twisted cartesian product.
 
 \section{The associated tensor twisted product}
 
-We\index{tensor twisted product} recall that around the cartesian product $X \times GX$, 
+We\index{tensor twisted product} recall that around the cartesian product $X \times GX$,
 the Eilenberg--Zilber theorem allows to build the reduction (see the function {\tt ez}):
 $$
 \diagram{
@@ -37,7 +37,7 @@ $$
  {{\cal C}_*(X) \otimes {\cal C}_*(GX)} \cr
 }
 $$
-On the other hand, 
+On the other hand,
 the differential morphism $d_\tau$ of the chain complex
 ${\cal C}_*(X \times_\tau GX)$ may be considered as a perturbed
 differential morphism $d$ of the chain complex ${\cal C}_*(X \times GX)$,
@@ -59,25 +59,25 @@ Ann. of Math., 1959, vol. 69, pp. 223-246.}.
 \section{Main functions for the twisted products}
 
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt twisted-crts-prdc} {\em space} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
-From the simplicial set $X$, here the argument {\em space},  return  the 
+{\leftskip=15mm
+From the simplicial set $X$, here the argument {\em space},  return  the
 twisted cartesian product $X \times_\tau GX$ (a simplicial set). This function calls internally the functions
 {\tt loop-space} and {\tt crts-prdc} described in preceding chapters. The slot {\tt grmd} of the
 resulting instance is set with the ordinary cartesian product $X \times GX$. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt dtau-d} {\em space} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 From the simplicial set $X$, here the argument {\em space}, build the morphism perturbation (degree $-1$)
 $$d_\tau-d: X \times GX \longrightarrow X \times GX.$$
 The work is essentialy done by the  lisp function {\tt dtau-d-intr} which computes the difference
-between  the differential morphisms taking in account the discrepancy between 
+between  the differential morphisms taking in account the discrepancy between
 the last face operator ($\partial_n$)
 in both chain complexes, $X \times_\tau GX$ and $X \times GX$. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt szczarba} {\em space} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Starting from the simplicial set $X$, (the argument {\em space}), return two values: \par}
 {\leftskip=20mm
 1- The reduction
@@ -88,7 +88,7 @@ $$
  {{\cal C}_*(X) \otimes_t {\cal C}_*(GX)} \cr
 }
 $$
-obtained by perturbing by $d_\tau-d$ the top chain complex of the reduction 
+obtained by perturbing by $d_\tau-d$ the top chain complex of the reduction
 $$
 \diagram{
 {{\cal C}_*(X \times GX)} & \stackrel{h}{\longrightarrow} & {}^s{{\cal C}_*(X \times GX)} \cr
@@ -102,11 +102,11 @@ $$
 induced by the perturbation $d_\tau-d$ upon the top chain complex of the above reduction. \par}
 {\leftskip=15mm
 This algorithm implements in particular  in a very efficient way the formulas of
-Szczarba\footnote{{\bf R.H. Szczarba.} {\em The homology of twisted cartesian products.} 
+Szczarba\footnote{{\bf R.H. Szczarba.} {\em The homology of twisted cartesian products.}
 Transactions of the American Math. Society, 1961, vol. 100, pp. 197-216}. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt twisted-tnsr-prdc} {\em space} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Return the twisted tensor product (a chain complex)  $X \otimes_t GX$.
 This is done simply by extraction of the bottom chain complex from
 the reduction  {\tt (szczarba {\em space})}. \par}
@@ -122,7 +122,7 @@ we have modified some functions of {\tt soft-delta}, as indicated.
 {\footnotesize\begin{verbatim}
 
 (DEFUN SOFT-DELTAB-CMPR (gmsm1 gmsm2)
-    (if (= 1 (logcount (cdr gmsm1))) 
+    (if (= 1 (logcount (cdr gmsm1)))
         :EQUAL
         (f-cmpr (cdr gmsm1)(cdr gmsm2)) ))
 
@@ -175,7 +175,7 @@ and the faces of the same object in $\bar{\Delta} \times_\tau \Omega(\bar{\Delta
 
 [K23 Simplicial-Set]
 
-(setf smpx (crpr 0 (code '(0 1 2 3 4)) 
+(setf smpx (crpr 0 (code '(0 1 2 3 4))
                  0 (loop3 0 (code '(0 1 2 3 4 5)) 1)))  ==>
 
 <CrPr - 0-1-2-3-4 - <<Loop[0-1-2-3-4-5]>>>
@@ -183,24 +183,24 @@ and the faces of the same object in $\bar{\Delta} \times_\tau \Omega(\bar{\Delta
 (dotimes (j 5)
          (print (face crts-pr j 4 smpx)))  ==>
 
-<AbSm - <CrPr - 1-2-3-4 - <<Loop[1-2-3-4-5]>>>> 
-<AbSm - <CrPr - 0-2-3-4 - <<Loop[0-2-3-4-5]>>>> 
-<AbSm - <CrPr - 0-1-3-4 - <<Loop[0-1-3-4-5]>>>> 
-<AbSm - <CrPr - 0-1-2-4 - <<Loop[0-1-2-4-5]>>>> 
-<AbSm - <CrPr - 0-1-2-3 - <<Loop[0-1-2-3-4\-1][0-1-2-3-5]>>>> 
+<AbSm - <CrPr - 1-2-3-4 - <<Loop[1-2-3-4-5]>>>>
+<AbSm - <CrPr - 0-2-3-4 - <<Loop[0-2-3-4-5]>>>>
+<AbSm - <CrPr - 0-1-3-4 - <<Loop[0-1-3-4-5]>>>>
+<AbSm - <CrPr - 0-1-2-4 - <<Loop[0-1-2-4-5]>>>>
+<AbSm - <CrPr - 0-1-2-3 - <<Loop[0-1-2-3-4\-1][0-1-2-3-5]>>>>
 
 (dotimes (j 5)
          (print (face tw-crts-pr j 4 smpx)))  ==>
 
-<AbSm - <CrPr - 1-2-3-4 - <<Loop[1-2-3-4-5]>>>> 
-<AbSm - <CrPr - 0-2-3-4 - <<Loop[0-2-3-4-5]>>>> 
-<AbSm - <CrPr - 0-1-3-4 - <<Loop[0-1-3-4-5]>>>> 
-<AbSm - <CrPr - 0-1-2-4 - <<Loop[0-1-2-4-5]>>>> 
-<AbSm - <CrPr - 0-1-2-3 - <<Loop[0-1-2-3-5]>>>> 
+<AbSm - <CrPr - 1-2-3-4 - <<Loop[1-2-3-4-5]>>>>
+<AbSm - <CrPr - 0-2-3-4 - <<Loop[0-2-3-4-5]>>>>
+<AbSm - <CrPr - 0-1-3-4 - <<Loop[0-1-3-4-5]>>>>
+<AbSm - <CrPr - 0-1-2-4 - <<Loop[0-1-2-4-5]>>>>
+<AbSm - <CrPr - 0-1-2-3 - <<Loop[0-1-2-3-5]>>>>
 \end{verbatim}}
 \newpage
 {\footnotesize\begin{verbatim}
-(setf smpx2 (crpr 0 (code '(1 2 3 4 5)) 
+(setf smpx2 (crpr 0 (code '(1 2 3 4 5))
                   0 (loop3 0 (code '(5 6 7 8 9 10)) 1)))  ==>
 
 <CrPr - 1-2-3-4-5 - <<Loop[5-6-7-8-9-10]>>>
@@ -208,37 +208,37 @@ and the faces of the same object in $\bar{\Delta} \times_\tau \Omega(\bar{\Delta
 (dotimes (j 5)
          (print (face crts-pr j 4 smpx2)))  ==>
 
-<AbSm - <CrPr - 2-3-4-5 - <<Loop[6-7-8-9-10]>>>> 
-<AbSm - <CrPr - 1-3-4-5 - <<Loop[5-7-8-9-10]>>>> 
-<AbSm - <CrPr - 1-2-4-5 - <<Loop[5-6-8-9-10]>>>> 
-<AbSm - <CrPr - 1-2-3-5 - <<Loop[5-6-7-9-10]>>>> 
-<AbSm - <CrPr - 1-2-3-4 - <<Loop[5-6-7-8-9\-1][5-6-7-8-10]>>>> 
+<AbSm - <CrPr - 2-3-4-5 - <<Loop[6-7-8-9-10]>>>>
+<AbSm - <CrPr - 1-3-4-5 - <<Loop[5-7-8-9-10]>>>>
+<AbSm - <CrPr - 1-2-4-5 - <<Loop[5-6-8-9-10]>>>>
+<AbSm - <CrPr - 1-2-3-5 - <<Loop[5-6-7-9-10]>>>>
+<AbSm - <CrPr - 1-2-3-4 - <<Loop[5-6-7-8-9\-1][5-6-7-8-10]>>>>
 
 (dotimes (j 5)
          (print (face tw-crts-pr j 4 smpx2)))  ==>
 
-<AbSm - <CrPr - 2-3-4-5 - <<Loop[6-7-8-9-10]>>>> 
-<AbSm - <CrPr - 1-3-4-5 - <<Loop[5-7-8-9-10]>>>> 
-<AbSm - <CrPr - 1-2-4-5 - <<Loop[5-6-8-9-10]>>>> 
-<AbSm - <CrPr - 1-2-3-5 - <<Loop[5-6-7-9-10]>>>> 
-<AbSm - <CrPr - 1-2-3-4 - <<Loop[1-2-3-4-5][5-6-7-8-9\-1][5-6-7-8-10]>>>> 
+<AbSm - <CrPr - 2-3-4-5 - <<Loop[6-7-8-9-10]>>>>
+<AbSm - <CrPr - 1-3-4-5 - <<Loop[5-7-8-9-10]>>>>
+<AbSm - <CrPr - 1-2-4-5 - <<Loop[5-6-8-9-10]>>>>
+<AbSm - <CrPr - 1-2-3-5 - <<Loop[5-6-7-9-10]>>>>
+<AbSm - <CrPr - 1-2-3-4 - <<Loop[1-2-3-4-5][5-6-7-8-9\-1][5-6-7-8-10]>>>>
 \end{verbatim}}
 The user will have noted that we may obtain the same twisted cartesian product
-by the fibration theory. 
+by the fibration theory.
 Let us define a general function {\tt loop-fbr} with  a reduced simplicial set,
-{\em space}, as argument. This function uses the function {\tt fibration-total} 
+{\em space}, as argument. This function uses the function {\tt fibration-total}
 that we have seen in the  chapter about fibrations.
 Here, we see that the lisp function for the simplicial morphism, (keyword {\tt :sintr}),
-implements straightforwardly the canonical twisting operator which applies a simplex of $X$ 
-to the corresponding $1$--letter word of $GX$. Note that the execution time by 
-the fibration function is a little longer than for the direct twisted cartesian product 
+implements straightforwardly the canonical twisting operator which applies a simplex of $X$
+to the corresponding $1$--letter word of $GX$. Note that the execution time by
+the fibration function is a little longer than for the direct twisted cartesian product
 and it requires more memory.
 {\footnotesize\begin{verbatim}
 (defun loop-fbr (space)
              (fibration-total
                 (build-smmr
-                  :sorc space 
-                  :trgt (loop-space space) 
+                  :sorc space
+                  :trgt (loop-space space)
                   :degr -1
                   :sintr #'(lambda (dmns gmsm)
                                (absm 0 (loop3 0 gmsm 1)))
@@ -252,11 +252,11 @@ and it requires more memory.
 (dotimes (j 5)
          (print(face fb-tt-db j 4 smpx2)))
 
-<AbSm - <CrPr - 2-3-4-5 - <<Loop[6-7-8-9-10]>>>> 
-<AbSm - <CrPr - 1-3-4-5 - <<Loop[5-7-8-9-10]>>>> 
-<AbSm - <CrPr - 1-2-4-5 - <<Loop[5-6-8-9-10]>>>> 
-<AbSm - <CrPr - 1-2-3-5 - <<Loop[5-6-7-9-10]>>>> 
-<AbSm - <CrPr - 1-2-3-4 - <<Loop[1-2-3-4-5][5-6-7-8-9\-1][5-6-7-8-10]>>>> 
+<AbSm - <CrPr - 2-3-4-5 - <<Loop[6-7-8-9-10]>>>>
+<AbSm - <CrPr - 1-3-4-5 - <<Loop[5-7-8-9-10]>>>>
+<AbSm - <CrPr - 1-2-4-5 - <<Loop[5-6-8-9-10]>>>>
+<AbSm - <CrPr - 1-2-3-5 - <<Loop[5-6-7-9-10]>>>>
+<AbSm - <CrPr - 1-2-3-4 - <<Loop[1-2-3-4-5][5-6-7-8-9\-1][5-6-7-8-10]>>>>
 
 (time (dotimes (j 1000) (face tw-crts-pr 4 4 smpx2)))  ==>
 
@@ -338,19 +338,19 @@ The same type of tests may be done with another reduced simplicial set, namely $
 {\footnotesize\begin{verbatim}
 (dotimes (i 5) (print (face crt-pri3 i 4 s)))  ==>
 
-<AbSm - <CrPr - 3 - <<Loop[4]>>>> 
-<AbSm 0 <CrPr 1-0 0 - <<Loop[3]>>>> 
-<AbSm 1 <CrPr 1-0 0 - <<Loop[3]>>>> 
-<AbSm 2 <CrPr 1-0 0 - <<Loop[3]>>>> 
-<AbSm - <CrPr - 3 - <<Loop[4\-1]>>>> 
+<AbSm - <CrPr - 3 - <<Loop[4]>>>>
+<AbSm 0 <CrPr 1-0 0 - <<Loop[3]>>>>
+<AbSm 1 <CrPr 1-0 0 - <<Loop[3]>>>>
+<AbSm 2 <CrPr 1-0 0 - <<Loop[3]>>>>
+<AbSm - <CrPr - 3 - <<Loop[4\-1]>>>>
 
 (dotimes (i 5) (print (face tw-pri3 i 4 s)))  ==>
 
-<AbSm - <CrPr - 3 - <<Loop[4]>>>> 
-<AbSm 0 <CrPr 1-0 0 - <<Loop[3]>>>> 
-<AbSm 1 <CrPr 1-0 0 - <<Loop[3]>>>> 
-<AbSm 2 <CrPr 1-0 0 - <<Loop[3]>>>> 
-<AbSm - <CrPr - 3 2-1-0 <<Loop>>>> 
+<AbSm - <CrPr - 3 - <<Loop[4]>>>>
+<AbSm 0 <CrPr 1-0 0 - <<Loop[3]>>>>
+<AbSm 1 <CrPr 1-0 0 - <<Loop[3]>>>>
+<AbSm 2 <CrPr 1-0 0 - <<Loop[3]>>>>
+<AbSm - <CrPr - 3 2-1-0 <<Loop>>>>
 
 (setf fb-tt-pri3 (loop-fbr pri3))  ==>
 
@@ -358,11 +358,11 @@ The same type of tests may be done with another reduced simplicial set, namely $
 
 (dotimes (j 5) (print (face fb-tt-pri3 j 4 s)))
 
-<AbSm - <CrPr - 3 - <<Loop[4]>>>> 
-<AbSm 0 <CrPr 1-0 0 - <<Loop[3]>>>> 
-<AbSm 1 <CrPr 1-0 0 - <<Loop[3]>>>> 
-<AbSm 2 <CrPr 1-0 0 - <<Loop[3]>>>> 
-<AbSm - <CrPr - 3 2-1-0 <<Loop>>>> 
+<AbSm - <CrPr - 3 - <<Loop[4]>>>>
+<AbSm 0 <CrPr 1-0 0 - <<Loop[3]>>>>
+<AbSm 1 <CrPr 1-0 0 - <<Loop[3]>>>>
+<AbSm 2 <CrPr 1-0 0 - <<Loop[3]>>>>
+<AbSm - <CrPr - 3 2-1-0 <<Loop>>>>
 \end{verbatim}}
 Let us check now the Szczarba reduction, with the simplicial set $\bar{\Delta}$.
 {\footnotesize\begin{verbatim}
@@ -374,7 +374,7 @@ Let us check now the Szczarba reduction, with the simplicial set $\bar{\Delta}$.
 
 ---done---
 
-(setf *tc* (cmbn 2 1 (crpr 0 (code '(0 1 2)) 
+(setf *tc* (cmbn 2 1 (crpr 0 (code '(0 1 2))
                            0 (loop3 0 (code '(5 6 7 8)) 1))))
 
 ----------------------------------------------------------------------{CMBN 2}
@@ -397,12 +397,12 @@ Let us check now the Szczarba reduction, with the simplicial set $\bar{\Delta}$.
 
 (check-rdct)  ==>
 
-*TC* => 
+*TC* =>
 ----------------------------------------------------------------------{CMBN 2}
 <1 * <CrPr - 0-1-2 - <<Loop[5-6-7-8]>>>>
 ------------------------------------------------------------------------------
 
-*BC* => 
+*BC* =>
 ----------------------------------------------------------------------{CMBN 2}
 <1 * <TnPr 0 <<Loop[5-6-7-8]>>>>
 <10 * <TnPr 10-11 <<Loop[0-1-2]>>>>
@@ -410,14 +410,14 @@ Let us check now the Szczarba reduction, with the simplicial set $\bar{\Delta}$.
 ------------------------------------------------------------------------------
 
 Checking *TDD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 0}
 ------------------------------------------------------------------------------
- 
+
               ....... All results null ......
 
 Checking *HG* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 3}
 ------------------------------------------------------------------------------
 
@@ -439,7 +439,7 @@ The\index{twisting cochain} twisting cochain $t$ is the morphism
 $$t: aug \circ d_{\otimes t} \circ coaug$$
 where,
 \begin{enumerate}
-\item $coaug$ is the morphism 
+\item $coaug$ is the morphism
 $$ coaug: B \rightarrow B \otimes GB,$$
 $$ coaug(b) = b \otimes 1_{GB}. $$
 \item $d_{\otimes t}$ is the differential morphism of the twisted tensor product
@@ -472,15 +472,15 @@ the reduction obtained by a call to the function {\tt szczarba}.
 [K49 Chain-Complex]
 \end{verbatim}}
 Let us define the  coaugmentation and augmentation morphisms. As usual, it is sufficient
-to define the algorithm on a generator. 
+to define the algorithm on a generator.
 {\footnotesize\begin{verbatim}
-(setf coaug (build-mrph 
-               :sorc d 
-               :trgt d-twtp-gd 
+(setf coaug (build-mrph
+               :sorc d
+               :trgt d-twtp-gd
                :degr 0
                :intr #'(lambda (degr gnrt)
                          (term-cmbn degr 1 (tnpr degr gnrt 0 +null-loop+)))
-               :strt :gnrt 
+               :strt :gnrt
                :orgn '(coaug. d --> d-twtp-gd)))  ==>
 
 [K52 Morphism (degree 0)]
@@ -522,7 +522,7 @@ to define the algorithm on a generator.
 \end{verbatim}}
 The morphism {\tt cochain} is simply a composition of morphisms.
 We apply it upon the simplices {\tt (0)},
-{\tt (0 1 2)}, {\tt (0 1 2 3)}, ..., 
+{\tt (0 1 2)}, {\tt (0 1 2 3)}, ...,
 coded as the integers $1,7,15,\ldots$.
 {\footnotesize\begin{verbatim}
 (setf cochain (i-cmps aug (dffr d-twtp-gd) coaug))  ==>
@@ -646,13 +646,13 @@ a long composition of morphisms.
                :sorc 3-left
                :trgt 3-right
                :degr 0
-               :intr #'(lambda (degr a2-a) 
+               :intr #'(lambda (degr a2-a)
                          (with-tnpr (degra2 gnrta2 degra gnrta) a2-a
                             (with-tnpr (degr1 gnrt1 degr2 gnrt2) gnrta2
-                               (cmbn (+ degr1 degr2 degra) 
-                                     1 (tnpr degr1 
-                                             gnrt1 
-                                             (+ degr2 degra) 
+                               (cmbn (+ degr1 degr2 degra)
+                                     1 (tnpr degr1
+                                             gnrt1
+                                             (+ degr2 degra)
                                              (tnpr degr2 gnrt2 degra gnrta))))))
                :strt :gnrt
                :orgn '(assoc-double-tensor-product)))   ==>
@@ -667,7 +667,7 @@ a long composition of morphisms.
 
 [K62 Morphism (degree 0)]
 
-(setf nabla 
+(setf nabla
  (add (dffr (tnsr-prdc d gd))
       (i-cmps (tnsr-prdc id-d (aprd gd))
               (tnsr-prdc id-d (tnsr-prdc cochain id-gd))
@@ -676,9 +676,9 @@ a long composition of morphisms.
 
 [K74 Morphism (degree -1)]
 \end{verbatim}}
-We verify that the morphism {\tt nabla} and the differential of the 
+We verify that the morphism {\tt nabla} and the differential of the
 twisted tensor product (accessible
-through the symbol {\tt d-twtp-gd}) return the same results: 
+through the symbol {\tt d-twtp-gd}) return the same results:
 {\footnotesize\begin{verbatim}
 (? (dffr d-twtp-gd) 2 (tnpr 1 3 1 (loop3 0 7 1)))  ==>
 
@@ -721,7 +721,7 @@ The cup product\index{twisting cochain!cup product} $t \sqcup t$ of the twisting
 $$t\sqcup t: B \longrightarrow GB$$
 is defined by the following composition of morphisms:
 $$B \buildrel {\Delta} \over \longrightarrow B \otimes B
-    \buildrel {t \otimes t} \over \longrightarrow GB \otimes GB 
+    \buildrel {t \otimes t} \over \longrightarrow GB \otimes GB
     \buildrel {\varpi} \over \longrightarrow GB.$$
 We may now verify the formula
 $$ d_{GB} \circ t + t \circ d_B + t\sqcup t =0,$$
@@ -735,7 +735,7 @@ where $d_B$ and $d_{GB}$ are  the respective differential morphisms in $B$ and $
 (setf dt (cmps (dffr gd) cochain))  ==>
 
 [K79 Morphism (degree -2)]
- 
+
 (setf td (cmps cochain (dffr d)))  ==>
 
 [K80 Morphism (degree -2)]
@@ -772,9 +772,9 @@ cochain $t$.
 \section {The essential contraction}
 
 It is known that if $B$ is a reduced simplicial set, the space $B \times_\tau GB$ is
-contractible. So it is possible to build a reduction of this space over ${\Z}$.
+contractible. So it is possible to build a reduction of this space over $\mathbb{Z}$.
 This reduction depends of the important contraction
-$$\chi_{\times\tau}:  {{\cal C}_*(B) \times_\tau {\cal C}_*(GB)} \longrightarrow 
+$$\chi_{\times\tau}:  {{\cal C}_*(B) \times_\tau {\cal C}_*(GB)} \longrightarrow
                       {{\cal C}_*(B) \times_\tau {\cal C}_*(GB)}, $$
 which is a homotopy operator (degree: $+1$) satisfying the relation
 $$d \circ \chi_{\times\tau} + \chi_{\times\tau} \circ d =1.$$
@@ -786,46 +786,46 @@ $$
  {{\cal C}_*(X) \otimes_t {\cal C}_*(GX)} \cr
 }
 $$
-there is also  an induced contraction 
-$$\chi_{\otimes t}:  {{\cal C}_*(B) \otimes_t {\cal C}_*(GB)} \longrightarrow 
+there is also  an induced contraction
+$$\chi_{\otimes t}:  {{\cal C}_*(B) \otimes_t {\cal C}_*(GB)} \longrightarrow
                       {{\cal C}_*(B) \otimes_t {\cal C}_*(GB)}, $$
 defined by $\chi_{\otimes t}= f \circ \chi_{\times\tau} \circ g$.
-This implies that the twisted tensor product is also contractible over ${\Z}$.
+This implies that the twisted tensor product is also contractible over $\mathbb{Z}$.
 \par
 The two functions of {\tt Kenzo} for this construction are:
 \vskip 0.35cm
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt crts-contraction} {\em space} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Return the homotopy morphism corresponding to the contraction
 $\chi_{\times\tau}$. The lisp definition is:
 {\footnotesize\begin{verbatim}
-          (defun CRTS-CONTRACTION 
+          (defun CRTS-CONTRACTION
              (space
                 &aux (twisted-crts-prdc (twisted-crts-prdc space)))
              (the morphism
                 (build-mrph
-                   :sorc twisted-crts-prdc 
-                   :trgt twisted-crts-prdc 
+                   :sorc twisted-crts-prdc
+                   :trgt twisted-crts-prdc
                    :degr +1
-                   :intr (crts-contraction-intr 
+                   :intr (crts-contraction-intr
                                (cmpr space)
-                               (bspn space) 
-                               (face space) 
+                               (bspn space)
+                               (face space)
                                (cmpr twisted-crts-prdc))
                    :strt :gnrt
                    :orgn `(crts-contraction ,space))))
 \end{verbatim}}
 At execution time, the work is essentialy done by the function put in the
 slot {\tt :intr}. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt tnpr-contraction} {\em space} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Return the induced morphism $\chi_{\otimes t}= f \circ \chi_{\times\tau} \circ g$,
 as shown by the lisp definition:
 {\footnotesize\begin{verbatim}
-          (defun TNPR-CONTRACTION 
+          (defun TNPR-CONTRACTION
              (space
                 &aux (szczarba (szczarba space))
                      (f (f szczarba))
@@ -834,13 +834,13 @@ as shown by the lisp definition:
 
              (the morphism
                 (i-cmps f crts-contraction g)))
-\end{verbatim}} \par} 
+\end{verbatim}} \par}
 }
 
 \subsection* {Examples}
 
 Let us use again our familiar simplicial set $\bar\Delta$. First we apply  the
-homotopy operator $\chi_{\times t}$   upon various generators. 
+homotopy operator $\chi_{\times t}$   upon various generators.
 Note that the binary coding of the simplices
 allows normal arithmetic operators to generate them.
 {\footnotesize\begin{verbatim}
@@ -1178,13 +1178,13 @@ T
 \end{verbatim}}
 We verify now
 the required property of the homotopy operator $\chi_{\times\tau}$. As usual, we build
-by composition a morphism {\tt zero}. 
+by composition a morphism {\tt zero}.
 {\footnotesize\begin{verbatim}
 (setf dfr (bndr (twisted-crts-prdc delta)))   ==>
 
 [K24 Morphism (degree -1)]
 
-(setf zero (i-sbtr (idnt-mrph (sorc dfr)) (cmps dfr chi-x) 
+(setf zero (i-sbtr (idnt-mrph (sorc dfr)) (cmps dfr chi-x)
                    (cmps chi-x dfr)))   ==>
 
 [K33 Morphism (degree 0)]
@@ -1198,7 +1198,7 @@ by composition a morphism {\tt zero}.
 ----------------------------------------------------------------------{CMBN 3}
 ------------------------------------------------------------------------------
 \end{verbatim}}
-Then, we do the same test for the homotopy operator $\chi_{\otimes t}$. 
+Then, we do the same test for the homotopy operator $\chi_{\otimes t}$.
 {\footnotesize\begin{verbatim}
 (setf tw (twisted-tnsr-prdc d))  ==>
 
@@ -1227,7 +1227,7 @@ Then, we do the same test for the homotopy operator $\chi_{\otimes t}$.
 Note nevertheless that the relation is not satisfied for the base generator
 $*\otimes *$, namely the tensor product of both base generators.
 This is due to the fact that both contractions,  $\chi_{\times t}$ and  $\chi_{\otimes t}$,
-correspond to  reductions over  ${\Z}$ and not on $0$.
+correspond to  reductions over  $\mathbb{Z}$ and not on $0$.
 {\footnotesize\begin{verbatim}
 (setf gnrt-0 (tnpr 0 1 0 +null-loop+))  ==>
 
@@ -1239,7 +1239,7 @@ correspond to  reductions over  ${\Z}$ and not on $0$.
 <1 * <TnPr 1 <<Loop>>>>
 ------------------------------------------------------------------------------
 \end{verbatim}}
-Let us build, for instance, the reduction of the twisted tensor product over ${\Z}$ and check it. 
+Let us build, for instance, the reduction of the twisted tensor product over $\mathbb{Z}$ and check it.
 In that case, the two homomorphisms
 $f$ and $g$ are respectively the {\em augmentation} and {\em coaugmentation}
 morphisms.
@@ -1248,28 +1248,28 @@ $$
 {{\cal C}_*(B) \otimes_t {\cal C}_*(GB)} & \stackrel{\chi_{\otimes t}}{\longrightarrow} &
   {}^s{{\cal C}_*(B) \otimes_t {\cal C}_*(GB)} \cr
  {\scriptstyle aug} \downarrow \uparrow {\scriptstyle coaug}  \cr
- {{\cal C}_*({\Z})} \cr
+ {{\cal C}_*(\mathbb{Z})} \cr
 }
 $$
-We recall that, the unit chain complex corresponding to ${\Z}$ is built by the function
-{\tt z-chcm}. The unique generator in degree $0$ is {\tt :z-gnrt}. 
+We recall that, the unit chain complex corresponding to $\mathbb{Z}$ is built by the function
+{\tt z-chcm}. The unique generator in degree $0$ is {\tt :z-gnrt}.
 {\footnotesize\begin{verbatim}
 (setf aug (build-mrph
-            :sorc tw 
-            :trgt (z-chcm) 
+            :sorc tw
+            :trgt (z-chcm)
             :degr 0
             :intr #'(lambda (degr gnrt)
                        (if (zerop degr)
                            (term-cmbn 0 1 :z-gnrt)
                            (zero-cmbn degr)))
-            :strt :gnrt 
+            :strt :gnrt
             :orgn '(aug tw)))  ==>
 
 [K67 Cohomology-Class (degree 0)]
 
 (setf coaug (build-mrph
-              :sorc (z-chcm) 
-              :trgt tw 
+              :sorc (z-chcm)
+              :trgt tw
               :degr 0
               :intr #'(lambda (degr gnrt)
                          (if (zerop degr)
@@ -1280,9 +1280,9 @@ We recall that, the unit chain complex corresponding to ${\Z}$ is built by the f
 
 [K68 Morphism (degree 0)]
 
-(setf rdct (build-rdct :f aug 
-                       :g coaug 
-                       :h Chi-t 
+(setf rdct (build-rdct :f aug
+                       :g coaug
+                       :h Chi-t
                        :orgn '(reduction-tw-Z)))   ==>
 
 [K69 Reduction]
@@ -1305,25 +1305,25 @@ We recall that, the unit chain complex corresponding to ${\Z}$ is built by the f
 
 (check-rdct)  ==>
 
-*TC* => 
+*TC* =>
 ----------------------------------------------------------------------{CMBN 3}
 <1 * <TnPr 3 <<Loop[15\2]>>>>
 ------------------------------------------------------------------------------
 
-*BC* => 
+*BC* =>
 ----------------------------------------------------------------------{CMBN 0}
 <1 * Z-GNRT>
 ------------------------------------------------------------------------------
 
 Checking *TDD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 1}
 ------------------------------------------------------------------------------
 
               ....... All results null ......
 
 Checking *HG* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 1}
 ------------------------------------------------------------------------------
 \end{verbatim}}
@@ -1332,9 +1332,9 @@ Result:
 
 \section {An unproved property of the algebraic Kan contraction}
 
-Since the early version of the software (1990), and through a host of examples, 
+Since the early version of the software (1990), and through a host of examples,
 an amazing algebraic property of the Kan contraction $\chi_{\otimes t}$ has
-been experimentally discovered. Many computations have been done of 
+been experimentally discovered. Many computations have been done of
 $\chi_{\otimes t}(b \otimes g)$, for various choices of $b \otimes g$
 and in all these cases,  as soon as $degree(b) > 0$, then the result is null.
 In other words,
@@ -1346,12 +1346,12 @@ We show that, using the ``soft'' version of $\bar{\Delta}$.
 (setf db (soft-deltab))  ==>
 
 [K1 Simplicial-Set]
- 
+
 (setf tt (tnpr-contraction db))  ==>
 
 [K54 Morphism (degree 1)]
 
-(setf gnrt1 (tnpr 3 (code '(0 1 2 3 4)) 
+(setf gnrt1 (tnpr 3 (code '(0 1 2 3 4))
                  4 (loop3 0 (code '(0 1 2 3 4 5)) 2)))  ==>
 
 <TnPr 3 0-1-2-3-4 4 <<Loop[0-1-2-3-4-5\2]>>>
@@ -1361,7 +1361,7 @@ We show that, using the ``soft'' version of $\bar{\Delta}$.
 ----------------------------------------------------------------------{CMBN 8}
 ------------------------------------------------------------------------------
 
-(setf gnrt2 (tnpr 4 (code '(2 4 6 8 10 12))  
+(setf gnrt2 (tnpr 4 (code '(2 4 6 8 10 12))
                   5 (loop3 0 (code '(1 3 5 7 9 11 13)) 5)))  ==>
 
 <TnPr 4 2-4-6-8-10-12  5 <<Loop[1-3-5-7-9-11-13\5]>>>
@@ -1391,7 +1391,7 @@ But if $degree(b) = 0$, then the result is non--null in general.
                    [4-3-2 1-4-5-6]>>>>
 <1 * <TnPr 1 <<Loop[4-3-2-1-0 1-2][3-2-1-0 1-2-3][4-2-1-0 1-3-4][4-3-1-0 1-4-5]
                    [4-3-2 1-4-5-6\2]>>>>
-... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... 
+... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ...
 ------------------------------------------------------------------------------
 
 (length *)  ==>
@@ -1402,4 +1402,3 @@ But if $degree(b) = 0$, then the result is non--null in general.
 \subsection* {Lisp file concerned in this chapter}
 
 {\tt ls-twisted-products.lisp}.
-

@@ -17,7 +17,7 @@ by {\em I.M.James, North-Holland, 1995}.
 
 \section{The detailed construction}
 
-Let ${\cal C}_*(X)$ be  a coalgebra with effective homology. This means that 
+Let ${\cal C}_*(X)$ be  a coalgebra with effective homology. This means that
 a   homotopy equivalence:
 $$\diagram{
   & \hat{C}_* \cr
@@ -25,18 +25,18 @@ $$\diagram{
 {\cal C}_*(X)  & & EC_* \cr
           }$$
 
-is provided, where  the chain complex $EC_*$ is effective 
+is provided, where  the chain complex $EC_*$ is effective
 and must be con\-si\-de\-red as describing
 the homology of ${\cal C}_*(X)$. This scheme includes the case where
-${\cal C}_*(X)$ is itself effective; without any other information, 
+${\cal C}_*(X)$ is itself effective; without any other information,
 the program  constructs automatically a trivial homotopy equivalence.
 \par
 Now, if we apply the  {\em Cobar} functor to this homotopy equivalence
 we obtain the homotopy equivalence $H_R$:
 $$\diagram{
-  &{\widetilde{Cobar}}^{{\hat C}_*}({\Z},{\Z}) \cr
+  &{\widetilde{Cobar}}^{{\hat C}_*}(\mathbb{Z},\mathbb{Z}) \cr
  \swarrow\nearrow & & \searrow\nwarrow \cr
-Cobar^{{\cal C}_*(X)}({\Z}, {\Z})  & & {\widetilde{Cobar}}^{EC_*}({\Z}, {\Z}) \cr
+Cobar^{{\cal C}_*(X)}(\mathbb{Z}, \mathbb{Z})  & & {\widetilde{Cobar}}^{EC_*}(\mathbb{Z}, \mathbb{Z}) \cr
           }$$
 
 in which the $\widetilde{Cobar}$'s are cobars construction with respect to
@@ -47,13 +47,13 @@ Secondly, Julio Rubio\footnote{{\bf J.J. Rubio-Garcia}. {\em Homologie
 effective des espaces de lacets it\'er\'es: un logiciel}, Th\`ese, Institut Fourier, 1991.}
 has shown that it is possible to construct another homotopy equivalence, $H_L$:
 $$\diagram{
-  & Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \cr
+  & Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \cr
  \swarrow\nearrow & & \searrow\nwarrow \cr
- {\cal C_*}(GX)  & & Cobar^{{\cal C}_*(X)}({\Z}, {\Z}) \cr
+ {\cal C_*}(GX)  & & Cobar^{{\cal C}_*(X)}(\mathbb{Z}, \mathbb{Z}) \cr
           }$$
 Both reductions of $H_L$ are obtained by the basic perturbation lemma, as explained
 in the following section.
-The composition of both homotopy e\-qui\-va\-len\-ces, $H_L$ and $H_R$, makes the link between $GX$, 
+The composition of both homotopy e\-qui\-va\-len\-ces, $H_L$ and $H_R$, makes the link between $GX$,
 i.e. the loop space of $X$
 and the effective right bottom chain complex of $H_R$.
 
@@ -66,17 +66,17 @@ We are led to consider the two following comodules:
 \item ${\cal C}_*(X)$ comodule on itself, with the canonical coproduct.
 $${\cal C}_*(X)\stackrel {\Delta}{\longrightarrow} {\cal C}_*(X)\otimes {\cal C}_*(X).$$
 \item ${\check{\cal C}}_*(X)$, comodule on ${\cal C}_*(X)$, with a ``trivial''
-coproduct 
+coproduct
 $${\check{\cal C}}_*(X) \stackrel {\check{\Delta}}{\longrightarrow}  {\cal C}_*(X)\otimes{\check{\cal C}}_*(X),\quad
 \sigma \rightarrow 1\otimes\sigma,\,\sigma \in {\check{\cal C}}_*(X).$$
 \end{itemize}
 Now, we consider the set of the followings cobars
 (where $u$ means {\em ``untwisted''} and $t$ {\em ``twisted''}):
 \begin{eqnarray*}
-{\rm Hat}_{uu} &=& Cobar^{{\cal C}_*(X)}({\Z}, {\check{\cal C}}_*(X)\otimes {\cal C_*}(GX)),\\
-{\rm Hat}_{ut} &=& Cobar^{{\cal C}_*(X)}({\Z}, {\check{\cal C}}_*(X)\otimes_t {\cal C_*}(GX)),\\
-{\rm Hat}_{tu} &=& Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes {\cal C_*}(GX)),\\
-{\rm Hat}_{tt} &=& Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)).
+{\rm Hat}_{uu} &=& Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\check{\cal C}}_*(X)\otimes {\cal C_*}(GX)),\\
+{\rm Hat}_{ut} &=& Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\check{\cal C}}_*(X)\otimes_t {\cal C_*}(GX)),\\
+{\rm Hat}_{tu} &=& Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\cal C}_*(X)\otimes {\cal C_*}(GX)),\\
+{\rm Hat}_{tt} &=& Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)).
 \end{eqnarray*}
 
 One may always say that ${\rm Hat}_{ut}$ is obtained from ${\rm Hat}_{uu}$ by a perturbation $\delta_r$ ($r$: right)
@@ -87,7 +87,7 @@ ${\rm Hat}_{tt}$ is obtained from ${\rm Hat}_{tu}$ by the perturbation $\delta_r
 from ${\rm Hat}_{ut}$ by the perturbation $\delta_l$. \par
 This is shown in the following diagram (here, the arrows are not reductions, but denote
 the  perturbations between  the differential morphisms):
-$$\diagram{ 
+$$\diagram{
   & {\rm Hat}_{uu} \cr
  \delta_l \swarrow  & & \searrow \delta_r \cr
 {\rm Hat}_{tu}  & &  {\rm Hat}_{ut} \cr
@@ -98,29 +98,29 @@ The underlying graded modules  ${\rm Hat}_{uu}$, ${\rm Hat}_{ut}$, ${\rm Hat}_{t
 and the program keeps ${\rm Hat}_{uu}$ as the underlying graded module for all the chain complexes.
 The  differential perturbations are given by the formulas:
 \begin{eqnarray*}
-\delta_r({\bar{c}}_1 \otimes \cdots \otimes {\bar{c}}_n \otimes c \otimes g) &=& 
+\delta_r({\bar{c}}_1 \otimes \cdots \otimes {\bar{c}}_n \otimes c \otimes g) &=&
  [{\bar{c}}_1 \otimes \cdots \otimes {\bar{c}}_n] \otimes [d_{\otimes t}(c \otimes g)-d_\otimes (c \otimes g)], \\
 \delta_l({\bar{c}}_1 \otimes \cdots \otimes {\bar{c}}_n \otimes c \otimes g) &=&
-{\bar{c}}_1 \otimes \cdots \otimes {\bar{c}}_n \otimes {\bar{\Delta}}c \otimes g, 
+{\bar{c}}_1 \otimes \cdots \otimes {\bar{c}}_n \otimes {\bar{\Delta}}c \otimes g,
 \end{eqnarray*}
 where ${\bar{c}}_i, c \in {\cal C}_*(X),\, g \in {\cal C_*}(GX))$ and $\bar{\Delta}= \Delta - \check{\Delta}$.
 \par
 \vskip 0.35cm
-Now, on one hand, we know that there exists a reduction  
-$${\rm Hat}_{tu}=Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes {\cal C_*}(GX)) \Longrightarrow {\cal C}_*(GX),$$ 
-so,  perturbing this reduction by $\delta_r$, one obtains the Rubio reduction 
-$${\rm Hat}_{tt}=Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow{\cal C}_*(GX).$$
-On the other hand, we know also that there exists a reduction 
-$${\rm Hat}_{ut}=Cobar^{{\cal C}_*(X)}({\Z}, {\check{\cal C}}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow
-Cobar^{{\cal C}_*(X)}({\Z}, {\Z}),$$ 
-so, perturbing this reduction by $\delta_l$, one obtains the reduction 
-$${\rm Hat}_{tt}=Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow 
-Cobar^{{\cal C}_*(X)}({\Z}, {\Z}).$$
+Now, on one hand, we know that there exists a reduction
+$${\rm Hat}_{tu}=Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\cal C}_*(X)\otimes {\cal C_*}(GX)) \Longrightarrow {\cal C}_*(GX),$$
+so,  perturbing this reduction by $\delta_r$, one obtains the Rubio reduction
+$${\rm Hat}_{tt}=Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow{\cal C}_*(GX).$$
+On the other hand, we know also that there exists a reduction
+$${\rm Hat}_{ut}=Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\check{\cal C}}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow
+Cobar^{{\cal C}_*(X)}(\mathbb{Z}, \mathbb{Z}),$$
+so, perturbing this reduction by $\delta_l$, one obtains the reduction
+$${\rm Hat}_{tt}=Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow
+Cobar^{{\cal C}_*(X)}(\mathbb{Z}, \mathbb{Z}).$$
 Finally, we have obtained the wished left homotopy equivalence $H_L$:
 $$\diagram{
-  & Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \cr
+  & Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \cr
     \swarrow\nearrow & & \searrow\nwarrow \cr
- {\cal C_*}(GX)  & & Cobar^{{\cal C}_*(X)}({\Z}, {\Z}) \cr
+ {\cal C_*}(GX)  & & Cobar^{{\cal C}_*(X)}(\mathbb{Z}, \mathbb{Z}) \cr
           }$$
 
 \subsection {The useful functions}
@@ -140,15 +140,15 @@ a homotopy equivalence giving an effective homology version  of the space $GX$. 
 equivalence will be used by the homology function to compute the homology groups. In fact, due to
 the slot-unbound mechanism of CLOS, this function will be automatically called, as soon
 as the user requires a homology group of a loop-space.
-If $X$ is $n$-reduced and if the wished loop space is $\Omega^k X, \, k \leq n$, then 
+If $X$ is $n$-reduced and if the wished loop space is $\Omega^k X, \, k \leq n$, then
 the process will be automatically  iterated. \par}
 {\leftskip=5mm
 {\tt ls-hat-u-u} {\em space}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
-Return the chain complex 
-$Cobar^{{\cal C}_*(X)}({\Z}, {\check{\cal C}}_*(X)\otimes {\cal C_*}(GX))$. Because of
+Return the chain complex
+$Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\check{\cal C}}_*(X)\otimes {\cal C_*}(GX))$. Because of
 the particular structure of ${\check{\cal C}}_*(X)$, this chain complex is nothing but
-$Cobar^{{\cal C}_*(X)}({\Z},{\Z})\otimes {\check{\cal C}}_*(X)\otimes {\cal C_*}(GX).$
+$Cobar^{{\cal C}_*(X)}(\mathbb{Z},\mathbb{Z})\otimes {\check{\cal C}}_*(X)\otimes {\cal C_*}(GX).$
 \par}
 {\leftskip=5mm
 {\tt ls-hat-left-perturbation} {\em space}  \hfill {\em [Function]} \par}
@@ -159,7 +159,7 @@ the discrepancy between the coproducts of  ${\check{\cal C}}_*(X)$ and ${\cal C}
 {\tt ls-hat-t-u} {\em space}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
 Return the chain complex
-$Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes {\cal C_*}(GX))$ by applying
+$Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\cal C}_*(X)\otimes {\cal C_*}(GX))$ by applying
 the differential perturbation {\tt hat-left-perturbation} upon
 the chain complex built by the function {\tt hat-u-u}. This is realized by the method
 {\tt add}. \par}
@@ -167,62 +167,62 @@ the chain complex built by the function {\tt hat-u-u}. This is realized by the m
 {\tt ls-hat-u-t} {\em space}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
 Return the chain complex
-$Cobar^{{\cal C}_*(X)}({\Z},{\check{\cal C}}_*(X)\otimes_t {\cal C_*}(GX))$. Because of
+$Cobar^{{\cal C}_*(X)}(\mathbb{Z},{\check{\cal C}}_*(X)\otimes_t {\cal C_*}(GX))$. Because of
 the particular structure of ${\check{\cal C}}_*(X)$, this chain complex is nothing but
-$Cobar^{{\cal C}_*(X)}({\Z},{\Z})\otimes[{\check{\cal C}}_*(X)\otimes_t {\cal C_*}(GX)],$
-where the twisted tensor product is obtained by a call to {\tt twisted-tnsr-prdc} 
+$Cobar^{{\cal C}_*(X)}(\mathbb{Z},\mathbb{Z})\otimes[{\check{\cal C}}_*(X)\otimes_t {\cal C_*}(GX)],$
+where the twisted tensor product is obtained by a call to {\tt twisted-tnsr-prdc}
 (see loop space fibrations chapter). \par}
 {\leftskip=5mm
 {\tt ls-hat-right-perturbation} {\em space}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
 Return the morphism corresponding to the differential perturbation $\delta_r$ induced
 by the twisted tensor product. This morphism is nothing but the tensor product of two
-morphisms: the identity morphism on $Cobar^{{\cal C}_*(X)}({\Z},{\Z})$ and 
-the perturbation morphism induced by the twisted tensor product. This last 
+morphisms: the identity morphism on $Cobar^{{\cal C}_*(X)}(\mathbb{Z},\mathbb{Z})$ and
+the perturbation morphism induced by the twisted tensor product. This last
 morphism is a by-product of the function {\tt szczarba}. \par}
 {\leftskip=5mm
 {\tt ls-left-hmeq-hat} {\em space}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
-Return the chain complex 
-${\rm Hat}_{tt}=Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX))$ by 
+Return the chain complex
+${\rm Hat}_{tt}=Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX))$ by
 perturbing the chain complex ${\rm Hat}_{ut}$ by the perturbation $\delta_l$. \par}
 {\leftskip=5mm
 {\tt ls-pre-left-hmeq-left-reduction} {\em space}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
 Build the reduction
-$${\rm Hat}_{tu}=Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes {\cal C_*}(GX)) \Longrightarrow {\cal C}_*(GX).$$ 
+$${\rm Hat}_{tu}=Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\cal C}_*(X)\otimes {\cal C_*}(GX)) \Longrightarrow {\cal C}_*(GX).$$
 \par}
 {\leftskip=5mm
 {\tt ls-pre-left-hmeq-right-reduction} {\em space}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
 Build the reduction
-$${\rm Hat}_{ut}=Cobar^{{\cal C}_*(X)}({\Z},{\check{\cal C}}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow
-Cobar^{{\cal C}_*(X)}({\Z}, {\Z}).$$ \par}
+$${\rm Hat}_{ut}=Cobar^{{\cal C}_*(X)}(\mathbb{Z},{\check{\cal C}}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow
+Cobar^{{\cal C}_*(X)}(\mathbb{Z}, \mathbb{Z}).$$ \par}
 {\leftskip=5mm
 {\tt ls-left-hmeq-left-reduction} {\em space}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
-Build the Rubio reduction 
-$$Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow{\cal C}_*(GX)$$
+Build the Rubio reduction
+$$Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow{\cal C}_*(GX)$$
 by perturbing by the perturbation $\delta_r$ the reduction
-$${\rm Hat}_{tu} \Longrightarrow {\cal C}_*(GX)$$ 
+$${\rm Hat}_{tu} \Longrightarrow {\cal C}_*(GX)$$
 obtained by the function {\tt pre-left-hmeq-left-reduction}. \par}
 {\leftskip=5mm
 {\tt ls-left-hmeq-right-reduction} {\em space}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
-Build the reduction 
-$$Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow 
-Cobar^{{\cal C}_*(X)}({\Z}, {\Z})$$
-by perturbing by the perturbation $\delta_l$ the reduction 
-$${\rm Hat}_{ut} \Longrightarrow Cobar^{{\cal C}_*(X)}({\Z}, {\Z})$$
+Build the reduction
+$$Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \Longrightarrow
+Cobar^{{\cal C}_*(X)}(\mathbb{Z}, \mathbb{Z})$$
+by perturbing by the perturbation $\delta_l$ the reduction
+$${\rm Hat}_{ut} \Longrightarrow Cobar^{{\cal C}_*(X)}(\mathbb{Z}, \mathbb{Z})$$
 obtained by the function {\tt pre-left-hmeq-right-reduction}. \par}
 {\leftskip=5mm
 {\tt ls-left-hmeq} {\em space}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
 Build the homotopy equivalence
 $$\diagram{
-  & Cobar^{{\cal C}_*(X)}({\Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \cr
+  & Cobar^{{\cal C}_*(X)}(\mathbb{Z}, {\cal C}_*(X)\otimes_t {\cal C_*}(GX)) \cr
     \swarrow\nearrow & & \searrow\nwarrow \cr
- {\cal C_*}(GX)  & & Cobar^{{\cal C}_*(X)}({\Z}, {\Z}) \cr
+ {\cal C_*}(GX)  & & Cobar^{{\cal C}_*(X)}(\mathbb{Z}, \mathbb{Z}) \cr
           }$$
 from the above reductions. The function {\tt loop-space-efhm} composes this left homotopy
 equivalence $H_L$ with a homotopy equivalence $H_R$ which is the cobar of a pre-existing
@@ -258,8 +258,8 @@ a loop space.
 
 \subsection* {Examples}
 
-Let us show first how to get the homology groups of some known loop spaces, 
-$\Omega {\cal S}^2$, $\Omega^3 {\cal S}^4$, $\Omega^2{\rm Moore}({\Z}/{2{\Z}},3)$.
+Let us show first how to get the homology groups of some known loop spaces,
+$\Omega {\cal S}^2$, $\Omega^3 {\cal S}^4$, $\Omega^2{\rm Moore}(\mathbb{Z}/{2\mathbb{Z}},3)$.
 {\footnotesize\begin{verbatim}
 (setf s2 (sphere 2))  ==>
 
@@ -413,9 +413,9 @@ Component Z/2Z
 
 \section {The solution of the Adams and Carlsson problem}
 
-Let\index{Adams's problem} $X$ an $n$-reduced simplicial set which is not a suspension. 
+Let\index{Adams's problem} $X$ an $n$-reduced simplicial set which is not a suspension.
 The Adams and Carlsson
-problem\footnote{{\bf Gunnar Carlsson, R.James Milgram.} {\em Stable homotopy and iterated loop spaces}  in 
+problem\footnote{{\bf Gunnar Carlsson, R.James Milgram.} {\em Stable homotopy and iterated loop spaces}  in
 {\em Handbook of Algebraic Topology, pp 545} edited by {\em I.M.James, North-Holland, 1995}.}
 asks for a finite CW-complex modelizing the iterated loop space $\Omega^n X$. We show in this section
 how the {\tt Kenzo} program builds the relevant solution.\par
@@ -440,12 +440,12 @@ basis in dimensions $0$ to $5$,
 {\footnotesize\begin{verbatim}
 (dotimes (i 6) (print (length (basis ecc i))))  ==>
 
-1 
-1 
-2 
-5 
-13 
-33 
+1
+1
+2
+5
+13
+33
 \end{verbatim}}
 we see that the required CW-complex can be constructed using $1$ $0$-cell, $1$ $1$-cell, $2$ $2$-cells,
 $5$ $3$-cells, $13$ $4$-cells and $33$ $5$-cells. Let us print the incidence matrix between
@@ -480,11 +480,9 @@ For instance, we see that the first $5$-cell,
 <<AlLp[5 <<AlLp[6 <<AlLp[7 8]>>]>>]>>
 \end{verbatim}}
 is glued to the $4$-cells \#5 and \#8 by attaching  maps of degree $6$.
-The $5$-cell \#4 is also glued to the $4$-cell \#5 by an attaching map 
+The $5$-cell \#4 is also glued to the $4$-cell \#5 by an attaching map
 of degree $1$, etc.
 
 \subsection* {Lisp files concerned in this chapter}
 
 {\tt lp-space-efhm.lisp}, {\tt searching-homology.lisp}.
-
-

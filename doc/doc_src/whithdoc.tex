@@ -66,27 +66,27 @@ $$
 \subsection* {3) The Serre exact sequence of the homotopy groups of fibrations.}
 
 Let us consider the fibration
-$$  F \quad \hookrightarrow\quad  T=X \otimes_\tau F \hskip 1.2em \longrightarrow \hskip -1.2em \longrightarrow  
+$$  F \quad \hookrightarrow\quad  T=X \otimes_\tau F \hskip 1.2em \longrightarrow \hskip -1.2em \longrightarrow
    \quad X,$$
 The Serre exact sequence establishes a connection between the homotopy groups of the $3$ spaces,
 in any  dimension:
-$$\cdots \longrightarrow \pi_{n+1}(F) \longrightarrow \pi_{n+1}(T) \longrightarrow \pi_{n+1}(X) 
+$$\cdots \longrightarrow \pi_{n+1}(F) \longrightarrow \pi_{n+1}(T) \longrightarrow \pi_{n+1}(X)
          \longrightarrow \pi_n(F) \longrightarrow$$
 $$\longrightarrow  \pi_n(T) \longrightarrow \pi_n(X)  \longrightarrow \pi_{n-1}(F) \longrightarrow \cdots $$
 In our special case, where the fibration is:
-$$  K(\pi, n-1) \quad \hookrightarrow\quad  X' \hskip 1.2em \longrightarrow \hskip -1.2em \longrightarrow  
+$$  K(\pi, n-1) \quad \hookrightarrow\quad  X' \hskip 1.2em \longrightarrow \hskip -1.2em \longrightarrow
    \quad X,$$
 the Serre sequence may be written:
 $$\cdots \longrightarrow  \pi_{n+1}(K(\pi, n-1)) \longrightarrow \pi_{n+1}(X') \longrightarrow \pi_{n+1}(X)
  \longrightarrow $$
-$$ \longrightarrow \pi_n(K(\pi, n-1)) \longrightarrow  \pi_n(X') \longrightarrow \pi_n(X) 
+$$ \longrightarrow \pi_n(K(\pi, n-1)) \longrightarrow  \pi_n(X') \longrightarrow \pi_n(X)
  \longrightarrow \pi_{n-1}(K(\pi, n-1)) \longrightarrow 0. $$
 But we know that $\pi_i(K(\pi,n))=0$ for $i \not= n$ and that $\pi_n(K(\pi, n))=\pi,$
 so the exact sequence may be re-written:
-$$  0 \rightarrow \pi_{n+1}(X') \rightarrow \pi_{n+1}(X) \rightarrow 0 \rightarrow  \pi_n(X') 
+$$  0 \rightarrow \pi_{n+1}(X') \rightarrow \pi_{n+1}(X) \rightarrow 0 \rightarrow  \pi_n(X')
       \rightarrow \pi_n(X) \rightarrow \pi \rightarrow 0. $$
 The  subsequence:
-$$ 0 \longrightarrow  \pi_n(X') \longrightarrow \pi_n(X) 
+$$ 0 \longrightarrow  \pi_n(X') \longrightarrow \pi_n(X)
  \longrightarrow \pi \longrightarrow 0. $$
 is exact; furthermore, the cocycle $\chi$ is such that the connection morphism
 $\partial: \pi_n(X) \rightarrow \pi$ is the identity; so that
@@ -105,28 +105,28 @@ So, if we know how to compute $H_{n+1}(X')$ then we  have obtained $\pi_{n+1}(X)
 
 Let\index{Whitehead tower} us denote for a reason which will be clear in a moment the space $X'$ by
 $X^{(n+1)}$.
-Due to the properties of  $X^{(n+1)}$, we may iterate the process, 
+Due to the properties of  $X^{(n+1)}$, we may iterate the process,
 namely, build the following fibrations, where $\pi_{n+1}(X^{(n+1)})$ is  denoted simply by
 $\pi'$:
 $$\diagram{
 K(\pi', n) &\buildrel {=} \over \longrightarrow  & K(\pi', n) \cr
 \downarrow  & & \downarrow \cr
-X^{(n+2)}=X^{(n+1)} \times_{\tau_\chi} K(\pi', n) & \buildrel {\psi_\chi} \over \longrightarrow & 
+X^{(n+2)}=X^{(n+1)} \times_{\tau_\chi} K(\pi', n) & \buildrel {\psi_\chi} \over \longrightarrow &
 K(\pi',n+1) \times_\tau K(\pi', n) \cr
 \downarrow  & & \downarrow \cr
    X^{(n+1)}  & \buildrel \varphi_\chi \over \longrightarrow & K(\pi',n+1) }
 $$
 where $X^{(n+2)}= X^{(n+1)} \times_{\tau_\chi} K(\pi', n)$ has the property
 $$H_{n+2}(X^{(n+2)}) \simeq  \pi_{n+2}(X^{(n+2)}) \simeq \pi_{n+2}(X^{(n+1)}) \simeq \pi_{n+2}(X). $$
-This construction is known as the Whitehead tower. 
+This construction is known as the Whitehead tower.
 
 \section {The functions for computing homotopy groups}
 
 \subsection* {An important remark}
 
 In this version of Kenzo, only the case where the first non--null
-homology group (in non--null dimension) is ${\Z}$ or ${\Z}/{2 {\Z}}$ can be processed; however if this 
-homology group is a direct sum of several copies of ${\Z}$ or ${\Z}/{2 {\Z}}$, then the corresponding
+homology group (in non--null dimension) is $\mathbb{Z}$ or $\mathbb{Z}/{2 \mathbb{Z}}$ can be processed; however if this
+homology group is a direct sum of several copies of $\mathbb{Z}$ or $\mathbb{Z}/{2 \mathbb{Z}}$, then the corresponding
 stage of the Whitehead tower may also be constructed step by step.
 \vskip 0.35cm
 {\parindent=0mm
@@ -134,59 +134,59 @@ stage of the Whitehead tower may also be constructed step by step.
 {\tt chml-clss} {\em chcm first}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
 Return a ``fundamental'' cohomology class, more precisely a cocycle $\chi$ defining it.
-The first argument {\em chcm} must be a chain complex $C_*$ with effective homology; in particular, 
+The first argument {\em chcm} must be a chain complex $C_*$ with effective homology; in particular,
 an effective chain complex $EC_*$ is a by--product of the machine object $C_*$. The second argument ``{\em first}''
 is an integer $n$, namely the first non--null dimension from which the chain complex
-{\em chcm} has a non--null homology group, which {\bf must be isomorphic to ${\Z}$} or ${\Z}/{2 {\Z}}$.
+{\em chcm} has a non--null homology group, which {\bf must be isomorphic to $\mathbb{Z}$} or $\mathbb{Z}/{2 \mathbb{Z}}$.
 The reader may be amazed that this argument ``{\em first}'' must be provided, since it is  a consequence
 of the given $C_*$. But in fact, the same function {\tt chml-class} may also be used in different contexts, for example,
 the Postnikov tower; in such a case, the argument {\em first} is not redundant. The returned cocycle $\chi$
-is in any case a chain complex morphism $\chi: EC_* \longrightarrow {\Z}$, where ${\Z}$ is the unit chain complex
+is in any case a chain complex morphism $\chi: EC_* \longrightarrow \mathbb{Z}$, where $\mathbb{Z}$ is the unit chain complex
 created by the function {\tt z-chcm}. The degree of the morphism is $- n$.
 It is important to note that  the chain complex involved in the source of the morphism
 is the {\bf effective} chain complex of the homotopy equivalence value of the slot {\tt efhm} of
 the object {\em chcm}. See the section {\em The general method for computing homology} in the Homology chapter.
-Finally, if $H_n(C_*)={\Z}/{2 {\Z}}$, the actual cohomology class hoped by the user is the composition
-$p \circ \chi$, where $p$ is the canonical projection ${\Z} \longrightarrow {\Z}/{2 {\Z}}$. But nevertheless,
+Finally, if $H_n(C_*)=\mathbb{Z}/{2 \mathbb{Z}}$, the actual cohomology class hoped by the user is the composition
+$p \circ \chi$, where $p$ is the canonical projection $\mathbb{Z} \longrightarrow \mathbb{Z}/{2 \mathbb{Z}}$. But nevertheless,
 the {\tt chml-clss} lisp function returns $\chi$ and not $p \circ \chi$.
 \par}
 {\leftskip=5mm
 {\tt z-whitehead} {\em smst chml-clss}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
 Return a fibration  over the simplicial set {\em smst} (the first argument), canonically associated
-to the ``cohomology class'' {\em chml-clss} (the second argument). The simplicial set $X$, i.e. {\em smst}, is 
+to the ``cohomology class'' {\em chml-clss} (the second argument). The simplicial set $X$, i.e. {\em smst}, is
 reduced; its homotopy groups $\pi_r(X)$ are null for $0 \leq r \leq n-1$. The first non null homotopy group
-$\pi_n(X)$ is assumed to be ${\Z}$, i.e. $\pi_n(X)= H_n(X)= {\Z}$. The previous function {\tt chml-clss}, in
+$\pi_n(X)$ is assumed to be $\mathbb{Z}$, i.e. $\pi_n(X)= H_n(X)= \mathbb{Z}$. The previous function {\tt chml-clss}, in
 this situation, returns a cocycle $\chi$, which may be used as the second argument {\em chml-clss} of the function
 {\tt z-whitehead}. The integer  $n$ is determined by the absolute value of the degree of the
 cohomology class {\em chcm-clss}. As explained in the previous section, a canonical fibration
 is induced by $\chi$ and it is this fibration which is returned by {\tt z-whitehead}. The slot {\tt sintr} of the
-fibration is set by the internal function {\tt z-whitehead-sintr} which builds 
+fibration is set by the internal function {\tt z-whitehead-sintr} which builds
 in an efficient way the lisp function implementing the twisting operator $\tau \circ \varphi_\chi$.
 \par}
 {\leftskip=5mm
 {\tt z2-whitehead} {\em smst chcm-clss}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
 Return a fibration  over the simplicial set {\em smst} (the first argument), canonically associated
-to the ``cohomology class'' {\em chml-clss} (the second argument). The simplicial set $X$, i.e. {\em smst}, is 
+to the ``cohomology class'' {\em chml-clss} (the second argument). The simplicial set $X$, i.e. {\em smst}, is
 reduced; its homotopy groups $\pi_r(X)$ are null for $0 \leq r \leq n-1$. The first non null homotopy group
-$\pi_n(X)$ is assumed to be ${\Z}/2{\Z}$, i.e. $\pi_n(X)= H_n(X)= {\Z}/2{\Z}$. The previous function {\tt chml-clss}, in
+$\pi_n(X)$ is assumed to be $\mathbb{Z}/2\mathbb{Z}$, i.e. $\pi_n(X)= H_n(X)= \mathbb{Z}/2\mathbb{Z}$. The previous function {\tt chml-clss}, in
 this situation, returns a ``cocycle'' $\chi$, which may be used as the second argument {\em chml-clss} of the function
 {\tt z2-whitehead}. The integer $n$ is determined by the absolute value of the degree of the
-cohomology class {\em chcm-clss}. In this ${\Z}/2{\Z}$ case, $\chi$ is even not a cocycle. The actual cocycle is
-obtained by the composition $p \circ \chi$, $p$ being the canonical projection 
-${\Z} \longrightarrow {\Z}/{2 {\Z}}$. But the user is not concerned by these technicalities, because the function
+cohomology class {\em chcm-clss}. In this $\mathbb{Z}/2\mathbb{Z}$ case, $\chi$ is even not a cocycle. The actual cocycle is
+obtained by the composition $p \circ \chi$, $p$ being the canonical projection
+$\mathbb{Z} \longrightarrow \mathbb{Z}/{2 \mathbb{Z}}$. But the user is not concerned by these technicalities, because the function
 {\tt z2-whitehead} makes itself the necessary conversion. The slot {\tt sintr} of the
-fibration is set by the internal function {\tt z2-whitehead-sintr} which builds 
+fibration is set by the internal function {\tt z2-whitehead-sintr} which builds
 in an efficient way the lisp function implementing the twisting operator $\tau \circ \varphi_\chi$.
 \par}
 }
 
 \subsection* {Examples}
 
-Let us retrieve some known facts about $S^3$, in particular $\pi_4(S^3) \simeq {\Z}/{2 {\Z}}$. 
+Let us retrieve some known facts about $S^3$, in particular $\pi_4(S^3) \simeq \mathbb{Z}/{2 \mathbb{Z}}$.
 We follow the theoritical method exposed above, namely  build the fibration
-$$  K({\Z},2) \quad \hookrightarrow\quad  S^3 \times_{\tau_\chi} K({\Z},2) \hskip 1.2em 
+$$  K(\mathbb{Z},2) \quad \hookrightarrow\quad  S^3 \times_{\tau_\chi} K(\mathbb{Z},2) \hskip 1.2em
     \longrightarrow \hskip -1.2em \longrightarrow     \quad S^3,$$
 and get the homology group in dimension $4$ of the total space.
 {\footnotesize\begin{verbatim}
@@ -242,9 +242,9 @@ Homology in dimension 5 :
 
 ---done---
 \end{verbatim}}
-Let us show a similar example with the space $Moore(2,4)$. As $H_4 \simeq {\Z}/{2 {\Z}}$, the function
-for building the fibration is {\tt z2-whitehead}. 
-We verify that $\pi_5(Moore(2,4))\simeq {\Z}/{2 {\Z}}$
+Let us show a similar example with the space $Moore(2,4)$. As $H_4 \simeq \mathbb{Z}/{2 \mathbb{Z}}$, the function
+for building the fibration is {\tt z2-whitehead}.
+We verify that $\pi_5(Moore(2,4))\simeq \mathbb{Z}/{2 \mathbb{Z}}$
 {\footnotesize\begin{verbatim}
 (setf m24 (moore 2 4)) ==>
 
@@ -266,13 +266,13 @@ Dimension = 4 :
 
         Simplex : M4
 
-                Faces : (<AbSm 2-1-0 *> <AbSm 2-1-0 *> <AbSm 2-1-0 *> 
+                Faces : (<AbSm 2-1-0 *> <AbSm 2-1-0 *> <AbSm 2-1-0 *>
                          <AbSm 2-1-0 *> <AbSm 2-1-0 *>)
 Dimension = 5 :
 
         Simplex : N5
 
-                Faces : (<AbSm - M4> <AbSm 3-2-1-0 *> <AbSm - M4> <AbSm 3-2-1-0 *> 
+                Faces : (<AbSm - M4> <AbSm 3-2-1-0 *> <AbSm - M4> <AbSm 3-2-1-0 *>
                          <AbSm 3-2-1-0 *> <AbSm 3-2-1-0 *>)
 
 Dimension = 6 :
@@ -330,7 +330,7 @@ Component Z/2Z
 ---done---
 \end{verbatim}}
 
-We may even verify that, up to $9$, the homotopy groups of the classifying group $K({\Z},5)$, for instance,
+We may even verify that, up to $9$, the homotopy groups of the classifying group $K(\mathbb{Z},5)$, for instance,
 are null except $\pi_5$. This is a far-fetched method to verify this well known result, but
 it proves that the software is coherent.
 {\footnotesize\begin{verbatim}
@@ -486,7 +486,7 @@ Component Z/2Z
 \end{verbatim}}
 Using the machinery described in this chapter, we find that the total space of the fibration
 has the same homology groups as $S^3$. It has been effectively proved that this space is homotopic
-to $S^3$. 
+to $S^3$.
 
 {\footnotesize\begin{verbatim}
 (setf ch (chml-clss x 2))  ==>

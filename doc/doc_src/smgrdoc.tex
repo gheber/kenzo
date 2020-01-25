@@ -2,7 +2,7 @@
 
 \section {Representation of a  simplicial group}
 
-A simplicial group\index{simplicial group} is  an instance\index{class!{\tt SIMPLICIAL-GROUP}} 
+A simplicial group\index{simplicial group} is  an instance\index{class!{\tt SIMPLICIAL-GROUP}}
 of the class {\tt SIMPLICIAL-GROUP}, subclass of the classes {\tt KAN} and {\tt HOPF-ALGEBRA}.
 {\footnotesize\begin{verbatim}
 (DEFCLASS SIMPLICIAL-GROUP (kan hopf-algebra)
@@ -13,13 +13,13 @@ We recall that this new class (multi--) inherits  from the following classes:
 {\tt KAN}, {\tt SIMPLICIAL-SET}, {\tt COALGEBRA},  {\tt ALGEBRA} and {\tt CHAIN-COMPLEX}.
 It has two slots of its own:
 \begin{description}
-\item {\tt grml}, an object of type {\tt SIMPLICIAL-MRPH}, defining in the underlying simplicial set $S$, 
-the group operation  as a simplicial morphism from $S \times S$ onto $S$,  
+\item {\tt grml}, an object of type {\tt SIMPLICIAL-MRPH}, defining in the underlying simplicial set $S$,
+the group operation  as a simplicial morphism from $S \times S$ onto $S$,
 compatible with the face and degeneracy operators in $S$, i.e. the $\partial$'s and $\eta$'s operators are
 also group morphisms. In dimension $n$, the neutral element is assumed to be the $n$--th degeneracy of
 the base point of the underlying simplicial set.
 \item {\tt grin}, an object of type {\tt SIMPLICIAL-MRPH}, defining the inverse of an element of the
-Kan simplicial set w.r.t. the preceding group law. 
+Kan simplicial set w.r.t. the preceding group law.
 \end{description}
 A printing method has been associated to the class {\tt SIMPLICIAL GROUP} and the external representation
 of  an instance is a string like {\tt [K{\em n} Simplicial-Group]}, where {\em n} is the number plate of
@@ -27,24 +27,24 @@ the Kenzo object.
 
 \section {Representation of an Abelian  simplicial group}
 
-The class of Abelian simplicial group, {\tt AB-SIMPLICIAL-GROUP}\index{class!{\tt SIMPLICIAL-GROUP}}, 
+The class of Abelian simplicial group, {\tt AB-SIMPLICIAL-GROUP}\index{class!{\tt SIMPLICIAL-GROUP}},
 inherits  all the properties of the class {\tt SIMPLICIAL-GROUP} and has not slots of its own, as shown by:
 {\footnotesize\begin{verbatim}
 (DEFCLASS AB-SIMPLICIAL-GROUP (simplicial-group) ())
 \end{verbatim}}
 The difference is purely mathematical: it is up to the user to provide as slot
-{\em grml}, a simplicial morphism which is {\bf commutative}. As expected, 
-the external representation of  an instance of this class, is a string like 
+{\em grml}, a simplicial morphism which is {\bf commutative}. As expected,
+the external representation of  an instance of this class, is a string like
 {\tt [K{\em n} Abelian-Simplicial-Group]}, where {\em n} is the number plate of
 the Kenzo object.
 
 
 \section {The functions build-smgr and build-ab-smrg}
 
-To\index{function!{\tt build-smgr}} facilitate the construction of instances of 
+To\index{function!{\tt build-smgr}} facilitate the construction of instances of
 the classes {\tt SIMPLICIAL-GROUP} and {\tt AB-SIMPLICIAL-GROUP} and to free  the user to call
 the standard constructor {\tt make-instance}, the software provides the functions
-{\em build-smrg} and {\em build-ab-smrg}\index{function!{\tt build-ab-smgr}}. 
+{\em build-smrg} and {\em build-ab-smrg}\index{function!{\tt build-ab-smgr}}.
 \vskip 0.35cm
 {\tt build-smgr}\par
 \hspace {0.60cm}{\tt :cmpr} {\em cmpr} {\tt basis} {\em basis} {\tt :bspn} {\em bspn} {\tt :face} {\em face}
@@ -64,15 +64,15 @@ As usual,  an adequate comment list must be provided for the parameter {\tt :org
 of the newly created simplicial set $S$ and itself. This new simplicial morphism is the value of the
 slot {\tt grml} of the simplicial group instance.
 \item[--] {\em sintr-grin}, a  lisp function defining the inverse w.r.t the preceding group law of
-an element of $S$. The function 
-{\tt build-smgr} uses this lisp function to build a simplicial morphism of degree $0$ between 
+an element of $S$. The function
+{\tt build-smgr} uses this lisp function to build a simplicial morphism of degree $0$ between
 $S$ and itself. This new simplicial morphism is the value of the
 slot {\tt grin} of the simplicial group instance.
 \end{itemize}
 \vskip 0.30cm
-After a call to {\tt build-smgr}, the simplicial group instance 
+After a call to {\tt build-smgr}, the simplicial group instance
 is pushed onto the list of previously constructed  ones ({\tt *smgr-list*}).
-The simplicial group with Kenzo identification $n$, may be retrieved in the {\tt *smgr-list*}, 
+The simplicial group with Kenzo identification $n$, may be retrieved in the {\tt *smgr-list*},
 by a call to the function {\tt sgmr}
 as {\tt (sgmr {\em n})}. The list {\tt *smgr-list*} may be cleared by the function {\tt cat-init}.
 \vskip 0.30cm
@@ -82,7 +82,7 @@ mecanism of CLOS enters in action and the filling function is defined by the sys
 the help of the functions {\tt face}, {\tt sintr-grml} and {\tt sintr-grin}. The automatic creation
 of the filling function is possible because mathematically, a simplicial group is always a Kan simplicial set.
 This is realized by the internal function {\tt smgr-kfll-intr}.\par
-For the user, the two simplicial morphisms, 
+For the user, the two simplicial morphisms,
 values of the specific slots  of a {\tt SIMPLICIAL-GROUP} are applied via the two following macros:
 \vskip 0.30cm
 {\parindent=0mm
@@ -92,7 +92,7 @@ values of the specific slots  of a {\tt SIMPLICIAL-GROUP} are applied via the tw
 Apply the simplicial morphism, value of the slot {\tt grml} of the simplicial group instance {\em smgr}
 to the cartesian product {\em crpr} in dimension {\em dmns}. Mathematically, this realizes the
 group operation. In principle, the simplicial morphism must
-accept the {\em crpr} argument on both forms: either a geometric cartesian product or an abstract simplex, 
+accept the {\em crpr} argument on both forms: either a geometric cartesian product or an abstract simplex,
 the geometric part of which is a geometric cartesian pro\-duct (see the examples). With only one argument
 ({\em smgr}) the macro selects the simplicial morphism instance. \par}
 {\leftskip=5mm
@@ -120,17 +120,17 @@ The lisp definition of {\tt build-ab-smgr} is simply:
   `(change-class (build-smgr ,@rest) 'ab-simplicial-group))
 \end{verbatim}}
 
-\section {Two important Abelian simplicial groups: $K({\Z}, 1)$ and $K({\Z}_2, 1)$}
+\section {Two important Abelian simplicial groups: $K(\mathbb{Z}, 1)$ and $K(\mathbb{Z}_2, 1)$}
 
 Let us recall the notion of classifying space in the framework of simplicial sets and
 in the particular case of discrete groups. Given a discrete group $\cal G$, we know that we may build a
 simplicial set $K({\cal G}, 1)$; in dimension $n$, we have $(K({\cal G}, 1))_n = {\cal G}^n$,
 the simplices or {\em bar objects} being  conventionally represented  as sequences of elements of $\cal G$:
 $$ [g_1 \mid g_2 \mid \ldots \mid g_n]. $$
-The base point is the void bar object $[\ ]$. 
+The base point is the void bar object $[\ ]$.
 Let us note the group law multiplicatively.
 \par
-The face operators are defined as follows: 
+The face operators are defined as follows:
 \begin{eqnarray*}
 \partial_0 [g_1 \mid g_2 \mid \ldots \mid g_n] & = & [g_2 \mid g_3 \mid \ldots \mid g_n], \\
 \partial_1 [g_1 \mid g_2 \mid \ldots \mid g_n] & = & [{\bf g_1g_2} \mid g_3 \mid \ldots \mid g_n], \\
@@ -142,7 +142,7 @@ The face operators are defined as follows:
 The degeneracy operators are defined as follows:
 $$ \eta_i [g_1 \mid \ldots \mid g_{i-1} \mid g_i \mid g_{i+1} \mid \ldots \mid g_n] =
           [g_1 \mid \ldots \mid g_{i-1}  \mid g_i \mid {\bf e} \mid g_{i+1} \mid \ldots \mid g_n],$$
-where $e$ is the neutral element of $\cal G$. 
+where $e$ is the neutral element of $\cal G$.
 \par
 If, in addition $\cal G$ is abelian, then  $K({\cal G}, 1)$ is itself a {\em simplicial group}, with the
 following group law, in dimension $n$:
@@ -151,19 +151,19 @@ $$[a_1  \mid \cdots \mid a_n]^{-1}= [-a_1  \mid \cdots \mid -a_n],\quad a,b \in 
 In dimension $n$, the neutral element is the bar object constitued by a sequence of $n$ times the neutral $e$ of {\cal G};
 this is also the $n$--th degeneracy of the base point $[\ ]$ of $K({\cal G}, 1)$.
 \par
-The two important simplicial groups $K({\Z}, 1)$ and $K({\Z}_2, 1)$ may be cons\-truc\-ted in {\tt Kenzo}.
+The two important simplicial groups $K(\mathbb{Z}, 1)$ and $K(\mathbb{Z}_2, 1)$ may be cons\-truc\-ted in {\tt Kenzo}.
 \vskip 0.30cm
 {\parindent=0mm
 {\leftskip=5mm
 {\tt k-z-1}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
-Build\index{$K({\Z}, 1)$} the simplicial group $K({\Z},1)$. In this simplicial group, a  simplex  in dimension $n$ 
+Build\index{$K(\mathbb{Z}, 1)$} the simplicial group $K(\mathbb{Z},1)$. In this simplicial group, a  simplex  in dimension $n$
 is mathematically represented by a sequence of integers, known as a {\em bar} object:
 $$ [a_1 \mid a_2 \mid \ldots \mid a_n]. $$
 The group operation inherits the additive law of $\Z$:
 $$[a_1  \mid \cdots \mid a_n] + [b_1 \mid \cdots \mid b_n] = [a_1+b_1 \mid \cdots \mid a_n+b_n]$$
 and the inverse of $[a_1  \mid \ldots \mid a_n]$ is $[-a_1 \mid \ldots \mid -a_n]. $
-In {\tt Kenzo}, a non-degenerate simplex of $K({\Z},1)$ in dimension $n$ will be simply 
+In {\tt Kenzo}, a non-degenerate simplex of $K(\mathbb{Z},1)$ in dimension $n$ will be simply
 a list of $n$ non-null integers.
 The underlying simplicial set is locally effective and its base point is {\tt NIL}, i.e the void bar object
 $[\ ]$. To be coeherent with the general policy of {\tt Kenzo}, a degenerate simplex must be represented by
@@ -174,9 +174,9 @@ functions are provided (see below). \par}
 {\leftskip=5mm
 {\tt k-z2-1}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
-Build\index{$K({\Z}_2, 1)$} the simplicial group $K({\Z}_2,1)$. 
+Build\index{$K(\mathbb{Z}_2, 1)$} the simplicial group $K(\mathbb{Z}_2,1)$.
 Mathematically, in dimension $n$, the only non-degenerate simplex is
-a sequence of $n$ $1$'s. But one may show that as simplicial set, $K({\Z}_2,1)$ is  isomorphic to
+a sequence of $n$ $1$'s. But one may show that as simplicial set, $K(\mathbb{Z}_2,1)$ is  isomorphic to
 $P^\infty {\R}$ which may be built by the statement {\tt (R-proj-space)}. This is the representation
 adopted in {\tt Kenzo}. In dimension $n$, this
 simplicial set has only one non-degenerate simplex, namely the integer $n$. The formulas for the faces of this
@@ -185,36 +185,36 @@ non-degenerate simplex $n$ collapse to:
 \partial_0 n & = & n-1, \\
 \partial_i n & = & \eta_{i-1} (n-2), \quad i \not= 0, i \not=n,  \\
 \partial_n n & = & n-1.
-\end{eqnarray*} 
+\end{eqnarray*}
 As a group, in dimension $n$, the non--degenerate element $n$
-is its own inverse and the neutral is the $n$-th degeneracy of $0$. As in $K({\Z}, 1)$ a degenerate simplex
+is its own inverse and the neutral is the $n$-th degeneracy of $0$. As in $K(\mathbb{Z}, 1)$ a degenerate simplex
 must be represented by a valid abstract simplex, but as the computations are more convenient if the
-general bar objects are represented by a sequence of mixed $0$'s and $1$'s, two conversion functions are 
+general bar objects are represented by a sequence of mixed $0$'s and $1$'s, two conversion functions are
 provided. \par}
 {\leftskip=5mm
 {\tt z-bar-absm} {\em bar}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
-Transform a general mathematical bar object {\em bar} of $K({\Z}, 1)$, 
+Transform a general mathematical bar object {\em bar} of $K(\mathbb{Z}, 1)$,
 represented by a list of integers (including $0$'s),
 into a valid abstract simplex (an object of type {\tt ABSM}), {\tt (:absm {\em dgop} . {\em gmsm})},
 where {\em gmsm}  is a sequence of non-null integers representing a non-de\-ge\-ne\-ra\-te bar object of
-$K({\Z},1)$ and {\em dgop} a coded sequence of degeneracy operators $\eta_i$'s. \par}
+$K(\mathbb{Z},1)$ and {\em dgop} a coded sequence of degeneracy operators $\eta_i$'s. \par}
 {\leftskip=5mm
 {\tt z-absm-bar} {\em absm}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
 Transform the abstract simplex {\em absm},  {\tt (:absm {\em dgop} . {\em gmsm})}, where
 {\em gmsm} is a sequence of non-null integers representing a nondegenerate bar object of
-$K({\Z},1)$ and {\em dgop} a coded sequence of degeneracy operators, into a list of integers
-representing a bar object, degenerate or not, of $K({\Z},1)$, for more convenience in the
+$K(\mathbb{Z},1)$ and {\em dgop} a coded sequence of degeneracy operators, into a list of integers
+representing a bar object, degenerate or not, of $K(\mathbb{Z},1)$, for more convenience in the
 internal computations or for more clarity in external printing. \par}
 {\leftskip=5mm
 {\tt z2-bar-absm} {\em bar}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
-Function analogous to {\tt z-bar-absm} but for  $K({\Z}_2, 1)$. \par}
+Function analogous to {\tt z-bar-absm} but for  $K(\mathbb{Z}_2, 1)$. \par}
 {\leftskip=5mm
 {\tt z2-absm-bar} {\em absm}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
-Function analogous to {\tt z-absm-bar} but for  $K({\Z}_2, 1)$. \par}
+Function analogous to {\tt z-absm-bar} but for  $K(\mathbb{Z}_2, 1)$. \par}
 }
 
 \subsection* {Examples}
@@ -257,7 +257,7 @@ verify the property of minimality of this special simplicial group.
 
 <AbSm - (1 10 100)>
 \end{verbatim}}
-We test now the two macros {\tt grml} and {\tt grin} related to the group operation. 
+We test now the two macros {\tt grml} and {\tt grin} related to the group operation.
 {\footnotesize\begin{verbatim}
 (grml KZ1 3 (crpr 0 simplex 0 simplex))  ==>
 
@@ -322,15 +322,15 @@ NIL
 (1 1 1 1 1 1 1)
 \end{verbatim}}
 Let us suppose that the value of the symbol {\tt labsms} is a list of
-abstract simplices built from the simplex {\tt (3 6))} in dimension $1$ of $K({\Z}, 1)$.
+abstract simplices built from the simplex {\tt (3 6))} in dimension $1$ of $K(\mathbb{Z}, 1)$.
 The application of the function {\tt z-absm-bar} on this list gives the representation
 of the simplices under the classical mathematical representation. Applying then {\tt z-bar-absm}
 returns the original list. A similar example is given with the symbol {\tt labsm2} in dimension $0$.
 {\footnotesize\begin{verbatim}
 labsms ==>
 
-(<AbSm - (3 6)> <AbSm 0 (3 6)> <AbSm 1 (3 6)> 
- <AbSm 1-0 (3 6)> <AbSm 2 (3 6)> <AbSm 2-0 (3 6)> 
+(<AbSm - (3 6)> <AbSm 0 (3 6)> <AbSm 1 (3 6)>
+ <AbSm 1-0 (3 6)> <AbSm 2 (3 6)> <AbSm 2-0 (3 6)>
  <AbSm 2-1 (3 6)> <AbSm 2-1-0 (3 6)>)
 
 (mapcar #'z-absm-bar labsms)  ==>
@@ -339,25 +339,25 @@ labsms ==>
 
 (mapcar #'z-bar-absm *)  ==>
 
-(<AbSm - (3 6)> <AbSm 0 (3 6)> <AbSm 1 (3 6)> 
- <AbSm 1-0 (3 6)> <AbSm 2 (3 6)> <AbSm 2-0 (3 6)> 
+(<AbSm - (3 6)> <AbSm 0 (3 6)> <AbSm 1 (3 6)>
+ <AbSm 1-0 (3 6)> <AbSm 2 (3 6)> <AbSm 2-0 (3 6)>
  <AbSm 2-1 (3 6)> <AbSm 2-1-0 (3 6)>)
 
 labsms2   ==>
 
-(<AbSm - 0> <AbSm - 1> <AbSm - 2> <AbSm - 3> 
- <AbSm 0 0> <AbSm 0 1> <AbSm 0 2> <AbSm 0 3> 
+(<AbSm - 0> <AbSm - 1> <AbSm - 2> <AbSm - 3>
+ <AbSm 0 0> <AbSm 0 1> <AbSm 0 2> <AbSm 0 3>
  <AbSm 1-0 0> <AbSm 1-0 1> <AbSm 1-0 2> <AbSm 1-0 3>)
 
 (mapcar #'z2-absm-bar labsms2)  ==>
 
-(NIL (1) (1 1) (1 1 1) (0) (0 1) (0 1 1) (0 1 1 1) (0 0) (0 0 1) (0 0 1 1) 
+(NIL (1) (1 1) (1 1 1) (0) (0 1) (0 1 1) (0 1 1 1) (0 0) (0 0 1) (0 0 1 1)
  (0 0 1 1 1))
 
 (mapcar #'z2-bar-absm *)  ==>
 
-(<AbSm - 0> <AbSm - 1> <AbSm - 2> <AbSm - 3> 
- <AbSm 0 0> <AbSm 0 1> <AbSm 0 2> <AbSm 0 3> 
+(<AbSm - 0> <AbSm - 1> <AbSm - 2> <AbSm - 3>
+ <AbSm 0 0> <AbSm 0 1> <AbSm 0 2> <AbSm 0 3>
  <AbSm 1-0 0> <AbSm 1-0 1> <AbSm 1-0 2> <AbSm 1-0 3>)
 \end{verbatim}}
 \newpage
@@ -367,12 +367,12 @@ labsms2   ==>
 If we consider a simplicial group ${\cal G}$, with group operation $\tau$, there is a ca\-no\-ni\-cal
 product for the algebra
 $$\varpi : C_*({\cal G}) \otimes C_*({\cal G}) \longrightarrow C_*({\cal G}), $$
-defined as the composition $\tau \circ {\cal EML}$, where ${\cal EML}$ is the 
-Eilenberg-Mac Lane homomorphism\index{homomorphism!Eilenberg-Mac Lane} or the {\em shuffle homomorphism} 
+defined as the composition $\tau \circ {\cal EML}$, where ${\cal EML}$ is the
+Eilenberg-Mac Lane homomorphism\index{homomorphism!Eilenberg-Mac Lane} or the {\em shuffle homomorphism}
 (see the Eilenberg-Zilber chapter):
-$$C_*({\cal G}) \otimes C_*({\cal G}) \buildrel {{\cal EML}} \over \longrightarrow 
+$$C_*({\cal G}) \otimes C_*({\cal G}) \buildrel {{\cal EML}} \over \longrightarrow
    C_*({\cal G} \times {\cal G}) \buildrel {\tau} \over \longrightarrow C_*({\cal G}). $$
-For instance let us look at the simplicial group $K({\Z}, 1)$:
+For instance let us look at the simplicial group $K(\mathbb{Z}, 1)$:
 
 {\footnotesize\begin{verbatim}
 (setf kz1 (k-z-1))  ==>
@@ -380,7 +380,7 @@ For instance let us look at the simplicial group $K({\Z}, 1)$:
 [K10 Abelian-Simplicial-Group]
 
 (inspect kz1)  ==>
- 
+
 AB-SIMPLICIAL-GROUP @ #x38c902 = [K10 Abelian-Simplicial-Group]
    0 Class --------> #<STANDARD-CLASS AB-SIMPLICIAL-GROUP>
    1 ORGN ---------> (K-Z-1), a proper list with 1 element
@@ -403,7 +403,7 @@ We see that  the slot {\tt aprd} has not been filled. As long as the user does n
 the product of the algebra, this slot remains unbound. But as soon as it is needed, the {\em slot-unbound}
 mecanism of CLOS enters in action, the canonical algebra product morphism is defined by the system, and the slot
 {\tt aprd} is set.\par
-For instance, let us take the tensor product of two elements of  $K({\Z}, 1)$ and apply the
+For instance, let us take the tensor product of two elements of  $K(\mathbb{Z}, 1)$ and apply the
 product in the algebra:
 {\footnotesize\begin{verbatim}
 (setf tnsrp (tnpr 2 '(1 2) 3 '(7 8 9)))  ==>
@@ -425,7 +425,7 @@ product in the algebra:
 <1 * (7 8 9 1 2)>
 ------------------------------------------------------------------------------
 \end{verbatim}}
-The system {\tt Kenzo} has automatically created the needed algebra product morphism  and 
+The system {\tt Kenzo} has automatically created the needed algebra product morphism  and
 this is shown in the slot instance {\tt aprd}:
 {\footnotesize\begin{verbatim}
 (inspect kz1)  ==>
@@ -487,13 +487,13 @@ Then we define the morphism {\tt assoc} and test it:
                :sorc 3-left
                :trgt 3-right
                :degr 0
-               :intr #'(lambda (degr a2-a) 
+               :intr #'(lambda (degr a2-a)
                          (with-tnpr (degra2 gnrta2 degra gnrta) a2-a
                             (with-tnpr (degr1 gnrt1 degr2 gnrt2) gnrta2
-                               (cmbn (+ degr1 degr2 degra) 
-                                     1 (tnpr degr1 
-                                             gnrt1 
-                                             (+ degr2 degra) 
+                               (cmbn (+ degr1 degr2 degra)
+                                     1 (tnpr degr1
+                                             gnrt1
+                                             (+ degr2 degra)
                                              (tnpr degr2 gnrt2 degra gnrta))))))
                :strt :gnrt
                :orgn '(assoc-double-tensor-product)))  ==>
@@ -528,9 +528,9 @@ We define now the other morphisms shown in the diagram:
 
 [K42 Morphism (degree 0)]
 \end{verbatim}}
-Now, if the diagram is commutative, the difference morphism, noted {\tt zero}, between 
-the following morphisms {\tt right} and {\tt left}, must give the null combination if applied to an 
-element of $(K({\Z}, 1) \otimes K({\Z}, 1)) \otimes K({\Z}, 1).$
+Now, if the diagram is commutative, the difference morphism, noted {\tt zero}, between
+the following morphisms {\tt right} and {\tt left}, must give the null combination if applied to an
+element of $(K(\mathbb{Z}, 1) \otimes K(\mathbb{Z}, 1)) \otimes K(\mathbb{Z}, 1).$
 {\footnotesize\begin{verbatim}
 (setf left (cmps nabla nabla-t-1))  ==>
 
@@ -588,7 +588,7 @@ The resulting combination of the rather simple double tensor product has yet
 \section {Coming back to the Bar of an algebra}
 
 The\index{bar!of an algebra} existence of a canonical product for the underlying algebra of a simplicial group
-allows us now to generate the bar of this algebra. Let us use again $K({\Z}, 1).$
+allows us now to generate the bar of this algebra. Let us use again $K(\mathbb{Z}, 1).$
 We begin to test separately the vertical and the horizontal differential.
 {\footnotesize\begin{verbatim}
 (setf kz1 (k-z-1))  ==>

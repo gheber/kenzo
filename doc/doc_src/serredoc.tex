@@ -3,10 +3,10 @@
 \section {Introduction}
 
 This chapter is devoted to the {\tt Kenzo} implementation of the
-Serre spectral sequence\index{Serre spectral sequence} 
+Serre spectral sequence\index{Serre spectral sequence}
 with the aim to compute the homology groups
 of the total  space of a fibration. From the programming point of view,
-this method will be used according to our general scheme of searching homology 
+this method will be used according to our general scheme of searching homology
 (generic function {\tt search-efhm}) applied  to an object of type {\tt fibration-total}.
 
 \section {The topological problem}
@@ -18,7 +18,7 @@ the total space of the fibration: $B \times_\tau {\cal G}$, which has the same s
 $B \times {\cal G}$ and the same face operators except the last one, given by:
 $$\partial_n(b,g)  =  (\partial_n b, \tau(b).\partial_n g), \quad b\in B, g \in {\cal G},$$
 where the '{\tt .}' denotes the group operation in ${\cal G}$. This discrepancy between the respective face operators
-$\partial_n$ induces a discrepancy between the differential operators. We suppose now, that 
+$\partial_n$ induces a discrepancy between the differential operators. We suppose now, that
 the base and  fiber  spaces are objects of effective homology type, i.e. there exists homotopy equivalences
 $$\diagram{
   & \widehat{B}  & & & & \widehat{\cal G} & & \cr
@@ -27,7 +27,7 @@ B  & & EB & & {\cal G}   & & EG \cr
            }$$
 
 where the chain complexes $EB$ and $EG$ are effective. The problem consists in finding a homotopy equivalence
-between $B \times_\tau {\cal G}$ and an effective chain complex noted $EB \widetilde{\otimes} EG$; 
+between $B \times_\tau {\cal G}$ and an effective chain complex noted $EB \widetilde{\otimes} EG$;
 the underlying graded module of $EB \widetilde{\otimes} EG$ is $EB \otimes EG$ but the differential
 is twisted in a rather complicated way. In fact, the chain complex $EB \widetilde{\otimes} EG$ is nothing
 but the Hirsh complex\footnote{{\bf Guy Hirsh.} {\em Sur les groupes d'homologie des espaces fibr\'es},
@@ -59,15 +59,15 @@ operator $\tau$; this twisting operator is nothing but the  Shih twisting cochai
   {\em The homology of twisted cartesian products}.
    Transactions of the American Mathematical Society,
    1961, vol. 100, pp. 197-216.}. Here, to obtain the Szczarba cochain, we apply the perturbation lemma (Ronnie Brown).
-In effect, writing 
+In effect, writing
 $$ d_\tau = d + (d_\tau -d),$$
-one may consider that the differential $d_\tau$ of $B \times_\tau {\cal G}$ 
+one may consider that the differential $d_\tau$ of $B \times_\tau {\cal G}$
 is the differential $d$ of $B \times {\cal G}$ modified by the perturbation $d_\tau - d$.
-The perturbation morphism $d_\tau -d$ is deduced from the  difference  between both  $\partial_n$ face operators. 
-This being done,  a perturbation may possibly be 
+The perturbation morphism $d_\tau -d$ is deduced from the  difference  between both  $\partial_n$ face operators.
+This being done,  a perturbation may possibly be
 propagated along the Eilenberg-Zilber reduction  (see the method {\tt add} applied to a reduction)
-and  the perturbation lemma  gives also, as a bonus, the perturbation to be applied to the dif\-fe\-ren\-ti\-al 
-of $B \otimes {\cal G}$  to obtain the differential of $B \otimes_t {\cal G}$. 
+and  the perturbation lemma  gives also, as a bonus, the perturbation to be applied to the dif\-fe\-ren\-ti\-al
+of $B \otimes {\cal G}$  to obtain the differential of $B \otimes_t {\cal G}$.
 
 \subsection {The Gugenheim algorithm}
 
@@ -92,13 +92,13 @@ B\otimes_t {\cal G}  & & EB \widetilde{\otimes} EG \cr}
 $$
 where $\widehat{B}\widetilde{\otimes}\widehat{\cal G}$ and $EB \widetilde{\otimes} EG$ are appropriate
 strongly twisted tensor products determined by the perturbation lemma: this last homotopy equivalence
-is obtained by propagating over the previous one, the perturbation to be applied to the differential 
+is obtained by propagating over the previous one, the perturbation to be applied to the differential
 of $B \otimes {\cal G}$  to obtain the differential of $B \otimes_t {\cal G}$.
 The homotopy equivalence so obtained is called in {\tt Kenzo} the {\em right Serre homotopy equivalence}.
 
 \subsection {Assembling the puzzle}
 
-Let us build now the so-called {\em left Serre homotopy equivalence}, 
+Let us build now the so-called {\em left Serre homotopy equivalence},
 $$\diagram{
   & B\times_\tau{\cal G} &    \cr
  \swarrow\nearrow & & \searrow\nwarrow \cr
@@ -106,7 +106,7 @@ B\times_\tau {\cal G}  & & B\otimes_t {\cal G} \cr}
 $$
 where the left reduction is the trivial one and the right reduction is
 the Brown reduction. We may then compose both Serre homotopy equivalences to obtain
-what we were looking for: 
+what we were looking for:
 $$\diagram{
   & B\times_\tau {\cal G}  & & &\widehat{B}\otimes_t\widehat{\cal G} & & \cr
  \rho_1 \swarrow\nearrow  & & \searrow\nwarrow \rho_2 & \rho'_1\swarrow\nearrow & & \searrow\nwarrow\rho'_2 & \cr
@@ -128,7 +128,7 @@ function and is used in the following one. \par}
 {\tt fibration-dtau-d} {\em fibration}  \hfill {\em [Function]} \par}
 {\leftskip=15mm
 Build the morphism $d_\tau-d$, which is the perturbation morphism to be added to
-the differential  $d$ of $B \times {\cal G}$  to obtain  $d_\tau$, 
+the differential  $d$ of $B \times {\cal G}$  to obtain  $d_\tau$,
 the differential in $B \times_\tau {\cal G}$. We recall that both simplicial sets have
 the same simplices. The source and the target of this morphism is the total space
 $B \times_\tau {\cal G}$ and the degree is $-1$. \par}
@@ -178,7 +178,7 @@ cannot compute the homology.
 We begin by some examples similar to examples that we have seen in the fibrations chapter.
 For the user, the delicate point is to write in Lisp a correct twisting operator. There is no check
 in this version of {\tt Kenzo} for the coherency of the twisting operator. In the first example
-we define a fibration $\tau: S^2 \rightarrow K({\Z},1)$ with $\tau(s2)= (2)$, then we build the
+we define a fibration $\tau: S^2 \rightarrow K(\mathbb{Z},1)$ with $\tau(s2)= (2)$, then we build the
 total space of the fibration, namely $P^3{\R}$, and we compute some known homology groups.
 {\footnotesize\begin{verbatim}
 (setf sph2 (sphere 2))  ==>
@@ -195,7 +195,7 @@ total space of the fibration, namely $P^3{\R}$, and we compute some known homolo
              :degr -1
              :sintr #'(lambda (dmns gmsm)
                         (unless (= dmns 2)
-                                (error "Dimension error for 
+                                (error "Dimension error for
                                         the twisting operator S2-->KZ1"))
                         (absm 0 (list 2)))
 	     :orgn '(s2-tw-kz1)))            ==>
@@ -312,10 +312,10 @@ Component Z
 Using the last total space ({\tt total-17}), it is instructive to enter in the details
 of the resulting homotopy equivalence that the system builds to compute the homology
 groups. First, the function {\tt echcm} selects the {\bf effective} chain complex of the homotopy
-equivalence, value of the slot {\tt efhm} of the simplicial set {\tt total-17}, and we may 
+equivalence, value of the slot {\tt efhm} of the simplicial set {\tt total-17}, and we may
 print some basis of this chain complex. In fact, all basis in dimension above $3$ are null.
 The presence of the symbol {\tt S1} is due to the fact that the effective chain complex
-used for the homology of $K({\Z},1)$ is the circle (see the classifying spaces chapter).
+used for the homology of $K(\mathbb{Z},1)$ is the circle (see the classifying spaces chapter).
 {\footnotesize\begin{verbatim}
 (setf echcm (echcm total-17))  ==>
 
@@ -323,10 +323,10 @@ used for the homology of $K({\Z},1)$ is the circle (see the classifying spaces c
 
 (dotimes (i 6) (print (basis echcm i)))  ==>
 
-(<TnPr * *>) 
-(<TnPr * S1>) 
-(<TnPr S2 *>) 
-(<TnPr S2 S1>) 
+(<TnPr * *>)
+(<TnPr * S1>)
+(<TnPr S2 *>)
+(<TnPr S2 S1>)
 NIL
 NIL
 \end{verbatim}}
@@ -334,15 +334,15 @@ The resulting homotopy equivalence built by the system, may be summarized
 by the diagram:
 
 $$\diagram{
-  &\widehat{S^2\times_\tau K({\Z},1)} &    \cr
+  &\widehat{S^2\times_\tau K(\mathbb{Z},1)} &    \cr
  f\swarrow\nearrow & & \searrow\nwarrow g \cr
-S^2\times_\tau K({\Z},1) & & [K205\, Chain\, Complex] \cr}
+S^2\times_\tau K(\mathbb{Z},1) & & [K205\, Chain\, Complex] \cr}
 $$
 
 where {\em f} and {\em g} are respectively the {\em descending} and {\em ascending}
 morphisms of the left and right reductions of the homotopy equivalence. We recall that
 these morphisms are obtained respectively by the functions {\tt lf} and {\tt rg}. We may
-compose these morphisms to create a morphism {\tt fg} from $[K205]$ to $S^2\times_\tau K({\Z},1)$ and
+compose these morphisms to create a morphism {\tt fg} from $[K205]$ to $S^2\times_\tau K(\mathbb{Z},1)$ and
 see how it acts on the basis  elements in dimension $1$ and $2$:
 {\footnotesize\begin{verbatim}
 (setf fg (cmps (lf (efhm total-17)) (rg (efhm total-17))))  ==>
@@ -385,7 +385,7 @@ see how it acts on the basis  elements in dimension $1$ and $2$:
 <-1 * <CrPr 1-0 * - (1 16)>>
 ------------------------------------------------------------------------------
 \end{verbatim}}
-The boundary of this combination in $S^2\times_\tau K({\Z},1)$ is 
+The boundary of this combination in $S^2\times_\tau K(\mathbb{Z},1)$ is
 {\footnotesize\begin{verbatim}
 (? total-17 *)
 
@@ -406,78 +406,78 @@ The printing of the $3$ faces of the $17$ simplices of the combination
 {\tt fg-gen2} shows the geometrical organisation of the twisted product:
 {\footnotesize\begin{verbatim}
 (dolist(iterm (cmbn-list fg-gen2))
-       (dotimes (i 3)(print (face total-17 i 2 (gnrt iterm)))) 
+       (dotimes (i 3)(print (face total-17 i 2 (gnrt iterm))))
                      (terpri))  ==>
 
-<AbSm 0 <CrPr - * - NIL>> 
-<AbSm 0 <CrPr - * - NIL>> 
-<AbSm - <CrPr 0 * - (17)>> 
+<AbSm 0 <CrPr - * - NIL>>
+<AbSm 0 <CrPr - * - NIL>>
+<AbSm - <CrPr 0 * - (17)>>
 
-<AbSm - <CrPr 0 * - (1)>> 
-<AbSm - <CrPr 0 * - (2)>> 
-<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (1)>>
+<AbSm - <CrPr 0 * - (2)>>
+<AbSm - <CrPr 0 * - (1)>>
 
-<AbSm - <CrPr 0 * - (2)>> 
-<AbSm - <CrPr 0 * - (3)>> 
-<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (2)>>
+<AbSm - <CrPr 0 * - (3)>>
+<AbSm - <CrPr 0 * - (1)>>
 
-<AbSm - <CrPr 0 * - (3)>> 
-<AbSm - <CrPr 0 * - (4)>> 
-<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (3)>>
+<AbSm - <CrPr 0 * - (4)>>
+<AbSm - <CrPr 0 * - (1)>>
 
-<AbSm - <CrPr 0 * - (4)>> 
-<AbSm - <CrPr 0 * - (5)>> 
-<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (4)>>
+<AbSm - <CrPr 0 * - (5)>>
+<AbSm - <CrPr 0 * - (1)>>
 
-<AbSm - <CrPr 0 * - (5)>> 
-<AbSm - <CrPr 0 * - (6)>> 
-<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (5)>>
+<AbSm - <CrPr 0 * - (6)>>
+<AbSm - <CrPr 0 * - (1)>>
 
-<AbSm - <CrPr 0 * - (6)>> 
-<AbSm - <CrPr 0 * - (7)>> 
-<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (6)>>
+<AbSm - <CrPr 0 * - (7)>>
+<AbSm - <CrPr 0 * - (1)>>
 
-<AbSm - <CrPr 0 * - (7)>> 
-<AbSm - <CrPr 0 * - (8)>> 
-<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (7)>>
+<AbSm - <CrPr 0 * - (8)>>
+<AbSm - <CrPr 0 * - (1)>>
 
-<AbSm - <CrPr 0 * - (8)>> 
-<AbSm - <CrPr 0 * - (9)>> 
-<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (8)>>
+<AbSm - <CrPr 0 * - (9)>>
+<AbSm - <CrPr 0 * - (1)>>
 \end{verbatim}}
 \newpage
 {\footnotesize\begin{verbatim}
-<AbSm - <CrPr 0 * - (9)>> 
-<AbSm - <CrPr 0 * - (10)>> 
-<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (9)>>
+<AbSm - <CrPr 0 * - (10)>>
+<AbSm - <CrPr 0 * - (1)>>
 
-<AbSm - <CrPr 0 * - (10)>> 
-<AbSm - <CrPr 0 * - (11)>> 
-<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (10)>>
+<AbSm - <CrPr 0 * - (11)>>
+<AbSm - <CrPr 0 * - (1)>>
 
-<AbSm - <CrPr 0 * - (11)>> 
-<AbSm - <CrPr 0 * - (12)>> 
-<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (11)>>
+<AbSm - <CrPr 0 * - (12)>>
+<AbSm - <CrPr 0 * - (1)>>
 
-<AbSm - <CrPr 0 * - (12)>> 
-<AbSm - <CrPr 0 * - (13)>> 
-<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (12)>>
+<AbSm - <CrPr 0 * - (13)>>
+<AbSm - <CrPr 0 * - (1)>>
 
-<AbSm - <CrPr 0 * - (13)>> 
-<AbSm - <CrPr 0 * - (14)>> 
-<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (13)>>
+<AbSm - <CrPr 0 * - (14)>>
+<AbSm - <CrPr 0 * - (1)>>
 
-<AbSm - <CrPr 0 * - (14)>> 
-<AbSm - <CrPr 0 * - (15)>> 
-<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (14)>>
+<AbSm - <CrPr 0 * - (15)>>
+<AbSm - <CrPr 0 * - (1)>>
 
-<AbSm - <CrPr 0 * - (15)>> 
-<AbSm - <CrPr 0 * - (16)>> 
-<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (15)>>
+<AbSm - <CrPr 0 * - (16)>>
+<AbSm - <CrPr 0 * - (1)>>
 
-<AbSm - <CrPr 0 * - (16)>> 
-<AbSm - <CrPr 0 * - (17)>> 
-<AbSm - <CrPr 0 * - (1)>> 
+<AbSm - <CrPr 0 * - (16)>>
+<AbSm - <CrPr 0 * - (17)>>
+<AbSm - <CrPr 0 * - (1)>>
 \end{verbatim}}
 \begin{center}
 ---------
@@ -501,7 +501,7 @@ builds the total space $X \times_\tau \Omega X$.
 It is of course possible to study, any other fibration, provided one
 defines a correct fibration $\tau$. In the following example
 the fibration $\tau: S^3 \longrightarrow \Omega S^3$, is defined
-by 
+by
 $\tau(s3)= s3^{-2},$ where $s3^{-2}$ is a word in the Kan simplicial version
 of the first loop space of $S^3$. In Kenzo, this object is created by the
 statement:

@@ -2,7 +2,7 @@
 
 \section {Introduction}
 
-This chapter\index{fibrations!simplicial groups} is analogous to the  Loop spaces fibrations chapter  
+This chapter\index{fibrations!simplicial groups} is analogous to the  Loop spaces fibrations chapter
 where  algorithms have been specially designed for loop spaces. In the present case, we have at our
 disposal all the tools developped for the fibrations. Let ${\cal G}$
 be a $0$--reduced simplicial group and $\bar{\cal W}{\cal G}$, its
@@ -10,10 +10,10 @@ classifying space.  We recall that if ${\cal G}$ is
 an Abelian simplicial group then $\bar{\cal W}{\cal G}$ is also an Abelian
 simplicial group, otherwise if ${\cal G}$ is non--Abelian, then $\bar{\cal W}{\cal G}$
 is only a simplicial set. The software {\tt Kenzo} implements the
-{\bf canonical} twisted cartesian product of $\bar{\cal W}{\cal G}$ by  ${\cal G}$, 
+{\bf canonical} twisted cartesian product of $\bar{\cal W}{\cal G}$ by  ${\cal G}$,
 denoted ${\cal WG}=\bar{\cal W}{\cal G} \times_\tau  {\cal G}$.
 The {\em canonical fibration}
-$$ {\cal G}\quad \hookrightarrow\quad  {\cal WG} \hskip 1.2em \longrightarrow \hskip -1.2em \longrightarrow  
+$$ {\cal G}\quad \hookrightarrow\quad  {\cal WG} \hskip 1.2em \longrightarrow \hskip -1.2em \longrightarrow
    \quad\bar{\cal W}{\cal G},$$
 is defined by the following twisting operator:
 $$\tau[(g_{n-1}, g_{n-2}, \ldots, g_0)]= g_{n-1}.$$
@@ -26,7 +26,7 @@ The total space ${\cal WG}=\bar{\cal W}{\cal G} \times_\tau  {\cal G}$ is acycli
 {\tt smgr-fibration} {\em smgr} \hfill {\em [Function]} \par}
 {\leftskip=15mm
 Build the simplicial morphism of degree $-1$ corresponding to the canonical fibration.
-The source is the classifying space of the simplicial group {\em smgr} 
+The source is the classifying space of the simplicial group {\em smgr}
 (built internally by the function), the target
 is {\em smgr} and the internal lisp function value of the slot {\tt :sintr} implements
 the twisting operator. The returned object is a fibration. \par}
@@ -34,7 +34,7 @@ the twisting operator. The returned object is a fibration. \par}
 
 \subsection* {Examples}
 
-Let us take the Abelian simplicial group $K({\Z},1)$ and  build the fibration morphism.
+Let us take the Abelian simplicial group $K(\mathbb{Z},1)$ and  build the fibration morphism.
 {\footnotesize\begin{verbatim}
 (setf k1 (k-z-1))  ==>
 
@@ -66,11 +66,11 @@ the total space {\tt tt}.
 
 (dotimes (i 5) (print (face tt i 4 gmsm)))  ==>
 
-<AbSm - <CrPr - <<GBar<- (11 12)><- (21)><- NIL>>> - (4 6 8)>> 
-<AbSm - <CrPr - <<GBar<- (21 12)><- (41)><- NIL>>> - (6 6 8)>> 
-<AbSm - <CrPr - <<GBar<- (10 23)><- (50)><- NIL>>> - (2 10 8)>> 
-<AbSm - <CrPr - <<GBar<- (30 32)><- (30)><- NIL>>> - (2 4 14)>> 
-<AbSm - <CrPr - <<GBar<- (20 21)><- (30)><- NIL>>> - (12 15 18)>> 
+<AbSm - <CrPr - <<GBar<- (11 12)><- (21)><- NIL>>> - (4 6 8)>>
+<AbSm - <CrPr - <<GBar<- (21 12)><- (41)><- NIL>>> - (6 6 8)>>
+<AbSm - <CrPr - <<GBar<- (10 23)><- (50)><- NIL>>> - (2 10 8)>>
+<AbSm - <CrPr - <<GBar<- (30 32)><- (30)><- NIL>>> - (2 4 14)>>
+<AbSm - <CrPr - <<GBar<- (20 21)><- (30)><- NIL>>> - (12 15 18)>>
 
 (? tt 4 gmsm)  ==>
 \end{verbatim}}
@@ -128,11 +128,11 @@ reduction).
 
 \section {The essential contraction for simplicial groups fibrations}
 
-It is known that if ${\cal G}$ is a $0$--reduced simplicial group, 
+It is known that if ${\cal G}$ is a $0$--reduced simplicial group,
 the space ${\cal WG}=\bar{\cal W}{\cal G} \times_\tau  {\cal G}$ is
-contractible. So it is possible to build a reduction of this space over ${\Z}$.
+contractible. So it is possible to build a reduction of this space over $\mathbb{Z}$.
 This reduction depends on the important contraction
-$$\chi_{\times\tau}:  {\bar{\cal W}{\cal G} \times_\tau  {\cal G}} \longrightarrow 
+$$\chi_{\times\tau}:  {\bar{\cal W}{\cal G} \times_\tau  {\cal G}} \longrightarrow
                       {\bar{\cal W}{\cal G} \times_\tau  {\cal G}}, $$
 defined by:
 $$\chi_{\times\tau}[(g_{n-1}, \ldots, g_0), g_n] = (-1)^{n+1} (g_n, g_{n-1}, \ldots, g_0, *),$$
@@ -144,24 +144,24 @@ $$d \circ \chi_{\times\tau} + \chi_{\times\tau} \circ d =1.$$
 In addition, if we consider the Brown reduction
 $$
 \diagram{
-{\bar{\cal W}{\cal G} \times_\tau  {\cal G}} & \stackrel{h}{\longrightarrow} & 
+{\bar{\cal W}{\cal G} \times_\tau  {\cal G}} & \stackrel{h}{\longrightarrow} &
  {}^s{\bar{\cal W}{\cal G} \times_\tau  {\cal G}} \cr
  {\scriptstyle f} \downarrow \uparrow {\scriptstyle g}  \cr
  {\bar{\cal W}{\cal G} \otimes_\tau  {\cal G}} \cr
 }
 $$
-there is an induced contraction 
-$$\chi_{\otimes t}:  {\bar{\cal W}{\cal G} \otimes_\tau  {\cal G}} \longrightarrow 
+there is an induced contraction
+$$\chi_{\otimes t}:  {\bar{\cal W}{\cal G} \otimes_\tau  {\cal G}} \longrightarrow
                      {\bar{\cal W}{\cal G} \otimes_\tau  {\cal G}}, $$
 defined by $\chi_{\otimes t}= f \circ \chi_{\times\tau} \circ g$.
-This implies that the twisted tensor product is also contractible over ${\Z}$.
+This implies that the twisted tensor product is also contractible over $\mathbb{Z}$.
 \par
 The two functions of {\tt Kenzo} for this construction are:
 \vskip 0.35cm
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt smgr-crts-contraction} {\em smgr} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Return the homotopy morphism corresponding to the contraction
 $\chi_{\times\tau}$. The lisp definition is:
 {\footnotesize\begin{verbatim}
@@ -178,14 +178,14 @@ $\chi_{\times\tau}$. The lisp definition is:
 At execution time, the work is essentialy done by the function put in the
 slot {\tt :intr}. This function is itself built by the internal function {\tt smgr-crts-contraction-intr}
 requiring as argument the base point of the  simplicial group. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt smgr-tnpr-contraction} {\em smgr} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Return the induced morphism $\chi_{\otimes t}= f \circ \chi_{\times\tau} \circ g$,
 where $f$ and $g$ are built by the Brown reduction.
 The lisp definition is:
 {\footnotesize\begin{verbatim}
-                     (defun SMGR-TNPR-CONTRACTION (smgr 
+                     (defun SMGR-TNPR-CONTRACTION (smgr
                          &aux (fibration (smgr-fibration smgr))
                               (brown (brown-reduction fibration))
                               (f (f brown))
@@ -194,28 +194,28 @@ The lisp definition is:
 
                            (the morphism
                               (i-cmps f chi g)))
-\end{verbatim}} \par} 
+\end{verbatim}} \par}
 }
 
 \subsection* {Examples}
 
-It is an instructive exercise to build and check the reduction over ${\Z}$ of the space
+It is an instructive exercise to build and check the reduction over $\mathbb{Z}$ of the space
 ${\cal WG}=\bar{\cal W}{\cal G} \times_\tau  {\cal G}$ as we did in the
-loop spaces fibrations chapter. 
+loop spaces fibrations chapter.
 $$
 \diagram{
 \bar{\cal W}{\cal G} \times_\tau  {\cal G} & \stackrel{\chi_{\times t}}{\longrightarrow} &
 {}^s\bar{\cal W}{\cal G} \times_\tau  {\cal G} \cr
  {\scriptstyle aug} \downarrow \uparrow {\scriptstyle coaug}  \cr
- {{\cal C}_*({\Z})} \cr
+ {{\cal C}_*(\mathbb{Z})} \cr
 }
 $$
 In this case, the two homomorphisms
 $f$ and $g$ of the reduction, are respectively the {\em augmentation} and {\em coaugmentation}
-morphisms. 
-We define both morphisms according to our previous example based on $K({\Z},1)$.
-The unit chain complex corresponding to ${\Z}$ is built by the function
-{\tt z-chcm}; its unique generator in degree $0$ is {\tt :z-gnrt}. 
+morphisms.
+We define both morphisms according to our previous example based on $K(\mathbb{Z},1)$.
+The unit chain complex corresponding to $\mathbb{Z}$ is built by the function
+{\tt z-chcm}; its unique generator in degree $0$ is {\tt :z-gnrt}.
 {\footnotesize\begin{verbatim}
 (setf k1 (k-z-1))  ==>
 
@@ -241,21 +241,21 @@ by either of the following statements:
 <CrPr - <<GBar>> - NIL>
 
 (setf aug (build-mrph
-              :sorc (fibration-total(smgr-fibration(k-z-1))) 
-              :trgt (z-chcm) 
+              :sorc (fibration-total(smgr-fibration(k-z-1)))
+              :trgt (z-chcm)
               :degr 0
               :intr #'(lambda (degr gnrt)
                        (if (zerop degr)
                            (term-cmbn 0 1 :z-gnrt)
                            (zero-cmbn degr)))
-              :strt :gnrt 
+              :strt :gnrt
               :orgn '(aug-fibr-tot-smgr-fibr-k-z-1)  ))  ==>
 
 [K38 Cohomology-Class (degree 0)]
 
 (setf coaug (build-mrph
-              :sorc (z-chcm) 
-              :trgt (fibration-total(smgr-fibration(k-z-1))) 
+              :sorc (z-chcm)
+              :trgt (fibration-total(smgr-fibration(k-z-1)))
               :degr 0
               :intr #'(lambda (degr gnrt)
                          (if (zerop degr)
@@ -305,7 +305,7 @@ Let us apply the contraction morphism upon some simplices:
 (? chi-x-tau *)  ==>
 
 ----------------------------------------------------------------------{CMBN 5}
-<-1 * <CrPr - <<GBar<- (2 4 6 8)><- (10 11 12)><- (20 21)><- (30)><- NIL>>> 
+<-1 * <CrPr - <<GBar<- (2 4 6 8)><- (10 11 12)><- (20 21)><- (30)><- NIL>>>
               4-3-2-1-0 NIL>>
 ------------------------------------------------------------------------------
 \end{verbatim}}
@@ -324,12 +324,12 @@ Let us apply the contraction morphism upon some simplices:
 <1 * <CrPr - <<GBar<- (2 4 6)><- (10 11)><- (20)><- NIL>>> 3-2-1-0 NIL>>
 ------------------------------------------------------------------------------
 \end{verbatim}}
-We may build now the reduction over ${\Z}$ and test it upon the various simplices
+We may build now the reduction over $\mathbb{Z}$ and test it upon the various simplices
 above:
 {\footnotesize\begin{verbatim}
-(setf rdct (build-rdct :f aug 
-                       :g coaug 
-                       :h chi-x-tau 
+(setf rdct (build-rdct :f aug
+                       :g coaug
+                       :h chi-x-tau
                        :orgn '(reduction-tt-z)))   ==>
 
 [K41 Reduction]
@@ -352,14 +352,14 @@ above:
 
 (check-rdct)  ==>
 
-*TC* => 
+*TC* =>
 ----------------------------------------------------------------------{CMBN 0}
 <1 * <CrPr - <<GBar>> - NIL>>
 ------------------------------------------------------------------------------
 \end{verbatim}}
 \newpage
 {\footnotesize\begin{verbatim}
-*BC* => 
+*BC* =>
 ----------------------------------------------------------------------{CMBN 0}
 <1 * Z-GNRT>
 ------------------------------------------------------------------------------
@@ -395,17 +395,17 @@ above:
 ---done---
 \end{verbatim}}
 \vskip 0.30cm
-We build now the reduction over ${\Z}$ of the twisted tensor product. The contraction
-is obtained by a call to the function {\tt smgr-tnpr-contraction}. 
+We build now the reduction over $\mathbb{Z}$ of the twisted tensor product. The contraction
+is obtained by a call to the function {\tt smgr-tnpr-contraction}.
 $$
 \diagram{
 \bar{\cal W}{\cal G} \otimes_\tau  {\cal G} & \stackrel{\chi_{\otimes t}}{\longrightarrow} &
 {}^s\bar{\cal W}{\cal G} \otimes_\tau  {\cal G} \cr
  {\scriptstyle aug} \downarrow \uparrow {\scriptstyle coaug}  \cr
- {{\cal C}_*({\Z})} \cr
+ {{\cal C}_*(\mathbb{Z})} \cr
 }
 $$
-Of course, we have to define 
+Of course, we have to define
 the augmentation and coaugmentation morphisms adapted to this new example. The user will note
 that the twisted tensor product chain complex may be obtained from the slot {\tt :sorc} of the contration
 $\chi_{\otimes t}$.
@@ -416,19 +416,19 @@ $\chi_{\otimes t}$.
 
 (setf aug-t (build-mrph
               :sorc (sorc chi-t-tau)
-              :trgt (z-chcm) 
+              :trgt (z-chcm)
               :degr 0
               :intr #'(lambda (degr gnrt)
                        (if (zerop degr)
                            (term-cmbn 0 1 :z-gnrt)
                            (zero-cmbn degr)))
-              :strt :gnrt 
+              :strt :gnrt
               :orgn '(aug-t-fibr-tot-smgr-fibr-k-z-1)  ))   ==>
 
 [K209 Cohomology-Class (degree 0)]
 
 (setf coaug-t (build-mrph
-                :sorc (z-chcm) 
+                :sorc (z-chcm)
                 :trgt (sorc chi-t-tau)
                 :degr 0
                 :intr #'(lambda (degr gnrt)
@@ -440,8 +440,8 @@ $\chi_{\otimes t}$.
 
 [K210 Morphism (degree 0)]
 
-(setf rdct-t (build-rdct :f aug-t 
-                         :g coaug-t 
+(setf rdct-t (build-rdct :f aug-t
+                         :g coaug-t
                          :h chi-t-tau
                          :orgn '(reduction-t-tt-z)))   ==>
 
@@ -472,7 +472,7 @@ $\chi_{\otimes t}$.
 The check is validated also for the following simplices. We see also that,
 if we apply the contraction $\chi_{\otimes t}$ upon various simplices outside the base fiber, the
 result is in general non--null. The nullity of this contraction  outside
-the base fiber, which we have verified experimentally in many cases in  loop spaces fibration 
+the base fiber, which we have verified experimentally in many cases in  loop spaces fibration
 is not verified in  simplicial group fibrations.
 {\footnotesize\begin{verbatim}
 
@@ -600,7 +600,7 @@ is not verified in  simplicial group fibrations.
 Let us verify once again the unproved conjecture signaled in the loop spaces fibrations
 chapter. In fact, if the conjecture is true, it is sufficient to prove
 it with $\bar{\Delta}$. But the following is also a good test of verifying all the
-involved machinery. If we take ${\cal G}= K({\Z},1)$, the space 
+involved machinery. If we take ${\cal G}= K(\mathbb{Z},1)$, the space
 ${\cal WG}=\bar{\cal W}{\cal G} \times_\tau  {\cal G}$ is $0$--reduced. Let us consider
 its loop space and the induced contraction $\chi_{\otimes t}$ over
 ${\cal WG} \otimes_\tau \Omega{\cal WG}$. ${\cal WG}$ and the contraction $\chi_{\otimes t}$
@@ -627,11 +627,11 @@ $\chi_{\otimes t}\circ \chi_{\otimes t}=0$.
 (? chi-t-tau 0 gnrt0)  ==>
 
 ----------------------------------------------------------------------{CMBN 1}
-<1 * <TnPr <CrPr - <<GBar<- (1)><- (0)>>> - (1)> 
+<1 * <TnPr <CrPr - <<GBar<- (1)><- (0)>>> - (1)>
            <<Loop[<CrPr - <<GBar<- (1)><- (0)>>> - (1)>\-3]>>>>
-<1 * <TnPr <CrPr - <<GBar<- (1)><- (0)>>> - (1)> 
+<1 * <TnPr <CrPr - <<GBar<- (1)><- (0)>>> - (1)>
            <<Loop[<CrPr - <<GBar<- (1)><- (0)>>> - (1)>\-2]>>>>
-<1 * <TnPr <CrPr - <<GBar<- (1)><- (0)>>> - (1)> 
+<1 * <TnPr <CrPr - <<GBar<- (1)><- (0)>>> - (1)>
            <<Loop[<CrPr - <<GBar<- (1)><- (0)>>> - (1)>\-1]>>>>
 ------------------------------------------------------------------------------
 
@@ -644,7 +644,7 @@ $\chi_{\otimes t}\circ \chi_{\otimes t}=0$.
                           0 '(2 4 6 8))
                   0 (loop3 0 (crpr 0 (gbar 2 0 '(1) 0 '(0) ) 0 '(1)) 2)))  ==>
 
-<TnPr <CrPr - <<GBar<- (10 11 12)><- (20 21)><- (30)><- NIL>>> - (2 4 6 8)> 
+<TnPr <CrPr - <<GBar<- (10 11 12)><- (20 21)><- (30)><- NIL>>> - (2 4 6 8)>
       <<Loop[<CrPr - <<GBar<- (1)><- (0)>>> - (1)>\2]>>>
 \end{verbatim}}
 \newpage
@@ -654,7 +654,7 @@ $\chi_{\otimes t}\circ \chi_{\otimes t}=0$.
 ----------------------------------------------------------------------{CMBN 5}
 ------------------------------------------------------------------------------
 \end{verbatim}}
-At last we verify that the total space of the fibration of $K({\Z},1)$ is
+At last we verify that the total space of the fibration of $K(\mathbb{Z},1)$ is
 contractible.
 {\footnotesize\begin{verbatim}
 (homology (fibration-total(smgr-fibration (k-z-1))) 0 10)  ==>
@@ -684,7 +684,7 @@ Homology in dimension 9 :
 ---done---
 \end{verbatim}}
 Another example is the following:
-we build the canonical fibration of $\bar{\cal W}^2K({\Z_2}, 1)$ and verify 
+we build the canonical fibration of $\bar{\cal W}^2K({\Z_2}, 1)$ and verify
 that its fibration total  space is contractible:
 {\footnotesize\begin{verbatim}
 (setf k22 (classifying-space(classifying-space(k-z2-1))))  ==>
@@ -729,5 +729,3 @@ Homology in dimension 9 :
 \subsection* {Lisp file concerned in this chapter}
 
 {\tt cs-twisted-products.lisp}.
-
-

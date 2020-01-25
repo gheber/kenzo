@@ -10,46 +10,46 @@ computing the homology groups of a chain complex.
 {\tt chcm-homology} {\em chcm dim} \hfill {\em [Function]} \par}
 {\leftskip=15mm
 Return a description  of the homology group in dimension {\em dim} of the chain complex {\em chcm}
-in terms of {\em components} of the form ${\Z}$ or ${\Z}/{n\, {\Z}}$. 
-The desired homology group is the direct sum of these 
-components. No canonical presentation is looked for, so that, if for instance, 
-a homology group is ${\Z}/{6\, {\Z}}$, it can be displayed as one component
-${\Z}/{6\, {\Z}}$ or two components ${\Z}/{2\, {\Z}}$ and ${\Z}/{3\, {\Z}}$.
-On the other hand, if the component part  is void, this  means  the homology 
+in terms of {\em components} of the form $\mathbb{Z}$ or $\mathbb{Z}/{n\, \mathbb{Z}}$.
+The desired homology group is the direct sum of these
+components. No canonical presentation is looked for, so that, if for instance,
+a homology group is $\mathbb{Z}/{6\, \mathbb{Z}}$, it can be displayed as one component
+$\mathbb{Z}/{6\, \mathbb{Z}}$ or two components $\mathbb{Z}/{2\, \mathbb{Z}}$ and $\mathbb{Z}/{3\, \mathbb{Z}}$.
+On the other hand, if the component part  is void, this  means  the homology
 group is the null group. The function {\tt chcm-homology} implements the
 usual algorithms to compute the homology group associated to two integer matrices,
 the composite of which is null. The current version is verbose: for each group asked for,
 the program displays the rank of each integer matrix and each generator of the source
 module. Timing indications are also given. In the examples, only the  components are printed.
 \par }
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt chcm-homology-gen} {\em chcm n} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 This function computes the homology group in dimension $n$ of the chain complex
-{\em chcm} and prints a generator of degree $n$ in {\em chcm} for each component of 
+{\em chcm} and prints a generator of degree $n$ in {\em chcm} for each component of
 the group (in general a combination of the  basis elements of degree $n$ of the
 chain complex).\par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt chcm-mat} {\em chcm n} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
-Return the   the  matrix of the li\-ne\-ar homomorphism 
+{\leftskip=15mm
+Return the   the  matrix of the li\-ne\-ar homomorphism
 $d_n: C_n \rightarrow C_{n-1}$, where
 $C_n$ is the $n$--th chain group   of the chain complex  {\em chcm}. More precisely,
-each column  of this matrix contains the integer coefficients in the basis of $C_{n-1}$ of 
+each column  of this matrix contains the integer coefficients in the basis of $C_{n-1}$ of
 the image by $d_n$ of each basis element of $C_n$. So the number of lines (resp. columns) of the matrix is
 the number of elements of the basis of $C_{n-1}$ (resp. $C_n$).
 The homology group
-${\cal H}_n={\cal Z}_n/{\cal B}_n$ is computed from the two matrices 
-{\tt MZ} $=$ {\tt chcm-mat {\em (chcm,n)}} and 
-{\tt NB} $=$ {\tt chcm-mat {\em (chcm, n+1)}}. By well known algorithms 
-on matrix reduction\footnote{{\bf S. MacLane \& G. Birkhoff}, {\em Algebra}, 
+${\cal H}_n={\cal Z}_n/{\cal B}_n$ is computed from the two matrices
+{\tt MZ} $=$ {\tt chcm-mat {\em (chcm,n)}} and
+{\tt NB} $=$ {\tt chcm-mat {\em (chcm, n+1)}}. By well known algorithms
+on matrix reduction\footnote{{\bf S. MacLane \& G. Birkhoff}, {\em Algebra},
 The MacMillan Company, 1967}, the matrix {\tt MZ}  is used
 to find a basis for the kernel ${\cal Z}_n$ and the matrix {\tt NB}, to find in ${\cal Z}_n$ a presentation
 of the group ${\cal H}_n={\cal Z}_n/{\cal B}_n$ by generators and relations. This is performed
 by the internal function {\tt homologie} (beware: not {\tt homology}!).\par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt homology} {\em chcm  degr1 {\tt \&optional} (degr2 (1+ degr1))} \hfill {\em [Method]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Compute the homology groups from $degr_1$ to $degr_2-1$ (default: only $degr_1$, if {\em degr2} is omitted) of
 the right chain complex of the homotopy equivalence contained in the slot {\tt :efhm} of the
 chain complex instance {\em chcm}. At the creation of the chain complex, this slot is unbound and
@@ -102,7 +102,7 @@ much more elegant method to describe this object.
 \centerline{\includegraphics{dunce.eps}}
 \vskip 0.40cm
 %
-The diagram shows a permissible triangulation. For the generators, we have  chosen lists 
+The diagram shows a permissible triangulation. For the generators, we have  chosen lists
 rather symbols: a vertex $s_i$ is represented as {\tt (i)}, an edge $s_is_j$ as
 {\tt (i j)} and a triangle $s_is_js_k$ as {\tt (i j k)}. The enumeration of
 the elements of the basis is a little  cumbersome but defining  the
@@ -237,7 +237,7 @@ NIL
 
 \section {The general method for computing homology}
 
-Among\index{Homology groups!general method in {\tt Kenzo}} the slots of the instance of an  object 
+Among\index{Homology groups!general method in {\tt Kenzo}} the slots of the instance of an  object
 inheriting the {\tt CHAIN COMPLEX} class, a slot {\tt efhm}
 has been reserved to point (possibly) to a homotopy e\-qui\-va\-len\-ce where the right bottom
 chain complex is effective. The function {\tt homology} is designed to get
@@ -256,8 +256,8 @@ function tries to get the content of the slot {\tt efhm} via the call {\tt (efch
 {\em slot-unbound} mechanism of CLOS is triggered, calling at its turn a method
 {\tt search-efhm} depending on the object. If no method is available for this object,
 {\tt NIL} is returned. In the following chapters, we shall see that cases have been
-written for cartesian products, tensor products, suspensions, disk pasting, fibrations, 
-loop spaces, and classifying spaces. The selection of the case is done thanks to the information 
+written for cartesian products, tensor products, suspensions, disk pasting, fibrations,
+loop spaces, and classifying spaces. The selection of the case is done thanks to the information
 contained in the comment list of the object (slot {\tt orgn}).
 In each case,  the {\tt search-efhm} method builds -- in general with a complex machinery, including a possible
 recursivity --
@@ -271,7 +271,7 @@ effective, an error is returned.
 \par
 {\bf Remark.} The user may wonder why one does not  look first if the given object is effective.
 We recall simply that even in the case of an effective chain complex, it is sometimes
-possible to find another effective chain complex, homotopic to the first and whose 
+possible to find another effective chain complex, homotopic to the first and whose
 number of basis elements, in any dimensions, is considerably smaller in comparison with the first one.
 A striking case will be shown in a further chapter, showing the application of the
 Eilenberg-Zilber theorem to a cartesian product.
@@ -279,11 +279,11 @@ Eilenberg-Zilber theorem to a cartesian product.
 \subsection*{Example}
 
 {\bf The reading of this subsection may be postponed until a full reading of this user's guide}.
-The following examples  show how are 
+The following examples  show how are
 filled the slots {\tt efhm} of the various objects.
 Starting from the sphere $S^2$, we  verify first that the {\tt efhm} slot is unbound.
 Then we ask for ${\cal H}_1$ and verify that, though there is a finite basis,
-{\tt Kenzo} has nevertheless built a trivial homotopy equivalence on this object. 
+{\tt Kenzo} has nevertheless built a trivial homotopy equivalence on this object.
 {\footnotesize\begin{verbatim}
 (setf s2 (sphere 2))  ==>
 
@@ -379,7 +379,7 @@ SIMPLICIAL-SET @ #x38647a = [K119 Simplicial-Set]
 
    ...........................
 
-(setf ooos4 (loop-space (loop-space (loop-space s4))))  ==> 
+(setf ooos4 (loop-space (loop-space (loop-space s4))))  ==>
 
 [K148 Simplicial-Group]
 

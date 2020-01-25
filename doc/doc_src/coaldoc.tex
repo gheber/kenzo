@@ -11,7 +11,7 @@ at the web site {\bf http://www-fourier.ujf.grenoble.fr/\~\,sergerar/}}.
 A coalgebra  is a pair $(C, \chi)$ where
 \begin{enumerate}
 \item $C$ is a chain complex.
-\item $\chi$ (the {\em coproduct}) is a chain complex morphism 
+\item $\chi$ (the {\em coproduct}) is a chain complex morphism
 $$\chi: C \rightarrow C \otimes C.$$
 \end{enumerate}
 These components must satisfy the usual structural properties of the coalgebras\footnote
@@ -19,7 +19,7 @@ These components must satisfy the usual structural properties of the coalgebras\
 
 \subsection {Implementation of a coalgebra}
 
-A coalgebra\index{class!{\tt COALGEBRA}}  is represented as an instance 
+A coalgebra\index{class!{\tt COALGEBRA}}  is represented as an instance
 of the CLOS class {\tt COALGEBRA}, subclass
 of the {\tt CHAIN COMPLEX} class. The definition of this new class is simply:
 {\footnotesize\begin{verbatim}
@@ -30,7 +30,7 @@ of the {\tt CHAIN COMPLEX} class. The definition of this new class is simply:
 So, this new class inherits the slots of the {\tt CHAIN COMPLEX} class and has a slot
 of its own, namely {\tt cprd}, a morphism  object representing the coproduct. The user will note
 the important following fact that, {\bf once a coalgebra has been defined, one may use on it any
-function or method applicable to a chain complex}. 
+function or method applicable to a chain complex}.
 
 \subsection {The function build-clgb}
 
@@ -41,7 +41,7 @@ software provides the function {\tt build-clgb},
 \hspace*{22.5mm}{\tt :dffr-strt} {\em dffr-strt} {\tt :intr-cprd} {\em intr-cprd} \par
 \hspace*{22.5mm}{\tt :cprd-strt} {\em cprd-strt} {\tt :orgn} {\em orgn}
 \vskip 0.40cm
-defined with keyword parameters. The returned value is an instance of type {\tt COALGEBRA}. 
+defined with keyword parameters. The returned value is an instance of type {\tt COALGEBRA}.
 The keyword arguments are:
 \begin{itemize}
 \item[--] {\em cmpr}, a comparison function for generators.
@@ -58,9 +58,9 @@ The function {\tt build-clgb} calls  the function {\tt build-chcm} and with the 
 slot {\tt crpd} of the instance. According to the definition, the
 source slot of the coproduct morphism is the underlying chain complex and the target slot
 is the tensor product of this chain complex with itself. As to the other objects,
-an identification number $n$ (slot {\tt idnm}) is assigned to this Kenzo object and the 
-{\tt COALGEBRA} instance is  pushed  onto the list {\tt *clgb-list*}. 
-The  associated printing method prints a string like 
+an identification number $n$ (slot {\tt idnm}) is assigned to this Kenzo object and the
+{\tt COALGEBRA} instance is  pushed  onto the list {\tt *clgb-list*}.
+The  associated printing method prints a string like
 {\tt [K{\em n} Coalgebra]}.
 
 \subsection {Miscellaneous functions and macros for coalgebras}
@@ -97,24 +97,24 @@ Let ${\cal A}$ be a coalgebra, ${\cal M}$ a  right ${\cal A}$-comodule, ${\cal N
 It means that there exist coproducts $\chi_{\cal M}$ and $\chi_{\cal N}$:
 $$\chi_{\cal M}: {\cal M} \longrightarrow {\cal M}\otimes {\cal A},\quad
   \chi_{\cal N}: {\cal N} \longrightarrow {\cal A}\otimes {\cal N}.  $$
-It is possible to build a chain complex denoted $Cobar^{\cal A}({\cal M}, {\cal N})$, 
+It is possible to build a chain complex denoted $Cobar^{\cal A}({\cal M}, {\cal N})$,
 $$Cobar^{\cal A}({\cal M}, {\cal N}) = \bigoplus_p
 {\cal M}\otimes {\bar{\cal A}}^{\otimes p} \otimes {\cal N}.$$
-This section  is devoted to the particular case ${\cal M}={\cal N}={\Z}$.
+This section  is devoted to the particular case ${\cal M}={\cal N}=\mathbb{Z}$.
 \par
-So, let\index{cobar!of a coalgebra} ${\cal A}$ be  a coalgebra , assumed $1$--connected, 
-i.e. ${\cal A}_1 = 0$ and  ${\cal A}_0 \simeq {\Z}$,
-we consider the chain complex, $Cobar^{{\cal A}}({\Z}, {\Z})$, noted more simply  $Cobar({\cal A})$, 
+So, let\index{cobar!of a coalgebra} ${\cal A}$ be  a coalgebra , assumed $1$--connected,
+i.e. ${\cal A}_1 = 0$ and  ${\cal A}_0 \simeq \mathbb{Z}$,
+we consider the chain complex, $Cobar^{{\cal A}}(\mathbb{Z}, \mathbb{Z})$, noted more simply  $Cobar({\cal A})$,
 whose $n$-th component is:
 $$ [Cobar({\cal A})]_n = \bigoplus ({\bar{\cal A}}_{i1} \otimes \cdots \otimes {\bar{\cal A}}_{ik}),\quad i_j >0, \quad
 i1 + \cdots + ik= n+k.$$
 A tensor product $g_1 \otimes \cdots \otimes g_k$, where
-$g_i$ is a generator of ${\bar{\cal A}}_{i}$ is called, in the software {\tt Kenzo}, 
+$g_i$ is a generator of ${\bar{\cal A}}_{i}$ is called, in the software {\tt Kenzo},
 an\index{algebraic loop} {\bf algebraic loop}.
 The reason is the following: if $X$ is a $1$--connected simplicial set, we shall see in a next
 chapter that the program {\tt Kenzo} constructs
-a homotopy equivalence between the chain complex of the loop space ${\cal C}_*(GX)$ 
-and $Cobar({\cal C}_*(X)) = Cobar^{{\cal C}_*(X)}({\Z}, {\Z})$,
+a homotopy equivalence between the chain complex of the loop space ${\cal C}_*(GX)$
+and $Cobar({\cal C}_*(X)) = Cobar^{{\cal C}_*(X)}(\mathbb{Z}, \mathbb{Z})$,
 so that a generator of the last chain complex is a kind of ``algebraic'' version of a generator of a loop space.
 The definition of  differential of the Cobar is recalled hereafter.
 
@@ -130,33 +130,33 @@ The corresponding type is {\tt ALLP}.
 The function to build such an object is also called {\tt allp}
 \vskip 0.35cm
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt allp} {\em  degr1 gnr1 degr2 gnr2 ... degrk gnrk}\hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Construct an algebraic loop, i.e. a  tensorial product of degree $\sum degr_i$. The sequence of pairs
 $\lbrace degr_i,\,  gnr_i \rbrace$ has an undefinite length and  may be void. In this case,  the algebraic loop
-is the null algebraic loop, identified in the system by the constant {\tt +null-allp+}. 
+is the null algebraic loop, identified in the system by the constant {\tt +null-allp+}.
 The function {\tt allp} accepts also as unique argument a list of the form
 {\em  {\tt (}degr1 gnr1 degr2 gnr2 ... degrk gnrk{\tt )}}    \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt allp-p} {\em object}\hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Test if {\em object} is an algebraic loop. \par}
 }
 \vskip 0.35cm
 The associated printing  method prints the object under the form:
-\begin{center} 
+\begin{center}
 {\tt <<AlLp [$i_1$ $g_1$] ... [$i_k$ $g_k$]>>}
 \end{center}
 The user will have noted that in the Cobar, each generator $g_i$ appears with its own degree in the
-underlying chain complex, {\bf lowered by $1$}. 
+underlying chain complex, {\bf lowered by $1$}.
 
 \subsection {Definition of the chain complex Cobar}
 
-The\index{chain complex!cobar} definition of the differential\index{cobar!differential} in the Cobar, 
+The\index{chain complex!cobar} definition of the differential\index{cobar!differential} in the Cobar,
 will be done in three steps. This is better understood,
 if we consider the following diagram. We recall that the elements of $({\bar{\cal A}}_*^{\otimes_p})_q$ are
-by convention of degree $q-p$ in the Cobar. 
+by convention of degree $q-p$ in the Cobar.
 \begin{itemize}
 \item A chain complex called {\tt vertical-cobar} is defined with the {\em vertical differential} $d_v$.
 In this case, only the  underlying  chain complex structure is used.
@@ -167,39 +167,39 @@ In this case, only the  underlying  chain complex structure is used.
 $$\diagram{
 %       &             & \vdots      &  & \vdots  \cr
        &             & \downarrow  &  & \downarrow \cr
-\cdots & \rightarrow & ({\bar{\cal A}}_*^{\otimes p})_q & \buildrel {d_h} \over \longrightarrow 
+\cdots & \rightarrow & ({\bar{\cal A}}_*^{\otimes p})_q & \buildrel {d_h} \over \longrightarrow
                      & ({\bar{\cal A}}_*^{\otimes {p+1}})_q  & \rightarrow & \cdots \cr
-%       &             & \vfl {\displaystyle {d_v}}{} 
+%       &             & \vfl {\displaystyle {d_v}}{}
 %       &             & \vfl {\displaystyle {d_v}}{} \cr
        &             &  \downarrow {\scriptstyle d}_v  &  &  \downarrow {\scriptstyle d}_v \cr
-\cdots & \rightarrow &({\bar{\cal A}}_*^{\otimes p})_{q-1} & \buildrel {d_h} \over \longrightarrow 
-                     & ({\bar{\cal A}}_*^{\otimes {p+1}})_{q-1}  & \rightarrow & \cdots \cr 
+\cdots & \rightarrow &({\bar{\cal A}}_*^{\otimes p})_{q-1} & \buildrel {d_h} \over \longrightarrow
+                     & ({\bar{\cal A}}_*^{\otimes {p+1}})_{q-1}  & \rightarrow & \cdots \cr
        &             & \downarrow  &  & \downarrow \cr
 %       &             & \vdots      &  & \vdots  \cr
           }$$
 
 \subsubsection {Definition of the vertical cobar}
 
-To\index{cobar!vertical} define the vertical cobar chain complex 
+To\index{cobar!vertical} define the vertical cobar chain complex
 from a chain complex ${\cal C}$, the following functions are provided:
 \vskip 0.35cm
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cobar-cmpr} {\em cmpr}\hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 From the comparison function {\em cmpr}, build a comparison function for objects
 of algebraic loop type. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cobar-basis} {\em basis}\hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 From the function {\em basis} of a  chain complex ${\cal C}$, build a basis
 function for the vertical cobar chain complex defined on ${\cal C}$. In dimension $0$, there
 is only one basis element, namely the null algebraic loop. If ${\cal C}$ is locally effective,
 this function returns the symbol {\tt :locally-effective}. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cobar-intr-vrtc-dffr} {\em dffr}\hfill {\em [Function]} \par}
-{\leftskip=15mm 
-From the {\tt lisp} function {\em dffr} of a chain complex  ${\cal C}$, build a 
+{\leftskip=15mm
+From the {\tt lisp} function {\em dffr} of a chain complex  ${\cal C}$, build a
 lisp function for the differential of the vertical cobar chain complex, according to the formula
 $$d_v(g_1 \otimes \cdots \otimes g_n)=
 \sum_{i=1}^n{(-1)^{n-i+1+{\sum_{j=1}^{i-1}{\mid g_j \mid}}}
@@ -211,9 +211,9 @@ So, applying the distribution law, the right member is a sum of tensor products,
 %}
 %\newpage
 %{\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt vrtc-cobar} {\em chcm}\hfill {\em [Method]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Build the vertical cobar chain complex with underlying chain complex {\em chcm}. This is simply done by the following
 call to {\tt build-chcm}:
 {\footnotesize\begin{verbatim}
@@ -238,11 +238,11 @@ identifying, firstly all the vertices with a unique one  and then any $1$--simpl
 unique degeneracy of this unique vertex. In other words, $\Delta_2^{\N}$ is $1$--reduced: $1$ vertex, no edges. \par
 Our implementation represents any non--degenerate $n$--simplex as an integer increasing list of length $n+1$.
 In dimension $0$, for every non--negative $m$ and $n$, the vertices {\tt (m)} and {\tt (n)} are identified; in
-dimension $1$, the list $(m\, n)$ is always an {\bf illegal} $1$--simplex. 
+dimension $1$, the list $(m\, n)$ is always an {\bf illegal} $1$--simplex.
 This coalgebra will be located through the symbol {\tt smp-deltab2}. The lisp definition uses the function
 {\tt build-smst} that will be described in the simplicial set chapter. For the moment, it is
 sufficient to know, that the function {\tt build-smst} allows us to create a coalgebra
-suitable for the tests. The definition  of $\Delta_2^{\N}$ given here, is only for pedagogical 
+suitable for the tests. The definition  of $\Delta_2^{\N}$ given here, is only for pedagogical
 purpose, an efficient definition    using another representation for the simplices
 is provided in the software {\tt Kenzo}.
 
@@ -379,10 +379,10 @@ the comparison function and the differential on some algebraic loops.
 
 \subsubsection {Definition of the horizontal differential}
 
-So\index{differential!horizontal in cobar} far, the coalgebra structure has not been used 
+So\index{differential!horizontal in cobar} far, the coalgebra structure has not been used
 but now it will be the main ingredient.
-If we  make the convention that the elements of 
-$({\bar{\cal A}}_*^{\otimes_p})_q$ are of degree $q-p$, 
+If we  make the convention that the elements of
+$({\bar{\cal A}}_*^{\otimes_p})_q$ are of degree $q-p$,
 we know that exists a canonical ``horizontal''  differential $d_h$,
 $$d_h:({\bar{\cal A}}_*^{\otimes p})_q \longrightarrow ({\bar{\cal A}}_*^{\otimes {p+1}})_q,$$
 \begin{eqnarray*}
@@ -394,24 +394,24 @@ d_h( g_1 \otimes \cdots \otimes g_p)& = & (-1)^p \Delta g_1 \otimes g_2 \otimes 
 where $\Delta$ is the coproduct of the coalgebra. Two functions are designed for that:
 \vskip 0.45cm
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cobar-intr-hrzn-dffr} {\em cprd}\hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 From the coproduct morphism {\em cprd}, build the lisp function with 2 arguments:
 a degree and an algebraic loop (i.e. a generator) implementing the algorithm for $d_h$. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cobar-hrzn-dffr} {\em clbg}\hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Build the horizontal differential morphism, using the slot co\-pro\-duct {\em cprd} of
-the coalgebra {\em clbg} and the previous function. 
+the coalgebra {\em clbg} and the previous function.
 Note that when called, this function creates, if not already created,
 the vertical cobar chain complex on {\em clbg}:
 {\footnotesize\begin{verbatim}
            (build-mrph
-             :sorc (vrtc-cobar clgb) 
-             :trgt (vrtc-cobar clgb) 
+             :sorc (vrtc-cobar clgb)
+             :trgt (vrtc-cobar clgb)
              :degr -1
-             :intr (cobar-intr-hrzn-dffr cprd) 
+             :intr (cobar-intr-hrzn-dffr cprd)
              :strt :gnrt
              :orgn `(cobar-hrzn-dffr ,clgb))
 \end{verbatim}}
@@ -498,22 +498,22 @@ loop-4  ==>
 
 \subsubsection {Final definition of the cobar of a coalgebra}
 
-To define completely the cobar chain complex\index{cobar! of a coalgebra}, 
+To define completely the cobar chain complex\index{cobar! of a coalgebra},
 we have to provide the lisp function
 for the differential $d_v + d_h$ and, once created the vertical cobar chain complex,
 to call the building function {\tt build-chcm} with adequate arguments.
 \vskip 0.45cm
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cobar-intr-dffr} {\em vrtc-dffr hrzn-dffr}\hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Define the lisp function for the differential $d_v+d_h$ from the two morphisms
 {\em vrtc-dffr} and {\em hrzn-dffr}. For efficiency reasons, the implementor
 has chosen to define this new function rather than to use simply
 the addition of two morphisms.\par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cobar} {\em coalgebra}\hfill {\em [Method]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Build first the vertical cobar chain complex on the coalgebra. Then return a chain complex
 with the same slots as the vertical cobar chain complex but with new {\tt :intr-dffr}
 and  {\tt :orgn} slots, as shown in the following definition: \par}
@@ -529,7 +529,7 @@ and  {\tt :orgn} slots, as shown in the following definition: \par}
                        :cmpr (cmpr vrtc-cobar)
                        :basis (basis vrtc-cobar)
                        :bsgn +null-allp+
-                       :intr-dffr (cobar-intr-dffr (dffr vrtc-cobar) 
+                       :intr-dffr (cobar-intr-dffr (dffr vrtc-cobar)
                                                    cobar-hrzn-dffr)
                        :strt :gnrt
                        :orgn `(add ,vrtc-cobar ,cobar-hrzn-dffr)))))
@@ -537,7 +537,7 @@ and  {\tt :orgn} slots, as shown in the following definition: \par}
 
 \subsection* {Example}
 
-We may now build the cobar of {\tt smp-deltab2} and test the differential. 
+We may now build the cobar of {\tt smp-deltab2} and test the differential.
 {\footnotesize \begin{verbatim}
 (setf cobar-deltab2 (cobar smp-deltab2))  ==>
 
@@ -608,36 +608,36 @@ loop-4  ==>
 \end{verbatim}}
 \newpage
 
-\section {Other functions for the cobar construction} 
+\section {Other functions for the cobar construction}
 
-The\index{functor!vertical cobar} vertical cobar construction is 
-{\em natural} and therefore defines a functor. 
+The\index{functor!vertical cobar} vertical cobar construction is
+{\em natural} and therefore defines a functor.
 Consequently, the {\tt Kenzo} program contains the following methods.
 \vskip 0.45cm
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt vrtc-cobar} {\em mrph}\hfill {\em [Method]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 From the morphism {\em mrph}, build a new morphism between the vertical-cobar of the source
 of {\em mrph} and the vertical cobar of the target of {\em mrph}, the morphism itself being
 induced in a natural way by the underlying morphism. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt vrtc-cobar} {\em rdct}\hfill {\em [Method]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 From the reduction {\em rdct}, build a new reduction, by applying the vertical cobar
 method to the functions $f$ and $g$. The new homotopy cannot be obtained so simply, being
 a function of the $f$, $g$ and $h$ of {\em rdct}. Nevertheless, the source and target
 of the new homotopy are the vertical cobar of the underlying homotopy. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt vrtc-cobar} {\em hmeq}\hfill {\em [Method]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Build a homotopy equivalence by applying the vertical cobar cons\-truc\-ti\-on
 to the left and right reductions of the homotopy equivalence {\em hmeq}. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cobar} {\em hmeq}\hfill {\em [Method]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Build a  homotopy equivalence where the cobar construction is applied to the
-underlying homotopy equivalence in the following way. First this construction is limited to the 
+underlying homotopy equivalence in the following way. First this construction is limited to the
 case where the left bottom chain complex of {\em hmeq} is a {\bf coalgebra}. Then the vertical cobar
 construction is applied to {\em hmeq} and the horizontal differential of the left bottom chain complex
 is propagated upon the new homotopy equivalence with the help of the method {\tt add}. In other words,

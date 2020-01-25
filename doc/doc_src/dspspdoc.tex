@@ -2,16 +2,16 @@
 
 \section{Introduction}
 
-Let\index{attaching maps} us recall the technique of space construction by 
+Let\index{attaching maps} us recall the technique of space construction by
 {\em attaching maps}\footnote {{\bf Marvin Greenberg} in
 {\em Lectures on Algebraic Topology.} Benjamin Inc, 1967.}. Let $A$ be a subspace of a space $X$ and a map
 $f$ of $A$ into a space $Y$. In the space $X \coprod Y$, let us identify each $x$ in $A$ with its image
 $f(x)$ in $Y$. The quotient space $Z=X\bigcup_f Y$ of the space $X\coprod Y$ by the equivalence
 relation that the identification above determines, is called the {\em adjunction space} of the system
-$(X \supset A), (Y\supset f(A))$. The quotient map $g: X\coprod Y \rightarrow Z$ sends $Y$ 
-onto a subspace of $Z$. 
+$(X \supset A), (Y\supset f(A))$. The quotient map $g: X\coprod Y \rightarrow Z$ sends $Y$
+onto a subspace of $Z$.
 \par
-In this section, we shall take as pair $(X,A)$ the pair $(D^n, S^{n-1})$, where $D^n$ is the 
+In this section, we shall take as pair $(X,A)$ the pair $(D^n, S^{n-1})$, where $D^n$ is the
 unit disc of ${\R}^n$ and  $S^{n-1}$ is the sphere of dimension ${n-1}$, boundary of $D^n$. In this case,
 the space $Z=D^n\bigcup_f Y$ is said to be obtained from $Y$ by {\em attaching an n--disc via} $f$, or
 {\em disk pasting}.\index{disk pasting}
@@ -26,37 +26,37 @@ Starting from a simplicial set {\em ss} representing $Y$, build a new one having
 as {\em ss} and in dimension $n$, a new added simplex described by the user. This description
 consists of: \par
 -- a name (a symbol) for this new generator,\par
--- the list of all its $n+1$ faces. 
+-- the list of all its $n+1$ faces.
 \newpage
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt disk-pasting} {\em smst dmns new faces }\hfill{\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Construct, from the  simplicial set  {\em smst}, a new simplicial set
 by attaching the unit disc of dimension {\em dmns}. The argument {\em faces} is the
-list of  $dmn+1$  simplices corresponding to the faces of the new simplex 
-attached to {\em smst}. These simplices are, in principle, written as abstract simplices 
-({\em absm}), nevertheless it is possible to write them as geometric simplices ({\em gmsm}). In this case, 
+list of  $dmn+1$  simplices corresponding to the faces of the new simplex
+attached to {\em smst}. These simplices are, in principle, written as abstract simplices
+({\em absm}), nevertheless it is possible to write them as geometric simplices ({\em gmsm}). In this case,
 the corresponding geometric simplices must have the correct dimension. The program will transform the list of
-{\em gmsm}'s into a list of {\em absm}'s.  The argument {\em new} allows the user to name this new added simplex. 
+{\em gmsm}'s into a list of {\em absm}'s.  The argument {\em new} allows the user to name this new added simplex.
 The program verifies the coherence of the addition of the new simplex by calling internally the function
 {\tt check-faces}.
 \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt chcm-disk-pasting} {\em chcm dmns new  bndr}\hfill{\em [Function]} \par}
-{\leftskip=15mm 
-Construct, from the chain complex  {\em chcm} (chain groups ${\cal C}_*$), a new chain complex 
+{\leftskip=15mm
+Construct, from the chain complex  {\em chcm} (chain groups ${\cal C}_*$), a new chain complex
 (chain groups ${\cal C}_*'$), where:
 $$C'_p=C_p,\quad \forall p \not= dmn,$$
-$$C'_{dmn}= C_{dmn} \oplus {\Z}\, new.$$
+$$C'_{dmn}= C_{dmn} \oplus \mathbb{Z}\, new.$$
 The symbol {\tt new} is the name given by the user to a new generator in dimension $dmns$ and
 {\em bndr} is a combination of degree $dmns-1$ representing the  boundary of the
 generator {\em new}. Of course, one must have $d_{dmns-1}(bndr)=0.$ \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt hmeq-disk-pasting} {\em hmeq dmns new bndr {\tt \&key} new-lbcc } \hfill{\em [Function]}\par}
-{\leftskip=15mm 
-Construct a homotopy equivalence by attaching  the  generator {\em new} of dimension {\em dmns} 
-with boundary {\em bndr} to the left bottom chain complex of the homotopy equivalence {\em hmeq}. 
+{\leftskip=15mm
+Construct a homotopy equivalence by attaching  the  generator {\em new} of dimension {\em dmns}
+with boundary {\em bndr} to the left bottom chain complex of the homotopy equivalence {\em hmeq}.
 This modification of the left bottom chain complex is propagated along the whole new homotopy equivalence.
 The key parameter {\em new-lbcc} is for internal use.
 \par}
@@ -67,7 +67,7 @@ The key parameter {\em new-lbcc} is for internal use.
 \subsection* {Example}
 
 Let us begin by a trivial example corresponding to the well known following result:
-if $f$ maps $S^{n-1}$ onto a point $Y$, then by disk pasting we obtain a space homeomorphic to $S^n$. 
+if $f$ maps $S^{n-1}$ onto a point $Y$, then by disk pasting we obtain a space homeomorphic to $S^n$.
 Here, the point $Y$ will be represented by the trivial simplicial set:
 
 {\footnotesize\begin{verbatim}
@@ -79,10 +79,10 @@ Checking the 0-simplices...
 In the identification process, the 1-simplices boundaries of the 2-simplex $\Delta^2$
 are applied on the 0--degeneracy of the base point $*$.
 {\footnotesize\begin{verbatim}
-(setf s2 (disk-pasting s0 
-                        2 
-                       's2 
-                       (list (absm 1 '*) (absm 1 '*) (absm 1 '*))  )) 
+(setf s2 (disk-pasting s0
+                        2
+                       's2
+                       (list (absm 1 '*) (absm 1 '*) (absm 1 '*))  ))
 
 [K6 Simplicial-Set]
 
@@ -101,7 +101,7 @@ Dimension = 2 :
                 Faces : (<AbSm 0 *> <AbSm 0 *> <AbSm 0 *>)
 \end{verbatim}}
 More interesting is the construction of the successive projectives spaces
-$P^i{\R}$. Let us begin by $P^1{\R}$. We start from a point (the simplicial set {\tt s0}) 
+$P^i{\R}$. Let us begin by $P^1{\R}$. We start from a point (the simplicial set {\tt s0})
 and we identify the two boundary
 points of $\Delta^1$ to the base point of {\tt s0}. The new simplex to be added to {\tt s0}
 is of dimension $1$ and its $2$ faces  are the base point itself. It is well known that
@@ -141,9 +141,9 @@ Homology in dimension 2 :
 The projective spaces $P^n{\R}$ of higher degree may be constructed by the following iterative
 rule. Suppose we have built a simplicial set corresponding to $P^{n-1}{\R}$ and that we have
 named the  additional simplex $d_{n-1}$. Suppose also that $d_{n-2}$ has been previously defined.
-($d_0$ is the base point). 
+($d_0$ is the base point).
 Then the simplicial set corresponding to $P^n{\R}$ is obtained by pasting $\Delta^n$ with the following
-description of the additional simplex: 
+description of the additional simplex:
 \begin{itemize}
 \item the name of the new simplex is  $d_n$,
 \item the  faces of $d_n$ are:
@@ -199,7 +199,7 @@ Homology in dimension 2 :
 ---done---
 
 (setf p3r (disk-pasting p2r 3 'd3
-                        (list (absm 0 'd2) 
+                        (list (absm 0 'd2)
                               (absm 1 'd1)
                               (absm 2 'd1)
                               (absm 0 'd2))))  ==>
@@ -247,10 +247,10 @@ Homology in dimension 3 :
 Component Z
 
 
-(setf p4r (disk-pasting p3r 4 'd4 
+(setf p4r (disk-pasting p3r 4 'd4
                         (list (absm 0 'd3)
                               (absm 1 'd2)
-                              (absm 2 'd2) 
+                              (absm 2 'd2)
                               (absm 4 'd2)
                               (absm 0 'd3))))  ==>
 
@@ -277,19 +277,19 @@ Homology in dimension 4 :
 ---done---
 \end{verbatim}}
 
-Let us give now some examples with the function {\tt chcm-disk-pasting}. We are going to work with 
-the unit chain complex (obtained by the function {\tt z-chcm}, see chapter 1), 
-having a unique non null component, 
-namely a $\Z$--module of degree $0$ generated by the unique generator {\tt :Z-gnrt}. 
+Let us give now some examples with the function {\tt chcm-disk-pasting}. We are going to work with
+the unit chain complex (obtained by the function {\tt z-chcm}, see chapter 1),
+having a unique non null component,
+namely a $\Z$--module of degree $0$ generated by the unique generator {\tt :Z-gnrt}.
 {\footnotesize\begin{verbatim}
 (setf *ccz* (z-chcm))  ==>
 
 [K84 Chain-Complex]
 \end{verbatim}}
 Using the function {\tt chcm-disk-pasting}, let us construct from {\tt *ccz*}
-a new chain complex  having in dimension $1$ a unique  new generator {\tt gen-1} 
+a new chain complex  having in dimension $1$ a unique  new generator {\tt gen-1}
 whose boundary  is 5 times the unique generator in dimension $0$. In this new chain complex the
-homology group in dimension $0$ is  ${\Z}/5\,{\Z}$.
+homology group in dimension $0$ is  $\mathbb{Z}/5\,\mathbb{Z}$.
 {\footnotesize\begin{verbatim}
 (setf newcc-0 (chcm-disk-pasting *ccz* 1 'gen-1 (cmbn 0 5 :Z-gnrt)))  ==>
 
@@ -363,7 +363,7 @@ As a second example, let us start from $\Omega^1(S^3)$.
 
 [K99 Simplicial-Group]
 \end{verbatim}}
-In the following instruction, we locate in the symbol {\tt fund-simp} the canonical generator of 
+In the following instruction, we locate in the symbol {\tt fund-simp} the canonical generator of
 $\pi_2 (\Omega^1S^3)$, that is the $2$--simplex coming from the original sphere:
 {\footnotesize\begin{verbatim}
 (setf fund-simp (absm 0 (loop3 0 's3 1)))  ==>
@@ -376,10 +376,10 @@ We need also the $2$--degeneracy of the base point of the loop space:
 
 <AbSm 1-0 <<Loop>>>
 \end{verbatim}}
-We may  build now a new  object by pasting a disk $D^3$ as indicated by the 
+We may  build now a new  object by pasting a disk $D^3$ as indicated by the
 following call:
 {\footnotesize\begin{verbatim}
-(setf dos3 (disk-pasting os3 3 '<D3> 
+(setf dos3 (disk-pasting os3 3 '<D3>
                         (list fund-simp null-simp fund-simp null-simp)))  ==>
 
 [K212 Simplicial-Set]
@@ -433,9 +433,9 @@ Checking the 0-simplices...
 
 [K1 Simplicial-Set]
 
-(setf s2 (disk-pasting s0 
-                        2 
-                       's2 
+(setf s2 (disk-pasting s0
+                        2
+                       's2
                        (list (absm 1 '*) (absm 1 '*) (absm 1 '*))  ))  ==>
 
 [K6 Simplicial-Set]
@@ -447,7 +447,7 @@ Checking the 0-simplices...
 In fact, the comment list contains the very arguments used to realize the attaching.
 The method retrieves those arguments, gets the homotopy equivalence value of the
 {\tt efhm} slot of the old object --creating it if necessary -- then build
-a new homotopy equivalence, by calling the function {\tt hmeq-disk-pasting {\em hmeq}} which 
+a new homotopy equivalence, by calling the function {\tt hmeq-disk-pasting {\em hmeq}} which
 takes in account the attaching.
 {\footnotesize\begin{verbatim}
 (DEFMETHOD SEARCH-EFHM (smst (orgn (eql 'disk-pasting)))
@@ -459,7 +459,7 @@ takes in account the attaching.
           (fixnum dmns)
           (symbol new)
           (ignore faces))
-       (hmeq-disk-pasting 
+       (hmeq-disk-pasting
                (efhm old-smst)
                dmns new (? smst dmns new)
                :new-lbcc smst))))
@@ -473,61 +473,61 @@ This function has one argument, a reduced  object (chain complex, simplicial set
 {\bf If the object is not reduced, the result is undefined}.
 The CLOS mechanism is used to apply an adequate method for building the suspension of the object.
 For a chain complex, a new base point is created with name {\tt :s-bsgn} and the degree of the generators
-is increased by $1$. If the suspension process is applied to a homotopy equivalence, then firstly, 
-the left bottom chain complex is suspended and secondly, the modification is propagated along 
+is increased by $1$. If the suspension process is applied to a homotopy equivalence, then firstly,
+the left bottom chain complex is suspended and secondly, the modification is propagated along
 the  whole homotopy equivalence.
 \par
 \vskip 0.40cm
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt suspension-cmpr} {\em cmpr}\hfill{\em[Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 From the comparison function {\em cmpr}, build a comparison function to compare
 two generators of a suspension. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt suspension-basis} {\em basis}\hfill{\em[Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 From the function {\em basis} of  a chain complex, build a basis function for
 the suspension of this chain complex. In degree $0$, the only generator is {\tt :s-bsgn},
 in degree $1$, the basis is void and in degree $k,\,k\ge 2$, the elements of the basis of
 the suspension are the elements of the initial chain complex in degree $k-1$. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt suspension-intr-dffr} {\em dffr}\hfill{\em[Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 From the lisp differential function {\em dffr} of a chain complex, build the
 lisp differential function for the suspension of this chain complex. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt suspension-intr-cprd} {\em cmbn}\hfill{\em[Function]} \par}
-{\leftskip=15mm 
-Return the result of the  application of the coproduct of a suspension 
+{\leftskip=15mm
+Return the result of the  application of the coproduct of a suspension
 (considered as a coalgebra) upon the combination {\em cmbn}. Note that
 this function does not need any other argument than the combination. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt suspension-face} {\em face}\hfill{\em[Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 From the function face of a simplicial set, build the face function
 for the suspension of this simplicial set. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt suspension-intr} {\em mrph}\hfill{\em[Function]} \par}
-{\leftskip=15mm 
-From a {\bf Kenzo} morphism {\em mrph}, build an internal function 
+{\leftskip=15mm
+From a {\bf Kenzo} morphism {\em mrph}, build an internal function
 cor\-res\-pon\-ding to the suspension of the initial morphism. This function
 will be applied to a combination assumed to belong to a suspension
 of a chain complex. \par}
 }
 \newpage
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt suspension} {\em obj {\tt \&optional} (n 1)}\hfill{\em[Function]} \par}
-{\leftskip=15mm 
-Construct a new object, the suspension of the {\bf reduced} object {\em obj}. 
+{\leftskip=15mm
+Construct a new object, the suspension of the {\bf reduced} object {\em obj}.
 The (geometrical) base point of the suspension of a chain complex
 (or simplicial set) is named  {\tt :s-bsgn}. The optional parameter {\em n} (default: $1$)
 allows to create in one instruction iterated suspensions. This function calls the adequate
 method ({\tt suspension-1}) for the object {\em obj}.\par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt suspension-1} {\em chcm}\hfill{\em[Method]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Build the chain complex suspension of the chain complex {\em chcm}, using the basic functions
 above, as shown in the following call to {\tt build-chcm}:
 {\footnotesize\begin{verbatim}
@@ -538,24 +538,24 @@ above, as shown in the following call to {\tt build-chcm}:
              :intr-dffr (suspension-intr-dffr dffr)
              :strt :cmbn
              :orgn `(suspension ,chcm))
-\end{verbatim}} 
+\end{verbatim}}
 \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt suspension-1} {\em clbg}\hfill{\em[Method]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Return the coalgebra associated to the suspension of the coalgebra {\em clbg}.
-This calls internally the method for the suspension of the chain complex {\em clbg} then  
+This calls internally the method for the suspension of the chain complex {\em clbg} then
 assigns the function {\tt suspension-intr-cprd} to the value of the slot {\tt cprd}. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt suspension-1} {\em smst}\hfill{\em[Method]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Return the simplicial set, suspension of the simplicial set {\em smst}.
 This function uses the previous basic function {\tt suspension-face}.
 The resulting object is also a coalgebra with a coproduct defined by the
 function {\tt suspension-intr-cprd}. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt suspension-1} {\em mrph}\hfill{\em[Method]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Build the suspension of the morphism {\em mrph}. This is a morphism of the same
 degree as {\em mrph}. If {\em mrph} is the zero morphism, return the zero morphism
 between the suspensions of the source and target of {\em mrph}. If {\em mrph} is the
@@ -572,10 +572,10 @@ of {\em mrph}. Otherwise, return the morphism built by the following call to
                  :orgn `(suspension ,mrph))
 \end{verbatim}}
 \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt suspension-1} {\em rdct}\hfill{\em[Method]} \par}
-{\leftskip=15mm 
-Build the suspension of the reduction {\em rdct}. If {\em rdct} is the trivial 
+{\leftskip=15mm
+Build the suspension of the reduction {\em rdct}. If {\em rdct} is the trivial
 reduction upon a chain complex ${\cal C}$, return the trivial reduction upon
 the suspension of ${\cal C}$. Otherwise, return the reduction built by the following call to
 the function {\tt build-rdct}:
@@ -587,10 +587,10 @@ the function {\tt build-rdct}:
                  :orgn `(suspension ,rdct))
 \end{verbatim}}
 \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt suspension-1} {\em hmeq}\hfill{\em[Method]} \par}
-{\leftskip=15mm 
-Build the suspension of the  homotopy equivalence {\em hmeq}. If {\em hmeq} is the trivial 
+{\leftskip=15mm
+Build the suspension of the  homotopy equivalence {\em hmeq}. If {\em hmeq} is the trivial
 homotopy equivalence  upon a chain complex ${\cal C}$, return the trivial homotopy equivalence upon
 the suspension of ${\cal C}$. O\-ther\-wi\-se, return the homotopy equivalence built by the following call to
 the function {\tt build-hmeq}:
@@ -606,8 +606,8 @@ the function {\tt build-hmeq}:
 \subsection* {Examples}
 
 Firstly we test  the coproduct of the suspension of $\bar\Delta$. In the third
-statement, the generators $7$ and $11$ are the binary coded representation 
-of the simplices {\tt (0 1 2)} and  {\tt (0 1 3)} in dimension $3$ of 
+statement, the generators $7$ and $11$ are the binary coded representation
+of the simplices {\tt (0 1 2)} and  {\tt (0 1 3)} in dimension $3$ of
 ${\cal S}\bar\Delta$,
 {\footnotesize\begin{verbatim}
 (suspension-intr-cprd (cmbn 0))  ==>
@@ -697,11 +697,11 @@ Dimension = 4 :
 
         Simplex : S2
 
-                Faces : (<AbSm 2-1-0 S-BSGN> <AbSm 2-1-0 S-BSGN> 
-                         <AbSm 2-1-0 S-BSGN> <AbSm 2-1-0 S-BSGN> 
+                Faces : (<AbSm 2-1-0 S-BSGN> <AbSm 2-1-0 S-BSGN>
+                         <AbSm 2-1-0 S-BSGN> <AbSm 2-1-0 S-BSGN>
                          <AbSm 2-1-0 S-BSGN>)
 \end{verbatim}}
-To test the suspension of a less simple chain complex, let us take a Moore space that we have seen in the 
+To test the suspension of a less simple chain complex, let us take a Moore space that we have seen in the
 simplicial set chapter.
 We know that the corresponding  chain complex  is connected. Let us compare the
 basis elements, in various degrees, of this chain complex and its suspension:
@@ -712,13 +712,13 @@ basis elements, in various degrees, of this chain complex and its suspension:
 
 (dotimes (i 7) (print (basis m23 i)))
 
-(*) 
-NIL 
-NIL 
-(M3) 
-(N4) 
-NIL 
-NIL 
+(*)
+NIL
+NIL
+(M3)
+(N4)
+NIL
+NIL
 NIL
 
 (setf sm23 (suspension m23))  ==>
@@ -727,17 +727,17 @@ NIL
 
 (dotimes (i 7) (print (basis sm23 i)))
 
-(:S-BSGN) 
-NIL 
-NIL 
-NIL 
-(M3) 
-(N4) 
-NIL 
+(:S-BSGN)
+NIL
+NIL
+NIL
+(M3)
+(N4)
+NIL
 NIL
 \end{verbatim}}
 
-Let us   apply  now the function {\tt suspension}  to 
+Let us   apply  now the function {\tt suspension}  to
 objects built from $S^2$, namely $\Omega^1(S^2)$ and $\Omega^2(S^2)$ and let us have a look
 upon the homology groups . For $S^2$, we know that the only
 non--null homology groups are in dimension $0$ and $2$:
@@ -784,7 +784,7 @@ Homology in dimension 4 :
 
 ---done---
 \end{verbatim}}
-Let us verify now that, for the space $\Omega(S^2)$, the homology groups are organized as 
+Let us verify now that, for the space $\Omega(S^2)$, the homology groups are organized as
 the tensor algebra over one generator in degree $1$:
 {\footnotesize\begin{verbatim}
 (setf s2 (sphere 2))  ==>
@@ -900,9 +900,9 @@ Component Z
 
 \subsection {Searching homology for suspensions}
 
-The comment list of a suspension\index{searching homology!suspension} has the 
+The comment list of a suspension\index{searching homology!suspension} has the
 form {\tt (SUSPENSION {\em suspended-object})}.
-The {\tt search-efhm} method applied to a suspension, looks for the value of the 
+The {\tt search-efhm} method applied to a suspension, looks for the value of the
 {\tt efhm} slot of the {\em suspended-object}, (i.e. a homotopy equivalence), then
 builds the suspension of this homotopy equivalence (see the method {\tt suspension} applied
 to a homotopy equivalence). Of course, this may imply a recursive process.
@@ -915,5 +915,3 @@ to a homotopy equivalence). Of course, this may imply a recursive process.
 \subsection* {Lisp files concerned in this chapter}
 
 {\tt disk-pasting.lisp}, {\tt suspensions.lisp}, {\tt searching-homology.lisp}
-
-
