@@ -9,7 +9,7 @@ They are followed by the answer of the program. We have suppressed some
 extra informations, in particular the ones printed during the computation
 of homology groups.
 \vskip 0.5cm
-Let us begin by the space $Moore(\mathbb{Z}/2\mathbb{Z}, 3)$ described as a simplicial set
+Let us begin by the space $Moore(\Z/2\Z, 3)$ described as a simplicial set
 having only three non--degenerate simplices, namely in dimension
 $0$, $3$ and $4$. In the  representation created by the software, the $0$--simplex (base point),
 the $3$--simplex and the $4$--simplex are respectively labelled
@@ -129,12 +129,12 @@ Component Z/2Z
 ---done---
 \end{verbatim}}
 \newpage
-Let us consider now the space $K(\mathbb{Z}, 1)$. This is an Abelian simplicial group created  in {\tt Kenzo}
+Let us consider now the space $K(\Z, 1)$. This is an Abelian simplicial group created  in {\tt Kenzo}
 by the function {\tt k-z}.
 In this simplicial group, a  simplex  in dimension $n$
 is mathematically represented by a sequence of integers, known as a {\em bar} object:
 $$ [a_1 \mid a_2 \mid \ldots \mid a_n]. $$
-In {\tt Kenzo}, a non-degenerate simplex of $K(\mathbb{Z},1)$ in dimension $n$ will be simply
+In {\tt Kenzo}, a non-degenerate simplex of $K(\Z,1)$ in dimension $n$ will be simply
 a list of $n$ non-null integers, for instance: {\tt (2 3 4 5)}. In dimension $0$, the only
 simplex is {\tt NIL} (the base point).
 {\footnotesize\begin{verbatim}
@@ -179,7 +179,7 @@ The printed results are the printed representation of {\em combinations}, i.e.
 integer linear combinations of generators resulting from the application of the
 morphisms. The degree of the combination is indicated by the information: {\tt CMBN $n$}.
 \par
-On the same way, we may create the Abelian simplicial groups $K(\mathbb{Z}/2\mathbb{Z}, n)$:
+On the same way, we may create the Abelian simplicial groups $K(\Z/2\Z, n)$:
 {\footnotesize\begin{verbatim}
 (setf k-z2-2 (k-z2 2))  ==>
 
@@ -408,11 +408,11 @@ Homology in dimension 4 :
 Let us end this short overview with an example of computation of homotopy groups.
 The method used in {\tt Kenzo} is the Whitehead tower.
 In this current version only the case where the first non--null
-homology group (in non--null dimension) is $\mathbb{Z}$ or $\mathbb{Z}/{2 \mathbb{Z}}$ can be processed; however if this
-homology group is a direct sum of several copies of $\mathbb{Z}$ or $\mathbb{Z}/{2 \mathbb{Z}}$, then the corresponding
+homology group (in non--null dimension) is $\Z$ or $\Z/{2 \Z}$ can be processed; however if this
+homology group is a direct sum of several copies of $\Z$ or $\Z/{2 \Z}$, then the corresponding
 stage of the Whitehead tower may also be constructed step by step.
 \vskip 0.40cm
-We take again $Moore(\mathbb{Z}/2\mathbb{Z}, 3)$ whose $H_3$ is $\mathbb{Z}/2\mathbb{Z}$. First the fundamental cohomology
+We take again $Moore(\Z/2\Z, 3)$ whose $H_3$ is $\Z/2\Z$. First the fundamental cohomology
 class is constructed:
 {\footnotesize\begin{verbatim}
 (setf ch3 (chml-clss m23 3))  ==>
@@ -432,7 +432,7 @@ Then the total space of the fibration is built:
 
 [K736 Simplicial-Set]
 \end{verbatim}}
-The $H_4$ of this total space is the $\pi_4$ of $Moore(\mathbb{Z}/2\mathbb{Z})$:
+The $H_4$ of this total space is the $\pi_4$ of $Moore(\Z/2\Z)$:
 {\footnotesize\begin{verbatim}
 (homology x4 3 5)  ==>
 
@@ -446,7 +446,7 @@ Component Z/2Z
 
 ---done---
 \end{verbatim}}
-We may now iterate the process, to compute the $\pi_5$ of $Moore(\mathbb{Z}/2\mathbb{Z})$:
+We may now iterate the process, to compute the $\pi_5$ of $Moore(\Z/2\Z)$:
 {\footnotesize\begin{verbatim}
 (setf ch4 (chml-clss x4 4))  ==>
 
@@ -472,4 +472,4 @@ Component Z/4Z
 
 ---done---
 \end{verbatim}}
-So $\pi_5(Moore(\mathbb{Z}/2\mathbb{Z}))$ is $\mathbb{Z}/4\mathbb{Z}$.
+So $\pi_5(Moore(\Z/2\Z))$ is $\Z/4\Z$.

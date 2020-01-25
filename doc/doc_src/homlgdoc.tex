@@ -10,11 +10,11 @@ computing the homology groups of a chain complex.
 {\tt chcm-homology} {\em chcm dim} \hfill {\em [Function]} \par}
 {\leftskip=15mm
 Return a description  of the homology group in dimension {\em dim} of the chain complex {\em chcm}
-in terms of {\em components} of the form $\mathbb{Z}$ or $\mathbb{Z}/{n\, \mathbb{Z}}$.
+in terms of {\em components} of the form $\Z$ or $\Z/{n\, \Z}$.
 The desired homology group is the direct sum of these
 components. No canonical presentation is looked for, so that, if for instance,
-a homology group is $\mathbb{Z}/{6\, \mathbb{Z}}$, it can be displayed as one component
-$\mathbb{Z}/{6\, \mathbb{Z}}$ or two components $\mathbb{Z}/{2\, \mathbb{Z}}$ and $\mathbb{Z}/{3\, \mathbb{Z}}$.
+a homology group is $\Z/{6\, \Z}$, it can be displayed as one component
+$\Z/{6\, \Z}$ or two components $\Z/{2\, \Z}$ and $\Z/{3\, \Z}$.
 On the other hand, if the component part  is void, this  means  the homology
 group is the null group. The function {\tt chcm-homology} implements the
 usual algorithms to compute the homology group associated to two integer matrices,

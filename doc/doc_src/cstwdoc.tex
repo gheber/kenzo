@@ -34,7 +34,7 @@ the twisting operator. The returned object is a fibration. \par}
 
 \subsection* {Examples}
 
-Let us take the Abelian simplicial group $K(\mathbb{Z},1)$ and  build the fibration morphism.
+Let us take the Abelian simplicial group $K(\Z,1)$ and  build the fibration morphism.
 {\footnotesize\begin{verbatim}
 (setf k1 (k-z-1))  ==>
 
@@ -130,7 +130,7 @@ reduction).
 
 It is known that if ${\cal G}$ is a $0$--reduced simplicial group,
 the space ${\cal WG}=\bar{\cal W}{\cal G} \times_\tau  {\cal G}$ is
-contractible. So it is possible to build a reduction of this space over $\mathbb{Z}$.
+contractible. So it is possible to build a reduction of this space over $\Z$.
 This reduction depends on the important contraction
 $$\chi_{\times\tau}:  {\bar{\cal W}{\cal G} \times_\tau  {\cal G}} \longrightarrow
                       {\bar{\cal W}{\cal G} \times_\tau  {\cal G}}, $$
@@ -154,7 +154,7 @@ there is an induced contraction
 $$\chi_{\otimes t}:  {\bar{\cal W}{\cal G} \otimes_\tau  {\cal G}} \longrightarrow
                      {\bar{\cal W}{\cal G} \otimes_\tau  {\cal G}}, $$
 defined by $\chi_{\otimes t}= f \circ \chi_{\times\tau} \circ g$.
-This implies that the twisted tensor product is also contractible over $\mathbb{Z}$.
+This implies that the twisted tensor product is also contractible over $\Z$.
 \par
 The two functions of {\tt Kenzo} for this construction are:
 \vskip 0.35cm
@@ -199,7 +199,7 @@ The lisp definition is:
 
 \subsection* {Examples}
 
-It is an instructive exercise to build and check the reduction over $\mathbb{Z}$ of the space
+It is an instructive exercise to build and check the reduction over $\Z$ of the space
 ${\cal WG}=\bar{\cal W}{\cal G} \times_\tau  {\cal G}$ as we did in the
 loop spaces fibrations chapter.
 $$
@@ -207,14 +207,14 @@ $$
 \bar{\cal W}{\cal G} \times_\tau  {\cal G} & \stackrel{\chi_{\times t}}{\longrightarrow} &
 {}^s\bar{\cal W}{\cal G} \times_\tau  {\cal G} \cr
  {\scriptstyle aug} \downarrow \uparrow {\scriptstyle coaug}  \cr
- {{\cal C}_*(\mathbb{Z})} \cr
+ {{\cal C}_*(\Z)} \cr
 }
 $$
 In this case, the two homomorphisms
 $f$ and $g$ of the reduction, are respectively the {\em augmentation} and {\em coaugmentation}
 morphisms.
-We define both morphisms according to our previous example based on $K(\mathbb{Z},1)$.
-The unit chain complex corresponding to $\mathbb{Z}$ is built by the function
+We define both morphisms according to our previous example based on $K(\Z,1)$.
+The unit chain complex corresponding to $\Z$ is built by the function
 {\tt z-chcm}; its unique generator in degree $0$ is {\tt :z-gnrt}.
 {\footnotesize\begin{verbatim}
 (setf k1 (k-z-1))  ==>
@@ -324,7 +324,7 @@ Let us apply the contraction morphism upon some simplices:
 <1 * <CrPr - <<GBar<- (2 4 6)><- (10 11)><- (20)><- NIL>>> 3-2-1-0 NIL>>
 ------------------------------------------------------------------------------
 \end{verbatim}}
-We may build now the reduction over $\mathbb{Z}$ and test it upon the various simplices
+We may build now the reduction over $\Z$ and test it upon the various simplices
 above:
 {\footnotesize\begin{verbatim}
 (setf rdct (build-rdct :f aug
@@ -395,14 +395,14 @@ above:
 ---done---
 \end{verbatim}}
 \vskip 0.30cm
-We build now the reduction over $\mathbb{Z}$ of the twisted tensor product. The contraction
+We build now the reduction over $\Z$ of the twisted tensor product. The contraction
 is obtained by a call to the function {\tt smgr-tnpr-contraction}.
 $$
 \diagram{
 \bar{\cal W}{\cal G} \otimes_\tau  {\cal G} & \stackrel{\chi_{\otimes t}}{\longrightarrow} &
 {}^s\bar{\cal W}{\cal G} \otimes_\tau  {\cal G} \cr
  {\scriptstyle aug} \downarrow \uparrow {\scriptstyle coaug}  \cr
- {{\cal C}_*(\mathbb{Z})} \cr
+ {{\cal C}_*(\Z)} \cr
 }
 $$
 Of course, we have to define
@@ -600,7 +600,7 @@ is not verified in  simplicial group fibrations.
 Let us verify once again the unproved conjecture signaled in the loop spaces fibrations
 chapter. In fact, if the conjecture is true, it is sufficient to prove
 it with $\bar{\Delta}$. But the following is also a good test of verifying all the
-involved machinery. If we take ${\cal G}= K(\mathbb{Z},1)$, the space
+involved machinery. If we take ${\cal G}= K(\Z,1)$, the space
 ${\cal WG}=\bar{\cal W}{\cal G} \times_\tau  {\cal G}$ is $0$--reduced. Let us consider
 its loop space and the induced contraction $\chi_{\otimes t}$ over
 ${\cal WG} \otimes_\tau \Omega{\cal WG}$. ${\cal WG}$ and the contraction $\chi_{\otimes t}$
@@ -654,7 +654,7 @@ $\chi_{\otimes t}\circ \chi_{\otimes t}=0$.
 ----------------------------------------------------------------------{CMBN 5}
 ------------------------------------------------------------------------------
 \end{verbatim}}
-At last we verify that the total space of the fibration of $K(\mathbb{Z},1)$ is
+At last we verify that the total space of the fibration of $K(\Z,1)$ is
 contractible.
 {\footnotesize\begin{verbatim}
 (homology (fibration-total(smgr-fibration (k-z-1))) 0 10)  ==>

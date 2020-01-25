@@ -3,7 +3,7 @@
 \section {Introduction}
 
 The present chapter describes the set of programming tools for handling
-{\em objects with effective homology}. The theoretical material may be 
+{\em objects with effective homology}. The theoretical material may be
 found in the paper {\em Constructive Algebraic Topology} by
 Julio Rubio Garcia and Francis Sergeraert\footnote{Available at the web site
 {\bf http://www-fourier.ujf.grenoble.fr/\~\,sergerar/}}.
@@ -22,9 +22,9 @@ $$
 $$
 where $\hat C$ and $C$ are chain complexes, $f$ and $g$  chain complex morphisms and
 $h$ a homotopy operator. Hereafter, $\hat C$ is called the {\em top chain complex}\index{chain complex!top (reduction)}
-and $C$ the {\em bottom chain complex}\index{chain complex!bottom (reduction)}. 
-${}^s\hat C$ is $\hat C$ shifted, i.e. $h$ has 
-degree $1$. The mappings $f$, $g$, $h$, together with the differential operator $d$ 
+and $C$ the {\em bottom chain complex}\index{chain complex!bottom (reduction)}.
+${}^s\hat C$ is $\hat C$ shifted, i.e. $h$ has
+degree $1$. The mappings $f$, $g$, $h$, together with the differential operator $d$
 on $\hat C$, must verify the following relations:
 \newpage
 \begin{eqnarray*}
@@ -35,13 +35,13 @@ h \circ g & = & 0   \\
 h \circ h & = & 0
 \end{eqnarray*}
 The morphisms $f$ and $g$ and the homotopy operator $h$ describe the (big) chain
-complex $\hat C$ as the direct sum 
+complex $\hat C$ as the direct sum
 $$ \hat C= \hat C_1 \oplus \hat C_2$$
 where $\hat C_1 = Im(g) \simeq C$ and  $\hat C_2= Ker(f)$ ($\hat C_2$ is acyclic).
 
 \subsection {Representation of a reduction}
 
-A reduction\index{reduction!representation} is implemented as an instance of 
+A reduction\index{reduction!representation} is implemented as an instance of
 the {\tt CLOS} class {\tt REDUCTION}\index{class! {\tt REDUCTION}}, whose
 definition is:
 {\footnotesize\begin{verbatim}
@@ -60,9 +60,9 @@ definition is:
 \end{verbatim}}
 This class has $7$  slots:
 \begin{enumerate}
-\item {\tt tcc}, the object of type {\tt chain-complex} representing the chain complex $\hat C$ 
+\item {\tt tcc}, the object of type {\tt chain-complex} representing the chain complex $\hat C$
 (\b top \b chain \b complex).
-\item {\tt bcc},  the object of type {\tt chain-complex}  representing the chain complex $C$ 
+\item {\tt bcc},  the object of type {\tt chain-complex}  representing the chain complex $C$
 (\b bottom \b chain \b complex).
 \item {\tt f}, the object of type {\tt morphism}  representing the morphism $f$.
 \item {\tt g}, the object of type {\tt morphism}  representing the morphism $g$.
@@ -71,7 +71,7 @@ This class has $7$  slots:
 \item {\tt orgn}, a comment list carefully chosen.
 \end{enumerate}
 The accessors of the slots are the functions whose name appears after the specifier {\tt:reader} in
-the class definition. A printing method has been associated to the class {\tt REDUCTION} 
+the class definition. A printing method has been associated to the class {\tt REDUCTION}
 and the external representation of an instance is a string like {\tt [K{\em n} Reduction]}, where $n$
 is the number plate of the Kenzo object.
 
@@ -82,7 +82,7 @@ software provides the function {\tt build-rdct}\index{function!{\tt build-rdct}}
 \vskip 0.45cm
 {\tt build-rdct :f} {\em f} {\tt :g} {\em g} {\tt :h} {\em h} {\tt :orgn} {\em orgn}
 \vskip 0.40cm
-defined with keyword parameters. The returned value is an instance of the class {\tt REDUCTION}. 
+defined with keyword parameters. The returned value is an instance of the class {\tt REDUCTION}.
 The keyword arguments are:
 \begin{itemize}
 \item[--] {\em f}, the object of type {\tt morphism}  representing the morphism $f$.
@@ -93,9 +93,9 @@ build a new instance of the class if it finds in the list of already built reduc
 a reduction  with the same comment list.
 \end{itemize}
 The {\tt tcc} slot and the {\tt bcc} slot of the instance are taken respectively
-from the {\tt sorc} slot (source slot) and  the {\tt trgt} slot (target slot) of the morphism $f$. 
+from the {\tt sorc} slot (source slot) and  the {\tt trgt} slot (target slot) of the morphism $f$.
 The function {\tt build-rdc} controls the validity of the degrees of the morphisms and
-pushes the new created  instance on the list {\tt *rdct-list*}. 
+pushes the new created  instance on the list {\tt *rdct-list*}.
 
 \newpage
 
@@ -110,20 +110,20 @@ Clear among others, the list {\tt *rdct-list*}, list of user created reductions 
 the global counter to $1$. See also the description of this function in chapter 1. \par}
 {\tt rdct} {\em n}\hfill {\em [Function]} \par}
 {\leftskip=15mm
-Retrieve in the list {\tt *rdct-list*} the reduction instance whose identification 
+Retrieve in the list {\tt *rdct-list*} the reduction instance whose identification
 (as {\tt Kenzo} object) is $n$. If it does not exist, return {\tt NIL}. \par}
 {\leftskip=5mm
 {\tt bcc} {\em rdct {\tt \&rest} args} \hfill {\em [Macro]} \par}
 {\leftskip=15mm
 With only one argument (a reduction {\em rdct}) this macro selects
-the bottom chain complex of the reduction. Otherwise, it applies  the differential 
+the bottom chain complex of the reduction. Otherwise, it applies  the differential
 of the bottom chain complex of the reduction {\em rdc} on the arguments {\em args},
 (either {\em degree generator} or {\em cmb}).  \par}
 {\leftskip=5mm
 {\tt tcc} {\em rdct {\tt \&rest} args} \hfill {\em [Macro]} \par}
 {\leftskip=15mm
 With only one argument (a reduction {\em rdct}) this macro selects
-the top chain complex of the reduction. Otherwise, it applies  the differential 
+the top chain complex of the reduction. Otherwise, it applies  the differential
 of the top chain complex of the reduction {\em rdc} on the arguments {\em args},
 (either {\em degree generator} or {\em cmb}).  \par}
 {\leftskip=5mm
@@ -164,9 +164,9 @@ $$
 where  the morphism {\em Zero} is the zero morphism of degree $1$ in the chain complex $C$
 and {\em Id} is the identity morphism in that chain complex (see the functions
 {\tt zero-mrph} and {\tt idnt-mrph} in the chain complex chapter). \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cmps} {\em brdct trdct}\hfill {\em [Method]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Build a new reduction from the two reductions $r1$ and $r2$ (here, respectively {\em brdct} and {\em trdct}).
 This is done by a call to {\tt build-rdct} with the following parameters:
 \begin{eqnarray*}
@@ -175,7 +175,7 @@ g & = & g_{r2}\circ g_{r1}, \\
 h & = &  h_{r2}  + g_{r2} \circ h_{r1} \circ f_{r2}.
 \end{eqnarray*}
 The compositions and additions of morphisms are realized respectively by the methods
-{\tt cmps}, {\tt i-cmps}  and   {\tt add } (see chapter~1). 
+{\tt cmps}, {\tt i-cmps}  and   {\tt add } (see chapter~1).
 We recall that the {\tt tcc}  and the {\tt bcc} slots of this new created
 reduction  are respectively
 the source and target slots of the new morphim $f$.
@@ -183,7 +183,7 @@ the source and target slots of the new morphim $f$.
 }
 \subsection {Verification functions}
 
-The two following functions\index{reduction!verification} are very helpful to verify the coherence of the 
+The two following functions\index{reduction!verification} are very helpful to verify the coherence of the
 the various mappings involved in a reduction. Let us recall the diagram
 of a reduction:
 $$
@@ -195,9 +195,9 @@ $$
 $$
 \newpage
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt pre-check-rdct} {\em rdct} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Assign to the following lisp global variables, the morphism instances computed
 from the morphisms of the reduction {\em rdct}, according to the  formulas:\par}
 {\leftskip 20mm
@@ -225,13 +225,13 @@ from the morphisms of the reduction {\em rdct}, according to the  formulas:\par}
 In these formulas  $d_C$ and $d_{\hat C}$ are the respective boundary operators of the
 chain complexes $C$ and $\hat C$. $Id_C$ and $Id_{\hat C}$ are the identity morphisms
 on the chain complexes $C$ and $\hat C$  built by the function {\tt idnt-mrph} \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt check-rdct} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Map  all the morphisms prepared by the function {\tt pre-check-rdct} on chosen combinations.
-This function having no parameters, the user must  assign  
+This function having no parameters, the user must  assign
 to  the two lisp global variables:
-{\tt *tc*} and {\tt *bc*},  valid combinations belonging respectively to $\hat C$ and $C$. 
+{\tt *tc*} and {\tt *bc*},  valid combinations belonging respectively to $\hat C$ and $C$.
 The call to this
 function is simply {\tt (check-rdct)}. This function knows what morphism to apply
 to the combinations and pauses after each evaluation to allow the user to inspect each result.
@@ -245,26 +245,26 @@ If the morphisms are coherent, the result of each mapping is a null combination.
 To show an example about the verification functions, we first define a locally effective version
 of the standard simplex $\Delta^n$. The following function {\tt cdelta} builds the standard simplex
 in dimension {\em dmns}. In using the created chain complex, the user must bear in mind that
-the only valid vertices are the vertices numbered from $(0)$ to $(dmns)$. 
+the only valid vertices are the vertices numbered from $(0)$ to $(dmns)$.
 {\footnotesize\begin{verbatim}
  (defun cdelta (dmns)
      (build-chcm
         :cmpr #'l-cmpr
         :basis :locally-effective
         :bsgn '(0)
-        :intr-dffr 
+        :intr-dffr
               #'(lambda (degr gmsm)
                    (make-cmbn
                      :degr (1- degr)
                      :list (do ((rslt +empty-list+
-                                  (cons (cons sign 
+                                  (cons (cons sign
                                               (append
                                                  (subseq gmsm 0 nark)
                                                  (subseq gmsm (1+ nark))))
                                           rslt))
                                 (sign 1 (- sign))
                                 (nark 0 (1+ nark)))
-                                ((> nark degr) rslt))))                                           
+                                ((> nark degr) rslt))))
         :strt :gnrt
         :orgn `(locally effective version of C_* delta ,dmns)))
 \end{verbatim}}
@@ -277,7 +277,7 @@ number in $\Delta^{bdms}$ and the vertices $(bdms+1)$ to $(tdms)$ are applied on
 $\Delta^{bdms}$.
 \item {\tt (make-g {\em tdms bdms})} builds the injection morphism $g$ from $\Delta^{bdms}$ to $\Delta^{tdms}$
 (the slot {\tt :intr} is the identity function).
-\item {\tt (make-h {\em tdms bdms})} builds a homotopy morphism of degree $1$, $h$, 
+\item {\tt (make-h {\em tdms bdms})} builds a homotopy morphism of degree $1$, $h$,
 from $\Delta^{tdms}$ to itself, connecting w.r.t. the homotopy relation, the chain map
 $g \circ f$ with the identity morphism $Id$.
 \end{itemize}
@@ -287,7 +287,7 @@ $g \circ f$ with the identity morphism $Id$.
    (build-mrph
      :sorc (cdelta tdmns) :trgt (cdelta bdmns) :degr 0
      :intr #'(lambda (degr gmsm)
-               (let ((pos (position-if #'(lambda (vertex) (>= vertex bdmns)) 
+               (let ((pos (position-if #'(lambda (vertex) (>= vertex bdmns))
                                              gmsm)))
                      (if pos
                        (if (< pos degr)
@@ -308,13 +308,13 @@ $g \circ f$ with the identity morphism $Id$.
    (build-mrph
      :sorc (cdelta tdmns) :trgt (cdelta tdmns) :degr +1
      :intr #'(lambda (degr gmsm)
-              (let ((pos (position-if #'(lambda (vertex) (>= vertex bdmns)) 
+              (let ((pos (position-if #'(lambda (vertex) (>= vertex bdmns))
                                              gmsm)))
                       (if pos
                           (if (member bdmns gmsm)
                               (zero-cmbn (1+ degr))
                               (cmbn (1+ degr) (-1-expt-n pos)
-                               (append (subseq gmsm 0 pos) (list bdmns) 
+                               (append (subseq gmsm 0 pos) (list bdmns)
                                        (subseq gmsm pos))))
                           (zero-cmbn (1+ degr)))))
      :strt :gnrt
@@ -333,7 +333,7 @@ owing to the comment list, if the instance of a class (here a chain complex) alr
                     :h (make-h tdmns bdmns)
                     :orgn `(reduction delta ,tdmns ,bdmns))))
 \end{verbatim}}
-We now build with a simple call to the function {\tt make-rdct} the chain complexes corresponding 
+We now build with a simple call to the function {\tt make-rdct} the chain complexes corresponding
 to $\Delta^6$ and $\Delta^3$, the $3$ morphisms
 $f$, $g$, $h$ and the reduction. The lisp utility function {\tt inspect} gives an idea
 of the organisation of the class instance. Then we verify the coherency of the reduction with the functions
@@ -381,7 +381,7 @@ REDUCTION @ #x498342 = [K8 Reduction]
 
 (check-rdct)  ==>
 
-*TC* => 
+*TC* =>
 ----------------------------------------------------------------------{CMBN 2}
 <1 * (0 1 2)>
 <10 * (1 2 3)>
@@ -389,55 +389,55 @@ REDUCTION @ #x498342 = [K8 Reduction]
 <1000 * (2 3 4)>
 ------------------------------------------------------------------------------
 
-*BC* => 
+*BC* =>
 ----------------------------------------------------------------------{CMBN 3}
 <4 * (0 1 2 3)>
 ------------------------------------------------------------------------------
 
 Checking *TDD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 0}
 ------------------------------------------------------------------------------
 
 Checking *BDD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 1}
 ------------------------------------------------------------------------------
 
 Checking *DF-FD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 1}
 ------------------------------------------------------------------------------
 
 Checking *DG-GD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 2}
 ------------------------------------------------------------------------------
 
 Checking *ID-FG* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 3}
 ------------------------------------------------------------------------------
 
 Checking *ID-GF-DH-HD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 2}
 ------------------------------------------------------------------------------
 \end{verbatim}}
 \newpage
 {\footnotesize\begin{verbatim}
 Checking *HH* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 4}
 ------------------------------------------------------------------------------
 
 Checking *FH* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 3}
 ------------------------------------------------------------------------------
 
 Checking *HG* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 4}
 ------------------------------------------------------------------------------
 
@@ -464,7 +464,7 @@ composition of the two following reductions:
 
 (check-rdct)  ==>
 
-*TC* => 
+*TC* =>
 ----------------------------------------------------------------------{CMBN 2}
 <1 * (0 1 2)>
 <10 * (1 2 3)>
@@ -474,55 +474,55 @@ composition of the two following reductions:
 \end{verbatim}}
 \newpage
 {\footnotesize\begin{verbatim}
-*BC* => 
+*BC* =>
 ----------------------------------------------------------------------{CMBN 3}
 <4 * (0 1 2 3)>
 ------------------------------------------------------------------------------
 
 Checking *TDD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 0}
 ------------------------------------------------------------------------------
 
 Checking *BDD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 1}
 ------------------------------------------------------------------------------
 
 Checking *DF-FD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 1}
 ------------------------------------------------------------------------------
 
 Checking *DG-GD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 2}
 ------------------------------------------------------------------------------
 
 Checking *ID-FG* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 3}
 ------------------------------------------------------------------------------
 
 Checking *ID-GF-DH-HD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 2}
 ------------------------------------------------------------------------------
 
 Checking *HH* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 4}
 ------------------------------------------------------------------------------
 
 Checking *FH* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 3}
 ------------------------------------------------------------------------------
 \end{verbatim}}
 \newpage
 {\footnotesize\begin{verbatim}
 Checking *HG* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 4}
 ------------------------------------------------------------------------------
 
@@ -532,7 +532,7 @@ Result:
 
 \section {Homotopy equivalence}
 
-A {\em homotopy equivalence}\index{homotopy equivalence!in {\tt Kenzo}} between two 
+A {\em homotopy equivalence}\index{homotopy equivalence!in {\tt Kenzo}} between two
 chain complexes $C$ and $EC$ is a pair of reductions:
 %$$
 %\begin{array}{l}
@@ -555,7 +555,7 @@ homology of $C$. The chain complexe $\hat C$ is only an intermediate object.
 
 \subsection {Representation of a homotopy equivalence}
 
-A homotopy equivalence\index{homotopy equivalence!representation} is implemented as an instance 
+A homotopy equivalence\index{homotopy equivalence!representation} is implemented as an instance
 of the {\tt CLOS}  class {\tt HOMOTOPY-EQUIVALENCE}\index{class!{\tt HOMOTOPY-EQUIVALENCE}},
 whose definition is
 {\footnotesize\begin{verbatim}
@@ -589,11 +589,11 @@ whose definition is
 %\newpage
 This class has  $13$  slots:
 \begin{enumerate}
-\item {\tt lbcc}, the object of type {\tt chain complex}  representing the chain complex $C$ 
+\item {\tt lbcc}, the object of type {\tt chain complex}  representing the chain complex $C$
 (\b left \b bottom \b chain \b complex on the diagram).
-\item {\tt tcc},  the object of type {\tt chain complex}  representing the chain complex $\hat C$ 
+\item {\tt tcc},  the object of type {\tt chain complex}  representing the chain complex $\hat C$
 (\b top \b chain \b complex).
-\item {\tt rbcc}, the object of type {\tt chain complex}  representing the chain complex $EC$ 
+\item {\tt rbcc}, the object of type {\tt chain complex}  representing the chain complex $EC$
 (\b right \b bottom \b chain \b complex on the diagram).
 \item {\tt lf}, the object of type {\tt morphism}  representing the morphism $f$ of the (\b left) reduction $\rho_1$.
 \item {\tt lg}, the object of type {\tt morphism}  representing the morphism $g$ of the (\b left) reduction $\rho_1$.
@@ -613,12 +613,12 @@ prints a string like {\tt [K{\em n} Homotopy-Equivalence]}, where {\em n} is the
 \subsection {The function build-hmeq}
 
 To facilitate\index{function!{\tt build-hmeq}} the construction of instances of the
-{\tt HOMOTOPY-EQUIVALENCE} class, the software provides the function, (in fact a method),  {\tt build-hmeq} 
+{\tt HOMOTOPY-EQUIVALENCE} class, the software provides the function, (in fact a method),  {\tt build-hmeq}
 which may be used in the following ways:
 either with the two reductions $\rho_1$ and $\rho_2$ or explicitly with the morphisms.
-The selection of the adequate method is done by inspecting the first keyword, which is 
+The selection of the adequate method is done by inspecting the first keyword, which is
 {\tt :lrdct} in the first case and {\tt :lf} in the second one. In both cases
-the returned value is an instance of the class {\tt HOMOTOPY-EQUIVALENCE}. 
+the returned value is an instance of the class {\tt HOMOTOPY-EQUIVALENCE}.
 \vskip 0.35cm
 1) {\tt build-hmeq :lrdct} {\em lrdct} {\tt :rrdct} {\em rrdc} {\tt :orgn} {\em orgn} \hfill {\em [Method]}
 \vskip 0.35cm
@@ -664,14 +664,14 @@ is $n$. If it does not exist, return {\tt NIL}. \par}
 {\tt lbcc} {\em hmeq {\tt \&rest} args} \hfill {\em [Macro]} \par}
 {\leftskip=15mm
 With only one argument (a homotopy equivalence {\em hmeq}) this macro selects
-the left bottom chain complex of the homotopy equivalence. Otherwise, it applies  the differential 
+the left bottom chain complex of the homotopy equivalence. Otherwise, it applies  the differential
 of the left bottom chain complex of  {\em hmeq} on the arguments {\em args},
 (either {\em degree generator} or {\em cmb}).  \par}
 {\leftskip=5mm
 {\tt rbcc} {\em hmeq {\tt \&rest} args} \hfill {\em [Macro]} \par}
 {\leftskip=15mm
 With only one argument (a homotopy equivalence {\em hmeq}) this macro selects
-the right bottom chain complex of the homotopy equivalence. Otherwise, it applies  the differential 
+the right bottom chain complex of the homotopy equivalence. Otherwise, it applies  the differential
 of the right  bottom chain complex of  {\em hmeq} on the arguments {\em args},
 (either {\em degree generator} or {\em cmb}).  \par}
 {\leftskip=5mm
@@ -730,7 +730,7 @@ by the statement {\tt (trivial-rdct {\em chcm})}. \par}
 For\index{perturbation lemma} a good understanding of the lisp functions involved in the machinery in question,
 we recall the {\em perturbation lemma}\footnote{{\bf Ronald Brown}. {\em The twisted Eilenberg--Zilber theorem}.
 Celebrazioni Arch. Secolo XX Simp. Top., 1967, pp 34-37.}. In the basic (resp. trivial) perturbation lemma,
-the given perturbation concerns the {\bf top} (resp. {\bf bottom}) chain complex. 
+the given perturbation concerns the {\bf top} (resp. {\bf bottom}) chain complex.
 
 \begin{thr}
 {\em \bf (Basic perturbation lemma)} --- Let
@@ -747,7 +747,7 @@ $\rho'=(\hat{C}',C',f',g',h')$ can be constructed where:
 differential $d_{\hat{C}}$ by $(d_{\hat{C}}+\hat{\delta}),$
 
 \noindent 2) the new chain complex $C'$ is obtained from the chain complex $C$ only by
-replacing  the old differential $d_C$ by $(d_C + \delta),$ 
+replacing  the old differential $d_C$ by $(d_C + \delta),$
 with $\delta = f \circ {\hat \delta} \circ \phi \circ g =
                f \circ \psi \circ {\hat \delta} \circ g,$
 
@@ -757,7 +757,7 @@ with $\delta = f \circ {\hat \delta} \circ \phi \circ g =
 
 \noindent 5) $h'= \phi \circ h = h \circ \psi$,
 \end{quotation}
-with 
+with
 $$\phi=\sum_{i=0}^{\infty}{(-1)^i(h \circ  \hat{\delta})^i}$$
 and
 $$\psi=\sum_{i=0}^{\infty}{(-1)^i(\hat{\delta}\circ h)^i} = Id - {\hat \delta} \circ \phi \circ h,$$
@@ -777,7 +777,7 @@ Then a new reduction $\rho'=(\hat{C}',C',f',g',h')$ can be constructed where:
 differential $d_{\hat{C}}$ by $(d_{\hat{C}}+ g \circ {\check\delta} \circ f),$
 
 \noindent 2) the new chain complex $C'$ is obtained from the chain complex $C$ only by
-replacing  the old differential $d_C$ by $(d_C +{\check \delta}),$ 
+replacing  the old differential $d_C$ by $(d_C +{\check \delta}),$
 
 \noindent 3) $f'= f,$
 
@@ -791,48 +791,48 @@ replacing  the old differential $d_C$ by $(d_C +{\check \delta}),$
 
 The functions implementing the perturbation-lemma are
 actually the heart of the program. They allow us
-to implement the effective versions of the classical spectral sequences 
-(Serre, Eilenberg-Moore, ...). 
-\vskip 0.35cm 
+to implement the effective versions of the classical spectral sequences
+(Serre, Eilenberg-Moore, ...).
+\vskip 0.35cm
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt add} {\em rdct perturbation} \hfill {\em [Method]} \par}
-{\leftskip=15mm 
-Build a new reduction from the  object of type {\tt reduction}, {\em rdct} and 
-the  object of type {\tt morphism},  {\em perturbation}, 
-applying the formulas given in the perturbation lemma. In fact, this 
+{\leftskip=15mm
+Build a new reduction from the  object of type {\tt reduction}, {\em rdct} and
+the  object of type {\tt morphism},  {\em perturbation},
+applying the formulas given in the perturbation lemma. In fact, this
 method calls  one or the other of the two following functions according as the perturbation is on the top
 or on the bottom chain complex and returns the values of the called function. \par}
-{\leftskip=5mm 
-{\tt basic-perturbation-lemma} {\em reduction top-perturbation}\hfill {\em [Function]} \par} 
-{\leftskip=15mm 
+{\leftskip=5mm
+{\tt basic-perturbation-lemma} {\em reduction top-perturbation}\hfill {\em [Function]} \par}
+{\leftskip=15mm
 Return a double value: the perturbed reduction and the computed bottom-perturbation (a morphism)
 $f \circ {\hat \delta}\circ  \phi \circ g$. Of course, to avoid unuseful computations when the morphisms
 are effectively applied, the function takes in account the simplifications involved for instance when
 some morphisms are the null morphism. \par}
-{\leftskip=5mm 
-{\tt easy-perturbation-lemma} {\em reduction bottom-perturbation} \hfill {\em [Function]} \par} 
-{\leftskip=15mm 
+{\leftskip=5mm
+{\tt easy-perturbation-lemma} {\em reduction bottom-perturbation} \hfill {\em [Function]} \par}
+{\leftskip=15mm
 Return a double value: the perturbed reduction and the computed top-perturbation (a morphism)
 $g \circ {\check \delta} \circ f$. Of course, to avoid unuseful computation when the morphisms
 will be applied, the function takes in account the simplifications involved for instance when
 some morphisms are the null morphism. \par}
-{\leftskip=5mm 
-{\tt special-bpl} {\em reduction top-perturbation} \hfill {\em [Function]} \par} 
-{\leftskip=15mm 
+{\leftskip=5mm
+{\tt special-bpl} {\em reduction top-perturbation} \hfill {\em [Function]} \par}
+{\leftskip=15mm
 This function is analogous to {\tt basic-perturbation-lemma} and is used in some special cases
 when the morphism $g$ is invariant. \par}
-{\leftskip=5mm 
-{\tt bpl-*-sigma} {\em  homotopy perturbation} \hfill {\em [Function]} \par} 
-{\leftskip=15mm 
+{\leftskip=5mm
+{\tt bpl-*-sigma} {\em  homotopy perturbation} \hfill {\em [Function]} \par}
+{\leftskip=15mm
 Construct the principal series
 $\phi=\sum_{i=0}^{\infty}{(-1)^i(h \circ  \hat{\delta})^i}$ of the basic
 perturbation lemma. \par}
-{\leftskip=5mm 
-{\tt add} {\em  hmeq lb-perturbation} \hfill {\em [Method]} \par} 
-{\leftskip=15mm 
-Build a homotopy equivalence from the {\tt homotopy-equivalence} {\em hmeq} and 
-the {\tt morphism} {\em lb-perturbation}, a perturbation  of the differential  
+{\leftskip=5mm
+{\tt add} {\em  hmeq lb-perturbation} \hfill {\em [Method]} \par}
+{\leftskip=15mm
+Build a homotopy equivalence from the {\tt homotopy-equivalence} {\em hmeq} and
+the {\tt morphism} {\em lb-perturbation}, a perturbation  of the differential
 of the left bottom chain complex of {\em hmeq}. From {\em hmeq}:
 $$\diagram{
   & \hat{C} \cr
@@ -848,8 +848,8 @@ $$
 where the  construction steps are the following:
 \par}
 {\leftskip=20mm
--- The reduction $\rho'_1$ is computed with the  method {\tt add} for a reduction with arguments: 
-the left  reduction of {\em hmeq} and the perturbation {\em lb-perturbation}. 
+-- The reduction $\rho'_1$ is computed with the  method {\tt add} for a reduction with arguments:
+the left  reduction of {\em hmeq} and the perturbation {\em lb-perturbation}.
 The trivial perturbation lemma is applied.
 As a bonus, this returns also the top perturbation, say $\delta$ to be applied to $\hat{C}$.
 
@@ -885,7 +885,7 @@ shows how this perturbation has been propagated.
 
 \section {Bicones}
 
-Given\index{bicones} $3$ chain complexes $B$, $C$ and $D$, together with $2$ 
+Given\index{bicones} $3$ chain complexes $B$, $C$ and $D$, together with $2$
 chain homomorphisms $f_1$ and $f_2$ of degree $0$ (commuting with the differentials),
 as shown in the following diagram, a bicone on these chain complexes is a chain
 complex, $BCN(f_1,f_2)$ where the $n$-th chain group $[BCN(f_1,f_2)]$ is $B_n \oplus C_{n+1} \oplus D_n$.
@@ -894,7 +894,7 @@ $$
 \hspace{4pt}B \hspace{32pt} D \\
 \hspace{1pt} \raisebox{3pt}{$f_1$} \searrow \hspace{12pt}
              \swarrow \raisebox{3pt}{$f_2$} \\
-\hspace{30pt} C 
+\hspace{30pt} C
 \end{array}
 $$
 
@@ -907,7 +907,7 @@ by the list {\tt (:BcnB gb)} and printed as {\tt <BcnB gb>}. The symbols for $C$
 {\tt :BcnC} and {\tt :BcnD}. The $3$ macros {\tt bcnb}, {\tt bcnc} and {\tt bcnd} may be used to build
 such a generator. The building function for combinations,  {\tt cmbn}, may be used in the following way:
 {\footnotesize\begin{verbatim}
-(setf comb-bic (cmbn 3 2 (bcnb 'b1) 4 (bcnb 'b2) 6 (bcnb 'b3) 
+(setf comb-bic (cmbn 3 2 (bcnb 'b1) 4 (bcnb 'b2) 6 (bcnb 'b3)
                        3 (bcnc 'c1) 5 (bcnc 'c2) 7 (bcnd 'd1)))
 
 ----------------------------------------------------------------------{CMBN 3}
@@ -921,7 +921,7 @@ such a generator. The building function for combinations,  {\tt cmbn}, may be us
 
 (cmbn-list comb-bic)  ==>
 
-((2 :BCNB . B1) (4 :BCNB . B2) (6 :BCNB . B3) 
+((2 :BCNB . B1) (4 :BCNB . B2) (6 :BCNB . B3)
  (3 :BCNC . C1) (5 :BCNC . C2) (7 :BCND . D1))
 \end{verbatim}}
 
@@ -930,44 +930,44 @@ such a generator. The building function for combinations,  {\tt cmbn}, may be us
 \subsection {Useful functions and macros for bicones}
 
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt bcnb} {\em gnrt} \hfill {\em [Macro]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Build the representation of the generator {\em gnrt} belonging to the chain complex
-$B$. \par}{\leftskip=5mm 
+$B$. \par}{\leftskip=5mm
 {\tt bcnc} {\em gnrt} \hfill {\em [Macro]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Build the representation of the generator {\em gnrt} belonging to the chain complex
-$C$. \par}{\leftskip=5mm 
+$C$. \par}{\leftskip=5mm
 {\tt bcnd} {\em gnrt} \hfill {\em [Macro]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Build the representation of the generator {\em gnrt} belonging to the chain complex
 $D$. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt make-bicn-cmbn} {\em cmbnb cmbnc cmbnd} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Build a bicone combination from the $3$ combinations {\em cmbnb}, {\em cmbnc} and {\em cmbnd} belonging
 respectively and in that order to $B$, $C$ and $D$. The degrees of the combinations {\em cmbnb} and {\em cmbnd}
 must be the same, say $n$. The degree of {\em cmbnc} must be $n+1$. The degree of the new created combination
 is $n$. \par }
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt bicn-cmbn-cmbnb} {\em cmbn} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Extract from the bicone combination of degree $n$, {\em cmbn}, the combination relative to $B$ as a legal combination
 of degree $n$ in $B$. If there is no $B$-component, return the null combination of degree $n$. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt bicn-cmbn-cmbnc} {\em cmbn} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Extract from the bicone combination of degree $n$, {\em cmbn}, the combination relative to $C$ as a legal combination
-of degree $n+1$ in $C$. If there is no $C$-component, return the null combination of degree $n+1$. \par} 
-{\leftskip=5mm 
+of degree $n+1$ in $C$. If there is no $C$-component, return the null combination of degree $n+1$. \par}
+{\leftskip=5mm
 {\tt bicn-cmbn-cmbnd} {\em cmbn} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Extract from the bicone combination of degree $n$, {\em cmbn}, the combination relative to $D$ as a legal combination
 of degree $n$ in $D$. If there is no $D$-component, return the null combination of degree $n$. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt dispatch-bicn-cmbn} {\em cmbn} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Give the $3$-values result constitued by the $3$ combinations components of the bicone combination
 {\em cmbn}. These combinations are valid combinations in their respective chain complexes. \par}
 }
@@ -1050,24 +1050,24 @@ Give the $3$-values result constitued by the $3$ combinations components of the 
 
 \section {Construction of a bicone from 2 reductions.}
 
-From\index{bicones!construction} the slots of the respective chain complexes $B$, $C$ and $D$, it is possible to 
+From\index{bicones!construction} the slots of the respective chain complexes $B$, $C$ and $D$, it is possible to
 build the bicone chain complex. The $3$ essential functions are the following:
 \vskip 0.45cm
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt bicone-cmpr} {\em cmprb cmprc cmprd} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 From the $3$ comparison functions {\em cmprb}, {\em cmprc} and {\em cmprd}, build a
 comparison function adequate to compare the generators as represented in the bicone. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt bicone-basis} {\em basisb basisc basisd} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 From the $3$ basis function {\em basisb}, {\em basisc} and {\em basisd}, build a
 basis function for the bicone. If at least one of the chain complex component of
 the bicone is {\em locally effective}, the function returns the symbol {\tt :locally-effective}. \par}
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt bicone-intr-dffr } {\em cmprc dffrb dffrc dffrd f1 f2} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Define the differential in the bicone according to the formula:
 $$d(cb, cc, cd)= (d_B(cb), f_1(cb) + f_2(cd) - d_C(cc), d_D(cd)),$$
 where the notation is self explanatory. One sees that one needs the comparison operator
@@ -1079,16 +1079,16 @@ in which $C_1 = C_2$. It is possible to define a bicone, with the identification
 $\hat C_1=B, C_1=C_2=C, \hat C_2=D$. This is realised by the  following function:
 \vskip 0.35cm
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt bicone} {\em rdct1 rdct2} \hfill {\em [Function]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Build the bicone chain complex from the objects ot type {\tt reduction} {\em rdct1} and {\em rdct2}.
 The bicone is built with the following identification: $B$ is the top chain complex of {\em rdct1},
 $D$ is the top chain complex of {\em rdct2}. The bottom chain complexes of both {\em rdct1} and {\em rdct2}
 must be the same and $C$ is  that chain complex. Of course, both chain morphisms $f_1$ and
 $f_2$ are respectively the morphism $f$ of the reductions. The construction of the bicone is realised
-by a call to the building function {\tt build-chcm} using the $3$ functions {\tt bicone-cmpr}, 
-{\tt bicone-basis} and {\tt bicone-intr-dffr} with arguments coming from {\em rdct1} an {\em rdct2}. 
+by a call to the building function {\tt build-chcm} using the $3$ functions {\tt bicone-cmpr},
+{\tt bicone-basis} and {\tt bicone-intr-dffr} with arguments coming from {\em rdct1} an {\em rdct2}.
 The slot {\tt bsgn} (base point) is let undefined and the strategy is by combination. \par}
 
 \subsection* {Example}
@@ -1106,14 +1106,14 @@ defines an effective version of ${\cal C}_*(\Delta^n)$, so we may ask for the ba
                         (make-cmbn
                            :degr (1- degr)
                            :list (do ((rslt +empty-list+
-                                           (cons (cons sign 
+                                           (cons (cons sign
                                                       (append
                                                         (subseq gmsm 0 nark)
                                                         (subseq gmsm (1+ nark))))
                                                   rslt))
                                      (sign 1 (- sign))
                                      (nark 0 (1+ nark)))
-                                    ((> nark degr) rslt))))                                           
+                                    ((> nark degr) rslt))))
         :strt :gnrt
         :orgn `(Effective version of C_* delta ,dmns)))
 
@@ -1142,7 +1142,7 @@ defines an effective version of ${\cal C}_*(\Delta^n)$, so we may ask for the ba
 
 NIL
 \end{verbatim}}
-Using the function {\tt make-rdct} defined in previous example which builds a reduction between 
+Using the function {\tt make-rdct} defined in previous example which builds a reduction between
 $\Delta^m$ and $\Delta^n$, we may
 create a bicone chain complex with the function {\tt bicone} and ask for basis in some dimensions.
 {\footnotesize\begin{verbatim}
@@ -1152,15 +1152,15 @@ create a bicone chain complex with the function {\tt bicone} and ask for basis i
 
 (basis bic 0)  ==>
 
-(<BcnB (0)> <BcnB (1)> <BcnB (2)> <BcnB (3)> 
- <BcnC (0 1)> <BcnC (0 2)> <BcnC (1 2)> 
+(<BcnB (0)> <BcnB (1)> <BcnB (2)> <BcnB (3)>
+ <BcnC (0 1)> <BcnC (0 2)> <BcnC (1 2)>
  <BcnD (0)> <BcnD (1)> <BcnD (2)> <BcnD (3)> <BcnD (4)>)
 
 (basis bic 1)  ==>
 
-(<BcnB (0 1)> <BcnB (0 2)> <BcnB (1 2)> <BcnB (0 3)> <BcnB (1 3)> <BcnB (2 3)> 
- <BcnC (0 1 2)> 
- <BcnD (0 1)> <BcnD (0 2)> <BcnD (1 2)> <BcnD (0 3)> <BcnD (1 3)> <BcnD (2 3)> 
+(<BcnB (0 1)> <BcnB (0 2)> <BcnB (1 2)> <BcnB (0 3)> <BcnB (1 3)> <BcnB (2 3)>
+ <BcnC (0 1 2)>
+ <BcnD (0 1)> <BcnD (0 2)> <BcnD (1 2)> <BcnD (0 3)> <BcnD (1 3)> <BcnD (2 3)>
  <BcnD (0 4)> <BcnD (1 4)> <BcnD (2 4)> <BcnD (3 4)>)
 
 (basis bic 4)  ==>
@@ -1212,9 +1212,9 @@ A  & &  E \cr
 This is realized by the method {\tt cmps}.
 \vskip 0.35cm
 {\parindent=0mm
-{\leftskip=5mm 
+{\leftskip=5mm
 {\tt cmps} {\em hmeq1 hmeq2} \hfill {\em [Method]} \par}
-{\leftskip=15mm 
+{\leftskip=15mm
 Build a homotopy equivalence by composition of both homotopy equivalences {\em hmeq1}, {\em hmeq2}.
 The system controls the validity of the composition. \par}
 }
@@ -1224,7 +1224,7 @@ The system controls the validity of the composition. \par}
 Starting with a very simple chain complex and the trivial homotopy equivalence
 on the chain complex, we verify the correctness of various compositions.
 The chain complex {\tt c} has only one vertex {\tt (a)} in every dimension and the
-differential is the null morphism. 
+differential is the null morphism.
 {\footnotesize \begin{verbatim}
 (setf c (build-chcm
              :cmpr #'s-cmpr
@@ -1270,62 +1270,62 @@ of {\tt h2}. The combination {\tt *tc*} must belong to a bicone whereas
 
 (check-rdct)  ==>
 
-*TC* => 
+*TC* =>
 ----------------------------------------------------------------------{CMBN 3}
 <1 * <BcnB A>>
 <10 * <BcnC A>>
 <100 * <BcnD A>>
 ------------------------------------------------------------------------------
 
-*BC* => 
+*BC* =>
 ----------------------------------------------------------------------{CMBN 3}
 <1 * A>
 ------------------------------------------------------------------------------
 
 Checking *TDD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 1}
 ------------------------------------------------------------------------------
 
 Checking *BDD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 1}
 ------------------------------------------------------------------------------
 
 Checking *DF-FD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 2}
 ------------------------------------------------------------------------------
 \end{verbatim}}
 \newpage
 {\footnotesize \begin{verbatim}
 Checking *DG-GD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 2}
 ------------------------------------------------------------------------------
 
 Checking *ID-FG* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 3}
 ------------------------------------------------------------------------------
 
 Checking *ID-GF-DH-HD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 3}
 ------------------------------------------------------------------------------
 
 Checking *HH* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 5}
 ------------------------------------------------------------------------------
 
 Checking *FH* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 4}
 ------------------------------------------------------------------------------
 
 Checking *HG* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 4}
 ------------------------------------------------------------------------------
 
@@ -1337,7 +1337,7 @@ Result:
 
 (check-rdct)  ==>
 
-*TC* => 
+*TC* =>
 ----------------------------------------------------------------------{CMBN 3}
 <1 * <BcnB A>>
 <10 * <BcnC A>>
@@ -1346,7 +1346,7 @@ Result:
 \end{verbatim}}
 \newpage
 {\footnotesize \begin{verbatim}
-*BC* => 
+*BC* =>
 ----------------------------------------------------------------------{CMBN 3}
 <1 * A>
 ------------------------------------------------------------------------------
@@ -1356,10 +1356,10 @@ Checking *TDD* = 0
 ----------------------------------------------------------------------{CMBN 2}
 ------------------------------------------------------------------------------
 
-............ all results NULL........... 
+............ all results NULL...........
 
 Checking *HG* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 4}
 ------------------------------------------------------------------------------
 
@@ -1374,7 +1374,7 @@ is a little more complicated because the chain complexes $B$ and $D$  are themse
 
 (setf *tc* (cmbn 3 1 (bcnB (bcnB 'a)) 10 (bcnB (bcnC 'a)) 100 (bcnB (bcnD 'a))
                       1000 (bcnC 'a)
-                     10000 (bcnD (bcnB 'a)) 5234 (bcnD (bcnC 'a)) 
+                     10000 (bcnD (bcnB 'a)) 5234 (bcnD (bcnC 'a))
                        223 (bcnD (bcnD 'a))))  ==>
 ----------------------------------------------------------------------{CMBN 3}
 <1 * <BcnB <BcnB A>>>
@@ -1392,7 +1392,7 @@ is a little more complicated because the chain complexes $B$ and $D$  are themse
 
 (check-rdct)  ==>
 
-*TC* => 
+*TC* =>
 ----------------------------------------------------------------------{CMBN 3}
 <1 * <BcnB <BcnB A>>>
 <10 * <BcnB <BcnC A>>>
@@ -1403,20 +1403,20 @@ is a little more complicated because the chain complexes $B$ and $D$  are themse
 <223 * <BcnD <BcnD A>>>
 ------------------------------------------------------------------------------
 
-*BC* => 
+*BC* =>
 ----------------------------------------------------------------------{CMBN 3}
 <1 * A>
 ------------------------------------------------------------------------------
 
 Checking *TDD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 1}
 ------------------------------------------------------------------------------
 
 ............ all results NULL...........
 
 Checking *HG* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 4}
 ------------------------------------------------------------------------------
 
@@ -1429,7 +1429,7 @@ Result:
 (check-rdct)  ==>
 
 
-*TC* => 
+*TC* =>
 ----------------------------------------------------------------------{CMBN 3}
 <1 * <BcnB <BcnB A>>>
 <10 * <BcnB <BcnC A>>>
@@ -1440,20 +1440,20 @@ Result:
 <223 * <BcnD <BcnD A>>>
 ------------------------------------------------------------------------------
 
-*BC* => 
+*BC* =>
 ----------------------------------------------------------------------{CMBN 3}
 <1 * A>
 ------------------------------------------------------------------------------
 
 Checking *TDD* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 1}
 ------------------------------------------------------------------------------
 
 ............ all results NULL...........
 
 Checking *HG* = 0
-Result: 
+Result:
 ----------------------------------------------------------------------{CMBN 4}
 ------------------------------------------------------------------------------
 
@@ -1466,14 +1466,3 @@ Result:
 {\tt effective-homology.lisp}, {\tt cones.lisp}.
 \par
 [{\tt classes.lisp }, {\tt macros.lisp}, {\tt various.lisp}].
-
-
-
-
-
-
-
-
-
-
-

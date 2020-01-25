@@ -772,7 +772,7 @@ cochain $t$.
 \section {The essential contraction}
 
 It is known that if $B$ is a reduced simplicial set, the space $B \times_\tau GB$ is
-contractible. So it is possible to build a reduction of this space over $\mathbb{Z}$.
+contractible. So it is possible to build a reduction of this space over $\Z$.
 This reduction depends of the important contraction
 $$\chi_{\times\tau}:  {{\cal C}_*(B) \times_\tau {\cal C}_*(GB)} \longrightarrow
                       {{\cal C}_*(B) \times_\tau {\cal C}_*(GB)}, $$
@@ -790,7 +790,7 @@ there is also  an induced contraction
 $$\chi_{\otimes t}:  {{\cal C}_*(B) \otimes_t {\cal C}_*(GB)} \longrightarrow
                       {{\cal C}_*(B) \otimes_t {\cal C}_*(GB)}, $$
 defined by $\chi_{\otimes t}= f \circ \chi_{\times\tau} \circ g$.
-This implies that the twisted tensor product is also contractible over $\mathbb{Z}$.
+This implies that the twisted tensor product is also contractible over $\Z$.
 \par
 The two functions of {\tt Kenzo} for this construction are:
 \vskip 0.35cm
@@ -1227,7 +1227,7 @@ Then, we do the same test for the homotopy operator $\chi_{\otimes t}$.
 Note nevertheless that the relation is not satisfied for the base generator
 $*\otimes *$, namely the tensor product of both base generators.
 This is due to the fact that both contractions,  $\chi_{\times t}$ and  $\chi_{\otimes t}$,
-correspond to  reductions over  $\mathbb{Z}$ and not on $0$.
+correspond to  reductions over  $\Z$ and not on $0$.
 {\footnotesize\begin{verbatim}
 (setf gnrt-0 (tnpr 0 1 0 +null-loop+))  ==>
 
@@ -1239,7 +1239,7 @@ correspond to  reductions over  $\mathbb{Z}$ and not on $0$.
 <1 * <TnPr 1 <<Loop>>>>
 ------------------------------------------------------------------------------
 \end{verbatim}}
-Let us build, for instance, the reduction of the twisted tensor product over $\mathbb{Z}$ and check it.
+Let us build, for instance, the reduction of the twisted tensor product over $\Z$ and check it.
 In that case, the two homomorphisms
 $f$ and $g$ are respectively the {\em augmentation} and {\em coaugmentation}
 morphisms.
@@ -1248,10 +1248,10 @@ $$
 {{\cal C}_*(B) \otimes_t {\cal C}_*(GB)} & \stackrel{\chi_{\otimes t}}{\longrightarrow} &
   {}^s{{\cal C}_*(B) \otimes_t {\cal C}_*(GB)} \cr
  {\scriptstyle aug} \downarrow \uparrow {\scriptstyle coaug}  \cr
- {{\cal C}_*(\mathbb{Z})} \cr
+ {{\cal C}_*(\Z)} \cr
 }
 $$
-We recall that, the unit chain complex corresponding to $\mathbb{Z}$ is built by the function
+We recall that, the unit chain complex corresponding to $\Z$ is built by the function
 {\tt z-chcm}. The unique generator in degree $0$ is {\tt :z-gnrt}.
 {\footnotesize\begin{verbatim}
 (setf aug (build-mrph

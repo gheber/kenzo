@@ -125,8 +125,8 @@ This construction is known as the Whitehead tower.
 \subsection* {An important remark}
 
 In this version of Kenzo, only the case where the first non--null
-homology group (in non--null dimension) is $\mathbb{Z}$ or $\mathbb{Z}/{2 \mathbb{Z}}$ can be processed; however if this
-homology group is a direct sum of several copies of $\mathbb{Z}$ or $\mathbb{Z}/{2 \mathbb{Z}}$, then the corresponding
+homology group (in non--null dimension) is $\Z$ or $\Z/{2 \Z}$ can be processed; however if this
+homology group is a direct sum of several copies of $\Z$ or $\Z/{2 \Z}$, then the corresponding
 stage of the Whitehead tower may also be constructed step by step.
 \vskip 0.35cm
 {\parindent=0mm
@@ -137,17 +137,17 @@ Return a ``fundamental'' cohomology class, more precisely a cocycle $\chi$ defin
 The first argument {\em chcm} must be a chain complex $C_*$ with effective homology; in particular,
 an effective chain complex $EC_*$ is a by--product of the machine object $C_*$. The second argument ``{\em first}''
 is an integer $n$, namely the first non--null dimension from which the chain complex
-{\em chcm} has a non--null homology group, which {\bf must be isomorphic to $\mathbb{Z}$} or $\mathbb{Z}/{2 \mathbb{Z}}$.
+{\em chcm} has a non--null homology group, which {\bf must be isomorphic to $\Z$} or $\Z/{2 \Z}$.
 The reader may be amazed that this argument ``{\em first}'' must be provided, since it is  a consequence
 of the given $C_*$. But in fact, the same function {\tt chml-class} may also be used in different contexts, for example,
 the Postnikov tower; in such a case, the argument {\em first} is not redundant. The returned cocycle $\chi$
-is in any case a chain complex morphism $\chi: EC_* \longrightarrow \mathbb{Z}$, where $\mathbb{Z}$ is the unit chain complex
+is in any case a chain complex morphism $\chi: EC_* \longrightarrow \Z$, where $\Z$ is the unit chain complex
 created by the function {\tt z-chcm}. The degree of the morphism is $- n$.
 It is important to note that  the chain complex involved in the source of the morphism
 is the {\bf effective} chain complex of the homotopy equivalence value of the slot {\tt efhm} of
 the object {\em chcm}. See the section {\em The general method for computing homology} in the Homology chapter.
-Finally, if $H_n(C_*)=\mathbb{Z}/{2 \mathbb{Z}}$, the actual cohomology class hoped by the user is the composition
-$p \circ \chi$, where $p$ is the canonical projection $\mathbb{Z} \longrightarrow \mathbb{Z}/{2 \mathbb{Z}}$. But nevertheless,
+Finally, if $H_n(C_*)=\Z/{2 \Z}$, the actual cohomology class hoped by the user is the composition
+$p \circ \chi$, where $p$ is the canonical projection $\Z \longrightarrow \Z/{2 \Z}$. But nevertheless,
 the {\tt chml-clss} lisp function returns $\chi$ and not $p \circ \chi$.
 \par}
 {\leftskip=5mm
@@ -156,7 +156,7 @@ the {\tt chml-clss} lisp function returns $\chi$ and not $p \circ \chi$.
 Return a fibration  over the simplicial set {\em smst} (the first argument), canonically associated
 to the ``cohomology class'' {\em chml-clss} (the second argument). The simplicial set $X$, i.e. {\em smst}, is
 reduced; its homotopy groups $\pi_r(X)$ are null for $0 \leq r \leq n-1$. The first non null homotopy group
-$\pi_n(X)$ is assumed to be $\mathbb{Z}$, i.e. $\pi_n(X)= H_n(X)= \mathbb{Z}$. The previous function {\tt chml-clss}, in
+$\pi_n(X)$ is assumed to be $\Z$, i.e. $\pi_n(X)= H_n(X)= \Z$. The previous function {\tt chml-clss}, in
 this situation, returns a cocycle $\chi$, which may be used as the second argument {\em chml-clss} of the function
 {\tt z-whitehead}. The integer  $n$ is determined by the absolute value of the degree of the
 cohomology class {\em chcm-clss}. As explained in the previous section, a canonical fibration
@@ -170,12 +170,12 @@ in an efficient way the lisp function implementing the twisting operator $\tau \
 Return a fibration  over the simplicial set {\em smst} (the first argument), canonically associated
 to the ``cohomology class'' {\em chml-clss} (the second argument). The simplicial set $X$, i.e. {\em smst}, is
 reduced; its homotopy groups $\pi_r(X)$ are null for $0 \leq r \leq n-1$. The first non null homotopy group
-$\pi_n(X)$ is assumed to be $\mathbb{Z}/2\mathbb{Z}$, i.e. $\pi_n(X)= H_n(X)= \mathbb{Z}/2\mathbb{Z}$. The previous function {\tt chml-clss}, in
+$\pi_n(X)$ is assumed to be $\Z/2\Z$, i.e. $\pi_n(X)= H_n(X)= \Z/2\Z$. The previous function {\tt chml-clss}, in
 this situation, returns a ``cocycle'' $\chi$, which may be used as the second argument {\em chml-clss} of the function
 {\tt z2-whitehead}. The integer $n$ is determined by the absolute value of the degree of the
-cohomology class {\em chcm-clss}. In this $\mathbb{Z}/2\mathbb{Z}$ case, $\chi$ is even not a cocycle. The actual cocycle is
+cohomology class {\em chcm-clss}. In this $\Z/2\Z$ case, $\chi$ is even not a cocycle. The actual cocycle is
 obtained by the composition $p \circ \chi$, $p$ being the canonical projection
-$\mathbb{Z} \longrightarrow \mathbb{Z}/{2 \mathbb{Z}}$. But the user is not concerned by these technicalities, because the function
+$\Z \longrightarrow \Z/{2 \Z}$. But the user is not concerned by these technicalities, because the function
 {\tt z2-whitehead} makes itself the necessary conversion. The slot {\tt sintr} of the
 fibration is set by the internal function {\tt z2-whitehead-sintr} which builds
 in an efficient way the lisp function implementing the twisting operator $\tau \circ \varphi_\chi$.
@@ -184,9 +184,9 @@ in an efficient way the lisp function implementing the twisting operator $\tau \
 
 \subsection* {Examples}
 
-Let us retrieve some known facts about $S^3$, in particular $\pi_4(S^3) \simeq \mathbb{Z}/{2 \mathbb{Z}}$.
+Let us retrieve some known facts about $S^3$, in particular $\pi_4(S^3) \simeq \Z/{2 \Z}$.
 We follow the theoritical method exposed above, namely  build the fibration
-$$  K(\mathbb{Z},2) \quad \hookrightarrow\quad  S^3 \times_{\tau_\chi} K(\mathbb{Z},2) \hskip 1.2em
+$$  K(\Z,2) \quad \hookrightarrow\quad  S^3 \times_{\tau_\chi} K(\Z,2) \hskip 1.2em
     \longrightarrow \hskip -1.2em \longrightarrow     \quad S^3,$$
 and get the homology group in dimension $4$ of the total space.
 {\footnotesize\begin{verbatim}
@@ -242,9 +242,9 @@ Homology in dimension 5 :
 
 ---done---
 \end{verbatim}}
-Let us show a similar example with the space $Moore(2,4)$. As $H_4 \simeq \mathbb{Z}/{2 \mathbb{Z}}$, the function
+Let us show a similar example with the space $Moore(2,4)$. As $H_4 \simeq \Z/{2 \Z}$, the function
 for building the fibration is {\tt z2-whitehead}.
-We verify that $\pi_5(Moore(2,4))\simeq \mathbb{Z}/{2 \mathbb{Z}}$
+We verify that $\pi_5(Moore(2,4))\simeq \Z/{2 \Z}$
 {\footnotesize\begin{verbatim}
 (setf m24 (moore 2 4)) ==>
 
@@ -330,7 +330,7 @@ Component Z/2Z
 ---done---
 \end{verbatim}}
 
-We may even verify that, up to $9$, the homotopy groups of the classifying group $K(\mathbb{Z},5)$, for instance,
+We may even verify that, up to $9$, the homotopy groups of the classifying group $K(\Z,5)$, for instance,
 are null except $\pi_5$. This is a far-fetched method to verify this well known result, but
 it proves that the software is coherent.
 {\footnotesize\begin{verbatim}

@@ -29,7 +29,7 @@ $\eta$ represents a sequence (possibly the void one) of degeneracy operators
 applied coherently upon some element of ${\cal G}_k$, for $k\leq i$. For instance $[\eta g]_1$
 can be $\eta_0 g_0$, i.e. the $0$--degeneracy of the base point and $[\eta g]_2$ can be
 can be $\eta_1\eta_0 g_0$. To be more explicit, let us take the Abelian simplicial group
-$K(\mathbb{Z}_2, 1)$ (see the simplicial groups chapter), then some elements of the basis in dimension $4$ of
+$K(\Z_2, 1)$ (see the simplicial groups chapter), then some elements of the basis in dimension $4$ of
 its classifying space are, for instance:
 {\footnotesize\begin{verbatim}
 <<GBar<- 3><- 2><- 1><- 0>>>
@@ -120,10 +120,10 @@ defining the laws of this new group from the corresponding laws of {\em A-smgr}.
 
 \section {Eilenberg-Mac Lane spaces $K(\pi,n)$}
 
-We\index{$K(\pi,n)$} have already described $K(\mathbb{Z},1)$ and $K(\mathbb{Z}_2,1)$ in the chapter on simplicial groups.
-This section gives some complements about the construction of $K(\mathbb{Z},n)$ and $K(\mathbb{Z}_2,n)$. The trivial case
+We\index{$K(\pi,n)$} have already described $K(\Z,1)$ and $K(\Z_2,1)$ in the chapter on simplicial groups.
+This section gives some complements about the construction of $K(\Z,n)$ and $K(\Z_2,n)$. The trivial case
 for $n=0$ is not implemented in {\tt Kenzo}. For $n > 1$, these simplicial groups
-are built recursively as the classifying spaces of $K(\mathbb{Z},n-1)$ and $K(\mathbb{Z}_2,n-1)$, respectively, as shown
+are built recursively as the classifying spaces of $K(\Z,n-1)$ and $K(\Z_2,n-1)$, respectively, as shown
 in the following description:
 \par
 \vskip 0.40cm
@@ -131,7 +131,7 @@ in the following description:
 {\leftskip=5mm
 {\tt k-z} {\em n} \hfill {\em [Function]} \par}
 {\leftskip=15mm
-Build $K(\mathbb{Z},n)$ recursively from $K(\mathbb{Z},n-1)$. If $n=1$, return $K(\mathbb{Z},1)$
+Build $K(\Z,n)$ recursively from $K(\Z,n-1)$. If $n=1$, return $K(\Z,1)$
 {\footnotesize\begin{verbatim}
      (defun K-Z (n)
         (the ab-simplicial-group
@@ -143,7 +143,7 @@ Build $K(\mathbb{Z},n)$ recursively from $K(\mathbb{Z},n-1)$. If $n=1$, return $
 {\leftskip=5mm
 {\tt k-z2} {\em n} \hfill {\em [Function]} \par}
 {\leftskip=15mm
-Build $K(\mathbb{Z}_2,n)$ recursively from $K(\mathbb{Z}_2,n-1)$. If $n=1$, return $K(\mathbb{Z}_2,1)$
+Build $K(\Z_2,n)$ recursively from $K(\Z_2,n-1)$. If $n=1$, return $K(\Z_2,1)$
 {\footnotesize\begin{verbatim}
      (defun K-Z2 (n)
         (the ab-simplicial-group
@@ -153,14 +153,14 @@ Build $K(\mathbb{Z}_2,n)$ recursively from $K(\mathbb{Z}_2,n-1)$. If $n=1$, retu
 \end{verbatim}}
 \par}}
 These spaces have an effective homology which is computed via a {\em search-efhm} method (described in a next chapter).
-For the case $n=1$, we may recall here that $K(\mathbb{Z},1)$, though being locally effective,
+For the case $n=1$, we may recall here that $K(\Z,1)$, though being locally effective,
 has the homology of $S^1$. The  {\em search-efhm} method applied to this chain complex does the following:  a reduction
-between $K(\mathbb{Z},1)$ and the chain complex {\tt circle} (described in the chain complex chapter) is
+between $K(\Z,1)$ and the chain complex {\tt circle} (described in the chain complex chapter) is
 built using the function {\tt kz1-rdct} and the homotopy equivalence, value of the slot {\tt efhm}, is
-built between this reduction and the trivial reduction of $K(\mathbb{Z},1)$ upon itself.\par
-On the other hand, $K(\mathbb{Z},2)$ has a very simple finite basis in every dimension (see $\R$-projective
+built between this reduction and the trivial reduction of $K(\Z,1)$ upon itself.\par
+On the other hand, $K(\Z,2)$ has a very simple finite basis in every dimension (see $\R$-projective
 spaces), so its homology is computed directly from its basis. The  homotopy
-equivalence, value of the slot {\tt efhm}, is the trivial homotopy equivalence of $K(\mathbb{Z},2)$ upon
+equivalence, value of the slot {\tt efhm}, is the trivial homotopy equivalence of $K(\Z,2)$ upon
 itself.
 \newpage
 
@@ -168,7 +168,7 @@ itself.
 
 Let us begin by showing some examples of gbars built  from various
 initial simplicial groups. In the second statement, the initial simplicial group
-is $K(\mathbb{Z}_2, 1)$, in the third, it is $\Omega({\mathit Moore}(2,2))$. We recall that
+is $K(\Z_2, 1)$, in the third, it is $\Omega({\mathit Moore}(2,2))$. We recall that
 in the call of the function {\tt gbar}, the degeneracy operators appear as integers,
 according to the general rule in {\tt Kenzo}, but the printed result shows in clear
 the sequence of $\eta_i$'s.
@@ -208,7 +208,7 @@ that the face function returns an abstract simplex.
 <AbSm - <<GBar<- <<Loop[N3\2]>>><- <<Loop[M2]>>><- <<Loop>>>>>>
 <AbSm - <<GBar<- <<Loop[N3]>>><- <<Loop[M2]>>><- <<Loop>>>>>>
 \end{verbatim}}
-Let us work now, directly with the classifying space of $K(\mathbb{Z}_2, 1)$.
+Let us work now, directly with the classifying space of $K(\Z_2, 1)$.
 {\footnotesize\begin{verbatim}
 (setf cs-kz21 (classifying-space (k-z2-1)))  ==>
 
@@ -252,7 +252,7 @@ Let us work now, directly with the classifying space of $K(\mathbb{Z}_2, 1)$.
 <AbSm 2 <<GBar<- 1><- 0>>>>
 <AbSm - <<GBar<- 2><- 1><- 0>>>>
 \end{verbatim}}
-Let us test the law group with $K(\mathbb{Z}, 1)$. We recall the simplices
+Let us test the law group with $K(\Z, 1)$. We recall the simplices
 of  this Abelian simplicial group are represented as lists of integers.
 The functions {\tt grml} and {\tt grin} accept also the gbars under the form
 of abstract simplices (see the last statement).
@@ -284,7 +284,7 @@ of abstract simplices (see the last statement).
 
 <AbSm - <<GBar<- (1 2)><0 NIL><- NIL>>>>
 \end{verbatim}}
-As $K(\mathbb{Z}, 1)$ and $K({\Z_2}, 1)$ are Abelian simplicial groups, we may iterate the classifying
+As $K(\Z, 1)$ and $K({\Z_2}, 1)$ are Abelian simplicial groups, we may iterate the classifying
 space construction and retrieve some known results.
 {\footnotesize\begin{verbatim}
 (cat-init)    ;; re-initialization

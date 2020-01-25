@@ -25,7 +25,7 @@ will be written $a^k$ and a sequence of $k$ times the same letter $a^{-1}$,
 $a^{-k}$. So a word
 formed from letters by the  concatenation product together with the cancellation rule,
 will be written under the reduced form:
-$$a_1^{n_1}a_2^{n_2}\ldots a_k^{n_k},\ n_i\in \mathbb{Z}^*,\ a_i\in {\cal A},\  a_i \not= a_{i+1}$$
+$$a_1^{n_1}a_2^{n_2}\ldots a_k^{n_k},\ n_i\in \Z^*,\ a_i\in {\cal A},\  a_i \not= a_{i+1}$$
 and its inverse is
 $$a_k^{-n_k}\ldots a_2^{-n_2}a_1^{-n_1}.$$
 After this r\'esum\'e, let $X$ be a reduced simplicial set (i.e. having only one $0$--simplex,
@@ -73,7 +73,7 @@ the realization $|GX|$ of $GX$ have the same  homotopy type.
 \section {Representation of letters and words}
 
 In the system, the chosen representation for letters and words follows the very definition
-of the free group $\mathbb{Z}^{*X_{n+1}^+}$. Here, a letter is a generator of $GX_n$ i.e. an {\bf abstract simplex}
+of the free group $\Z^{*X_{n+1}^+}$. Here, a letter is a generator of $GX_n$ i.e. an {\bf abstract simplex}
 $\sigma$ of $X^+_{n+1}$.
 A word will be implemented  as a sequence of such letters to a certain power (including 1).
 The chosen terminology is the following:
@@ -237,7 +237,7 @@ by the positive integers. \par}
 <<Loop [2-1-0 P\2] [5-4-3-2-1 Q\5]>>
 \end{verbatim}}
 
-Let us consider now a true reduced simplicial set, namely $Moore(\mathbb{Z}/{2\mathbb{Z}}, 3)$,
+Let us consider now a true reduced simplicial set, namely $Moore(\Z/{2\Z}, 3)$,
 whose structure is shown using the function {\tt show-structure} defined in the Simplicial Sets chapter.
 {\footnotesize\begin{verbatim}
 (setf moore23 (moore 2 3)) ==>
@@ -269,7 +269,7 @@ Dimension = 4 :
                 Faces : (<AbSm - M3> <AbSm 2-1-0 *>
                          <AbSm - M3> <AbSm 2-1-0 *> <AbSm 2-1-0 *>)
 \end{verbatim}}
-Let us build now $\Omega^1(Moore(\mathbb{Z}/{2\mathbb{Z}}, 3))$ and ask for faces of some loops.
+Let us build now $\Omega^1(Moore(\Z/{2\Z}, 3))$ and ask for faces of some loops.
 The user will note that the function face admits either {\tt LOOP} type objects or
 {\tt ABSM} type objects (normalized loop) but always returns normalized loops, i.e.
 an abstract simplex, according to the normal behaviour of the face function in a

@@ -40,7 +40,7 @@ to build a simplicial morphism. The source (keyword {\tt :sorc}) is the base spa
 set, the target (keyword {\tt :trgt}) is the fiber space, a simplicial group. The degree is $-1$ and
 the morphism (keyword {\tt :sintr}) is the internal lisp function implementing $\tau$. See the example
 below, where $\tau$ is a simple twisting operator, applying in particular the only (geometrical) simplex
-of degree $2$  of $S^2$ upon the bar object  $[1] \in (K(\mathbb{Z}_2,1))_1$. \par
+of degree $2$  of $S^2$ upon the bar object  $[1] \in (K(\Z_2,1))_1$. \par
 In {\tt Kenzo}, the type {\tt FIBRATION} is defined. An object of this type must be of type
 {\tt SIMPLICIAL-MRPH}, the degree of the corresponding morphism  being  $-1$. To apply the morphism,
 one uses the well known macro {\tt ?} or the special macro {\tt tw-a-sintr3}.
@@ -223,8 +223,8 @@ Homology in dimension 7 :
 
 Component Z/4Z
 \end{verbatim}}
-In the following example, we take $K(\mathbb{Z},1)$ and build a similar twisting o\-pe\-ra\-tor. Note
-that in $(K(\mathbb{Z},1))_1$, the bar object $[1]$ is represented as {\tt (1)} whereas in $K(\mathbb{Z}_2,1)$ it
+In the following example, we take $K(\Z,1)$ and build a similar twisting o\-pe\-ra\-tor. Note
+that in $(K(\Z,1))_1$, the bar object $[1]$ is represented as {\tt (1)} whereas in $K(\Z_2,1)$ it
 is {\tt 1}. In this case, it is known that the total space is a model of the sphere $S^3$
 (Hopf fibration - see below).
 {\footnotesize\begin{verbatim}
@@ -324,7 +324,7 @@ Hopf fibrations\index{fibrations! of Hopf}. The lisp definition is the following
 \end{verbatim}}
 In the definition of the lisp function for the slot {\tt sintr}, we see that the simplicial morphism
 applies in particular the only geometric simplex in dimension $2$ of $S^2$ onto the bar object
-$[n] \in (K(\mathbb{Z},1))_1$. If $n=0$, this is $\eta_0 [\ ]$, i.e. the $0$--degeneracy of the base point
+$[n] \in (K(\Z,1))_1$. If $n=0$, this is $\eta_0 [\ ]$, i.e. the $0$--degeneracy of the base point
 {\tt NIL}. We give some examples of some fibrations and of the corresponding total spaces in function of the
 parameter {\tt n}. First we generate $4$ fibrations and apply the twisting operator
 on the geometrical simplex {\tt s2}.

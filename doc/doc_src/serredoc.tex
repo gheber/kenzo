@@ -178,7 +178,7 @@ cannot compute the homology.
 We begin by some examples similar to examples that we have seen in the fibrations chapter.
 For the user, the delicate point is to write in Lisp a correct twisting operator. There is no check
 in this version of {\tt Kenzo} for the coherency of the twisting operator. In the first example
-we define a fibration $\tau: S^2 \rightarrow K(\mathbb{Z},1)$ with $\tau(s2)= (2)$, then we build the
+we define a fibration $\tau: S^2 \rightarrow K(\Z,1)$ with $\tau(s2)= (2)$, then we build the
 total space of the fibration, namely $P^3{\R}$, and we compute some known homology groups.
 {\footnotesize\begin{verbatim}
 (setf sph2 (sphere 2))  ==>
@@ -315,7 +315,7 @@ groups. First, the function {\tt echcm} selects the {\bf effective} chain comple
 equivalence, value of the slot {\tt efhm} of the simplicial set {\tt total-17}, and we may
 print some basis of this chain complex. In fact, all basis in dimension above $3$ are null.
 The presence of the symbol {\tt S1} is due to the fact that the effective chain complex
-used for the homology of $K(\mathbb{Z},1)$ is the circle (see the classifying spaces chapter).
+used for the homology of $K(\Z,1)$ is the circle (see the classifying spaces chapter).
 {\footnotesize\begin{verbatim}
 (setf echcm (echcm total-17))  ==>
 
@@ -334,15 +334,15 @@ The resulting homotopy equivalence built by the system, may be summarized
 by the diagram:
 
 $$\diagram{
-  &\widehat{S^2\times_\tau K(\mathbb{Z},1)} &    \cr
+  &\widehat{S^2\times_\tau K(\Z,1)} &    \cr
  f\swarrow\nearrow & & \searrow\nwarrow g \cr
-S^2\times_\tau K(\mathbb{Z},1) & & [K205\, Chain\, Complex] \cr}
+S^2\times_\tau K(\Z,1) & & [K205\, Chain\, Complex] \cr}
 $$
 
 where {\em f} and {\em g} are respectively the {\em descending} and {\em ascending}
 morphisms of the left and right reductions of the homotopy equivalence. We recall that
 these morphisms are obtained respectively by the functions {\tt lf} and {\tt rg}. We may
-compose these morphisms to create a morphism {\tt fg} from $[K205]$ to $S^2\times_\tau K(\mathbb{Z},1)$ and
+compose these morphisms to create a morphism {\tt fg} from $[K205]$ to $S^2\times_\tau K(\Z,1)$ and
 see how it acts on the basis  elements in dimension $1$ and $2$:
 {\footnotesize\begin{verbatim}
 (setf fg (cmps (lf (efhm total-17)) (rg (efhm total-17))))  ==>
@@ -385,7 +385,7 @@ see how it acts on the basis  elements in dimension $1$ and $2$:
 <-1 * <CrPr 1-0 * - (1 16)>>
 ------------------------------------------------------------------------------
 \end{verbatim}}
-The boundary of this combination in $S^2\times_\tau K(\mathbb{Z},1)$ is
+The boundary of this combination in $S^2\times_\tau K(\Z,1)$ is
 {\footnotesize\begin{verbatim}
 (? total-17 *)
 
