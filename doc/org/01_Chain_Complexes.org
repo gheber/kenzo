@@ -11,15 +11,7 @@ printed. This is useful, for example, when evaluating forms interactively via
 =C-c C-c=.
 
 #+BEGIN_SRC lisp :results silent
-(defparameter *echo* t)
-
-(defmacro ==> (&rest body)
-  `(progn
-     (when *echo*
-       (pprint (quote ,@body))
-       (pprint '==>))
-     (pprint ,@body)
-     (terpri)))
+(load "common.lisp")
 #+END_SRC
 
 #+BEGIN_SRC lisp

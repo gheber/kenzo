@@ -127,7 +127,7 @@ W
 ==>
 #<FUNCTION (LAMBDA (DMN)
              :IN
-             "/home/gerd/GitHub/kenzo/doc/org/01_Chain_Complexes.lisp") {52E7495B}>
+             "/home/gerd/GitHub/kenzo/doc/org/01_Chain_Complexes.lisp") {52E74A2B}>
 
 (DEF DIABOLO-BSPN 'S0)
 ==>
@@ -144,7 +144,7 @@ S0
 ==>
 #<FUNCTION (LAMBDA (DMN GNR)
              :IN
-             "/home/gerd/GitHub/kenzo/doc/org/01_Chain_Complexes.lisp") {52E74ACB}>
+             "/home/gerd/GitHub/kenzo/doc/org/01_Chain_Complexes.lisp") {52E74B9B}>
 
 (DEF DIABOLO-STRT :GNRT)
 ==>

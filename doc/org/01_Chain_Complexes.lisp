@@ -1,12 +1,4 @@
-(defparameter *echo* t)
-
-(defmacro ==> (&rest body)
-  `(progn
-     (when *echo*
-       (pprint (quote ,@body))
-       (pprint '==>))
-     (pprint ,@body)
-     (terpri)))
+(load "common.lisp")
 
 (ql:quickload "kenzo")
 ;;(use-package :cat-7)
