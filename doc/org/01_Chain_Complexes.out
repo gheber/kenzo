@@ -1,0 +1,536 @@
+This is SBCL 2.0.0, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+To load "kenzo":
+  Load 1 ASDF system:
+    kenzo
+; Loading "kenzo"
+
+
+(F-CMPR 123 789)
+==>
+:LESS
+
+(S-CMPR 'CIRCULATION 'CIRCULAR)
+==>
+:GREATER
+
+(S-CMPR 'QWERTY 'QWERTY)
+==>
+:EQUAL
+
+(L-CMPR '(1 A B) '(1 A))
+==>
+:GREATER
+
+(DEF COMB1 (CMBN 1 1 'U 2 'V 3 'W 4 'Z))
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+<1 * U>
+<2 * V>
+<3 * W>
+<4 * Z>
+------------------------------------------------------------------------------
+
+
+(CMBN-NON-ZERO-P COMB1)
+==>
+T
+
+(CMBN-LIST COMB1)
+==>
+((1 . U) (2 . V) (3 . W) (4 . Z))
+
+(DEF TERM3 (THIRD (CMBN-LIST COMB1)))
+==>
+(3 . W)
+
+(CFFC TERM3)
+==>
+3
+
+(GNRT TERM3)
+==>
+W
+
+(DEF MCOMB1 (CMBN-OPPS COMB1))
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+<-1 * U>
+<-2 * V>
+<-3 * W>
+<-4 * Z>
+------------------------------------------------------------------------------
+
+
+(DEF COMB2 (N-CMBN 10 COMB1))
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+<10 * U>
+<20 * V>
+<30 * W>
+<40 * Z>
+------------------------------------------------------------------------------
+
+
+(DEF CMB12 (2CMBN-ADD #'S-CMPR COMB1 COMB2))
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+<11 * U>
+<22 * V>
+<33 * W>
+<44 * Z>
+------------------------------------------------------------------------------
+
+
+(2CMBN-SBTR #'S-CMPR COMB1 CMB12)
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+<-10 * U>
+<-20 * V>
+<-30 * W>
+<-40 * Z>
+------------------------------------------------------------------------------
+
+
+(NCMBN-ADD #'S-CMPR COMB1 COMB2 COMB1 COMB2 COMB1 COMB2 COMB1 COMB2 ...)
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+<55 * U>
+<110 * V>
+<165 * W>
+<220 * Z>
+------------------------------------------------------------------------------
+
+
+(DEF DIABOLO-CMPR #'S-CMPR)
+==>
+#<FUNCTION S-CMPR>
+
+(DEF DIABOLO-BASIS
+     #'(LAMBDA (DMN)
+         (CASE DMN
+           (0 '(S0 S1 S2 S3 S4 S5))
+           (1 '(S01 S02 S12 S23 S34 S35 S45))
+           (2 '(S345))
+           (OTHERWISE NIL))))
+==>
+#<FUNCTION (LAMBDA (DMN)
+             :IN
+             "/home/gerd/GitHub/kenzo/doc/org/01_Chain_Complexes.lisp") {52E7495B}>
+
+(DEF DIABOLO-BSPN 'S0)
+==>
+S0
+
+(DEF DIABOLO-PURE-DFFR
+     #'(LAMBDA (DMN GNR)
+         (UNLESS (<= 0 DMN 2) (ERROR "Incorrect dimension for diabolo-dp."))
+         (CASE DMN
+           (0 (CMBN -1))
+           (1 (CASE GNR # # # # # # #))
+           (2 (CASE GNR #))
+           (OTHERWISE (ERROR "Bad generator for complex diabolo")))))
+==>
+#<FUNCTION (LAMBDA (DMN GNR)
+             :IN
+             "/home/gerd/GitHub/kenzo/doc/org/01_Chain_Complexes.lisp") {52E74ACB}>
+
+(DEF DIABOLO-STRT :GNRT)
+==>
+:GNRT
+
+(DEF DIABOLO-ORGN '(DIABOLO-FOR-EXAMPLE))
+==>
+(DIABOLO-FOR-EXAMPLE)
+
+(DEF DIABOLO
+     (BUILD-CHCM :CMPR DIABOLO-CMPR :BASIS DIABOLO-BASIS :BSGN DIABOLO-BSPN
+                 :INTR-DFFR DIABOLO-PURE-DFFR :STRT ...))
+==>
+[K1 Chain-Complex]
+
+*CHCM-LIST*
+==>
+([K1 Chain-Complex])
+
+(CHCM 1)
+==>
+[K1 Chain-Complex]
+
+(CHCM 1)
+==>
+[K1 Chain-Complex]
+
+(IDNM DIABOLO)
+==>
+1
+
+(IDNM DIABOLO)
+==>
+1
+
+(BASIS DIABOLO 0)
+==>
+(S0 S1 S2 S3 S4 S5)
+
+(BASIS DIABOLO 1)
+==>
+(S01 S02 S12 S23 S34 S35 S45)
+
+(BASIS DIABOLO 2)
+==>
+(S345)
+
+(BASIS DIABOLO 10)
+==>
+NIL
+
+(DFFR DIABOLO 2 'S345)
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+<1 * S34>
+<-1 * S35>
+<1 * S45>
+------------------------------------------------------------------------------
+
+
+(DFFR DIABOLO (DFFR DIABOLO 2 'S345))
+==>
+
+----------------------------------------------------------------------{CMBN 0}
+------------------------------------------------------------------------------
+
+
+(DEF ZCC
+     (THE CHAIN-COMPLEX
+          (BUILD-CHCM :CMPR
+                      #'(LAMBDA (GNRT1 GNRT2) (DECLARE #) (THE CMPR :EQUAL))
+                      :BASIS #'(LAMBDA (N) (THE LIST #)) :BSGN :Z-GNRT
+                      :INTR-DFFR #'(LAMBDA (CMBN) (THE CMBN #)) :STRT ...)))
+==>
+[K3 Chain-Complex]
+
+(DEFUN MY-CIRCLE ()
+  (THE CHAIN-COMPLEX
+       (BUILD-CHCM :CMPR #'(LAMBDA (GNRT1 GNRT2) (DECLARE #) (THE CMPR :EQUAL))
+                   :BASIS #'(LAMBDA (DMNS) (THE LIST #)) :BSGN '* :INTR-DFFR
+                   #'ZERO-INTR-DFFR :STRT ...)))
+==>
+MY-CIRCLE
+
+(CAT-INIT)
+==>
+---done---
+NIL
+
+(DEF ZCC (Z-CHCM))
+==>
+[K1 Chain-Complex]
+
+(DEF ZERO-MORPHISM
+     (BUILD-MRPH :SORC ZCC :TRGT ZCC :DEGR -1 :INTR
+                 #'(LAMBDA (COMB) (CMBN (1- #))) :STRT ...))
+==>
+[K3 Cohomology-Class on K1 of degree 1]
+
+(DEF ID-MORPHISM
+     (BUILD-MRPH :SORC ZCC :TRGT ZCC :DEGR 0 :INTR #'IDENTITY :STRT ...))
+==>
+[K4 Cohomology-Class on K1 of degree 0]
+
+(DEF CCN-BOUNDARY
+     #'(LAMBDA (DGR GNR)
+         (IF (EVENP (+ DGR GNR))
+             (CMBN (1- DGR) 1 (- GNR 10))
+             (CMBN (1- DGR)))))
+==>
+#<FUNCTION (LAMBDA (DGR GNR)
+             :IN
+             "/home/gerd/GitHub/kenzo/doc/org/01_Chain_Complexes.lisp") {52BC12FB}>
+
+(DEF CCN
+     (BUILD-CHCM :CMPR #'F-CMPR :BASIS #'(LAMBDA (N) (<A-B< (* 10 N) (* 10 #)))
+                 :BSGN 0 :INTR-DFFR CCN-BOUNDARY :STRT ...))
+==>
+[K5 Chain-Complex]
+
+(DEF UPPER-SHIFT (BUILD-MRPH :SORC CCN :TRGT CCN :STRT :GNRT :DEGR 1 :INTR ...))
+==>
+[K7 Morphism (degree 1): K5 -> K5]
+
+(DEF LOWER-SHIFT
+     (BUILD-MRPH :SORC CCN :TRGT CCN :STRT :GNRT :DEGR -1 :INTR ...))
+==>
+[K8 Morphism (degree -1): K5 -> K5]
+
+(? CCN 2 22)
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+<1 * 12>
+------------------------------------------------------------------------------
+
+
+(? CCN (? CCN 2 22))
+==>
+
+----------------------------------------------------------------------{CMBN 0}
+------------------------------------------------------------------------------
+
+
+(DEF COMBN (CMBN 5 1 50 5 55 9 59))
+==>
+
+----------------------------------------------------------------------{CMBN 5}
+<1 * 50>
+<5 * 55>
+<9 * 59>
+------------------------------------------------------------------------------
+
+
+(? CCN COMBN)
+==>
+
+----------------------------------------------------------------------{CMBN 4}
+<5 * 45>
+<9 * 49>
+------------------------------------------------------------------------------
+
+
+(? CCN (? CCN COMBN))
+==>
+
+----------------------------------------------------------------------{CMBN 3}
+------------------------------------------------------------------------------
+
+
+(? UPPER-SHIFT 0 6)
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+<1 * 16>
+------------------------------------------------------------------------------
+
+
+(? LOWER-SHIFT 5 51)
+==>
+
+----------------------------------------------------------------------{CMBN 4}
+<1 * 41>
+------------------------------------------------------------------------------
+
+
+(? LOWER-SHIFT (? LOWER-SHIFT 5 51))
+==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * 31>
+------------------------------------------------------------------------------
+
+
+(DEF COMB1 (CMBN 1 1 10 2 11 3 12 4 13))
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+<1 * 10>
+<2 * 11>
+<3 * 12>
+<4 * 13>
+------------------------------------------------------------------------------
+
+
+(DEF IDENTITY? (CMPS UPPER-SHIFT LOWER-SHIFT))
+==>
+[K9 Morphism (degree 0): K5 -> K5]
+
+(DEGR IDENTITY?)
+==>
+0
+
+(? IDENTITY? COMB1)
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+<1 * 10>
+<2 * 11>
+<3 * 12>
+<4 * 13>
+------------------------------------------------------------------------------
+
+
+(2CMBN-SBTR (CMPR CCN) COMB1 (? IDENTITY? COMB1))
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+------------------------------------------------------------------------------
+
+
+(DEF UPPER-SHIFT2 (CMPS UPPER-SHIFT UPPER-SHIFT))
+==>
+[K10 Morphism (degree 2): K5 -> K5]
+
+(DEGR UPPER-SHIFT2)
+==>
+2
+
+(? UPPER-SHIFT2 COMB1)
+==>
+
+----------------------------------------------------------------------{CMBN 3}
+<1 * 30>
+<2 * 31>
+<3 * 32>
+<4 * 33>
+------------------------------------------------------------------------------
+
+
+(DEF TWICE-UP-SHIFT (ADD UPPER-SHIFT UPPER-SHIFT))
+==>
+[K11 Morphism (degree 1): K5 -> K5]
+
+(DEGR TWICE-UP-SHIFT)
+==>
+1
+
+(? TWICE-UP-SHIFT COMB1)
+==>
+
+----------------------------------------------------------------------{CMBN 2}
+<2 * 20>
+<4 * 21>
+<6 * 22>
+<8 * 23>
+------------------------------------------------------------------------------
+
+
+(DEF UP-D (CMPS UPPER-SHIFT (DFFR1 CCN)))
+==>
+[K12 Morphism (degree 0): K5 -> K5]
+
+(DEF D-UP (CMPS (DFFR1 CCN) UPPER-SHIFT))
+==>
+[K13 Morphism (degree 0): K5 -> K5]
+
+(? UP-D 1 11)
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+<1 * 11>
+------------------------------------------------------------------------------
+
+
+(? D-UP 1 11)
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+------------------------------------------------------------------------------
+
+
+(DEF COMB3 (CMBN 1 1 10 2 11 3 12 4 13 ...))
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+<1 * 10>
+<2 * 11>
+<3 * 12>
+<4 * 13>
+<5 * 14>
+<6 * 15>
+------------------------------------------------------------------------------
+
+
+(? UP-D COMB3)
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+<2 * 11>
+<4 * 13>
+<6 * 15>
+------------------------------------------------------------------------------
+
+
+(? D-UP COMB3)
+==>
+
+----------------------------------------------------------------------{CMBN 1}
+<1 * 10>
+<3 * 12>
+<5 * 14>
+------------------------------------------------------------------------------
+
+
+(K 1)
+==>
+[K1 Chain-Complex]
+
+(KD 1)
+==>
+Object: [K1 Chain-Complex]
+   Origin: (Z-CHCM)
+
+
+NIL
+
+(K 3)
+==>
+[K3 Cohomology-Class on K1 of degree 1]
+
+(KD 3)
+==>
+Object: [K3 Cohomology-Class on K1 of degree 1]
+   Origin: (ZERO MORPHISM ON ZCC)
+
+
+NIL
+
+(KD 8)
+==>
+Object: [K8 Morphism (degree -1): K5 -> K5]
+   Origin: (CCN SHIFT -10)
+
+
+NIL
+
+(KD 5)
+==>
+Object: [K5 Chain-Complex]
+   Origin: (CCN)
+
+
+NIL
+
+(KD 9)
+==>
+Object: [K9 Morphism (degree 0): K5 -> K5]
+   Origin: (2MRPH-CMPS [K7 Morphism (degree 1): K5 -> K5] [K8 Morphism (degree -1): K5 -> K5] GNRT)
+
+
+NIL
+
+(KD2 9)
+==>
+Object: [K9 Morphism (degree 0): K5 -> K5]
+   Origin: (2MRPH-CMPS [K7 Morphism (degree 1): K5 -> K5] [K8 Morphism (degree -1): K5 -> K5] GNRT)
+
+
+Object: [K8 Morphism (degree -1): K5 -> K5]
+   Origin: (CCN SHIFT -10)
+
+
+Object: [K7 Morphism (degree 1): K5 -> K5]
+   Origin: (CCN SHIFT 10)
+
+
+(9 8 7)

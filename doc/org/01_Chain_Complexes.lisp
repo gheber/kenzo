@@ -1,16 +1,3 @@
-#+TITLE: Chain Complexes
-#+OPTIONS: toc:nil num:nil
-#+PROPERTY: header-args :eval never-export :exports both :tangle yes :results output
-
-This file contains the sample code from Chapter 1 of the Kenzo handbook.
-
-Tangle with =C-c C-v t= and run via =sbcl --load 01_Chain_Complexes.lisp=.
-
-Set =*echo*= to =nil= to prevent the form to be echoed and only the result be
-printed. This is useful, for example, when evaluating forms interactively via
-=C-c C-c=.
-
-#+BEGIN_SRC lisp :results silent
 (defparameter *echo* t)
 
 (defmacro ==> (&rest body)
@@ -20,95 +7,55 @@ printed. This is useful, for example, when evaluating forms interactively via
        (pprint '==>))
      (pprint ,@body)
      (terpri)))
-#+END_SRC
 
-#+BEGIN_SRC lisp
 (ql:quickload "kenzo")
 ;;(use-package :cat-7)
 ;;(use-package :cat-8)
 ;;(use-package :cat-9)
 (use-package :cat)
-#+END_SRC
 
-#+BEGIN_SRC lisp
 (==> (f-cmpr 123 789))
-#+END_SRC
 
-#+BEGIN_SRC lisp
 (==> (s-cmpr 'circulation 'circular))
-#+END_SRC
 
-#+BEGIN_SRC lisp
 (==> (s-cmpr 'qwerty 'qwerty))
-#+END_SRC
 
-#+BEGIN_SRC lisp
 (==> (l-cmpr '(1 a b) '(1 a)))
-#+END_SRC
 
-#+BEGIN_SRC lisp
 (==> (def comb1 (cmbn 1 1 'u 2 'v 3 'w 4 'z)))
-#+END_SRC
 
-#+BEGIN_SRC lisp
 (==> (cmbn-non-zero-p comb1))
-#+END_SRC
 
-#+BEGIN_SRC lisp
 (==> (cmbn-list comb1))
-#+END_SRC
 
-#+BEGIN_SRC lisp
 (==> (def term3 (third (cmbn-list comb1))))
-#+END_SRC
 
-#+begin_src lisp
 (==> (cffc term3))
-#+end_src
 
-#+begin_src lisp
 (==> (gnrt term3))
-#+end_src
 
-#+begin_src lisp
 (==> (def mcomb1 (cmbn-opps comb1)))
-#+end_src
 
-#+begin_src lisp
 (==> (def comb2 (n-cmbn 10 comb1)))
-#+end_src
 
-#+begin_src lisp
 (==> (def cmb12 (2cmbn-add #'s-cmpr comb1 comb2)))
-#+end_src
 
-#+begin_src lisp
 (==> (2cmbn-sbtr #'s-cmpr comb1 cmb12))
-#+end_src
 
-#+begin_src lisp
 (==> (ncmbn-add #'s-cmpr
                 comb1 comb2 comb1 comb2 comb1 comb2 comb1 comb2 comb1 comb2))
-#+end_src
 
-#+begin_src lisp
 (==> (def diabolo-cmpr #'s-cmpr))
-#+end_src
 
-#+begin_src lisp
 (==> (def diabolo-basis #'(lambda (dmn)
                             (case dmn
                               (0 '(s0 s1 s2 s3 s4 s5))
                               (1 '(s01 s02 s12 s23 s34 s35 s45))
                               (2 '(s345))
                               (otherwise nil)))))
-#+end_src
 
-#+begin_src lisp
 (==> (def diabolo-bspn 's0))
-#+end_src
 
-#+begin_src lisp
 (==> (def diabolo-pure-dffr
          #'(lambda (dmn gnr)
              (unless (<= 0 dmn 2)
@@ -126,67 +73,37 @@ printed. This is useful, for example, when evaluating forms interactively via
                (2 (case gnr
                     (s345 (cmbn 1 1 's34 -1 's35 1 's45))))
                (otherwise (error "Bad generator for complex diabolo"))))))
-#+end_src
 
-#+begin_src lisp
 (==> (def diabolo-strt :GNRT))
-#+end_src
 
-#+begin_src lisp
 (==> (def diabolo-orgn '(diabolo-for-example)))
-#+end_src
 
-#+begin_src lisp
 (==> (def diabolo (build-chcm :cmpr diabolo-cmpr :basis diabolo-basis
                               :bsgn diabolo-bspn :intr-dffr diabolo-pure-dffr
                               :strt diabolo-strt :orgn diabolo-orgn)))
-#+end_src
 
-#+begin_src lisp
 (==> *chcm-list*)
-#+end_src
 
-#+begin_src lisp
 (==> (chcm 1))
-#+end_src
 
-#+begin_src lisp
 (==> (chcm 1))
-#+end_src
 
-#+begin_src lisp
 (==> (idnm diabolo))
-#+end_src
 
-#+begin_src lisp
 (==> (idnm diabolo))
-#+end_src
 
-#+begin_src lisp
 (==> (basis diabolo 0))
-#+end_src
 
-#+begin_src lisp
 (==> (basis diabolo 1))
-#+end_src
 
-#+begin_src lisp
 (==> (basis diabolo 2))
-#+end_src
 
-#+begin_src lisp
 (==> (basis diabolo 10))
-#+end_src
 
-#+begin_src lisp
 (==> (dffr diabolo 2 's345))
-#+end_src
 
-#+begin_src lisp
 (==> (dffr diabolo (dffr diabolo 2 's345)))
-#+end_src
 
-#+begin_src lisp
 (==> (def ZCC
          (the chain-complex
               (build-chcm
@@ -201,9 +118,7 @@ printed. This is useful, for example, when evaluating forms interactively via
                               (the cmbn (zero-cmbn (1- (cmbn-degr cmbn)))))
                :strt :cmbn
                :orgn '(zcc-constant)))))
-#+end_src
 
-#+begin_src lisp
 (==> (defun MY-CIRCLE ()
        (the chain-complex
             (build-chcm
@@ -218,17 +133,11 @@ printed. This is useful, for example, when evaluating forms interactively via
              :intr-dffr #'zero-intr-dffr
              :strt :cmbn
              :orgn '(circle)))))
-#+end_src
 
-#+begin_src lisp
 (==> (cat-init))
-#+end_src
 
-#+begin_src lisp
 (==> (def ZCC (z-chcm)))
-#+end_src
 
-#+begin_src lisp
 (==> (def zero-morphism (build-mrph :sorc ZCC
                                     :trgt ZCC
                                     :degr -1
@@ -236,183 +145,102 @@ printed. This is useful, for example, when evaluating forms interactively via
                                               (cmbn (1- (degr comb))))
                                     :strt :cmbn
                                     :orgn '(zero morphism on ZCC))))
-#+end_src
 
-#+begin_src lisp
 (==> (def id-morphism (build-mrph :sorc ZCC
                                   :trgt ZCC
                                   :degr 0
                                   :intr #'identity
                                   :strt :cmbn
                                   :orgn '(identity morphism on ZCC))))
-#+end_src
 
-#+begin_src lisp
 (==> (def ccn-boundary #'(lambda (dgr gnr)
                            (if (evenp (+ dgr gnr))
                                (cmbn (1- dgr) 1 (- gnr 10))
                                (cmbn (1- dgr))))))
-#+end_src
 
-#+begin_src lisp
 (==> (def ccn (build-chcm :cmpr #'f-cmpr
                           :basis #'(lambda (n) (<a-b< (* 10 n) (* 10 (1+ n))))
                           :bsgn 0
                           :intr-dffr ccn-boundary
                           :strt :gnrt
                           :orgn '(ccn))))
-#+end_src
 
-#+begin_src lisp
 (==> (def upper-shift (build-mrph
                        :sorc ccn :trgt ccn :strt :gnrt :degr +1
                        :intr #'(lambda (d gn) (cmbn (1+ d) 1 (+ gn 10)))
                        :orgn '(ccn shift +10))))
-#+end_src
 
-#+begin_src lisp
 (==> (def lower-shift (build-mrph
                        :sorc ccn :trgt ccn :strt :gnrt :degr -1
                        :intr #'(lambda (d gn) (cmbn (1- d) 1 (- gn 10)))
                        :orgn '(ccn shift -10))))
-#+end_src
 
-#+begin_src lisp
 (==> (? ccn 2 22))
-#+end_src
 
-#+begin_src lisp
 (==> (? ccn (? ccn 2 22)))
-#+end_src
 
-#+begin_src lisp
 (==> (def combn (cmbn 5 1 50 5 55 9 59)))
-#+end_src
 
-#+begin_src lisp
 (==> (? ccn combn))
-#+end_src
 
-#+begin_src lisp
 (==> (? ccn(? ccn combn)))
-#+end_src
 
-#+begin_src lisp
 (==> (? upper-shift 0 6))
-#+end_src
 
-#+begin_src lisp
 (==> (? lower-shift 5 51))
-#+end_src
 
-#+begin_src lisp
 (==> (? lower-shift (? lower-shift 5 51)))
-#+end_src
 
-#+begin_src lisp
 (==> (def comb1 (cmbn 1 1 10 2 11 3 12 4 13)))
-#+end_src
 
-#+begin_src lisp
 (==> (def identity? (cmps upper-shift lower-shift)))
-#+end_src
 
-#+begin_src lisp
 (==> (degr identity?))
-#+end_src
 
-#+begin_src lisp
 (==> (? identity? comb1))
-#+end_src
 
-#+begin_src lisp
 (==> (2cmbn-sbtr (cmpr ccn) comb1 (? identity? comb1)))
-#+end_src
 
-#+begin_src lisp
 (==> (def upper-shift2 (cmps upper-shift upper-shift)))
-#+end_src
 
-#+begin_src lisp
 (==> (degr upper-shift2))
-#+end_src
 
-#+begin_src lisp
 (==> (? upper-shift2 comb1))
-#+end_src
 
-#+begin_src lisp
 (==> (def twice-up-shift (add upper-shift upper-shift)))
-#+end_src
 
-#+begin_src lisp
 (==> (degr twice-up-shift))
-#+end_src
 
-#+begin_src lisp
 (==> (? twice-up-shift comb1))
-#+end_src
 
-#+begin_src lisp
 (==> (def up-d (cmps upper-shift (dffr1 ccn))))
-#+end_src
 
-#+begin_src lisp
 (==> (def d-up (cmps (dffr1 ccn) upper-shift)))
-#+end_src
 
-#+begin_src lisp
 (==> (? up-d 1 11))
-#+end_src
 
-#+begin_src lisp
 (==> (? d-up 1 11))
-#+end_src
 
-#+begin_src lisp
 (==> (def comb3 (cmbn 1 1 10 2 11 3 12 4 13 5 14 6 15)))
-#+end_src
 
-#+begin_src lisp
 (==> (? up-d comb3))
-#+end_src
 
-#+begin_src lisp
 (==> (? d-up comb3))
-#+end_src
 
-#+begin_src lisp
 (==> (k 1))
-#+end_src
 
-#+begin_src lisp
 (==> (kd 1))
-#+end_src
 
-#+begin_src lisp
 (==> (k 3))
-#+end_src
 
-#+begin_src lisp
 (==> (kd 3))
-#+end_src
 
-#+begin_src lisp
 (==> (kd 8))
-#+end_src
 
-#+begin_src lisp
 (==> (kd 5))
-#+end_src
 
-#+begin_src lisp
 (==> (kd 9))
-#+end_src
 
-#+begin_src lisp
 (==> (kd2 9))
-#+end_src
 
-#+begin_src lisp
 (sb-ext:exit)
-#+end_src
