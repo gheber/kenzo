@@ -1,0 +1,357 @@
+#+TITLE: Objects with effective homology
+#+OPTIONS: toc:nil num:nil
+#+PROPERTY: header-args :eval never-export :exports both :tangle yes :results output
+
+This file contains the sample code from Chapter 2 of the Kenzo handbook.
+
+Tangle with =C-c C-v t= and run via =sbcl --load 02_Objects_with_effective_homology.lisp=.
+
+Set =*echo*= to =nil= to prevent the form to be echoed and only the result be
+printed. This is useful, for example, when evaluating forms interactively via
+=C-c C-c=.
+
+#+BEGIN_SRC lisp :results silent
+(load "common.lisp")
+#+END_SRC
+
+#+BEGIN_SRC lisp
+(ql:quickload "kenzo")
+;;(use-package :cat-7)
+;;(use-package :cat-8)
+;;(use-package :cat-9)
+(use-package :cat)
+#+END_SRC
+
+#+BEGIN_SRC lisp
+(==> (defun cdelta (dmns)
+       (build-chcm
+        :cmpr #'l-cmpr
+        :basis :locally-effective
+        :bsgn '(0)
+        :intr-dffr
+        #'(lambda (degr gmsm)
+            (make-cmbn
+             :degr (1- degr)
+             :list (do ((rslt +empty-list+
+                              (cons (cons sign
+                                          (append
+                                           (subseq gmsm 0 nark)
+                                           (subseq gmsm (1+ nark))))
+                                    rslt))
+                        (sign 1 (- sign))
+                        (nark 0 (1+ nark)))
+                       ((> nark degr) rslt))))
+        :strt :gnrt
+        :orgn `(locally effective version of C_* delta ,dmns))))
+#+END_SRC
+
+#+begin_src lisp
+(==> (defun make-f (tdmns bdmns)
+       (build-mrph
+        :sorc (cdelta tdmns) :trgt (cdelta bdmns) :degr 0
+        :intr #'(lambda (degr gmsm)
+                  (let ((pos (position-if #'(lambda (vertex) (>= vertex bdmns))
+                                          gmsm)))
+                    (if pos
+                        (if (< pos degr)
+                            (zero-cmbn degr)
+                            (cmbn degr 1 (nconc (butlast gmsm) (list bdmns))))
+                        (cmbn degr 1 gmsm))))
+        :strt :gnrt
+        :orgn `(projection delta ,tdmns => delta ,bdmns))))
+#+end_src
+
+#+begin_src lisp
+(==> (defun make-g (tdmns bdmns)
+       (build-mrph
+        :sorc (cdelta bdmns) :trgt (cdelta tdmns) :degr 0
+        :intr #'identity
+        :strt :cmbn
+        :orgn `(injection delta ,bdmns => delta ,tdmns))))
+#+end_src
+
+#+begin_src lisp
+(==> (defun make-h (tdmns bdmns)
+       (build-mrph
+        :sorc (cdelta tdmns) :trgt (cdelta tdmns) :degr +1
+        :intr #'(lambda (degr gmsm)
+                  (let ((pos (position-if #'(lambda (vertex) (>= vertex bdmns))
+                                          gmsm)))
+                    (if pos
+                        (if (member bdmns gmsm)
+                            (zero-cmbn (1+ degr))
+                            (cmbn (1+ degr) (-1-expt-n pos)
+                                  (append (subseq gmsm 0 pos) (list bdmns)
+                                          (subseq gmsm pos))))
+                        (zero-cmbn (1+ degr)))))
+        :strt :gnrt
+        :orgn `(homotopy for delta ,tdmns => ,bdmns))))
+#+end_src
+
+#+begin_src lisp
+(==> (defun make-rdct (tdmns bdmns)
+       (let ((rdct (build-rdct
+                    :f (make-f tdmns bdmns)
+                    :g (make-g tdmns bdmns)
+                    :h (make-h tdmns bdmns)
+                    :orgn `(reduction delta ,tdmns ,bdmns))))
+         rdct)))
+#+end_src
+
+#+begin_src lisp
+(==> (def rdct (make-rdct 6 3)))
+#+end_src
+
+#+begin_src lisp
+(==> (inspect rdct))
+#+end_src
+
+#+begin_src lisp
+(==> (orgn rdct))
+#+end_src
+
+#+begin_src lisp
+(==> (pre-check-rdct rdct))
+#+end_src
+
+#+begin_src lisp
+(==> (setf *tc* (cmbn 2 1 '(0 1 2) 10 '(1 2 3) 100 '(1 2 4) 1000 '(2 3 4))))
+#+end_src
+
+#+begin_src lisp
+(==> (setf *bc* (cmbn 3 4 '(0 1 2 3))))
+#+end_src
+
+#+begin_src lisp
+(==> (check-rdct-no-wait))
+#+end_src
+
+#+begin_src lisp
+(==> (def trdct (make-rdct 6 4)))
+#+end_src
+
+#+begin_src lisp
+(==> (def brdct (make-rdct 4 3)))
+#+end_src
+
+#+begin_src lisp
+(==> (setf rdct (cmps brdct trdct)))
+#+end_src
+
+#+begin_src lisp
+(==> (pre-check-rdct rdct))
+#+end_src
+
+#+begin_src lisp
+(==> (check-rdct-no-wait))
+#+end_src
+
+#+begin_src lisp
+(==> (def hmeq (trivial-hmeq (cdelta 4))))
+#+end_src
+
+#+begin_src lisp
+(==> (setf hmeq (add hmeq (opps (dffr (cdelta 4))))))
+#+end_src
+
+#+begin_src lisp
+(==> (gnrt-? (dffr (rbcc hmeq)) 3 '(0 1 2 3)))
+#+end_src
+
+#+begin_src lisp
+(==> (def comb-bic (cmbn 3 2 (bcnb 'b1) 4 (bcnb 'b1) 6 (bcnb 'b3)
+                         3 (bcnb 'c1) 5 (bcnb 'c1) 7 (bcnb 'd1))))
+#+end_src
+
+#+begin_src lisp
+(==> (cmbn-list comb-bic))
+#+end_src
+
+#+begin_src lisp
+(==> (def comb-b (cmbn 3 2 'b1 4 'b2 6 'b3)))
+#+end_src
+
+#+begin_src lisp
+(==> (def comb-c (cmbn 4 3 'c1 5 'c2)))
+#+end_src
+
+#+begin_src lisp
+(==> (def comb-d (cmbn 3 7 'd1)))
+#+end_src
+
+#+begin_src lisp
+(==> (def comb-bic (make-bicn-cmbn comb-b comb-c comb-d)))
+#+end_src
+
+#+begin_src lisp
+(==> (bicn-cmbn-cmbnb comb-bic))
+#+end_src
+
+#+begin_src lisp
+(==> (bicn-cmbn-cmbnc comb-bic))
+#+end_src
+
+#+begin_src lisp
+(==> (bicn-cmbn-cmbnd comb-bic))
+#+end_src
+
+#+begin_src lisp
+(==> (multiple-value-bind (b c d)
+         (dispatch-bicn-cmbn comb-bic)
+       (list b c d)))
+#+end_src
+
+#+begin_src lisp
+(==> (cat-init))
+#+end_src
+
+#+begin_src lisp
+(==> (defun cdelta (dmns)
+       (build-chcm
+        :cmpr #'l-cmpr
+        :basis #'(lambda (n)
+                   (mapcar #'dlop-int-ext (funcall (delta-n-basis dmns) n)))
+        :bsgn '(0)
+        :intr-dffr
+        #'(lambda (degr gmsm)
+            (make-cmbn
+             :degr (1- degr)
+             :list (do ((rslt +empty-list+
+                              (cons (cons sign
+                                          (append
+                                           (subseq gmsm 0 nark)
+                                           (subseq gmsm (1+ nark))))
+                                    rslt))
+                        (sign 1 (- sign))
+                        (nark 0 (1+ nark)))
+                       ((> nark degr) rslt))))
+        :strt :gnrt
+        :orgn `(Effective version of C_* delta ,dmns))))
+#+end_src
+
+#+begin_src lisp
+(==> (def delta3 (cdelta 3)))
+#+end_src
+
+#+begin_src lisp
+(==> (basis delta3 0))
+#+end_src
+
+#+begin_src lisp
+(==> (basis delta3 1))
+#+end_src
+
+#+begin_src lisp
+(==> (basis delta3 2))
+#+end_src
+
+#+begin_src lisp
+(==> (basis delta3 3))
+#+end_src
+
+#+begin_src lisp
+(==> (basis delta3 4))
+#+end_src
+
+#+begin_src lisp
+(==> (def bic (bicone (make-rdct 3 2) (make-rdct 4 2))))
+#+end_src
+
+#+begin_src lisp
+(==> (basis bic 0))
+#+end_src
+
+#+begin_src lisp
+(==> (basis bic 1))
+#+end_src
+
+#+begin_src lisp
+(==> (basis bic 4))
+#+end_src
+
+#+begin_src lisp
+(==> (? bic (cmbn 2 3 (bcnb '(0 1 3)) 4 (bcnc '(0 1 2 3)) 5 (bcnd '(0 1 4)))))
+#+end_src
+
+#+begin_src lisp
+(==> (? bic (? bic (cmbn 2 3 (bcnb '(0 1 3))
+                         4 (bcnc '(0 1 2 3))
+                         5 (bcnd '(0 1 4))))))
+#+end_src
+
+#+begin_src lisp
+(==> (cat-init))
+#+end_src
+
+#+begin_src lisp
+(==> (def c (build-chcm
+             :cmpr #'s-cmpr
+             :basis #'(lambda (dmns) (declare (ignore dmns)) '(a))
+             :bsgn 'a
+             :intr-dffr #'zero-intr-dffr
+             :strt :cmbn
+             :orgn '(c))))
+#+end_src
+
+#+begin_src lisp
+(==> (def h1 (trivial-hmeq c)))
+#+end_src
+
+#+begin_src lisp
+(==> (def h2 (cmps h1 h1)))
+#+end_src
+
+#+begin_src lisp
+(==> (pre-check-rdct (lrdct h2)))
+#+end_src
+
+#+begin_src lisp
+(==> (setf *tc* (cmbn 3 1 (bcnb 'a) 10 (bcnc 'a) 100 (bcnd 'a))))
+#+end_src
+
+#+begin_src lisp
+(==> (setf *bc* (cmbn 3 1 'a)))
+#+end_src
+
+#+begin_src lisp
+(==> (check-rdct-no-wait))
+#+end_src
+
+#+begin_src lisp
+(==> (pre-check-rdct (rrdct h2)))
+#+end_src
+
+#+begin_src lisp
+(==> (check-rdct-no-wait))
+#+end_src
+
+#+begin_src lisp
+(==> (def h3 (cmps h2 h2)))
+#+end_src
+
+#+begin_src lisp
+(==> (setf *tc* (cmbn 3 1 (bcnb (bcnb 'a)) 10 (bcnb (bcnc 'a))
+                      100 (bcnb (bcnd 'a)) 1000 (bcnc 'a)
+                      10000 (bcnd (bcnb 'a)) 5234 (bcnd (bcnc 'a))
+                      223 (bcnd (bcnd 'a)))))
+#+end_src
+
+#+begin_src lisp
+(==> (pre-check-rdct (lrdct h3)))
+#+end_src
+
+#+begin_src lisp
+(==> (check-rdct-no-wait))
+#+end_src
+
+#+begin_src lisp
+(==> (pre-check-rdct (rrdct h3)))
+#+end_src
+
+#+begin_src lisp
+(==> (check-rdct-no-wait))
+#+end_src
+
+#+begin_src lisp
+(sb-ext:exit)
+#+end_src
