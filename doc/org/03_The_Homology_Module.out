@@ -1,0 +1,1387 @@
+This is SBCL 2.0.0, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+To load "kenzo":
+  Load 1 ASDF system:
+    kenzo
+; Loading "kenzo"
+
+
+(DEF DIABOLO
+     (BUILD-CHCM :CMPR #'S-CMPR :BASIS
+                 #'(LAMBDA (DMN)
+                     (CASE DMN (0 '#) (1 '#) (2 '#) (OTHERWISE NIL)))
+                 :BSGN 'S0 :INTR-DFFR
+                 #'(LAMBDA (DMN GNR)
+                     (UNLESS (<= 0 DMN 2)
+                       (ERROR "Incorrect dimension for diabolo-dp."))
+                     (CASE DMN (0 #) (1 #) (2 #) (OTHERWISE #)))
+                 :STRT ...))
+==>
+[K1 Chain-Complex]
+
+(CHCM-HOMOLOGY DIABOLO 0)
+==>
+Computing boundary-matrix in dimension 0.
+Rank of the source-module : 6.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 1/6 (dimension 0) :
+S0 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 2/6 (dimension 0) :
+S1 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 3/6 (dimension 0) :
+S2 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 4/6 (dimension 0) :
+S3 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 5/6 (dimension 0) :
+S4 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 6/6 (dimension 0) :
+S5 
+End of computing.
+
+
+Computing boundary-matrix in dimension 1.
+Rank of the source-module : 7.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 1/7 (dimension 1) :
+S01 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 2/7 (dimension 1) :
+S02 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 3/7 (dimension 1) :
+S12 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 4/7 (dimension 1) :
+S23 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 5/7 (dimension 1) :
+S34 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 6/7 (dimension 1) :
+S35 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 7/7 (dimension 1) :
+S45 
+End of computing.
+
+
+
+
+Homology in dimension 0 :
+
+
+Component Z
+
+
+---done---
+NIL
+
+(CHCM-HOMOLOGY DIABOLO 1)
+==>
+Computing boundary-matrix in dimension 1.
+Rank of the source-module : 7.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 1/7 (dimension 1) :
+S01 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 2/7 (dimension 1) :
+S02 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 3/7 (dimension 1) :
+S12 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 4/7 (dimension 1) :
+S23 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 5/7 (dimension 1) :
+S34 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 6/7 (dimension 1) :
+S35 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 7/7 (dimension 1) :
+S45 
+End of computing.
+
+
+Computing boundary-matrix in dimension 2.
+Rank of the source-module : 1.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 1/1 (dimension 2) :
+S345 
+End of computing.
+
+
+
+
+Homology in dimension 1 :
+
+
+Component Z
+
+
+---done---
+NIL
+
+(CHCM-HOMOLOGY DIABOLO 2)
+==>
+Computing boundary-matrix in dimension 2.
+Rank of the source-module : 1.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 1/1 (dimension 2) :
+S345 
+End of computing.
+
+
+Computing boundary-matrix in dimension 3.
+Rank of the source-module : 0.
+
+
+
+
+Homology in dimension 2 :
+
+
+
+---done---
+NIL
+
+(DEF DUNCEHAT-BASIS
+     #'(LAMBDA (DMN)
+         (CASE DMN
+           (0 '(# # # # # # # #))
+           (1 '(# # # # # # # # # # ...))
+           (2 '(# # # # # # # # # # ...))
+           (OTHERWISE NIL))))
+==>
+#<FUNCTION (LAMBDA (DMN)
+             :IN
+             "/home/gerd/GitHub/kenzo/doc/org/03_The_Homology_Module.lisp") {52C6A10B}>
+
+(DEF DUNCEHAT-DF
+     #'(LAMBDA (DMN GNR)
+         (CASE DMN
+           (0 (CMBN -1))
+           (1 (CMBN 0 -1 # 1 #))
+           (2 (CMBN 1 1 # -1 # 1 #))
+           (OTHERWISE NIL))))
+==>
+#<FUNCTION (LAMBDA (DMN GNR)
+             :IN
+             "/home/gerd/GitHub/kenzo/doc/org/03_The_Homology_Module.lisp") {52E754FB}>
+
+(DEF DUNCEHAT
+     (BUILD-CHCM :CMPR #'L-CMPR :BASIS DUNCEHAT-BASIS :BSGN '(0) :INTR-DFFR
+                 DUNCEHAT-DF :STRT ...))
+==>
+[K3 Chain-Complex]
+
+(CHCM-HOMOLOGY DUNCEHAT 0)
+==>
+Computing boundary-matrix in dimension 0.
+Rank of the source-module : 8.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 1/8 (dimension 0) :
+(0) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 2/8 (dimension 0) :
+(1) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 3/8 (dimension 0) :
+(2) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 4/8 (dimension 0) :
+(3) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 5/8 (dimension 0) :
+(4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 6/8 (dimension 0) :
+(5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 7/8 (dimension 0) :
+(6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 8/8 (dimension 0) :
+(7) 
+End of computing.
+
+
+Computing boundary-matrix in dimension 1.
+Rank of the source-module : 24.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 1/24 (dimension 1) :
+(0 1) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 2/24 (dimension 1) :
+(0 2) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 3/24 (dimension 1) :
+(0 3) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 4/24 (dimension 1) :
+(0 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 5/24 (dimension 1) :
+(0 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 6/24 (dimension 1) :
+(0 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 7/24 (dimension 1) :
+(0 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 8/24 (dimension 1) :
+(1 2) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 9/24 (dimension 1) :
+(1 3) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 10/24 (dimension 1) :
+(1 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 11/24 (dimension 1) :
+(1 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 12/24 (dimension 1) :
+(1 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 13/24 (dimension 1) :
+(1 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 14/24 (dimension 1) :
+(2 3) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 15/24 (dimension 1) :
+(2 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 16/24 (dimension 1) :
+(2 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 17/24 (dimension 1) :
+(2 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 18/24 (dimension 1) :
+(3 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 19/24 (dimension 1) :
+(3 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 20/24 (dimension 1) :
+(4 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 21/24 (dimension 1) :
+(4 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 22/24 (dimension 1) :
+(5 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 23/24 (dimension 1) :
+(5 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 24/24 (dimension 1) :
+(6 7) 
+End of computing.
+
+
+
+
+Homology in dimension 0 :
+
+
+Component Z
+
+
+---done---
+NIL
+
+(CHCM-HOMOLOGY DUNCEHAT 1)
+==>
+Computing boundary-matrix in dimension 1.
+Rank of the source-module : 24.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 1/24 (dimension 1) :
+(0 1) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 2/24 (dimension 1) :
+(0 2) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 3/24 (dimension 1) :
+(0 3) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 4/24 (dimension 1) :
+(0 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 5/24 (dimension 1) :
+(0 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 6/24 (dimension 1) :
+(0 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 7/24 (dimension 1) :
+(0 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 8/24 (dimension 1) :
+(1 2) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 9/24 (dimension 1) :
+(1 3) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 10/24 (dimension 1) :
+(1 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 11/24 (dimension 1) :
+(1 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 12/24 (dimension 1) :
+(1 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 13/24 (dimension 1) :
+(1 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 14/24 (dimension 1) :
+(2 3) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 15/24 (dimension 1) :
+(2 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 16/24 (dimension 1) :
+(2 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 17/24 (dimension 1) :
+(2 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 18/24 (dimension 1) :
+(3 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 19/24 (dimension 1) :
+(3 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 20/24 (dimension 1) :
+(4 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 21/24 (dimension 1) :
+(4 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 22/24 (dimension 1) :
+(5 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 23/24 (dimension 1) :
+(5 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 24/24 (dimension 1) :
+(6 7) 
+End of computing.
+
+
+Computing boundary-matrix in dimension 2.
+Rank of the source-module : 17.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 1/17 (dimension 2) :
+(0 1 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 2/17 (dimension 2) :
+(0 1 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 3/17 (dimension 2) :
+(0 1 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 4/17 (dimension 2) :
+(0 2 3) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 5/17 (dimension 2) :
+(0 2 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 6/17 (dimension 2) :
+(0 2 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 7/17 (dimension 2) :
+(0 3 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 8/17 (dimension 2) :
+(0 5 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 9/17 (dimension 2) :
+(1 2 3) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 10/17 (dimension 2) :
+(1 2 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 11/17 (dimension 2) :
+(1 2 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 12/17 (dimension 2) :
+(1 3 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 13/17 (dimension 2) :
+(1 4 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 14/17 (dimension 2) :
+(2 6 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 15/17 (dimension 2) :
+(3 4 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 16/17 (dimension 2) :
+(4 5 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 17/17 (dimension 2) :
+(5 6 7) 
+End of computing.
+
+
+
+
+Homology in dimension 1 :
+
+
+
+---done---
+NIL
+
+(CHCM-HOMOLOGY DUNCEHAT 2)
+==>
+Computing boundary-matrix in dimension 2.
+Rank of the source-module : 17.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 1/17 (dimension 2) :
+(0 1 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 2/17 (dimension 2) :
+(0 1 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 3/17 (dimension 2) :
+(0 1 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 4/17 (dimension 2) :
+(0 2 3) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 5/17 (dimension 2) :
+(0 2 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 6/17 (dimension 2) :
+(0 2 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 7/17 (dimension 2) :
+(0 3 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 8/17 (dimension 2) :
+(0 5 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 9/17 (dimension 2) :
+(1 2 3) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 10/17 (dimension 2) :
+(1 2 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 11/17 (dimension 2) :
+(1 2 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 12/17 (dimension 2) :
+(1 3 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 13/17 (dimension 2) :
+(1 4 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 14/17 (dimension 2) :
+(2 6 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 15/17 (dimension 2) :
+(3 4 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 16/17 (dimension 2) :
+(4 5 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 17/17 (dimension 2) :
+(5 6 7) 
+End of computing.
+
+
+Computing boundary-matrix in dimension 3.
+Rank of the source-module : 0.
+
+
+
+
+Homology in dimension 2 :
+
+
+
+---done---
+NIL
+
+(DEF MZ (CHCM-MAT DUNCEHAT 1))
+==>
+Computing boundary-matrix in dimension 1.
+Rank of the source-module : 24.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 1/24 (dimension 1) :
+(0 1) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 2/24 (dimension 1) :
+(0 2) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 3/24 (dimension 1) :
+(0 3) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 4/24 (dimension 1) :
+(0 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 5/24 (dimension 1) :
+(0 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 6/24 (dimension 1) :
+(0 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 7/24 (dimension 1) :
+(0 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 8/24 (dimension 1) :
+(1 2) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 9/24 (dimension 1) :
+(1 3) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 10/24 (dimension 1) :
+(1 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 11/24 (dimension 1) :
+(1 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 12/24 (dimension 1) :
+(1 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 13/24 (dimension 1) :
+(1 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 14/24 (dimension 1) :
+(2 3) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 15/24 (dimension 1) :
+(2 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 16/24 (dimension 1) :
+(2 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 17/24 (dimension 1) :
+(2 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 18/24 (dimension 1) :
+(3 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 19/24 (dimension 1) :
+(3 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 20/24 (dimension 1) :
+(4 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 21/24 (dimension 1) :
+(4 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 22/24 (dimension 1) :
+(5 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 23/24 (dimension 1) :
+(5 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 24/24 (dimension 1) :
+(6 7) 
+End of computing.
+
+
+
+========== MATRIX 8 lines + 24 columns =====
+L1=[C1=-1][C2=-1][C3=-1][C4=-1][C5=-1][C6=-1][C7=-1]
+L2=[C1=1][C8=-1][C9=-1][C10=-1][C11=-1][C12=-1][C13=-1]
+L3=[C2=1][C8=1][C14=-1][C15=-1][C16=-1][C17=-1]
+L4=[C3=1][C9=1][C14=1][C18=-1][C19=-1]
+L5=[C4=1][C10=1][C15=1][C18=1][C20=-1][C21=-1]
+L6=[C5=1][C11=1][C19=1][C20=1][C22=-1][C23=-1]
+L7=[C6=1][C12=1][C16=1][C21=1][C22=1][C24=-1]
+L8=[C7=1][C13=1][C17=1][C23=1][C24=1]
+========== END-MATRIX
+
+(DEF NB (CHCM-MAT DUNCEHAT 2))
+==>
+Computing boundary-matrix in dimension 2.
+Rank of the source-module : 17.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 1/17 (dimension 2) :
+(0 1 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 2/17 (dimension 2) :
+(0 1 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 3/17 (dimension 2) :
+(0 1 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 4/17 (dimension 2) :
+(0 2 3) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 5/17 (dimension 2) :
+(0 2 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 6/17 (dimension 2) :
+(0 2 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 7/17 (dimension 2) :
+(0 3 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 8/17 (dimension 2) :
+(0 5 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 9/17 (dimension 2) :
+(1 2 3) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 10/17 (dimension 2) :
+(1 2 4) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 11/17 (dimension 2) :
+(1 2 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 12/17 (dimension 2) :
+(1 3 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 13/17 (dimension 2) :
+(1 4 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 14/17 (dimension 2) :
+(2 6 7) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 15/17 (dimension 2) :
+(3 4 5) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 16/17 (dimension 2) :
+(4 5 6) 
+End of computing.
+
+
+;; Clock -> 2020-02-16, 21h 41m 12s.
+Computing the boundary of the generator 17/17 (dimension 2) :
+(5 6 7) 
+End of computing.
+
+
+
+========== MATRIX 24 lines + 17 columns =====
+L1=[C1=1][C2=1][C3=1]
+L2=[C4=1][C5=1][C6=1]
+L3=[C4=-1][C7=1]
+L4=[C5=-1][C7=-1]
+L5=[C1=-1][C8=1]
+L6=[C2=-1][C6=-1]
+L7=[C3=-1][C8=-1]
+L8=[C9=1][C10=1][C11=1]
+L9=[C9=-1][C12=1]
+L10=[C10=-1][C13=1]
+L11=[C1=1][C12=-1]
+L12=[C2=1][C13=-1]
+L13=[C3=1][C11=-1]
+L14=[C4=1][C9=1]
+L15=[C5=1][C10=1]
+L16=[C6=1][C14=1]
+L17=[C11=1][C14=-1]
+L18=[C7=1][C15=1]
+L19=[C12=1][C15=-1]
+L20=[C15=1][C16=1]
+L21=[C13=1][C16=-1]
+L22=[C16=1][C17=1]
+L23=[C8=1][C17=-1]
+L24=[C14=1][C17=1]
+========== END-MATRIX
+
+(HOMOLOGIE MZ NB)
+==>
+NIL
+
+(CAT-INIT)
+==>
+---done---
+NIL
+
+(DEF S2 (SPHERE 2))
+==>
+[K1 Simplicial-Set]
+
+(INSPECT S2)
+==>
+The object is a STANDARD-OBJECT of type SIMPLICIAL-SET.
+0. CMPR: #<FUNCTION CAT-7::SPHERE-CMPR>
+1. BASIS: #<CLOSURE (FLET CAT-7::RSLT :IN CAT-7::SPHERE-BASIS) {10018F787B}>
+2. BSGN: *
+3. DFFR: [K2 Morphism (degree -1): K1 -> K1]
+4. GRMD: [K1 Simplicial-Set]
+5. EFHM: "unbound"
+6. IDNM: 1
+7. ORGN: (SPHERE 2)
+8. CPRD: [K5 Morphism (degree 0): K1 -> K3]
+9. FACE: #<CLOSURE (FLET CAT-7::RSLT :IN SPHERE-FACE) {10018F78BB}>
+> 
+NIL
+
+(HOMOLOGY S2 1)
+==>
+Computing boundary-matrix in dimension 1.
+Rank of the source-module : 0.
+
+
+Computing boundary-matrix in dimension 2.
+Rank of the source-module : 1.
+
+
+;; Clock -> 2020-02-16, 21h 41m 14s.
+Computing the boundary of the generator 1/1 (dimension 2) :
+S2 
+End of computing.
+
+
+
+
+Homology in dimension 1 :
+
+
+
+---done---
+
+;; Clock -> 2020-02-16, 21h 41m 14s.
+
+
+NIL
+
+(INSPECT S2)
+==>
+The object is a STANDARD-OBJECT of type SIMPLICIAL-SET.
+0. CMPR: #<FUNCTION CAT-7::SPHERE-CMPR>
+1. BASIS: #<CLOSURE (FLET CAT-7::RSLT :IN CAT-7::SPHERE-BASIS) {10018F787B}>
+2. BSGN: *
+3. DFFR: [K2 Morphism (degree -1): K1 -> K1]
+4. GRMD: [K1 Simplicial-Set]
+5. EFHM: [K9 Homotopy-Equivalence K1 <= K1 => K1]
+6. IDNM: 1
+7. ORGN: (SPHERE 2)
+8. CPRD: [K5 Morphism (degree 0): K1 -> K3]
+9. FACE: #<CLOSURE (FLET CAT-7::RSLT :IN SPHERE-FACE) {10018F78BB}>
+> 
+NIL
+
+(ORGN (HMEQ 9))
+==>
+(TRIVIAL-HMEQ [K1 Simplicial-Set])
+
+(DEF OS2 (LOOP-SPACE S2))
+==>
+[K10 Simplicial-Group]
+
+(EFHM OS2)
+==>
+[K118 Homotopy-Equivalence K10 <= K108 => K25]
+
+(INSPECT OS2)
+==>
+The object is a STANDARD-OBJECT of type SIMPLICIAL-GROUP.
+0. CMPR: #<CLOSURE (FLET CAT-7::RSLT :IN LOOP-SPACE-CMPR) {100242EA2B}>
+1. BASIS: :LOCALLY-EFFECTIVE
+2. BSGN: <<Loop>>
+3. DFFR: [K11 Morphism (degree -1): K10 -> K10]
+4. GRMD: [K10 Simplicial-Group]
+5. EFHM: [K118 Homotopy-Equivalence K10 <= K108 => K25]
+6. IDNM: 10
+7. ORGN: (LOOP-SPACE [K1 Simplicial-Set])
+8. APRD: "unbound"
+9. CPRD: [K14 Morphism (degree 0): K10 -> K12]
+10. FACE: #<CLOSURE (FLET CAT-7::RSLT :IN LOOP-SPACE-FACE) {100242EE1B}>
+11. KFLL: "unbound"
+12. GRML: [K20 Simplicial-Morphism K15 -> K10]
+13. GRIN: [K21 Simplicial-Morphism K10 -> K10]
+> 
+NIL
+
+(DEF S4 (SPHERE 4))
+==>
+[K119 Simplicial-Set]
+
+(INSPECT S4)
+==>
+The object is a STANDARD-OBJECT of type SIMPLICIAL-SET.
+0. CMPR: #<FUNCTION CAT-7::SPHERE-CMPR>
+1. BASIS: #<CLOSURE (FLET CAT-7::RSLT :IN CAT-7::SPHERE-BASIS) {100249241B}>
+2. BSGN: *
+3. DFFR: [K120 Morphism (degree -1): K119 -> K119]
+4. GRMD: [K119 Simplicial-Set]
+5. EFHM: "unbound"
+6. IDNM: 119
+7. ORGN: (SPHERE 4)
+8. CPRD: [K123 Morphism (degree 0): K119 -> K121]
+9. FACE: #<CLOSURE (FLET CAT-7::RSLT :IN SPHERE-FACE) {100249245B}>
+> 
+NIL
+
+(DEF OOOS4 (LOOP-SPACE (LOOP-SPACE (LOOP-SPACE S4))))
+==>
+[K148 Simplicial-Group]
+
+(ORGN OOOS4)
+==>
+(LOOP-SPACE [K136 Simplicial-Group])
+
+(ORGN (SECOND (ORGN OOOS4)))
+==>
+(LOOP-SPACE [K124 Simplicial-Group])
+
+(ORGN (SECOND (ORGN (SECOND (ORGN OOOS4)))))
+==>
+(LOOP-SPACE [K119 Simplicial-Set])
+
+(ORGN (SECOND (ORGN (SECOND (ORGN #)))))
+==>
+(SPHERE 4)
+
+(INSPECT OOOS4)
+==>
+The object is a STANDARD-OBJECT of type SIMPLICIAL-GROUP.
+0. CMPR: #<CLOSURE (FLET CAT-7::RSLT :IN LOOP-SPACE-CMPR) {100249F4AB}>
+1. BASIS: :LOCALLY-EFFECTIVE
+2. BSGN: <<Loop>>
+3. DFFR: [K149 Morphism (degree -1): K148 -> K148]
+4. GRMD: [K148 Simplicial-Group]
+5. EFHM: "unbound"
+6. IDNM: 148
+7. ORGN: (LOOP-SPACE [K136 Simplicial-Group])
+8. APRD: "unbound"
+9. CPRD: [K152 Morphism (degree 0): K148 -> K150]
+10. FACE: #<CLOSURE (FLET CAT-7::RSLT :IN LOOP-SPACE-FACE) {100249F4CB}>
+11. KFLL: "unbound"
+12. GRML: [K158 Simplicial-Morphism K153 -> K148]
+13. GRIN: [K159 Simplicial-Morphism K148 -> K148]
+> 
+NIL
+
+(INSPECT (SMGR 124))
+==>
+The object is a STANDARD-OBJECT of type SIMPLICIAL-GROUP.
+0. CMPR: #<CLOSURE (FLET CAT-7::RSLT :IN LOOP-SPACE-CMPR) {100249648B}>
+1. BASIS: :LOCALLY-EFFECTIVE
+2. BSGN: <<Loop>>
+3. DFFR: [K125 Morphism (degree -1): K124 -> K124]
+4. GRMD: [K124 Simplicial-Group]
+5. EFHM: "unbound"
+6. IDNM: 124
+7. ORGN: (LOOP-SPACE [K119 Simplicial-Set])
+8. APRD: "unbound"
+9. CPRD: [K128 Morphism (degree 0): K124 -> K126]
+10. FACE: #<CLOSURE (FLET CAT-7::RSLT :IN LOOP-SPACE-FACE) {10024964AB}>
+11. KFLL: "unbound"
+12. GRML: [K134 Simplicial-Morphism K129 -> K124]
+13. GRIN: [K135 Simplicial-Morphism K124 -> K124]
+> 
+NIL
+
+(INSPECT (SMST 119))
+==>
+The object is a STANDARD-OBJECT of type SIMPLICIAL-SET.
+0. CMPR: #<FUNCTION CAT-7::SPHERE-CMPR>
+1. BASIS: #<CLOSURE (FLET CAT-7::RSLT :IN CAT-7::SPHERE-BASIS) {100249241B}>
+2. BSGN: *
+3. DFFR: [K120 Morphism (degree -1): K119 -> K119]
+4. GRMD: [K119 Simplicial-Set]
+5. EFHM: "unbound"
+6. IDNM: 119
+7. ORGN: (SPHERE 4)
+8. CPRD: [K123 Morphism (degree 0): K119 -> K121]
+9. FACE: #<CLOSURE (FLET CAT-7::RSLT :IN SPHERE-FACE) {100249245B}>
+> 
+NIL
+
+(EFHM OOOS4)
+==>
+[K522 Homotopy-Equivalence K148 <= K512 => K508]
+
+(INSPECT (SMGR 124))
+==>
+The object is a STANDARD-OBJECT of type SIMPLICIAL-GROUP.
+0. CMPR: #<CLOSURE (FLET CAT-7::RSLT :IN LOOP-SPACE-CMPR) {100249648B}>
+1. BASIS: :LOCALLY-EFFECTIVE
+2. BSGN: <<Loop>>
+3. DFFR: [K125 Morphism (degree -1): K124 -> K124]
+4. GRMD: [K124 Simplicial-Group]
+5. EFHM: [K426 Homotopy-Equivalence K124 <= K416 => K329]
+6. IDNM: 124
+7. ORGN: (LOOP-SPACE [K119 Simplicial-Set])
+8. APRD: "unbound"
+9. CPRD: [K128 Morphism (degree 0): K124 -> K126]
+10. FACE: #<CLOSURE (FLET CAT-7::RSLT :IN LOOP-SPACE-FACE) {10024964AB}>
+11. KFLL: "unbound"
+12. GRML: [K134 Simplicial-Morphism K129 -> K124]
+13. GRIN: [K135 Simplicial-Morphism K124 -> K124]
+> 
+NIL
+
+(INSPECT (SMST 119))
+==>
+The object is a STANDARD-OBJECT of type SIMPLICIAL-SET.
+0. CMPR: #<FUNCTION CAT-7::SPHERE-CMPR>
+1. BASIS: #<CLOSURE (FLET CAT-7::RSLT :IN CAT-7::SPHERE-BASIS) {100249241B}>
+2. BSGN: *
+3. DFFR: [K120 Morphism (degree -1): K119 -> K119]
+4. GRMD: [K119 Simplicial-Set]
+5. EFHM: [K412 Homotopy-Equivalence K119 <= K119 => K119]
+6. IDNM: 119
+7. ORGN: (SPHERE 4)
+8. CPRD: [K123 Morphism (degree 0): K119 -> K121]
+9. FACE: #<CLOSURE (FLET CAT-7::RSLT :IN SPHERE-FACE) {100249245B}>
+> 
+NIL

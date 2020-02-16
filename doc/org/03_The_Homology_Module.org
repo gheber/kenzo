@@ -1,0 +1,223 @@
+#+TITLE: The Homology Module
+#+OPTIONS: toc:nil num:nil
+#+PROPERTY: header-args :eval never-export :exports both :tangle yes :results output
+
+This file contains the sample code from Chapter 3 of the Kenzo handbook.
+
+Tangle with =C-c C-v t= and run via =sbcl --load 03_The_Homology_Module.lisp=.
+
+Set =*echo*= to =nil= to prevent the form to be echoed and only the result be
+printed. This is useful, for example, when evaluating forms interactively via
+=C-c C-c=.
+
+#+BEGIN_SRC lisp :results silent
+(load "common.lisp")
+#+END_SRC
+
+#+BEGIN_SRC lisp
+(ql:quickload "kenzo")
+;;(use-package :cat-7)
+;;(use-package :cat-8)
+;;(use-package :cat-9)
+(use-package :cat)
+#+END_SRC
+
+#+begin_src lisp
+(==> (def diabolo (build-chcm
+                   :cmpr #'s-cmpr
+                   :basis #'(lambda (dmn)
+                              (case dmn
+                                (0 '(s0 s1 s2 s3 s4 s5))
+                                (1 '(s01 s02 s12 s23 s34 s35 s45))
+                                (2 '(s345))
+                                (otherwise nil)))
+                   :bsgn 's0
+                   :intr-dffr #'(lambda (dmn gnr)
+                                  (unless (<= 0 dmn 2)
+                                    (error "Incorrect dimension for diabolo-dp."))
+                                  (case dmn
+                                    (0 (cmbn -1))  ; Note the null combination of degree -1
+                                    (1 (case gnr
+                                         (s01 (cmbn 0 -1 's0 1 's1))
+                                         (s02 (cmbn 0 -1 's0 1 's2))
+                                         (s12 (cmbn 0 -1 's1 1 's2))
+                                         (s23 (cmbn 0 -1 's2 1 's3))
+                                         (s34 (cmbn 0 -1 's3 1 's4))
+                                         (s35 (cmbn 0 -1 's3 1 's5))
+                                         (s45 (cmbn 0 -1 's4 1 's5))))
+                                    (2 (case gnr
+                                         (s345 (cmbn 1 1 's34 -1 's35 1 's45))))
+                                    (otherwise (error "Bad generator for complex diabolo"))))
+                   :strt :GNRT
+                   :orgn '(diabolo-for-example))))
+#+end_src
+
+#+begin_src lisp
+(==> (chcm-homology diabolo 0))
+#+end_src
+
+#+begin_src lisp
+(==> (chcm-homology diabolo 1))
+#+end_src
+
+#+begin_src lisp
+(==> (chcm-homology diabolo 2))
+#+end_src
+
+#+begin_src lisp
+(==> (def duncehat-basis #'(lambda (dmn)
+                             (case dmn
+                               (0 '((0) (1) (2) (3) (4) (5) (6) (7)))
+                               (1 '((0 1) (0 2) (0 3)
+                                    (0 4) (0 5) (0 6)
+                                    (0 7) (1 2) (1 3)
+                                    (1 4) (1 5) (1 6)
+                                    (1 7) (2 3) (2 4)
+                                    (2 6) (2 7) (3 4)
+                                    (3 5) (4 5) (4 6)
+                                    (5 6) (5 7) (6 7)))
+                               (2 '((0 1 5) (0 1 6) (0 1 7)
+                                    (0 2 3) (0 2 4) (0 2 6)
+                                    (0 3 4) (0 5 7) (1 2 3)
+                                    (1 2 4) (1 2 7) (1 3 5)
+                                    (1 4 6) (2 6 7) (3 4 5)
+                                    (4 5 6) (5 6 7)))
+                               (otherwise nil)))))
+#+end_src
+
+#+begin_src lisp
+(==> (def duncehat-df #'(lambda (dmn gnr)
+                          (case dmn
+                            (0 (cmbn -1))
+                            (1 (cmbn 0 -1 (list (first gnr)) 1 (rest gnr)))
+                            (2 (cmbn 1 1 (list (first gnr) (second gnr))
+                                     -1 (list (first gnr) (third gnr))
+                                     1 (rest gnr)))
+                            (otherwise nil)))))
+
+#+end_src
+
+#+begin_src lisp
+(==> (def duncehat (build-chcm :cmpr #'l-cmpr
+                               :basis duncehat-basis
+                               :bsgn '(0)
+                               :intr-dffr duncehat-df
+                               :strt :gnrt
+                               :orgn '(dunce hat))))
+#+end_src
+
+#+begin_src lisp
+(==> (chcm-homology duncehat 0))
+#+end_src
+
+#+begin_src lisp
+(==> (chcm-homology duncehat 1))
+#+end_src
+
+#+begin_src lisp
+(==> (chcm-homology duncehat 2))
+#+end_src
+
+#+begin_src lisp
+(==> (def mz (chcm-mat duncehat 1)))
+#+end_src
+
+#+begin_src lisp
+(==> (def nb (chcm-mat duncehat 2)))
+#+end_src
+
+#+begin_src lisp
+(==> (homologie mz nb))
+#+end_src
+
+#+begin_src lisp
+(==> (cat-init))
+#+end_src
+
+#+begin_src lisp
+(==> (def s2 (sphere 2)))
+#+end_src
+
+#+begin_src lisp
+(==> (inspect s2))
+#+end_src
+
+#+begin_src lisp
+(==> (homology s2 1))
+#+end_src
+
+#+begin_src lisp
+(==> (inspect s2))
+#+end_src
+
+#+begin_src lisp
+(==> (orgn (hmeq 9)))
+#+end_src
+
+#+begin_src lisp
+(==> (def os2 (loop-space s2)))
+#+end_src
+
+#+begin_src lisp
+(==> (efhm os2))
+#+end_src
+
+#+begin_src lisp
+(==> (inspect os2))
+#+end_src
+
+#+begin_src lisp
+(==> (def s4 (sphere 4)))
+#+end_src
+
+#+begin_src lisp
+(==> (inspect s4))
+#+end_src
+
+#+begin_src lisp
+(==> (def ooos4 (loop-space (loop-space (loop-space s4)))))
+#+end_src
+
+#+begin_src lisp
+(==> (orgn ooos4))
+#+end_src
+
+#+begin_src lisp
+(==> (orgn (second (orgn ooos4))))
+#+end_src
+
+#+begin_src lisp
+(==> (orgn (second (orgn (second (orgn ooos4))))))
+#+end_src
+
+#+begin_src lisp
+(==> (orgn (second (orgn (second (orgn (second (orgn ooos4))))))))
+#+end_src
+
+#+begin_src lisp
+(==> (inspect ooos4))
+#+end_src
+
+#+begin_src lisp
+(==> (inspect (smgr 124)))
+#+end_src
+
+#+begin_src lisp
+(==> (inspect (smst 119)))
+#+end_src
+
+#+begin_src lisp
+(==> (efhm ooos4))
+#+end_src
+
+#+begin_src lisp
+(==> (inspect (smgr 124)))
+#+end_src
+
+#+begin_src lisp
+(==> (inspect (smst 119)))
+#+end_src
+
+#+begin_src lisp
+(sb-ext:exit)
+#+end_src
