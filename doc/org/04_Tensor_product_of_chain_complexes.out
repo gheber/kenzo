@@ -1,0 +1,196 @@
+This is SBCL 2.0.0, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+To load "kenzo":
+  Load 1 ASDF system:
+    kenzo
+; Loading "kenzo"
+
+
+(TNPR 1 'A 2 'B)
+==>
+<TnPr A B>
+
+(INSPECT (TNPR 1 'A 2 'B))
+==>
+The object is a STRUCTURE-OBJECT of type TNPR.
+0. DEGR1: 1
+1. GNRT1: A
+2. DEGR2: 2
+3. GNRT2: B
+> 
+NIL
+
+(TNPR-P (TNPR 1 'A 2 'B))
+==>
+T
+
+(TNPR-P (CMBN 0 1 'A 2 'B))
+==>
+NIL
+
+(SETF *TNPR-WITH-DEGREES* T)
+==>
+T
+
+(2CMBN-TNPR (CMBN 2 3 'A 4 'B -5 'C) (CMBN 3 4 'X -3 'Y 2 'Z))
+==>
+
+----------------------------------------------------------------------{CMBN 5}
+<12 * <TnPr 2 A 3 X>>
+<-9 * <TnPr 2 A 3 Y>>
+<6 * <TnPr 2 A 3 Z>>
+<16 * <TnPr 2 B 3 X>>
+<-12 * <TnPr 2 B 3 Y>>
+<8 * <TnPr 2 B 3 Z>>
+<-20 * <TnPr 2 C 3 X>>
+<15 * <TnPr 2 C 3 Y>>
+<-10 * <TnPr 2 C 3 Z>>
+------------------------------------------------------------------------------
+
+
+(SETF *TNPR-WITH-DEGREES* NIL)
+==>
+NIL
+
+(2CMBN-TNPR (CMBN 2 3 'A 4 'B -5 'C) (CMBN 3 4 'X -3 'Y 2 'Z))
+==>
+
+----------------------------------------------------------------------{CMBN 5}
+<12 * <TnPr A X>>
+<-9 * <TnPr A Y>>
+<6 * <TnPr A Z>>
+<16 * <TnPr B X>>
+<-12 * <TnPr B Y>>
+<8 * <TnPr B Z>>
+<-20 * <TnPr C X>>
+<15 * <TnPr C Y>>
+<-10 * <TnPr C Z>>
+------------------------------------------------------------------------------
+
+
+(CAT-INIT)
+==>
+---done---
+NIL
+
+(DEFUN CDELTA (DMNS)
+  (BUILD-CHCM :CMPR #'L-CMPR :BASIS
+              #'(LAMBDA (N) (MAPCAR #'DLOP-INT-EXT (FUNCALL # N))) :BSGN '(0)
+              :INTR-DFFR
+              #'(LAMBDA (DEGR GMSM) (MAKE-CMBN :DEGR (1- DEGR) :LIST (DO # #)))
+              :STRT ...))
+==>
+CDELTA
+
+(DEF TRIANGLE (CDELTA 2))
+==>
+[K1 Chain-Complex]
+
+(BASIS TRIANGLE 1)
+==>
+((0 1) (0 2) (1 2))
+
+(DEF TPR-TRIANGLES (TNSR-PRDC TRIANGLE TRIANGLE))
+==>
+[K3 Chain-Complex]
+
+(BASIS TPR-TRIANGLES 0)
+==>
+(<TnPr (0) (0)> <TnPr (0) (1)> <TnPr (0) (2)> <TnPr (1) (0)> <TnPr (1) (1)>
+ <TnPr (1) (2)> <TnPr (2) (0)> <TnPr (2) (1)> <TnPr (2) (2)>)
+
+(BASIS TPR-TRIANGLES 1)
+==>
+(<TnPr (0) (0 1)> <TnPr (0) (0 2)> <TnPr (0) (1 2)> <TnPr (1) (0 1)>
+ <TnPr (1) (0 2)> <TnPr (1) (1 2)> <TnPr (2) (0 1)> <TnPr (2) (0 2)>
+ <TnPr (2) (1 2)> <TnPr (0 1) (0)> ...)
+
+(BASIS TPR-TRIANGLES 2)
+==>
+(<TnPr (0) (0 1 2)> <TnPr (1) (0 1 2)> <TnPr (2) (0 1 2)> <TnPr (0 1) (0 1)>
+ <TnPr (0 1) (0 2)> <TnPr (0 1) (1 2)> <TnPr (0 2) (0 1)> <TnPr (0 2) (0 2)>
+ <TnPr (0 2) (1 2)> <TnPr (1 2) (0 1)> ...)
+
+(BASIS TPR-TRIANGLES 3)
+==>
+(<TnPr (0 1) (0 1 2)> <TnPr (0 2) (0 1 2)> <TnPr (1 2) (0 1 2)>
+ <TnPr (0 1 2) (0 1)> <TnPr (0 1 2) (0 2)> <TnPr (0 1 2) (1 2)>)
+
+(BASIS TPR-TRIANGLES 4)
+==>
+(<TnPr (0 1 2) (0 1 2)>)
+
+(DEF CCN
+     (BUILD-CHCM :CMPR #'F-CMPR :BASIS #'(LAMBDA (N) (<A-B< (* 10 N) (* 10 #)))
+                 :INTR-DFFR CCN-BOUNDARY :STRT :GNRT :ORGN ...))
+==>
+[K5 Chain-Complex]
+
+(BASIS CCN 3)
+==>
+(30 31 32 33 34 35 36 37 38 39)
+
+(DEF TPR-CCN-CCN (TNSR-PRDC CCN CCN))
+==>
+[K7 Chain-Complex]
+
+(DEF COMB2 (CMBN 2 1 21 5 25 9 29))
+==>
+
+----------------------------------------------------------------------{CMBN 2}
+<1 * 21>
+<5 * 25>
+<9 * 29>
+------------------------------------------------------------------------------
+
+
+(DEF COMB3 (CMBN 3 2 32 3 33 -4 34 -6 36))
+==>
+
+----------------------------------------------------------------------{CMBN 3}
+<2 * 32>
+<3 * 33>
+<-4 * 34>
+<-6 * 36>
+------------------------------------------------------------------------------
+
+
+(DEF TCMB (2CMBN-TNPR COMB2 COMB3))
+==>
+
+----------------------------------------------------------------------{CMBN 5}
+<2 * <TnPr 21 32>>
+<3 * <TnPr 21 33>>
+<-4 * <TnPr 21 34>>
+<-6 * <TnPr 21 36>>
+<10 * <TnPr 25 32>>
+<15 * <TnPr 25 33>>
+<-20 * <TnPr 25 34>>
+<-30 * <TnPr 25 36>>
+<18 * <TnPr 29 32>>
+<27 * <TnPr 29 33>>
+... ...
+------------------------------------------------------------------------------
+
+
+(? TPR-CCN-CCN TCMB)
+==>
+
+----------------------------------------------------------------------{CMBN 4}
+<3 * <TnPr 21 23>>
+<15 * <TnPr 25 23>>
+<27 * <TnPr 29 23>>
+------------------------------------------------------------------------------
+
+
+(? TPR-CCN-CCN (? TPR-CCN-CCN TCMB))
+==>
+
+----------------------------------------------------------------------{CMBN 3}
+------------------------------------------------------------------------------
+

@@ -1,0 +1,162 @@
+#+TITLE: Tensor product of chain complexes
+#+OPTIONS: toc:nil num:nil
+#+PROPERTY: header-args :eval never-export :exports both :tangle yes :results output
+
+This file contains the sample code from Chapter 4 of the Kenzo handbook.
+
+Tangle with =C-c C-v t= and run via =sbcl --load 04_Tensor_product_of_cahin_complexes.lisp=.
+
+Set =*echo*= to =nil= to prevent the form to be echoed and only the result be
+printed. This is useful, for example, when evaluating forms interactively via
+=C-c C-c=.
+
+#+BEGIN_SRC lisp :results silent
+(load "common.lisp")
+#+END_SRC
+
+#+BEGIN_SRC lisp
+(ql:quickload "kenzo")
+;;(use-package :cat-7)
+;;(use-package :cat-8)
+;;(use-package :cat-9)
+(use-package :cat)
+#+END_SRC
+
+#+begin_src lisp
+(==> (tnpr 1 'a 2 'b))
+#+end_src
+
+#+begin_src lisp
+(==> (inspect (tnpr 1 'a 2 'b)))
+#+end_src
+
+#+begin_src lisp
+(==> (tnpr-p (tnpr 1 'a 2 'b)))
+#+end_src
+
+#+begin_src lisp
+(==> (tnpr-p (cmbn 0 1 'a 2 'b)))
+#+end_src
+
+#+begin_src lisp
+(==> (setf *tnpr-with-degrees* t))
+#+end_src
+
+#+begin_src lisp
+(==> (2cmbn-tnpr (cmbn 2 3 'a 4 'b -5 'c) (cmbn 3 4 'x -3 'y 2 'z)))
+#+end_src
+
+#+begin_src lisp
+(==> (setf *tnpr-with-degrees* nil))
+#+end_src
+
+#+begin_src lisp
+(==> (2cmbn-tnpr (cmbn 2 3 'a 4 'b -5 'c) (cmbn 3 4 'x -3 'y 2 'z)))
+#+end_src
+
+#+begin_src lisp
+(==> (cat-init))
+#+end_src
+
+#+begin_src lisp
+(==> (defun cdelta (dmns)
+       (build-chcm
+        :cmpr #'l-cmpr
+        :basis #'(lambda (n)
+                   (mapcar #'dlop-int-ext (funcall (delta-n-basis dmns) n)))
+        :bsgn '(0)
+        :intr-dffr
+        #'(lambda (degr gmsm)
+            (make-cmbn
+             :degr (1- degr)
+             :list (do ((rslt +empty-list+
+                              (cons (cons sign
+                                          (append
+                                           (subseq gmsm 0 nark)
+                                           (subseq gmsm (1+ nark))))
+                                    rslt))
+                        (sign 1 (- sign))
+                        (nark 0 (1+ nark)))
+                       ((> nark degr) rslt))))
+        :strt :gnrt
+        :orgn `(Effective version of C_* delta ,dmns))))
+#+end_src
+
+#+begin_src lisp
+(==> (def triangle (cdelta 2)))
+#+end_src
+
+#+begin_src lisp
+(==> (basis triangle 1))
+#+end_src
+
+#+begin_src lisp
+(==> (def tpr-triangles (tnsr-prdc triangle triangle)))
+#+end_src
+
+#+begin_src lisp
+(==> (basis tpr-triangles 0))
+#+end_src
+
+#+begin_src lisp
+(==> (basis tpr-triangles 1))
+#+end_src
+
+#+begin_src lisp
+(==> (basis tpr-triangles 2))
+#+end_src
+
+#+begin_src lisp
+(==> (basis tpr-triangles 3))
+#+end_src
+
+#+begin_src lisp
+(==> (basis tpr-triangles 4))
+#+end_src
+
+#+begin_src lisp
+(def ccn-boundary #'(lambda (dgr gnr)
+                      (if (evenp (+ dgr gnr))
+                          (cmbn (1- dgr) 1 (- gnr 10))
+                          (cmbn (1- dgr)))))
+#+end_src
+
+#+begin_src lisp
+(==> (def ccn (build-chcm :cmpr #'f-cmpr
+                          :basis #'(lambda (n) (<a-b< (* 10 n) (* 10 (1+ n))))
+                          :intr-dffr  ccn-boundary
+                          :strt :gnrt
+                          :orgn '(ccn) )))
+#+end_src
+
+#+begin_src lisp
+(==> (basis ccn 3))
+#+end_src
+
+#+begin_src lisp
+(==> (def tpr-ccn-ccn (tnsr-prdc ccn ccn)))
+#+end_src
+
+#+begin_src lisp
+(==> (def comb2 (cmbn 2 1 21 5 25 9 29)))
+#+end_src
+
+#+begin_src lisp
+(==> (def comb3 (cmbn 3 2 32 3 33 -4 34 -6 36)))
+#+end_src
+
+#+begin_src lisp
+(==> (def tcmb (2cmbn-tnpr comb2 comb3)))
+#+end_src
+
+#+begin_src lisp
+(==> (? tpr-ccn-ccn tcmb))
+#+end_src
+
+#+begin_src lisp
+(==> (? tpr-ccn-ccn (? tpr-ccn-ccn tcmb)))
+#+end_src
+
+#+begin_src lisp
+(sb-ext:exit)
+#+end_src
