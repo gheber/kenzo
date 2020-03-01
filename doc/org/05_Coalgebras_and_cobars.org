@@ -1,0 +1,184 @@
+#+TITLE: Coalgebras and cobars
+#+OPTIONS: toc:nil num:nil
+#+PROPERTY: header-args :eval never-export :exports both :tangle yes :results output
+
+This file contains the sample code from Chapter 5 of the Kenzo handbook.
+
+Tangle with =C-c C-v t= and run via =sbcl --load 05_Coalgebras_and_cobars.lisp=.
+
+Set =*echo*= to =nil= to prevent the form to be echoed and only the result be
+printed. This is useful, for example, when evaluating forms interactively via
+=C-c C-c=.
+
+#+BEGIN_SRC lisp :results silent
+(load "common.lisp")
+#+END_SRC
+
+#+BEGIN_SRC lisp
+(ql:quickload "kenzo")
+;;(use-package :cat-7)
+;;(use-package :cat-8)
+;;(use-package :cat-9)
+(use-package :cat)
+#+END_SRC
+
+#+begin_src lisp
+(==> (def smp-deltab2
+         (build-smst
+          :cmpr #'(lambda (gsm1 gsm2)
+                    (if (rest gsm1) (l-cmpr gsm1 gsm2) :equal))
+          :basis :locally-effective
+          :bspn '(0)
+          :face #'(lambda (i dmn gsm)
+                    (case dmn
+                      (0 (error "No face in dimension 0"))
+                      (1 (error "No non-degenerate simplex in dimension 1"))
+                      (2 (absm 1 '(0)))
+                      (otherwise (absm 0 (append (subseq gsm 0 i)
+                                                 (subseq gsm (1+ i)))))))
+          :orgn '(simple-deltab2))))
+#+end_src
+
+#+begin_src lisp
+(==> (cmpr smp-deltab2 '(5) '(0)))
+#+end_src
+
+#+begin_src lisp
+(==> (? smp-deltab2 2 '(0 1 2)))
+#+end_src
+
+#+begin_src lisp
+(==> (? smp-deltab2 3 '(0 1 2 3)))
+#+end_src
+
+#+begin_src lisp
+(==> (def precobar (vrtc-cobar smp-deltab2)))
+#+end_src
+
+#+begin_src lisp
+(==> (bsgn precobar))
+#+end_src
+
+#+begin_src lisp
+(==> (def loop-1 (allp 2 '(0 1 2 3))))
+#+end_src
+
+#+begin_src lisp
+(==> (def loop-2 (allp 2 '(1 2 3 4))))
+#+end_src
+
+#+begin_src lisp
+(==> (cmpr precobar loop-1 loop-2))
+#+end_src
+
+#+begin_src lisp
+(==> (? precobar 2 loop-1))
+#+end_src
+
+#+begin_src lisp
+(==> (? precobar (? precobar 2 loop-1)))
+#+end_src
+
+#+begin_src lisp
+(==> (def loop-3 (allp 3 '(0 1 2 3 4) 3 '(1 3 5 7 9))))
+#+end_src
+
+#+begin_src lisp
+(==> (? precobar 6 loop-3))
+#+end_src
+
+#+begin_src lisp
+(==> (? precobar (? precobar 6 loop-3)))
+#+end_src
+
+#+begin_src lisp
+(==> (def loop-4 (allp 3 '(0 1 4 5 6) 4 '(2 3 4 5 6 8) 4 '(0 4 5 6 7 8))))
+#+end_src
+
+#+begin_src lisp
+(==> (? precobar 11 loop-4))
+#+end_src
+
+#+begin_src lisp
+(==> (? precobar (? precobar 11 loop-4)))
+#+end_src
+
+#+begin_src lisp
+(==> (cprd smp-deltab2 2 '(0 1 2)))
+#+end_src
+
+#+begin_src lisp
+(==> (cprd smp-deltab2 3 '(1 2 3 4)))
+#+end_src
+
+#+begin_src lisp
+(==> (cprd smp-deltab2 4 '(0 1 2 3 4)))
+#+end_src
+
+#+begin_src lisp
+(==> (def dh-mrph (cobar-hrzn-dffr smp-deltab2)))
+#+end_src
+
+#+begin_src lisp
+(==> loop-1)
+#+end_src
+
+#+begin_src lisp
+(==> (? dh-mrph 2 loop-1))
+#+end_src
+
+#+begin_src lisp
+(==> loop-3)
+#+end_src
+
+#+begin_src lisp
+(==> (? dh-mrph 6 loop-3))
+#+end_src
+
+#+begin_src lisp
+(==> (? dh-mrph (? dh-mrph 6 loop-3)))
+#+end_src
+
+#+begin_src lisp
+(==> loop-4)
+#+end_src
+
+#+begin_src lisp
+(==> (? dh-mrph 11 loop-4))
+#+end_src
+
+#+begin_src lisp
+(==> (? dh-mrph (? dh-mrph 11 loop-4)))
+#+end_src
+
+#+begin_src lisp
+(==> (def cobar-deltab2 (cobar smp-deltab2)))
+#+end_src
+
+#+begin_src lisp
+(==> loop-3)
+#+end_src
+
+#+begin_src lisp
+(==> (? cobar-deltab2 6 loop-3))
+#+end_src
+
+#+begin_src lisp
+(==> (? cobar-deltab2 (? cobar-deltab2 6 loop-3)))
+#+end_src
+
+#+begin_src lisp
+(==> loop-4)
+#+end_src
+
+#+begin_src lisp
+(==> (? cobar-deltab2 11 loop-4))
+#+end_src
+
+#+begin_src lisp
+(==> (? cobar-deltab2 (? cobar-deltab2 11 loop-4)))
+#+end_src
+
+#+begin_src lisp
+(sb-ext:exit)
+#+end_src
