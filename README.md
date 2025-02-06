@@ -1,5 +1,6 @@
 # Welcome to Kenzo
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/gheber/kenzo)
 [![GPLv3 Logo](http://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)
 [![Travis Status](https://travis-ci.org/gheber/kenzo.svg?branch=master)](https://travis-ci.org/gheber/kenzo)
 
